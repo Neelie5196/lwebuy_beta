@@ -1,10 +1,18 @@
 body {
     font-family: sans-serif;
     overflow-x: hidden;
-    background: radial-gradient(#eaf4d7, #77787b);
-    background-repeat: no-repeat;
-    height: 100vh;
     min-height: 100vh;
+}
+
+.radialbg{
+    background: radial-gradient(#dfeec4, #2f9142);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.linearbg{
+    background: linear-gradient(180deg, #2f9142, #dfeec4);
+    background-repeat: no-repeat;
     background-size: cover;
 }
 
@@ -35,15 +43,7 @@ body {
     width: 50%;
 }
 
-/*
-.homerow2 h1 {
-    color: #fff;
-    font-weight: bold;
-    font-size: 10vh;
-}
-*/
-
-.homerow3 button {
+.homerow3 a {
     margin: 0 1%;
     padding: 0.8% 2%;
     color: #fff;
@@ -98,6 +98,86 @@ body {
     margin-right: 1%;
     border-right: solid 1px #fff;
     padding-right: 1.5%;
+}
+
+.loginrow1 {
+    color: #fff;
+    font-weight: bolder;
+    padding: 1% 1%;
+}
+
+.loginrow2 {
+    margin: 5% auto;    
+}
+
+.aback {
+    color: #fff;
+    font-weight: normal;
+}
+
+.aback:hover {
+    color: #8bb836;
+    text-decoration: none;
+}
+
+.btnreglogin {
+    background: none;
+    border: solid 1px #fff;
+    color: #fff;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.btnreglogin:hover {
+    background: #fff;
+    color: #2f9142;
+}
+
+.logincontainer {
+    color: rgba(255, 255, 255, 0.5);
+    margin: auto;
+    width: 25%;
+}
+
+.logincontainers {
+    color: rgba(255, 255, 255, 0.5);
+    margin: auto;
+    width: 80%;
+}
+
+.logincontainer a {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.logincontainer a:hover {
+    color: rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+}
+
+.formfield {
+    width: 100%;
+    border: none;
+    border-bottom: solid 0.5px #fff;
+    background: none;
+    color: #fff;
+    padding: 2%;
+    margin-bottom: 1%;
+}
+
+.formfield:focus {
+    outline: none;
+}
+
+.btnlogin {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 2%;
+    color: rgba(47, 145, 66, 0.7);
+    font-weight: bold;
+}
+
+.btnlogin:hover {
+    color: #2f9142;
 }
 
 /*

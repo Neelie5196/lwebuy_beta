@@ -21,7 +21,7 @@
         <![endif]-->
     </head>
     
-    <body>
+    <body class="radialbg">
         <div class="row right homerow1">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <p>
@@ -31,12 +31,6 @@
         </div>
         
         <div class="row homerow2">
-<!--
-            <div class="col-xs-6 col-md-6 col-lg-6">
-                <h1>Logistics Worldwide Express</h1>
-            </div>
--->
-            
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <img src="resources/img/logo.PNG" width="100%" />
             </div>
@@ -44,8 +38,8 @@
         
         <div class="row homerow3 center">
             <div class="col-xs-12 col-md-12 col-lg-12">
-                <button class="btn btn-default btnreg" href="service.php">Order now</button>
-                <button class="btn btn-default btnlearn" href="services.php">Learn more</button>
+                <a class="btn btn-default btnreg" href="service.php">Register now</a>
+                <a class="btn btn-default btnlearn" href="services.php">Learn more</a>
             </div>
         </div>
         

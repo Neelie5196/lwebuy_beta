@@ -3,6 +3,31 @@
 require_once '../connection/config.php';
 session_start();
 
+if(isset($_POST['add'])) {
+
+    $straight_saving = array(
+        'name' => $_POST['name'],
+        'link' => $_POST['link'],
+        'type' => $_POST['type'],
+        'quantity' => $_POST['quantity'],
+        'price' => $_POST['price'],
+        'remark' => $_POST['remark'],
+        'add' => $_POST['add']
+    );
+
+    $_SESSION['straight_saving'][] = $straight_saving;
+
+}
+
+if(!empty($_GET['action'])) {
+    switch($_GET['action']) {
+        
+        case "empty":
+            unset($_SESSION["straight_saving"]);
+        break;	
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +69,7 @@ session_start();
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <form method="post" action="addpurchase.php">
+                            <form method="post" action="purchase.php">
                                 <table class="table">
                                     <tbody>
                                         <tr>
@@ -89,7 +114,7 @@ session_start();
                                                 <label>Remark:</label>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="remark" type="text" required>
+                                                <input class="form-control" name="remark" type="text">
                                             </td>
                                         </tr>
                                     </tbody>
@@ -104,16 +129,55 @@ session_start();
                     <div class="row botmar">
                         <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                             <strong>Purchase Product List</strong>
-                            <button class="btn btn-danger fltright" type="button">Empty List</button>
+                            <a href="purchase.php?action=empty" class="btn btn-danger fltright">Empty List</a>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-12 col-lg-12">
-                            <form method="post" action="addpurchase.php">
-                                
-                            </form>
+                    <form action="payment.php" method="post">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12 col-lg-12">	
+                                <?php
+                                    if(isset($_SESSION['straight_saving'])){
+                                        $total = 0;
+                                ?>
+                                <table class="table thead-bordered table-hover" style="width:100%">
+                                    <tbody>
+                                        <tr>
+                                            <th style="text-align:left;"><strong>Name</strong></th>
+                                            <th style="text-align:left;"><strong>Link</strong></th>
+                                            <th style="text-align:left;"><strong>Type</strong></th>
+                                            <th style="text-align:right;"><strong>Quantity</strong></th>
+                                            <th style="text-align:right;"><strong>U.Price</strong></th>
+                                            <th style="text-align:left;"><strong>Remark</strong></th>
+                                        </tr>
+                                        <?php
+                                            foreach($_SESSION['straight_saving'] as $sav) {
+                                        ?>
+                                        <tr>
+                                            <td style="text-align:left;"><strong><?php echo $sav['name']; ?></strong></td>
+                                            <td style="text-align:left;"><a href="<?php echo $sav['link']; ?>" target="_blank">Item Link</a></td>
+                                            <td style="text-align:left;"><?php echo $sav['type']; ?></td>
+                                            <td style="text-align:right;"><?php echo $sav['quantity']; ?></td>
+                                            <td style="text-align:right;"><?php echo "¥ ".$sav['price']; ?></td>
+                                            <td style="text-align:left;"><?php echo $sav['remark']; ?></td>
+                                            
+                                        </tr>
+                                        <?php
+                                            $total += ($sav["price"]*$sav["quantity"]);
+                                            }
+                                        ?>
+
+                                        <tr>
+                                            <td colspan="8" style="text-align:right;"><strong>Total:</strong> <?php echo "¥ ".number_format((float)$total, 2, '.', ''); ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <input type="submit" class="btn btn-warning fltright" name="add" value="Payment">
+                                <?php
+                                    }
+                                ?>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </section>
             </center>
         </div>

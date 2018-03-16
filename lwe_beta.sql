@@ -1,20 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.11
--- http://www.phpmyadmin.net
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2018 at 05:27 AM
--- Server version: 5.6.24
--- PHP Version: 5.6.8
+-- Generation Time: Mar 16, 2018 at 06:45 AM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `lwe_beta`
@@ -26,7 +28,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `address`
 --
 
-CREATE TABLE IF NOT EXISTS `address` (
+CREATE TABLE `address` (
   `address_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `address` varchar(100) NOT NULL,
@@ -42,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `address` (
 -- Table structure for table `country`
 --
 
-CREATE TABLE IF NOT EXISTS `country` (
+CREATE TABLE `country` (
   `country_id` int(11) NOT NULL,
   `country_name` varchar(50) NOT NULL,
   `country_currency` decimal(10,2) NOT NULL
@@ -54,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `country` (
 -- Table structure for table `item`
 --
 
-CREATE TABLE IF NOT EXISTS `item` (
+CREATE TABLE `item` (
   `item_id` int(11) NOT NULL,
   `slot_id` int(11) NOT NULL,
   `from_order` varchar(20) NOT NULL,
@@ -72,19 +74,27 @@ CREATE TABLE IF NOT EXISTS `item` (
 -- Table structure for table `order_item`
 --
 
-CREATE TABLE IF NOT EXISTS `order_item` (
+CREATE TABLE `order_item` (
   `order_item_id` int(11) NOT NULL,
-  `order_list_id` int(11) NOT NULL,
+  `order_list_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
   `order_item` varchar(50) NOT NULL,
   `link` varchar(255) NOT NULL,
   `type` varchar(50) NOT NULL,
-  `unit` int(15) NOT NULL,
+  `quantity` int(15) NOT NULL,
   `remark` varchar(255) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `status` varchar(15) NOT NULL,
-  `order_code` varchar(25) NOT NULL,
+  `status` varchar(15) DEFAULT NULL,
+  `order_code` varchar(25) DEFAULT NULL,
   `datetimes` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_item`
+--
+
+INSERT INTO `order_item` (`order_item_id`, `order_list_id`, `user_id`, `order_item`, `link`, `type`, `quantity`, `remark`, `price`, `status`, `order_code`, `datetimes`) VALUES
+(22, NULL, 10, 'ä¸ƒåŽŸç½ª', 'http://localhost/LWE_BUY/user/purchase.php?success', '1', 1, '', '111.00', NULL, NULL, '2018-03-16 05:44:54');
 
 -- --------------------------------------------------------
 
@@ -92,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `order_item` (
 -- Table structure for table `order_list`
 --
 
-CREATE TABLE IF NOT EXISTS `order_list` (
+CREATE TABLE `order_list` (
   `order_list_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `status` varchar(15) NOT NULL,
@@ -106,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `order_list` (
 -- Table structure for table `package`
 --
 
-CREATE TABLE IF NOT EXISTS `package` (
+CREATE TABLE `package` (
   `package_id` int(11) NOT NULL,
   `package_name` varchar(255) NOT NULL,
   `package_price` decimal(10,2) NOT NULL
@@ -118,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `package` (
 -- Table structure for table `payment`
 --
 
-CREATE TABLE IF NOT EXISTS `payment` (
+CREATE TABLE `payment` (
   `payment_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -138,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `payment` (
 -- Table structure for table `point`
 --
 
-CREATE TABLE IF NOT EXISTS `point` (
+CREATE TABLE `point` (
   `point_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `point` decimal(10,2) NOT NULL
@@ -150,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `point` (
 -- Table structure for table `request`
 --
 
-CREATE TABLE IF NOT EXISTS `request` (
+CREATE TABLE `request` (
   `request_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `order_item` varchar(50) NOT NULL,
@@ -165,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `request` (
 -- Table structure for table `shipping`
 --
 
-CREATE TABLE IF NOT EXISTS `shipping` (
+CREATE TABLE `shipping` (
   `shipping_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `receipient_name` varchar(50) NOT NULL,
@@ -184,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `shipping` (
 -- Table structure for table `shipping_update_details`
 --
 
-CREATE TABLE IF NOT EXISTS `shipping_update_details` (
+CREATE TABLE `shipping_update_details` (
   `sud_id` int(11) NOT NULL,
   `HawbNo` varchar(20) NOT NULL,
   `TransactionDate` datetime NOT NULL,
@@ -205,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `shipping_update_details` (
 -- Table structure for table `shipping_update_summary`
 --
 
-CREATE TABLE IF NOT EXISTS `shipping_update_summary` (
+CREATE TABLE `shipping_update_summary` (
   `sum_id` int(11) NOT NULL,
   `HawbNo` varchar(20) NOT NULL,
   `XR1` varchar(20) NOT NULL,
@@ -235,7 +245,7 @@ CREATE TABLE IF NOT EXISTS `shipping_update_summary` (
 -- Table structure for table `slot`
 --
 
-CREATE TABLE IF NOT EXISTS `slot` (
+CREATE TABLE `slot` (
   `slot_id` int(11) NOT NULL,
   `slot_code` int(100) NOT NULL,
   `slot_num` int(100) NOT NULL,
@@ -249,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `slot` (
 -- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `fname` varchar(100) NOT NULL,
   `lname` varchar(100) NOT NULL,
@@ -268,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Table structure for table `warehouse`
 --
 
-CREATE TABLE IF NOT EXISTS `warehouse` (
+CREATE TABLE `warehouse` (
   `ware_id` int(11) NOT NULL,
   `station_code` varchar(10) NOT NULL,
   `station_description` text NOT NULL,
@@ -283,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `warehouse` (
 -- Table structure for table `work_station`
 --
 
-CREATE TABLE IF NOT EXISTS `work_station` (
+CREATE TABLE `work_station` (
   `work_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `ware_id` int(11) NOT NULL
@@ -386,71 +396,86 @@ ALTER TABLE `work_station`
 --
 ALTER TABLE `address`
   MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `country`
 --
 ALTER TABLE `country`
   MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
   MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
 --
 -- AUTO_INCREMENT for table `order_list`
 --
 ALTER TABLE `order_list`
-  MODIFY `order_list_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_list_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483647;
+
 --
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
   MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
   MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
   MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
   MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `shipping_update_details`
 --
 ALTER TABLE `shipping_update_details`
   MODIFY `sud_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `shipping_update_summary`
 --
 ALTER TABLE `shipping_update_summary`
   MODIFY `sum_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
   MODIFY `ware_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `work_station`
 --
 ALTER TABLE `work_station`
   MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

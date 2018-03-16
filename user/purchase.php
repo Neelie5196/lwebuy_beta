@@ -2,30 +2,69 @@
 
 require_once '../connection/config.php';
 session_start();
+$user_id = $_SESSION['user_id'];
 
-if(isset($_POST['add'])) {
+if(isset($_POST['add']))
+{    
 
-    $straight_saving = array(
-        'name' => $_POST['name'],
-        'link' => $_POST['link'],
-        'type' => $_POST['type'],
-        'quantity' => $_POST['quantity'],
-        'price' => $_POST['price'],
-        'remark' => $_POST['remark'],
-        'add' => $_POST['add']
-    );
+    $name = $_POST['name'];
+    $link = $_POST['link'];
+    $type = $_POST['type'];
+    $quantity = $_POST['quantity'];
+    $price = $_POST['price'];
+    $remark = $_POST['remark'];
+    
+	
+	$result1 = mysqli_query($con, "INSERT INTO order_item SET user_id='$user_id', order_item='$name', link='$link', type='$type', quantity='$quantity', price='$price', remark='$remark'") or die(mysqli_error($con));
+}
 
-    $_SESSION['straight_saving'][] = $straight_saving;
+$query = "SELECT *
+          FROM order_item
+          WHERE user_id='$user_id' AND order_list_id IS NULL";
+$result = mysqli_query($con, $query);
+
+if (isset($_GET['order_item_id']))
+{
+    $order_item_id = $_GET['order_item_id'];
+
+    $result2 = mysqli_query($con, "DELETE FROM order_item WHERE order_item_id=$order_item_id") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    window.location.href='purchase.php?success';
+    </script>
+    <?php
 
 }
 
-if(!empty($_GET['action'])) {
-    switch($_GET['action']) {
-        
-        case "empty":
-            unset($_SESSION["straight_saving"]);
-        break;	
-    }
+if (isset($_GET['empty']))
+{
+    
+    $result3 = mysqli_query($con, "DELETE FROM order_item WHERE order_list_id IS NULL AND user_id=$user_id") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    window.location.href='purchase.php?success';
+    </script>
+    <?php
+
+}
+
+if(isset($_POST['payment']))
+{    
+    $unique_id = rand(1000,100000). $user_id;
+    $order_list_id = $unique_id;
+    $status = 'Waiting';
+    $price = $_POST['total_price'];
+    
+    $result4 = mysqli_query($con, "UPDATE order_item SET order_list_id='$order_list_id', status='$status' WHERE order_list_id IS NULL AND user_id='$user_id'") or die(mysqli_error($con));
+    
+	$result5 = mysqli_query($con, "INSERT INTO order_list SET order_list_id='$order_list_id', user_id='$user_id', status='$status', price='$price'") or die(mysqli_error($con));
+    ?>
+    <script>
+    window.location.href='payment.php?success';
+    </script>
+    <?php
 }
 
 ?>
@@ -129,49 +168,58 @@ if(!empty($_GET['action'])) {
                     <div class="row botmar">
                         <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                             <strong>Purchase Product List</strong>
-                            <a href="purchase.php?action=empty" class="btn btn-danger fltright">Empty List</a>
+                            <a href="purchase.php?empty=empty" class="btn btn-danger fltright">Empty List</a>
                         </div>
                     </div>
-                    <form action="payment.php" method="post">
+                    <form action="purchase.php" method="post">
                         <div class="row">
-                            <div class="col-xs-12 col-md-12 col-lg-12">	
-                                <?php
-                                    if(isset($_SESSION['straight_saving'])){
+                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                <?php 
+                                    if(mysqli_num_rows($result) > 0)
+                                    {
+                                        $counter = 0;
                                         $total = 0;
-                                ?>
-                                <table class="table thead-bordered table-hover" style="width:100%">
-                                    <tbody>
-                                        <tr>
-                                            <th style="text-align:left;"><strong>Name</strong></th>
-                                            <th style="text-align:left;"><strong>Link</strong></th>
-                                            <th style="text-align:left;"><strong>Type</strong></th>
-                                            <th style="text-align:right;"><strong>Quantity</strong></th>
-                                            <th style="text-align:right;"><strong>U.Price</strong></th>
-                                            <th style="text-align:left;"><strong>Remark</strong></th>
-                                        </tr>
-                                        <?php
-                                            foreach($_SESSION['straight_saving'] as $sav) {
-                                        ?>
-                                        <tr>
-                                            <td style="text-align:left;"><strong><?php echo $sav['name']; ?></strong></td>
-                                            <td style="text-align:left;"><a href="<?php echo $sav['link']; ?>" target="_blank">Item Link</a></td>
-                                            <td style="text-align:left;"><?php echo $sav['type']; ?></td>
-                                            <td style="text-align:right;"><?php echo $sav['quantity']; ?></td>
-                                            <td style="text-align:right;"><?php echo "¥ ".$sav['price']; ?></td>
-                                            <td style="text-align:left;"><?php echo $sav['remark']; ?></td>
-                                            
-                                        </tr>
-                                        <?php
-                                            $total += ($sav["price"]*$sav["quantity"]);
+                                    ?>
+                                    <table class="table thead-bordered table-hover" style="width:100%">
+                                        <tbody>
+                                            <tr>
+                                                <th>#</th>
+                                                <th style="text-align:left;"><strong>Name</strong></th>
+                                                <th style="text-align:left;"><strong>Link</strong></th>
+                                                <th style="text-align:left;"><strong>Type</strong></th>
+                                                <th style="text-align:right;"><strong>Quantity</strong></th>
+                                                <th style="text-align:right;"><strong>U.Price</strong></th>
+                                                <th style="text-align:left;"><strong>Remark</strong></th>
+                                                <th style="text-align:center;"><strong>Action</strong></th>
+                                            </tr>
+                                            <?php
+                                            while($row = mysqli_fetch_array($result))
+                                            {
+                                                $counter++;
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $counter; ?></td>
+                                                    <td style="text-align:left;"><strong><?php echo $row['order_item']; ?></strong></td>
+                                                    <td style="text-align:left;"><a href="<?php echo $row['link']; ?>" target="_blank">Item Link</a></td>
+                                                    <td style="text-align:left;"><?php echo $row['type']; ?></td>
+                                                    <td style="text-align:right;"><?php echo $row['quantity']; ?></td>
+                                                    <td style="text-align:right;"><?php echo "¥ ".$row['price']; ?></td>
+                                                    <td style="text-align:left;"><?php echo $row['remark']; ?></td>
+                                                    <td style="text-align:center;">
+                                                        <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-xs btn-danger delete-button" name="delete">Remove</a>
+                                                    </td>
+                                                </tr>
+                                            <?php
+                                                $total += ($row["price"]*$row["quantity"]);
                                             }
-                                        ?>
-
-                                        <tr>
-                                            <td colspan="8" style="text-align:right;"><strong>Total:</strong> <?php echo "¥ ".number_format((float)$total, 2, '.', ''); ?></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <input type="submit" class="btn btn-warning fltright" name="add" value="Payment">
+                                            ?>
+                                            <tr>
+                                                <td colspan="8" style="text-align:right;"><strong>Total:</strong> <?php echo "¥ ".number_format((float)$total, 2, '.', ''); ?></td>
+                                                <input class="form-control" name="total_price" type="hidden" value="<?php echo $total; ?>">
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                <input type="submit" class="btn btn-warning fltright" name="payment" value="Payment">
                                 <?php
                                     }
                                 ?>

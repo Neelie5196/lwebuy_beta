@@ -50,7 +50,7 @@ if(isset($_POST['submit']))
     
     
 	$result4 = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE order_list_id='$order_list_id'") or die(mysqli_error($con));
-	$result5 = mysqli_query($con, "UPDATE order_list SET status='$status' WHERE order_list_id='$order_list_id'") or die(mysqli_error($con));
+	$result5 = mysqli_query($con, "UPDATE order_list SET status='$statuss' WHERE order_list_id='$order_list_id'") or die(mysqli_error($con));
     
 	if(move_uploaded_file($file_loc,$folder.$final_file))
 	{
@@ -70,11 +70,11 @@ if(isset($_POST['pay']))
     $point_pay = $_POST['point_pay'];
     $title = 'Pay by';
     $points = 'Points';
-    $statuss = 'Completed';
+    $statuss = 'Waiting for Accept';
     $current_rate = $results3['rate'];
     
     $result7 = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE order_list_id='$order_list_id'") or die(mysqli_error($con));
-    $result8 = mysqli_query($con, "UPDATE order_list SET status='$status' WHERE order_list_id='$order_list_id'") or die(mysqli_error($con));
+    $result8 = mysqli_query($con, "UPDATE order_list SET status='$statuss' WHERE order_list_id='$order_list_id'") or die(mysqli_error($con));
     $result9 = mysqli_query($con, "UPDATE point SET point= point - '$point_pay' WHERE user_id = '$user_id' ") or die(mysqli_error($con));
 
     $result10 = mysqli_query($con, "INSERT INTO payment SET user_id='$user_id', title='$title $points', file='$point_pay $points', status='$statuss', from_order_list_id='$order_list_id', current_rate='$current_rate'") or die(mysqli_error($con));

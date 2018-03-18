@@ -54,7 +54,7 @@ if(isset($_POST['payment']))
 {    
     $unique_id = rand(1000,100000). $user_id;
     $order_list_id = $unique_id;
-    $status = 'Waiting';
+    $status = 'Ready to Pay';
     $price = $_POST['total_price'];
     
     $result4 = mysqli_query($con, "UPDATE order_item SET order_list_id='$order_list_id', status='$status' WHERE order_list_id IS NULL AND user_id='$user_id'") or die(mysqli_error($con));
@@ -62,7 +62,7 @@ if(isset($_POST['payment']))
 	$result5 = mysqli_query($con, "INSERT INTO order_list SET order_list_id='$order_list_id', user_id='$user_id', status='$status', price='$price'") or die(mysqli_error($con));
     ?>
     <script>
-    window.location.href='payment.php?success';
+    window.location.href='payment.php?order_list_id=<?php echo $order_list_id; ?>';
     </script>
     <?php
 }
@@ -215,7 +215,7 @@ if(isset($_POST['payment']))
                                             ?>
                                             <tr>
                                                 <td colspan="8" style="text-align:right;"><strong>Total:</strong> <?php echo "¥ ".number_format((float)$total, 2, '.', ''); ?></td>
-                                                <input class="form-control" name="total_price" type="hidden" value="<?php echo $total; ?>">
+                                                <input class="form-control" name="total_price" type="hidden" value="<?php echo number_format((float)$total, 2, '.', ''); ?>">
                                             </tr>
                                         </tbody>
                                     </table>

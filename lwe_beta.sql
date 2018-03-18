@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2018 at 06:45 AM
+-- Generation Time: Mar 18, 2018 at 11:10 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -47,8 +47,19 @@ CREATE TABLE `address` (
 CREATE TABLE `country` (
   `country_id` int(11) NOT NULL,
   `country_name` varchar(50) NOT NULL,
-  `country_currency` decimal(10,2) NOT NULL
+  `country_currency` decimal(10,2) NOT NULL,
+  `bank` varchar(50) NOT NULL,
+  `account_no` int(15) NOT NULL,
+  `account_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `country`
+--
+
+INSERT INTO `country` (`country_id`, `country_name`, `country_currency`, `bank`, `account_no`, `account_name`) VALUES
+(1, 'MYR', '0.62', 'MYR bank', 123456789, 'Logistics Worldwide Express(M) Sdn Bhd'),
+(2, 'USD', '0.16', 'USD bank', 987654321, 'Logistics Worldwide Express(M) Sdn Bhd');
 
 -- --------------------------------------------------------
 
@@ -94,7 +105,11 @@ CREATE TABLE `order_item` (
 --
 
 INSERT INTO `order_item` (`order_item_id`, `order_list_id`, `user_id`, `order_item`, `link`, `type`, `quantity`, `remark`, `price`, `status`, `order_code`, `datetimes`) VALUES
-(22, NULL, 10, 'ä¸ƒåŽŸç½ª', 'http://localhost/LWE_BUY/user/purchase.php?success', '1', 1, '', '111.00', NULL, NULL, '2018-03-16 05:44:54');
+(22, 9337410, 10, 'ä¸ƒåŽŸç½ª', 'http://localhost/LWE_BUY/user/purchase.php?success', '1', 1, '', '111.00', 'Paid', NULL, '2018-03-18 09:38:10'),
+(28, 4721710, 10, 'Test4', 'https://github.com/Neelie5196/lwebuy_beta', 'testing4', 2, '', '18.00', 'Ready to Pay', NULL, '2018-03-18 10:04:44'),
+(29, 9397010, 10, 'Test1', 'https://en.wikipedia.org/wiki/Software_testing', 'testing', 1, '', '23.00', 'Paid', NULL, '2018-03-18 10:07:18'),
+(30, 9397010, 10, 'Test2', 'https://en.wikipedia.org/wiki/Test', 'testing2', 4, '', '65.00', 'Paid', NULL, '2018-03-18 10:07:18'),
+(31, 9397010, 10, 'Test3', 'https://www.google.com.my/search?source=hp&ei=xTOuWtmFL8rovgSr4oK4Cw&q=testing&oq=testing&gs_l=psy-ab.3..0l10.1638.3281.0.3564.8.7.0.0.0.0.217.745.0j3j1.4.0....0...1c.1.64.psy-ab..4.4.744.0..35i39k1j0i67k1.0.5iUMBMh6PJ4', 'testing3', 2, 'test 123', '72.00', 'Paid', NULL, '2018-03-18 10:07:18');
 
 -- --------------------------------------------------------
 
@@ -109,6 +124,15 @@ CREATE TABLE `order_list` (
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_list`
+--
+
+INSERT INTO `order_list` (`order_list_id`, `user_id`, `status`, `datetime`, `price`) VALUES
+(4721710, 10, 'Ready to Pay', '2018-03-18 10:04:44', '36.00'),
+(9337410, 10, 'Paid', '2018-03-18 09:38:10', '111.00'),
+(9397010, 10, 'Paid', '2018-03-18 10:07:18', '427.00');
 
 -- --------------------------------------------------------
 
@@ -133,14 +157,22 @@ CREATE TABLE `payment` (
   `user_id` int(11) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `title` varchar(45) NOT NULL,
-  `amount` decimal(10,2) NOT NULL,
+  `amount` varchar(10) NOT NULL,
   `file` varchar(150) NOT NULL,
   `type` varchar(30) NOT NULL,
-  `status` int(20) NOT NULL,
-  `from_order_list_id` int(11) NOT NULL,
-  `from_shipping_id` int(11) NOT NULL,
-  `current_rate` decimal(10,3) NOT NULL
+  `status` varchar(20) NOT NULL,
+  `from_order_list_id` int(11) DEFAULT NULL,
+  `from_shipping_id` int(11) DEFAULT NULL,
+  `current_rate` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`payment_id`, `user_id`, `datetime`, `title`, `amount`, `file`, `type`, `status`, `from_order_list_id`, `from_shipping_id`, `current_rate`) VALUES
+(2, 10, '2018-03-18 09:38:51', 'Pay Order 9337410', 'MYR 68.82', '87908-receipt.jpg', 'image/jpeg', 'Waiting for Accept', 9337410, NULL, '0.62'),
+(5, 10, '2018-03-18 10:07:18', 'Pay by Points', '', '213.50 Points', '', 'Completed', 9397010, NULL, '0.50');
 
 -- --------------------------------------------------------
 
@@ -153,6 +185,32 @@ CREATE TABLE `point` (
   `user_id` int(11) NOT NULL,
   `point` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `point`
+--
+
+INSERT INTO `point` (`point_id`, `user_id`, `point`) VALUES
+(1, 10, '99723.00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rate`
+--
+
+CREATE TABLE `rate` (
+  `rate_id` int(11) NOT NULL,
+  `rate_name` varchar(15) NOT NULL,
+  `rate` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rate`
+--
+
+INSERT INTO `rate` (`rate_id`, `rate_name`, `rate`) VALUES
+(1, 'LWE point', '0.50');
 
 -- --------------------------------------------------------
 
@@ -346,6 +404,18 @@ ALTER TABLE `payment`
   ADD PRIMARY KEY (`payment_id`);
 
 --
+-- Indexes for table `point`
+--
+ALTER TABLE `point`
+  ADD PRIMARY KEY (`point_id`);
+
+--
+-- Indexes for table `rate`
+--
+ALTER TABLE `rate`
+  ADD PRIMARY KEY (`rate_id`);
+
+--
 -- Indexes for table `request`
 --
 ALTER TABLE `request`
@@ -401,7 +471,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `country`
 --
 ALTER TABLE `country`
-  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `item`
@@ -413,13 +483,13 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `order_list`
 --
 ALTER TABLE `order_list`
-  MODIFY `order_list_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483647;
+  MODIFY `order_list_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9397011;
 
 --
 -- AUTO_INCREMENT for table `package`
@@ -431,7 +501,19 @@ ALTER TABLE `package`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `point`
+--
+ALTER TABLE `point`
+  MODIFY `point_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `rate`
+--
+ALTER TABLE `rate`
+  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `request`

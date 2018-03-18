@@ -16,6 +16,76 @@ $query1 = "SELECT *
 $result1 = mysqli_query($con, $query1);
 $results1 = mysqli_fetch_assoc($result1);
 
+$query2 = "SELECT * FROM point WHERE user_id='$user_id'";
+$result2 = mysqli_query($con, $query2);
+$results2 = mysqli_fetch_assoc($result2);
+
+
+$query3 = "SELECT *
+          FROM rate
+          WHERE rate_name = 'LWE point'";
+$result3 = mysqli_query($con, $query3);
+$results3 = mysqli_fetch_assoc($result3);
+
+if(isset($_POST['submit']))
+{    
+    $status = 'Paid';
+    
+    $file = rand(1000,100000)."-".$_FILES['file']['name'];
+    $file_loc = $_FILES['file']['tmp_name'];
+	$file_type = $_FILES['file']['type'];
+	$folder="../receipts/";
+    
+    $title = 'Pay Order';
+    $country_name = $results1['country_name'];
+    $total_pay = $_POST['total_pay'];
+    $statuss = 'Waiting for Accept';
+    $current_rate = $results1['country_currency'];
+	
+	// make file name in lower case
+	$new_file_name = strtolower($file);
+	// make file name in lower case
+	
+	$final_file=str_replace(' ','-',$new_file_name);
+    
+    
+	$result4 = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE order_list_id='$order_list_id'") or die(mysqli_error($con));
+	$result5 = mysqli_query($con, "UPDATE order_list SET status='$status' WHERE order_list_id='$order_list_id'") or die(mysqli_error($con));
+    
+	if(move_uploaded_file($file_loc,$folder.$final_file))
+	{
+        $result6 = mysqli_query($con, "INSERT INTO payment SET user_id='$user_id', title='$title $order_list_id', amount='$country_name $total_pay', file='$final_file', type='$file_type', status='$statuss', from_order_list_id='$order_list_id', current_rate='$current_rate'") or die(mysqli_error($con));
+		?>
+		<script>
+		alert('Successfully Submit');
+        window.location.href='purchaselist.php?success';
+        </script>
+		<?php
+	}
+}
+
+if(isset($_POST['pay']))
+{    
+    $status = 'Paid';
+    $point_pay = $_POST['point_pay'];
+    $title = 'Pay by';
+    $points = 'Points';
+    $statuss = 'Completed';
+    $current_rate = $results3['rate'];
+    
+    $result7 = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE order_list_id='$order_list_id'") or die(mysqli_error($con));
+    $result8 = mysqli_query($con, "UPDATE order_list SET status='$status' WHERE order_list_id='$order_list_id'") or die(mysqli_error($con));
+    $result9 = mysqli_query($con, "UPDATE point SET point= point - '$point_pay' WHERE user_id = '$user_id' ") or die(mysqli_error($con));
+
+    $result10 = mysqli_query($con, "INSERT INTO payment SET user_id='$user_id', title='$title $points', file='$point_pay $points', status='$statuss', from_order_list_id='$order_list_id', current_rate='$current_rate'") or die(mysqli_error($con));
+    ?>
+    <script>
+    alert('Successfully Submit');
+    window.location.href='purchaselist.php?success';
+    </script>
+    <?php
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -102,62 +172,84 @@ $results1 = mysqli_fetch_assoc($result1);
                                         <?php
                                             $total += ($row["price"]*$row["quantity"]);
                                             $total_pay = $total*$results1['country_currency'];
+                                            $point = $total*$results3['rate'];
                                         }
                                         ?>
                                         <tr>
                                             <td colspan="8" style="text-align:right;"><strong>Total Pay:</strong> <h3><?php echo $results1['country_name']." ".number_format((float)$total_pay, 2, '.', ''); ?></h3></td>
-                                            
-                                            <input class="form-control" name="total_pay" type="hidden" value="<?php echo number_format((float)$total, 2, '.', ''); ?>">
-                                            <input class="form-control" name="currency" type="hidden" value="<?php echo $results1['country_currency']; ?>">
                                         </tr>
                                     </tbody>
                                 </table>
                             <?php
                                 }
                             ?>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                    <form action="#.php" method="post" enctype="multipart/form-data">
-                                        <h3>Upload Banking Receipt</h3>
-                                        <div class="row">
-                                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                                <label>Transaction receipt: </label>
-                                                <input type="file" name="file" required/>
-                                                <br/>
-                                                <input type="submit" class="btn btn-success" name="submit" value="Upload">
-                                            </div>
+                            <?php
+                                if($results2['point'] >= $point){
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <form action="payment.php?order_list_id=<?php echo $order_list_id; ?>" method="post" enctype="multipart/form-data">
+                                                <h3>Upload Banking Receipt</h3>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12 col-lg-12">
+                                                        <label>Transaction receipt: </label>
+                                                        <input type="file" name="file" required/>
+                                                        <input class="form-control" name="total_pay" type="hidden" value="<?php echo number_format((float)$total_pay, 2, '.', ''); ?>">
+                                                        <br/>
+                                                        <input type="submit" class="btn btn-success" name="submit" value="Upload">
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="col-xs-12 col-md-1 col-lg-1">
-                                    <div class="vl"></div>
-                                </div>
-                                <div class="col-xs-12 col-md-5 col-lg-5">
-                                    <form action="#.php" method="post">
-                                        <div class="row">
-                                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                                <br />
-                                                <p> point</p>
-                                                <input type="submit" class="btn btn-success" name="pay" value="Pay Now">
-                                            </div>
+                                        <div class="col-xs-12 col-md-1 col-lg-1">
+                                            <div class="vl"></div>
                                         </div>
-                                    </form>
-                                </div>
-                            </div>
+                                        <div class="col-xs-12 col-md-5 col-lg-5">
+                                            <form action="payment.php?order_list_id=<?php echo $order_list_id; ?>" method="post">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12 col-lg-12">
+                                                        <br />
+                                                        <p><?php echo $point; ?> point</p>
+                                                        <input class="form-control" name="point_pay" type="hidden" value="<?php echo number_format((float)$point, 2, '.', ''); ?>">
+                                                        <input type="submit" class="btn btn-success" name="pay" value="Pay by Point">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }else{
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-12 col-lg-12">
+                                            <form action="payment.php?order_list_id=<?php echo $order_list_id; ?>" method="post" enctype="multipart/form-data">
+                                                <h3>Upload Banking Receipt</h3>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12 col-lg-12">
+                                                        <label>Transaction receipt: </label>
+                                                        <input type="file" name="file" required/>
+                                                        <input class="form-control" name="total_pay" type="hidden" value="<?php echo number_format((float)$total_pay, 2, '.', ''); ?>">
+                                                        <br/>
+                                                        <input type="submit" class="btn btn-success" name="submit" value="Upload">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                            ?>
+                            
                         </div>
                         <div class="col-xs-4 col-md-4 col-lg-4 jumbotron">
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-12">
                                     <p>Banking Details </p>
                                     <div class="details">
-                                        <p>Bank: Maybank</p>
-                                        <p>Account No: 123456789</p>
-                                        <p>Account Name: Logistics Worldwide Express(M) Sdn Bhd</p>
+                                        <p>Bank: <?php echo $results1['bank']; ?></p>
+                                        <p>Account No: <?php echo $results1['account_no']; ?></p>
+                                        <p>Account Name: <?php echo $results1['account_name']; ?></p>
                                         <?php
-                                            $query2 = "SELECT * FROM point WHERE user_id='$user_id'";
-                                            $result2 = mysqli_query($con, $query2);
-                                            $results2 = mysqli_fetch_assoc($result2);
-
                                             if($results2 > 0){
                                                 ?>
                                                     <input type="hidden" name="point" class="form-control" value="<?php echo $results2['point']; ?>">
@@ -177,45 +269,6 @@ $results1 = mysqli_fetch_assoc($result1);
                     </center>
                 </div>
             </section>
-            <div id="topupModal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="reload.php" method="post" enctype="multipart/form-data">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Point Reload</h4>
-                            </div>
-
-                            <div class="modal-body">
-                                <p>Enter point amount to reload</p>
-                                <p>
-                                    <input type="number" name="reloadamt" ng-model="reloadamt" ng-init="reloadamt=1"/>
-                                </p>
-
-                                <p>
-                                    <input type="hidden" name="amount" value="{{reloadamt*<?php echo $results['value']; ?>}}">
-                                    Amount to be paid: RM {{reloadamt*<?php echo $results['value']; ?> | number:2}}
-                                </p>
-
-                                <p>Instructions for top up:<br/>
-                                    Please bank in amount to the following bank account and submit transaction details. Thank you.</p>
-                                <p>
-                                    Bank: Maybank<br/>
-                                    Account No.: 123456789<br/>
-                                    Account name: Logistics Worldwide Express(M) Sdn Bhd
-                                </p>
-
-                                <label for="file">Transaction receipt: </label>
-                                <input type="file" name="file" id="file" required/>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-success" name="transaction">Submit</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            </div>
-                        </form>                                                    
-                    </div>
-                </div>
-            </div>
         </div>
     </body>
 </html>

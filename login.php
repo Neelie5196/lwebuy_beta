@@ -1,5 +1,5 @@
 <?php
-require_once 'connection/config.php';
+/*require_once 'connection/config.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') 
@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $mysqli = new mysqli($dbhost,$dbuser,$dbpass,$dbname) or die($mysqli->error);
         
-        /* User login process, checks if user exists and password is correct */
+         User login process, checks if user exists and password is correct 
         
         // Escape email to protect against SQL injections
         $email = $mysqli->escape_string($_POST['email']);
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             }
         }
     }
-}
+}*/
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <div class="col-xs-6 col-md-6 col-lg-6 right">
                 <p>
                     Not a member?
-                    <a class="btn btn-default btnreglogin" href="service.php">Register</a>
+                    <a class="btn btn-default btnreglogin" href="register.php">Register</a>
                 </p>
             </div>
         </div>
@@ -101,26 +101,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         </div>
         
         <div class="row loginrow3">
-            <div class="col-md-12 col-lg-12 col-md hidden-xs hidden-sm">
+            <div class="col-md-12 col-lg-12 hidden-xs hidden-sm">
                 <div class="logincontainer">
                     <form action="login.php" method="post" autocomplete="off">
-                        <div>
-                            <p>
-                                <label for="email">EMAIL ADDRESS </label><br/>
-                                <input type="email" class="formfield" id="email" name="email" required autofocus/>
-                            </p>
+                        <p>
+                            <label for="email">EMAIL ADDRESS </label><br/>
+                            <input type="email" class="formfield" id="email" name="email" required autofocus/>
+                        </p>
 
-                            <p>
-                                <label for="password">PASSWORD: </label>
-                                <input type="password" class="formfield" id="password" name="password" required/>
-                            </p>
+                        <p>
+                            <label for="password">PASSWORD: </label>
+                            <input type="password" class="formfield" id="password" name="password" required/>
+                        </p>
 
-                            <p><a href="#">Forgot password?</a></p>
+                        <p><a href="#">Forgot password?</a></p>
 
-                            <p>
-                                <button type="submit" class="btn btn-default btnlogin" name="login">Login</button>
-                            </p>
-                        </div>
+                        <p>
+                            <button type="submit" class="btn btn-default btnlogin" name="login">Login</button>
+                        </p>
                     </form>
                 </div>
             </div>
@@ -135,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                             </p>
 
                             <p>
-                                <label for="password">PASSWORD: </label>
+                                <label for="password">PASSWORD </label>
                                 <input type="password" class="formfield" id="password" name="password" required/>
                             </p>
 

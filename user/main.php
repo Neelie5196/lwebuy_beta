@@ -16,6 +16,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
 
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+        
         <!--stylesheet-->
         <link href="../frameworks/css/style.css" rel="stylesheet"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -35,7 +38,7 @@
             <?php include_once "nav.php"?>
         </div>
         
-        <div class="row userrow2 center" id="mainview" data-ng-controller="mainController">
+        <div class="row userrow2 center">
             <div data-ng-view></div>
         </div>
         
@@ -49,12 +52,13 @@
             </div>
         </div>
         
-        <script src="../frameworks/js/angular.min.js"></script>
-        <script src="../frameworks/js/angular-route.min.js"></script>
+        
         <script>
             var app = angular.module('lweApp', ['ngRoute']);
             
             app.config(['$routeProvider', function ($routeProvider) {
+                'use strict';
+                
                 $routeProvider.
                 when ('/', {templateUrl: 'dashboard.php'}).
                 when ('/home', {templateUrl: 'dashboard.php'}).

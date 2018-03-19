@@ -5,7 +5,7 @@
 
 ?>
 <!DOCTYPE html>
-<html data-ng-app="lweApp">
+<html>
     <head>
         <title>LWE Buy</title>
 
@@ -16,9 +16,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
 
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-        
         <!--stylesheet-->
         <link href="../frameworks/css/style.css" rel="stylesheet"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -27,9 +24,11 @@
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]-->
+        
+        <script src="../frameworks/js/lwe.js"></script>
     </head>
 
-    <body class="userbg">
+    <body class="userbg" onload="initPage()">
         <div class="row">
             <?php include_once "../userbar.php" ?>
         </div>
@@ -38,8 +37,8 @@
             <?php include_once "nav.php"?>
         </div>
         
-        <div class="row userrow2 center">
-            <div data-ng-view></div>
+        <div class="row userrow2 center" id="mainview">
+            
         </div>
         
         <div class="row userrow4">
@@ -51,22 +50,5 @@
                 </p>
             </div>
         </div>
-        
-        
-        <script>
-            var app = angular.module('lweApp', ['ngRoute']);
-            
-            app.config(['$routeProvider', function ($routeProvider) {
-                'use strict';
-                
-                $routeProvider.
-                when ('/', {templateUrl: 'dashboard.php'}).
-                when ('/home', {templateUrl: 'dashboard.php'}).
-                when ('/purchase', {templateUrl: 'purchase.php'}).
-                when ('/ship', {templateUrl: 'shipping.php'}).
-                when ('/tracking', {templateUrl: 'tracking.php'});
-            }])
-            
-        </script>
     </body>
 </html>

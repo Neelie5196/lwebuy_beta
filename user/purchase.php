@@ -9,13 +9,12 @@ if(isset($_POST['add']))
 
     $name = $_POST['name'];
     $link = $_POST['link'];
-    $type = $_POST['type'];
+    $category = $_POST['category'];
     $quantity = $_POST['quantity'];
-    $price = $_POST['price'];
     $remark = $_POST['remark'];
     
 	
-	$result1 = mysqli_query($con, "INSERT INTO order_item SET user_id='$user_id', order_item='$name', link='$link', type='$type', quantity='$quantity', price='$price', remark='$remark'") or die(mysqli_error($con));
+	$result1 = mysqli_query($con, "INSERT INTO order_item SET user_id='$user_id', order_item='$name', link='$link', category='$category', quantity='$quantity', remark='$remark'") or die(mysqli_error($con));
 }
 
 $query = "SELECT *
@@ -31,7 +30,7 @@ if (isset($_GET['order_item_id']))
     
     ?>
     <script>
-    window.location.href='purchase.php?success';
+    window.location.href='purchase.php?';
     </script>
     <?php
 
@@ -44,28 +43,30 @@ if (isset($_GET['empty']))
     
     ?>
     <script>
-    window.location.href='purchase.php?success';
+    window.location.href='purchase.php';
     </script>
     <?php
 
 }
 
-if(isset($_POST['payment']))
+if(isset($_POST['request']))
 {    
     $unique_id = rand(1000,100000). $user_id;
     $order_list_id = $unique_id;
-    $status = 'Ready to Pay';
-    $price = $_POST['total_price'];
+    $status = 'Request';
     
     $result4 = mysqli_query($con, "UPDATE order_item SET order_list_id='$order_list_id', status='$status' WHERE order_list_id IS NULL AND user_id='$user_id'") or die(mysqli_error($con));
     
-	$result5 = mysqli_query($con, "INSERT INTO order_list SET order_list_id='$order_list_id', user_id='$user_id', status='$status', price='$price'") or die(mysqli_error($con));
+	$result5 = mysqli_query($con, "INSERT INTO order_list SET order_list_id='$order_list_id', user_id='$user_id', status='$status'") or die(mysqli_error($con));
     ?>
     <script>
-    window.location.href='payment.php?order_list_id=<?php echo $order_list_id; ?>';
+    window.location.href='purchaselist.php';
     </script>
     <?php
 }
+
+$query6 = "SELECT * FROM category";
+$result6 = mysqli_query($con, $query6);
 
 ?>
 
@@ -95,7 +96,7 @@ if(isset($_POST['payment']))
         <div class="row">
             <?php include_once('nav.php')?>
         </div>
-        
+            
         <div class="container">
             <center>
                 <h2>Purchase Product</h2>
@@ -127,10 +128,25 @@ if(isset($_POST['payment']))
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Type:</label>
+                                                <label>Category:</label>
                                             </td>
                                             <td>
-                                                <input class="form-control" name="type" type="text" required>
+                                                <select name="category" class="form-control" required>
+                                                    <option selected>Please Select</option>
+                                                    <?php 
+                                                        if(mysqli_num_rows($result6) > 0)
+                                                        {
+                                                            while($row = mysqli_fetch_array($result6))
+                                                            {
+                                                                ?>
+                                                                    <option value="<?php echo $row['category_name']; ?>">
+                                                                        <?php echo $row['category_name']; ?>
+                                                                    </option>
+                                                                <?php
+                                                            }
+                                                        }
+                                                    ?>
+                                                </select>
                                             </td>
                                             <td>
                                                 <label>Quantity:</label>
@@ -140,15 +156,6 @@ if(isset($_POST['payment']))
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
-                                                <label>Price:</label>
-                                            </td>
-                                            <td>
-                                                <div class="input-group"> 
-                                                    <span class="input-group-addon">¥</span>
-                                                    <input class="form-control" name="price" type="number" value="0.01" min="0.01" step="0.01" required />
-                                                </div>
-                                            </td>
                                             <td>
                                                 <label>Remark:</label>
                                             </td>
@@ -186,9 +193,8 @@ if(isset($_POST['payment']))
                                                 <th>#</th>
                                                 <th style="text-align:left;"><strong>Name</strong></th>
                                                 <th style="text-align:left;"><strong>Link</strong></th>
-                                                <th style="text-align:left;"><strong>Type</strong></th>
+                                                <th style="text-align:left;"><strong>Category</strong></th>
                                                 <th style="text-align:right;"><strong>Quantity</strong></th>
-                                                <th style="text-align:right;"><strong>U.Price</strong></th>
                                                 <th style="text-align:left;"><strong>Remark</strong></th>
                                                 <th style="text-align:center;"><strong>Action</strong></th>
                                             </tr>
@@ -201,25 +207,19 @@ if(isset($_POST['payment']))
                                                     <td><?php echo $counter; ?></td>
                                                     <td style="text-align:left;"><strong><?php echo $row['order_item']; ?></strong></td>
                                                     <td style="text-align:left;"><a href="<?php echo $row['link']; ?>" target="_blank">Item Link</a></td>
-                                                    <td style="text-align:left;"><?php echo $row['type']; ?></td>
+                                                    <td style="text-align:left;"><?php echo $row['category']; ?></td>
                                                     <td style="text-align:right;"><?php echo $row['quantity']; ?></td>
-                                                    <td style="text-align:right;"><?php echo "¥ ".$row['price']; ?></td>
                                                     <td style="text-align:left;"><?php echo $row['remark']; ?></td>
                                                     <td style="text-align:center;">
                                                         <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-xs btn-danger delete-button" name="delete">Remove</a>
                                                     </td>
                                                 </tr>
                                             <?php
-                                                $total += ($row["price"]*$row["quantity"]);
                                             }
                                             ?>
-                                            <tr>
-                                                <td colspan="8" style="text-align:right;"><strong>Total:</strong> <?php echo "¥ ".number_format((float)$total, 2, '.', ''); ?></td>
-                                                <input class="form-control" name="total_price" type="hidden" value="<?php echo number_format((float)$total, 2, '.', ''); ?>">
-                                            </tr>
                                         </tbody>
                                     </table>
-                                <input type="submit" class="btn btn-warning fltright" name="payment" value="Payment">
+                                <input type="submit" class="btn btn-warning fltright" name="request" value="Request">
                                 <?php
                                     }
                                 ?>
@@ -229,7 +229,5 @@ if(isset($_POST['payment']))
                 </section>
             </center>
         </div>
-        
-        <div><?php include('../footer.php') ?></div>
     </body>
 </html>

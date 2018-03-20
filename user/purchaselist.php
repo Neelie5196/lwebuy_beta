@@ -6,7 +6,7 @@ $user_id = $_SESSION['user_id'];
 
 $query1 = "SELECT *
            FROM order_list
-           WHERE user_id='$user_id' AND status = 'waiting for accept'
+           WHERE user_id='$user_id' AND status = 'request'
            ORDER BY datetime desc";
 $result1 = mysqli_query($con, $query1);
 
@@ -18,15 +18,21 @@ $result2 = mysqli_query($con, $query2);
 
 $query3 = "SELECT *
            FROM order_list
-           WHERE user_id='$user_id' AND status = 'proceed'
+           WHERE user_id='$user_id' AND status = 'paid'
            ORDER BY datetime desc";
 $result3 = mysqli_query($con, $query3);
 
 $query4 = "SELECT *
            FROM order_list
-           WHERE user_id='$user_id' AND status = 'received'
+           WHERE user_id='$user_id' AND status = 'proceed'
            ORDER BY datetime desc";
 $result4 = mysqli_query($con, $query4);
+
+$query5 = "SELECT *
+           FROM order_list
+           WHERE user_id='$user_id' AND status = 'received'
+           ORDER BY datetime desc";
+$result5 = mysqli_query($con, $query5);
 
 ?>
 
@@ -98,7 +104,6 @@ $result4 = mysqli_query($con, $query4);
                                             <tr>
                                                 <th>Order#</th>
                                                 <th>Placed on</th>
-                                                <th>Total Price (¥)</th>
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -109,10 +114,9 @@ $result4 = mysqli_query($con, $query4);
                                             <tbody>
                                                 <tr>
                                                     <td width="5%"><?php echo $row['order_list_id']; ?></td>
-                                                    <td width="40%"><?php echo $row['datetime']; ?></td>
-                                                    <td width="20%"><?php echo $row['price']; ?></td>
-                                                    <td width="20%"><?php echo $row['status']; ?></td>
-                                                    <td width="15%"><a href="purchaseview.php?order_list_id=<?php echo $row['order_list_id']; ?>" class="btn btn-xs btn-default">View</a></td>
+                                                    <td width="50%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="30%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="#.php?order_list_id=<?php echo $row['order_list_id']; ?>" class="btn btn-xs btn-default">View</a></td>
                                                 </tr>
                                             </tbody>
                                             <?php
@@ -167,7 +171,7 @@ $result4 = mysqli_query($con, $query4);
                                                     <td width="40%"><?php echo $row['datetime']; ?></td>
                                                     <td width="20%"><?php echo $row['price']; ?></td>
                                                     <td width="20%"><?php echo $row['status']; ?></td>
-                                                    <td width="15%"><a href="purchasepview.php?order_list_id=<?php echo $row['order_list_id']; ?>" class="btn btn-xs btn-default">View</a></td>
+                                                    <td width="15%"><a href="#.php?order_list_id=<?php echo $row['order_list_id']; ?>" class="btn btn-xs btn-default">View</a></td>
                                                 </tr>
                                             </tbody>
                                             <?php
@@ -182,7 +186,7 @@ $result4 = mysqli_query($con, $query4);
 
                 <div class="row botmar">
                     <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
-                        <strong>Proceeded (<?php echo mysqli_num_rows($result3); ?>)</strong>
+                        <strong>Ready to Proceed (<?php echo mysqli_num_rows($result3); ?>)</strong>
                         <?php
                             if(mysqli_num_rows($result3)>0){
                                 ?>
@@ -222,7 +226,7 @@ $result4 = mysqli_query($con, $query4);
                                                     <td width="40%"><?php echo $row['datetime']; ?></td>
                                                     <td width="20%"><?php echo $row['price']; ?></td>
                                                     <td width="20%"><?php echo $row['status']; ?></td>
-                                                    <td width="15%"><a href="purchasephview.php?order_list_id=<?php echo $row['order_list_id']; ?>" class="btn btn-xs btn-default">View</a></td>
+                                                    <td width="15%"><a href="#.php?order_list_id=<?php echo $row['order_list_id']; ?>" class="btn btn-xs btn-default">View</a></td>
                                                 </tr>
                                             </tbody>
                                             <?php
@@ -237,7 +241,7 @@ $result4 = mysqli_query($con, $query4);
 
                 <div class="row botmar">
                     <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
-                        <strong>Received (<?php echo mysqli_num_rows($result4); ?>)</strong>
+                        <strong>Proceeded (<?php echo mysqli_num_rows($result4); ?>)</strong>
                         <?php
                             if(mysqli_num_rows($result4)>0){
                                 ?>
@@ -277,7 +281,62 @@ $result4 = mysqli_query($con, $query4);
                                                     <td width="40%"><?php echo $row['datetime']; ?></td>
                                                     <td width="20%"><?php echo $row['price']; ?></td>
                                                     <td width="20%"><?php echo $row['status']; ?></td>
-                                                    <td width="15%"><a href="purchasehview.php?order_list_id=<?php echo $row['order_list_id']; ?>&timeline=Shipping" class="btn btn-xs btn-default">View</a></td>
+                                                    <td width="15%"><a href="#.php?order_list_id=<?php echo $row['order_list_id']; ?>&timeline=Shipping" class="btn btn-xs btn-default">View</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                            }
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <div class="row botmar">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
+                        <strong>Received (<?php echo mysqli_num_rows($result5); ?>)</strong>
+                        <?php
+                            if(mysqli_num_rows($result5)>0){
+                                ?>
+                                    <button class="btn btn-success fltright" type="button" data-toggle="collapse" data-target="#collapse4">More</button>
+                                <?php
+                            }else{
+                                
+                            }
+                        ?>
+                    </div>
+                </div>
+
+                <section class="content">
+                    <div class="row botmar">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <div class="span12 collapse" id="collapse4">
+                                <?php 
+                                    if(mysqli_num_rows($result5) > 0)
+                                    {
+                                    ?>
+                                    <table class="table thead-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Order#</th>
+                                                <th>Placed on</th>
+                                                <th>Total Price (¥)</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result5))
+                                        {
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $row['order_list_id']; ?></td>
+                                                    <td width="40%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="20%"><?php echo $row['price']; ?></td>
+                                                    <td width="20%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="#.php?order_list_id=<?php echo $row['order_list_id']; ?>&timeline=Shipping" class="btn btn-xs btn-default">View</a></td>
                                                 </tr>
                                             </tbody>
                                             <?php
@@ -291,7 +350,5 @@ $result4 = mysqli_query($con, $query4);
                 </section>
             </center>
         </div>
-        
-        <div><?php include('../footer.php') ?></div>
     </body>
 </html>

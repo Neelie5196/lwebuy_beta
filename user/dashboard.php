@@ -1,11 +1,11 @@
 <?php
 
-require_once '../connection/config.php';
-session_start();
+//require_once '../connection/config.php';
+//session_start();
 
 ?>
 
-<div class="col-md-12 col-lg-12 hidden-sm hidden-xs homerow">
+<div class="col-md-12 col-lg-12 hidden-sm hidden-xs">
     <div class="row">
         <div class="col-md-12 col-lg-12 hidden-sm hidden-xs">
             <h1 class="bigh1">LOGISTICS WORLDWIDE EXPRESS</h1>

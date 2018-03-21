@@ -28,9 +28,13 @@
         <script src="../frameworks/js/lwe.js"></script>
     </head>
 
-    <body class="userbg">
+    <body class="userbg" onload="initPage()">
         <div class="row">
             <?php include_once "../userbar.php" ?>
+        </div>
+        
+        <div class="row">
+            <?php include_once "nav.php"?>
         </div>
         
         <div class="row userrow2 center" id="mainview">

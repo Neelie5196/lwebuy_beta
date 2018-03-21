@@ -15,24 +15,10 @@ $(document).ready(function(){
         {
             $("#mainview").load('tracking.php');
         }
-    else if (window.location.hash == "#inventory")
-        {
-            $("#mainview").load('inventory.php');
-        }
-    else
-        {
-            $("#mainview").load('dashboard.php');
-        }
 });
 
 $(document).ready(function(){
     $("#btnhome").click(function(){
-        $("#mainview").load('dashboard.php');
-    });
-});
-
-$(document).ready(function(){
-    $("#btnlogo").click(function(){
         $("#mainview").load('dashboard.php');
     });
 });
@@ -52,11 +38,5 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("#btntracking").click(function(){
         $("#mainview").load('tracking.php');
-    });
-});
-
-$(document).ready(function(){
-    $("#btninventory").click(function(){
-        $("#mainview").load('inventory.php');
     });
 });

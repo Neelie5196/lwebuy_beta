@@ -70,164 +70,150 @@ $result6 = mysqli_query($con, $query6);
 
 ?>
 
-<!DOCTYPE html>
-<html data-ng-app="myApp">
-    <head>
-        <title>LWE Buy</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initialscale=1.0"/>
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-        <!--stylesheet-->
-        <link href="../frameworks/css/style.css" rel="stylesheet"/>
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
-        <![endif]-->
-        
-    </head>
-
-    <body>
-        <div class="row">
-            <?php include_once('nav.php')?>
-        </div>
+<div class="col-md-12 col-lg-12 hidden-xs hidden-sm">
+    <h2 class="bigh2 pagetitle">Purchase</h2>
+    
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
             
-        <div class="container">
-            <center>
-                <h2>Purchase Product</h2>
-                <hr/>
-                <section class="content">
-                    <div class="row botmar">
-                        <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
-                            <strong>Product Details</strong>
-                        </div>
+            <?php 
+                if(mysqli_num_rows($result) > 0)
+                {
+            ?>
+            
+            <table class="purchasetable">
+                <tr>
+                    <th class="purchasecol2">Name</th>
+                    <th class="purchasecol2">Link</th>
+                    <th class="purchasecol2">Category</th>
+                    <th class="purchasecol1">Quantity</th>
+                    <th class="purchasecol2">Remark</th>
+                    <th class="purchasecol1">Status</th>
+                    <th class="purchasecol1">Total Price</th>
+                    <th class="purchasecol1"></th>
+                </tr>
+                
+                <?php
+                    while($row = mysqli_fetch_array($result))
+                    {
+                ?>
+                
+                <tr class="bodyrow" data-toggle="modal" data-target="#editPurchase">
+                    <td><?php echo $row['order_item']; ?></td>
+                    <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
+                    <td><?php echo $row['category']; ?></td>
+                    <td><?php echo $row['quantity']; ?></td>
+                    <td><?php echo $row['remark']; ?></td>
+                    <td><?php echo $row['status']; ?></td>
+                    <td><?php echo $row['price']; ?></td>
+                    <td>
+                        <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
+                        <button type="button" class="btn btn-default btn-xs btnDelete" data-toggle="modal1" data-target="#editPurchase"><span class="glyphicon glyphicon-pencil"></span></button>
+                    </td>
+                </tr>
+                
+                <?php
+                    }
+                }
+                ?>
+                <tr>
+                    <td colspan="8">
+                        <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#addPurchase">Add</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="modal fade" id="addPurchase" tabindex="-1" role="dialog" aria-labelledby="addPurchaseTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addPurchaseTitle">Add Purchase</h5>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-12 col-lg-12">
-                            <form method="post" action="purchase.php">
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <label>Name:</label>
-                                            </td>
-                                            <td>
-                                                <input class="form-control" name="name" type="text" required>
-                                            </td>
-                                            <td>
-                                                <label>Link:</label>
-                                            </td>
-                                            <td>
-                                                <input class="form-control" name="link" type="text" required>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Category:</label>
-                                            </td>
-                                            <td>
-                                                <select name="category" class="form-control" required>
-                                                    <option selected>Please Select</option>
-                                                    <?php 
-                                                        if(mysqli_num_rows($result6) > 0)
-                                                        {
-                                                            while($row = mysqli_fetch_array($result6))
-                                                            {
-                                                                ?>
-                                                                    <option value="<?php echo $row['category_name']; ?>">
-                                                                        <?php echo $row['category_name']; ?>
-                                                                    </option>
-                                                                <?php
-                                                            }
-                                                        }
-                                                    ?>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <label>Quantity:</label>
-                                            </td>
-                                            <td>
-                                                <input class="form-control" name="quantity" type="number" required>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>Remark:</label>
-                                            </td>
-                                            <td>
-                                                <input class="form-control" name="remark" type="text">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <input type="submit" class="btn btn-success fltright" name="add" value="Add to list">
-                            </form>
-                        </div>
-                    </div>
-                </section>
-                <br/>
-                <section class="content">
-                    <div class="row botmar">
-                        <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
-                            <strong>Purchase Product List</strong>
-                            <a href="purchase.php?empty=empty" class="btn btn-danger fltright">Empty List</a>
-                        </div>
-                    </div>
-                    <form action="purchase.php" method="post">
-                        <div class="row">
-                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                <?php 
-                                    if(mysqli_num_rows($result) > 0)
-                                    {
-                                        $counter = 0;
-                                        $total = 0;
-                                    ?>
-                                    <table class="table thead-bordered table-hover" style="width:100%">
-                                        <tbody>
-                                            <tr>
-                                                <th>#</th>
-                                                <th style="text-align:left;"><strong>Name</strong></th>
-                                                <th style="text-align:left;"><strong>Link</strong></th>
-                                                <th style="text-align:left;"><strong>Category</strong></th>
-                                                <th style="text-align:right;"><strong>Quantity</strong></th>
-                                                <th style="text-align:left;"><strong>Remark</strong></th>
-                                                <th style="text-align:center;"><strong>Action</strong></th>
-                                            </tr>
-                                            <?php
-                                            while($row = mysqli_fetch_array($result))
+                    
+                    <form method="post" action="purchase.php">
+                        <div class="modal-body left">
+                            <p><input class="formfield" name="name" type="text" placeholder="Name" required /></p>
+                            
+                            <p><input class="formfield" name="link" type="text" placeholder="URL" required /></p>
+                            
+                            <p>
+                                <select name="category" class="formselect" required>
+                                    <option class="formoption" selected>Category</option>
+                                    <?php 
+                                        if(mysqli_num_rows($result6) > 0)
+                                        {
+                                            while($row = mysqli_fetch_array($result6))
                                             {
-                                                $counter++;
                                                 ?>
-                                                <tr>
-                                                    <td><?php echo $counter; ?></td>
-                                                    <td style="text-align:left;"><strong><?php echo $row['order_item']; ?></strong></td>
-                                                    <td style="text-align:left;"><a href="<?php echo $row['link']; ?>" target="_blank">Item Link</a></td>
-                                                    <td style="text-align:left;"><?php echo $row['category']; ?></td>
-                                                    <td style="text-align:right;"><?php echo $row['quantity']; ?></td>
-                                                    <td style="text-align:left;"><?php echo $row['remark']; ?></td>
-                                                    <td style="text-align:center;">
-                                                        <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-xs btn-danger delete-button" name="delete">Remove</a>
-                                                    </td>
-                                                </tr>
-                                            <?php
+                                                    <option class="formoption" value="<?php echo $row['category_name']; ?>">
+                                                        <?php echo $row['category_name']; ?>
+                                                    </option>
+                                                <?php
                                             }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                <input type="submit" class="btn btn-warning fltright" name="request" value="Request">
-                                <?php
-                                    }
-                                ?>
-                            </div>
+                                        }
+                                    ?>
+                                </select>
+                            </p>
+                            
+                            <p><input class="formfield" name="quantity" type="number" placeholder="Quantity" required /></p>
+                            
+                            <p><input class="formfield" name="remark" type="text" placeholder="Remarks" required /></p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success btnSend" name="add" value="Send" />
                         </div>
                     </form>
-                </section>
-            </center>
+                </div>
+            </div>
         </div>
-    </body>
-</html>
+        
+        <div class="modal fade" id="editPurchase" tabindex="-1" role="dialog" aria-labelledby="editPurchaseTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="EditPurchaseTitle">Edit Purchase</h5>
+                    </div>
+                    
+                    <form method="post" action="purchase.php">
+                        <div class="modal-body left">
+                            <p><input class="formfield" name="name" type="text" placeholder="Name" required /></p>
+                            
+                            <p><input class="formfield" name="link" type="text" placeholder="URL" required /></p>
+                            
+                            <p>
+                                <select name="category" class="formselect" required>
+                                    <option class="formoption" selected>Category</option>
+                                    <?php 
+                                        if(mysqli_num_rows($result6) > 0)
+                                        {
+                                            while($row = mysqli_fetch_array($result6))
+                                            {
+                                                ?>
+                                                    <option class="formoption" value="<?php echo $row['category_name']; ?>">
+                                                        <?php echo $row['category_name']; ?>
+                                                    </option>
+                                                <?php
+                                            }
+                                        }
+                                    ?>
+                                </select>
+                            </p>
+                            
+                            <p><input class="formfield" name="quantity" type="number" placeholder="Quantity" required /></p>
+                            
+                            <p><input class="formfield" name="remark" type="text" placeholder="Remarks" required /></p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success btnSend" name="edit" value="Send" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

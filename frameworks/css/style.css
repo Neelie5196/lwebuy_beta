@@ -93,6 +93,57 @@ body {
     border: solid 1px #8bb836;
 }
 
+.btnAdd, .btnAdd:visited {
+    width: 100%;
+    background: #329a47!important;
+    color: #fff!important;
+    font-weight: bold!important;
+    outline: none!important;
+}
+
+.btnAdd:hover, .btnAdd:active, btnAdd:focus {
+    background: #95c639!important;
+    outline: none!important;
+}
+
+.btnDelete {
+    background: none;
+    border: none;
+}
+
+.btnDelete:focus, .btnDelete:active {
+    background: none;
+    border: none;
+    outline: none!important;
+}
+
+.btnCancel, .btnCancel:focus, .btnCancel:active, .btnSend:focus, .btnSend:active, .btnSend:visited {
+    outline: none!important;
+    border: none!important;
+}
+
+.btnCancel {
+    color: #2f9142;
+    background: #fff;
+}
+
+.btnCancel:hover {
+    color: #fff;
+    background: #f26522;
+}
+
+.btnSend {
+    outline: none!important;
+    background: #8bb836;
+    border: none!important;
+}
+
+.btnSend:hover {
+    outline: none!important;
+    background: #2f9142;
+    border: none!important;
+}
+
 .glyphicon {
     color: #fff;
     font-size: 150%;
@@ -106,6 +157,22 @@ body {
     margin-right: 1%;
     border-right: solid 1px #fff;
     padding-right: 1.5%;
+}
+
+.glyphicon-trash {
+    color: #2f9142;
+}
+
+.glyphicon-trash:hover {
+    color: #f26522!important;
+}
+
+.glyphicon-pencil {
+    color: #2f9142!important;
+}
+
+.glyphicon-pencil:hover {
+    color: #8bb836!important;
 }
 
 .loginrow1 {
@@ -192,7 +259,7 @@ body {
     color: #2f9142;
 }
 
-.userrow2 {
+.homerow {
     margin: 3% auto 0 auto;
 }
 
@@ -214,39 +281,40 @@ body {
     font-size: 150%!important;
 }
 
-.usernav {
-    background: none;
-    border-top: solid 2px #2f9142;
-    border-bottom: solid 2px #2f9142;
+.userbar > div {
+    width: 10%;
+    margin-left: 1%;
 }
 
-.usernav ul {
+.useritem {
+    width: 10%;
+}
+
+.userbar .menuitem {
     margin: 0 auto;
-    width: 100%;
+    width: 77%;
 }
 
-.usernav li {
+.userbar li {
     float: none;
     display:inline-block;
     vertical-align: middle;
-    margin: 0 1%; 
+    margin: 0 2%; 
 }
 
-.usernav > div > ul > li > a {
+.userbar > ul > li > a {
     color: #8bb836!important;
     font-weight: bold;
 }
 
-.usernav > div > ul > li > a:hover {
+.userbar > ul > li > a:hover {
     color: #2f9142!important;
 }
 
 .userbar {
     background: none!important;
-    border: none;
+    border-bottom: solid 2px #2f9142;
     margin-bottom: 0.5%;
-    margin-top: 0.5%;
-    margin-left: 1%;
 }
 
 .userbar .navbar-right {
@@ -287,4 +355,88 @@ body {
 .userrow4 .btnfoot:hover {
     border: solid 1px #2f9142;
     color: #2f9142;
+}
+
+.pagetitle {
+    color: #2f9142!important;
+}
+
+.purchasetable {
+    border-top: solid 1px #2f9142;
+    border-bottom:  solid 1px #2f9142;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.purchasetable th {
+    text-align: center;
+    color: #2f9142;
+}
+
+.purchasetable tr {
+    border-top: solid 1px #2f9142;
+    border-bottom:  solid 1px #2f9142;
+}
+
+.purchasetable td {
+    text-align: center;
+    color: #2f9142;
+    height: 40px;
+}
+
+.purchasetable .bodyrow:hover {
+        background: rgba(139, 184, 54, 0.2);
+}
+
+.modal-content {
+    background: #f4f9eb;
+}
+
+.modal-content h5 {
+    font-weight: bold;
+    color:#2f9142;
+}
+
+.modal-body {
+    width: 90%;
+    margin: 2% auto 0 auto;
+}
+
+.modal-body label {
+    color: #2f9142;
+    margin-bottom: 0!important;
+}
+
+.modal-body .formfield {
+    border-bottom: solid 1px #2f9142!important;
+    color: #8bb836!important;
+}
+
+.modal-body .formfield::placeholder {
+    color: #8bb836!important;
+}
+
+.formselect, .formselect:focus, .formselect:active {
+    outline: none!important;
+    width: 100%;
+    background: none;
+    height: 100%;
+    border-bottom: solid 1px #2f9142!important;
+    border: none;
+    padding: 2% 2% 2% 1%;
+    color: #8bb836;
+    margin-bottom: 1%;
+}
+
+.formoption {
+    background: #f4f9eb!important;
+    outline: none!important;
+}
+
+.purchasecol1 {
+    width: 10%;
+}
+
+.purhcasecol2 {
+    width: 15%;
 }

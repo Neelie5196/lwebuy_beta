@@ -50,3 +50,31 @@ $(document).ready(function(){
         $("#mainview").load('inventory.php');
     });
 });
+
+function funcPRequest() {
+    document.getElementById("prequest").style.display = "block";
+    document.getElementById("ppayment").style.display = "none";
+    document.getElementById("pproceed").style.display = "none";
+    document.getElementById("preceive").style.display = "none";
+}
+
+function funcPPayment() {
+    document.getElementById("prequest").style.display = "none";
+    document.getElementById("ppayment").style.display = "block";
+    document.getElementById("pproceed").style.display = "none";
+    document.getElementById("preceive").style.display = "none";
+}
+
+function funcPProceed() {
+    document.getElementById("prequest").style.display = "none";
+    document.getElementById("ppayment").style.display = "none";
+    document.getElementById("pproceed").style.display = "block";
+    document.getElementById("preceive").style.display = "none";
+}
+
+function funcPReceive() {
+    document.getElementById("prequest").style.display = "none";
+    document.getElementById("ppayment").style.display = "none";
+    document.getElementById("pproceed").style.display = "none";
+    document.getElementById("preceive").style.display = "block";
+}

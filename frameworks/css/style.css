@@ -259,14 +259,25 @@ body {
     color: #2f9142;
 }
 
+.btntab, .btntab:visited, .btntab:active, .btntab:focus {
+    color: #2f9142!important;
+    margin: 0 2%;
+    text-decoration: none;
+    outline: none!important;
+}
+
+.btntab:hover {
+    color: #8bb836!important;
+    text-decoration: none;
+}
+
 .homerow {
     margin: 3% auto 0 auto;
 }
 
 .bigh1 {
     font-weight: bolder;
-    color: #fff;
-    text-shadow: 3px 3px 2px #2f9142;
+    color: #2f9142;
     font-size: 350%;
 }
 
@@ -439,4 +450,30 @@ body {
 
 .purhcasecol2 {
     width: 15%;
+}
+
+.tblTab {
+    margin-left: 5%;
+    margin-bottom: 1%;
+    width: 30%;
+}
+
+.wborder {
+    border-right: solid 1px #2f9142;
+}
+
+#prequest {
+    display: block;
+}
+
+#ppayment {
+    display: none;
+}
+
+#pproceed {
+    display: none;
+}
+
+#preceive {
+    display: none;
 }

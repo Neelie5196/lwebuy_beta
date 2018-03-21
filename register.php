@@ -83,11 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             </div>
         </div>
         
-        <div class="row regrow2">
+        <!--<div class="row regrow2">
             <div class="col-xs-2 col-md-2 col-lg-2 col-xs-push-5 col-md-push-5 col-lg-push-5 center">
                 <img src="resources/img/logo-box.PNG" width="50%" />
             </div>
-        </div>
+        </div>-->
         
         <div class="row loginrow3">
             <div class="col-md-12 col-lg-12 hidden-xs hidden-sm">
@@ -103,6 +103,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                             <input type="text" class="formfield" id="lname" name="lname" required/>
                         </p>
 
+                        <p>
+                            <label for="contact">Contact number </label><br/>
+                            <input type="text" class="formfield" id="contact" name="contact" required/>
+                        </p>
+                        
                         <p>
                             <label for="email">Email </label><br/>
                             <input type="email" class="formfield" id="email" name="email" required/>

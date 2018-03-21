@@ -56,6 +56,7 @@ function funcPRequest() {
     document.getElementById("ppayment").style.display = "none";
     document.getElementById("pproceed").style.display = "none";
     document.getElementById("preceive").style.display = "none";
+    document.getElementById("pdecline").style.display = "none";
 }
 
 function funcPPayment() {
@@ -63,6 +64,7 @@ function funcPPayment() {
     document.getElementById("ppayment").style.display = "block";
     document.getElementById("pproceed").style.display = "none";
     document.getElementById("preceive").style.display = "none";
+    document.getElementById("pdecline").style.display = "none";
 }
 
 function funcPProceed() {
@@ -70,6 +72,7 @@ function funcPProceed() {
     document.getElementById("ppayment").style.display = "none";
     document.getElementById("pproceed").style.display = "block";
     document.getElementById("preceive").style.display = "none";
+    document.getElementById("pdecline").style.display = "none";
 }
 
 function funcPReceive() {
@@ -77,4 +80,13 @@ function funcPReceive() {
     document.getElementById("ppayment").style.display = "none";
     document.getElementById("pproceed").style.display = "none";
     document.getElementById("preceive").style.display = "block";
+    document.getElementById("pdecline").style.display = "none";
+}
+
+function funcPDecline() {
+    document.getElementById("prequest").style.display = "none";
+    document.getElementById("ppayment").style.display = "none";
+    document.getElementById("pproceed").style.display = "none";
+    document.getElementById("preceive").style.display = "none";
+    document.getElementById("pdecline").style.display = "block";
 }

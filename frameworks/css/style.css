@@ -167,11 +167,11 @@ body {
     color: #f26522!important;
 }
 
-.glyphicon-pencil {
+.glyphicon-pencil, .glyphicon-edit {
     color: #2f9142!important;
 }
 
-.glyphicon-pencil:hover {
+.glyphicon-pencil:hover, .glyphicon-edit:hover {
     color: #8bb836!important;
 }
 
@@ -444,6 +444,10 @@ body {
     outline: none!important;
 }
 
+.purchasecol05 {
+    width: 5%;
+}
+
 .purchasecol1 {
     width: 10%;
 }
@@ -455,7 +459,7 @@ body {
 .tblTab {
     margin-left: 5%;
     margin-bottom: 1%;
-    width: 30%;
+    width: 40%;
 }
 
 .wborder {
@@ -475,5 +479,9 @@ body {
 }
 
 #preceive {
+    display: none;
+}
+
+#pdecline {
     display: none;
 }

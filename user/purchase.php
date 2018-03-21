@@ -285,6 +285,12 @@ $result5 = mysqli_query($con, $query5);
                     <?php
                         }
                     ?>
+                    
+                    <tr>
+                        <td colspan="8">
+                            <a href="payment.php" class="btn btn-default btnAdd">Pay</a>
+                        </td>
+                    </tr>
                 </table>
             </div>
         

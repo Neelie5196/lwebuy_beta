@@ -11,10 +11,6 @@ $(document).ready(function(){
         {
             $("#mainview").load('shipping.php');
         }
-    else if (window.location.hash == "#tracking")
-        {
-            $("#mainview").load('tracking.php');
-        }
     else if (window.location.hash == "#inventory")
         {
             $("#mainview").load('inventory.php');
@@ -46,12 +42,6 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("#btnship").click(function(){
         $("#mainview").load('shipping.php');
-    });
-});
-
-$(document).ready(function(){
-    $("#btntracking").click(function(){
-        $("#mainview").load('tracking.php');
     });
 });
 

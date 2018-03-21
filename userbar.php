@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default userbar">
     <div class="navbar-header">
-        <a class="navbar-brand" href="dashboard.php"><img src="../resources/img/logo.png" alt="logo" width="50%"/></a>
+        <a class="navbar-brand" href="#home" id="btnlogo"><img src="../resources/img/logo.png" alt="logo" width="50%"/></a>
     </div>
 
     <ul class="nav navbar-nav center menuitem">
@@ -8,7 +8,6 @@
         <li><a href="#purchase" id="btnpurchase">Purchase</a></li>
         <li><a href="#inventory" id="btninventory">Inventory</a></li>
         <li><a href="#ship" id="btnship">Ship</a></li>
-        <li><a href="#tracking" id="btntracking">Track</a></li>
     </ul>
     
     <ul class="nav navbar-nav navbar-right useritem right">

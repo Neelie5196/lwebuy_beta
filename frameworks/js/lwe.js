@@ -90,3 +90,13 @@ function funcPDecline() {
     document.getElementById("preceive").style.display = "none";
     document.getElementById("pdecline").style.display = "block";
 }
+
+function funcIPending() {
+    document.getElementById("ipending").style.display = "block";
+    document.getElementById("ireceive").style.display = "none";
+}
+
+function funcIReceive() {
+    document.getElementById("ipending").style.display = "none";
+    document.getElementById("ireceive").style.display = "block";
+}

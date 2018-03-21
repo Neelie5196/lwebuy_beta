@@ -456,32 +456,30 @@ body {
     width: 15%;
 }
 
+.purchasecol3 {
+    width: 30%;
+}
+
 .tblTab {
     margin-left: 5%;
     margin-bottom: 1%;
     width: 40%;
 }
 
+.tblITab {
+    margin-left: 5%;
+    margin-bottom: 1%;
+    width: 15%;    
+}
+
 .wborder {
     border-right: solid 1px #2f9142;
 }
 
-#prequest {
+#prequest, #ipending {
     display: block;
 }
 
-#ppayment {
-    display: none;
-}
-
-#pproceed {
-    display: none;
-}
-
-#preceive {
-    display: none;
-}
-
-#pdecline {
+#ppayment, #pproceed, #preceive, #pdecline, #ireceive {
     display: none;
 }

@@ -134,7 +134,7 @@ $result5 = mysqli_query($con, $query5);
                     <?php
                         }
                     ?>
-
+                    
                     <tr>
                         <td colspan="8">
                             <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#addPurchase">Add</button>
@@ -377,7 +377,7 @@ $result5 = mysqli_query($con, $query5);
                     ?>
 
                     <tr>
-                        <td colspan="8">No purchases proceeded.</td>
+                        <td colspan="6">No purchases proceeded.</td>
                     </tr>
 
                     <?php
@@ -407,14 +407,13 @@ $result5 = mysqli_query($con, $query5);
                             {
                     ?>
 
-                    <tr class="bodyrow" data-toggle="modal" data-target="#editPPurchase">
+                    <tr class="bodyrow" data-toggle="modal" data-target="#pfeedback">
                         <td><?php echo $row['order_item']; ?></td>
                         <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
                         <td><?php echo $row['category']; ?></td>
                         <td><?php echo $row['quantity']; ?></td>
                         <td><?php echo $row['remark']; ?></td>
-                        <td><button type="button" class="btn btn-default btn-xs btnEdit" data-toggle="modal3" data-target="#pfeedback"><span class="glyphicon glyphicon-edit"></span></button></td>
-                        
+                        <td><button type="button" class="btn btn-default btn-xs btnDelete" data-toggle="modal3" data-target="#pfeedback"><span class="glyphicon glyphicon-edit"></span></button></td>
                     </tr>
 
                     <?php
@@ -423,9 +422,9 @@ $result5 = mysqli_query($con, $query5);
                     else
                     {
                     ?>
-
+                    
                     <tr>
-                        <td colspan="8">No purchases received.</td>
+                        <td colspan="6">No purchases received.</td>
                     </tr>
 
                     <?php
@@ -434,7 +433,7 @@ $result5 = mysqli_query($con, $query5);
                 </table>
             </div>
             
-            <div class="modal fade" id="pfeeedback" tabindex="-1" role="dialog" aria-labelledby="pfeedbackTitle" aria-hidden="true">
+            <div class="modal fade" id="pfeedback" tabindex="-1" role="dialog" aria-labelledby="pfeedbackTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -443,7 +442,7 @@ $result5 = mysqli_query($con, $query5);
 
                         <form method="post" action="purchase.php">
                             <div class="modal-body left">
-                                <p><input class="formfield" name="feedback" type="textarea" placeholder="Enter your comments here..." disabled /></p>
+                                <p><input class="formfield" name="feedback" type="textarea" rows="3" placeholder="Enter your comments here..." disabled /></p>
                             </div>
 
                             <div class="modal-footer">
@@ -492,7 +491,7 @@ $result5 = mysqli_query($con, $query5);
                     ?>
 
                     <tr>
-                        <td colspan="8">No declined purchases.</td>
+                        <td colspan="6">No declined purchases.</td>
                     </tr>
 
                     <?php

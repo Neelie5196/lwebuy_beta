@@ -19,7 +19,7 @@ if(isset($_POST['add']))
 
 $query = "SELECT *
           FROM order_item
-          WHERE user_id='$user_id' AND order_list_id IS NULL";
+          WHERE user_id='$user_id' AND status IS NULL";
 $result = mysqli_query($con, $query);
 
 if (isset($_GET['order_item_id']))
@@ -39,7 +39,7 @@ if (isset($_GET['order_item_id']))
 if (isset($_GET['empty']))
 {
     
-    $result3 = mysqli_query($con, "DELETE FROM order_item WHERE order_list_id IS NULL AND user_id=$user_id") or die(mysqli_error($con));
+    $result3 = mysqli_query($con, "DELETE FROM order_item WHERE status IS NULL AND user_id=$user_id") or die(mysqli_error($con));
     
     ?>
     <script>
@@ -50,23 +50,21 @@ if (isset($_GET['empty']))
 }
 
 if(isset($_POST['request']))
-{    
-    $unique_id = rand(1000,100000). $user_id;
-    $order_list_id = $unique_id;
+{   
     $status = 'Request';
     
-    $result4 = mysqli_query($con, "UPDATE order_item SET order_list_id='$order_list_id', status='$status' WHERE order_list_id IS NULL AND user_id='$user_id'") or die(mysqli_error($con));
+    $result4 = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE status IS NULL AND user_id='$user_id'") or die(mysqli_error($con));
     
-	$result5 = mysqli_query($con, "INSERT INTO order_list SET order_list_id='$order_list_id', user_id='$user_id', status='$status'") or die(mysqli_error($con));
     ?>
     <script>
+    alert('Success to Submit Request');
     window.location.href='purchaselist.php';
     </script>
     <?php
 }
 
-$query6 = "SELECT * FROM category";
-$result6 = mysqli_query($con, $query6);
+$query5 = "SELECT * FROM category";
+$result5 = mysqli_query($con, $query5);
 
 ?>
 
@@ -163,10 +161,9 @@ $result6 = mysqli_query($con, $query6);
                                     <select name="category" class="formselect" required>
                                         <option class="formoption" selected>Category</option>
                                         <?php 
-                                            if(mysqli_num_rows($result6) > 0)
+                                            if(mysqli_num_rows($result5) > 0)
                                             {
-                                                while($row = mysqli_fetch_array($result6))
-                                                {
+                                                while($row = mysqli_fetch_array($result5))
                                                     ?>
                                                         <option class="formoption" value="<?php echo $row['category_name']; ?>">
                                                             <?php echo $row['category_name']; ?>

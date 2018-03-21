@@ -1,5 +1,5 @@
 <?php
-/*require_once 'connection/config.php';
+require_once 'connection/config.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') 
@@ -8,11 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     {
         $mysqli = new mysqli($dbhost,$dbuser,$dbpass,$dbname) or die($mysqli->error);
         
-         User login process, checks if user exists and password is correct 
+        /* User login process, checks if user exists and password is correct */
         
         // Escape email to protect against SQL injections
         $email = $mysqli->escape_string($_POST['email']);
-        
+        $password = $mysqli->escape_string($_POST['password']);
         $result = $mysqli->query("SELECT * FROM users WHERE email='$email'");
         
         if ( $result->num_rows == 0 )
@@ -23,36 +23,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $user = $result->fetch_assoc();
             
-            if ($_POST['password'] == $user['password'] )
+			if(password_verify($password, $user["password"]))  
             {    
                 $_SESSION['user_id'] = $user['user_id'];
 				$_SESSION['fname'] = $user['fname'];
                 $_SESSION['lname'] = $user['lname'];
                 $_SESSION['email'] = $user['email'];
+                $_SESSION['type'] = $user['type'];
+                $_SESSION['contact'] = $user['contact'];
             
                 
                 if($user['type'] == 'admin')
                 {
+					$result = mysqli_query($con, "UPDATE users
+													SET login_status = 'Online'
+													WHERE user_id = '$_SESSION[user_id]';");
                     header("location: admin/dashboard.php");
                 }
                 else if($user['type'] == 'staff')
-                {
+                {	
+					$result = mysqli_query($con, "UPDATE users
+								SET login_status = 'Online'
+								WHERE user_id = '$_SESSION[user_id]';");
                     header("location: admin/dashboard.php");
                 }
                 else if($user['type'] == 'customer')
                 {
-                    header("location: user/dashboard.php");
+						$result = mysqli_query($con, "UPDATE users
+						SET login_status = 'Online'
+						WHERE user_id = '$_SESSION[user_id]';");
+                    header("location: user/main.php");
                 }
+                            
+                
             }
             else
             {
-                $_SESSION['message'] = "You have entered wrong password, try again!";
+			     ?>
+            <script>
+            alert('Wrong Password');
+            window.location.href='login.php?fail';
+            </script>
+            <?php
+			   
             }
         }
     }
-}*/
+}
 ?>
-
 <!DOCTYPE html>
 <html data-ng-app="">
     <head>

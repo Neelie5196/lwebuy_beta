@@ -1,5 +1,5 @@
 <?php
-/*require 'connection/config.php';
+require 'connection/config.php';
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') 
@@ -27,10 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $lname = $_POST['lname'];
             $fname = $_POST['fname'];
             $email = $_POST['email'];
+            $contact = $_POST['contact'];
             $password = $_POST['password'];
-
-            $sql = "INSERT INTO users (email, password, lname, fname, type) VALUES ('$email', '$password', '$lname', '$fname', 'customer')";
-            mysql_query($sql);
+			$password = password_hash($password, PASSWORD_DEFAULT); 
+			
+			
+            $sql = "INSERT INTO users (email, password, lname, fname, type, contact) VALUES ('$email', '$password', '$lname', '$fname', 'customer', '$contact')";
+            mysqli_query($con, $sql);
             ?>
             <script>
             alert('Register Successful');
@@ -39,9 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <?php
         }
     }
-}*/
+}
 ?>
-
 <!DOCTYPE html>
 <html data-ng-app="">
     <head>

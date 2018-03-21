@@ -4,7 +4,7 @@
             <li><a href="#home" id="btnhome">Home</a></li>
             <li><a href="#purchase" id="btnpurchase">Purchase</a></li>
             <li><a href="#ship" id="btnship">Ship</a></li>
-            <li><a href="#tracking" id="btntracking">Tracking</a></li>
+            <li><a href="#tracking" id="btntracking">Track</a></li>
         </ul>
     </div>
 </nav>

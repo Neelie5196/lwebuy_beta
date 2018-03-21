@@ -91,7 +91,6 @@ $result5 = mysqli_query($con, $query5);
                 <form action="purchase.php" method="post">
                     <table class="purchasetable">
                         <tr>
-                            <th class="purchasecol05"></th>
                             <th class="purchasecol2">Name</th>
                             <th class="purchasecol2">Link</th>
                             <th class="purchasecol1">Category</th>
@@ -108,7 +107,6 @@ $result5 = mysqli_query($con, $query5);
                         ?>
 
                         <tr class="bodyrow" data-toggle="modal" data-target="#editPurchase">
-                            <td><input type="checkbox" name="pay" /></td>
                             <td><?php echo $row['order_item']; ?></td>
                             <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
                             <td><?php echo $row['category']; ?></td>

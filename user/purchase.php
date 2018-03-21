@@ -88,58 +88,56 @@ $result5 = mysqli_query($con, $query5);
     <div class="row">
         <div id="prequest">
             <div class="col-md-12 col-lg-12">
-                <form action="purchase.php" method="post">
-                    <table class="purchasetable">
-                        <tr>
-                            <th class="purchasecol2">Name</th>
-                            <th class="purchasecol2">Link</th>
-                            <th class="purchasecol1">Category</th>
-                            <th class="purchasecol1">Quantity</th>
-                            <th class="purchasecol2">Remark</th>
-                            <th class="purchasecol1"></th>
-                        </tr>
+                <table class="purchasetable">
+                    <tr>
+                        <th class="purchasecol2">Name</th>
+                        <th class="purchasecol2">Link</th>
+                        <th class="purchasecol1">Category</th>
+                        <th class="purchasecol1">Quantity</th>
+                        <th class="purchasecol2">Remark</th>
+                        <th class="purchasecol1"></th>
+                    </tr>
 
-                        <?php
-                            if(mysqli_num_rows($result) > 0)
-                            {
-                                while($row = mysqli_fetch_array($result))
-                                {
-                        ?>
-
-                        <tr class="bodyrow" data-toggle="modal" data-target="#editPurchase">
-                            <td><?php echo $row['order_item']; ?></td>
-                            <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
-                            <td><?php echo $row['category']; ?></td>
-                            <td><?php echo $row['quantity']; ?></td>
-                            <td><?php echo $row['remark']; ?></td>
-                            <td>
-                                <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
-                                <button type="button" class="btn btn-default btn-xs btnDelete" data-toggle="modal1" data-target="#editPurchase"><span class="glyphicon glyphicon-pencil"></span></button>
-                            </td>
-                        </tr>
-
-                        <?php
-                            }
-                        }
-                        else
+                    <?php
+                        if(mysqli_num_rows($result) > 0)
                         {
-                        ?>
-                        
-                        <tr>
-                            <td colspan="8">No requests submitted</td>
-                        </tr>
-                        
-                        <?php
-                            }
-                        ?>
-                        
-                        <tr>
-                            <td colspan="8">
-                                <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#addPurchase">Add</button>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
+                            while($row = mysqli_fetch_array($result))
+                            {
+                    ?>
+
+                    <tr class="bodyrow" data-toggle="modal" data-target="#editPurchase">
+                        <td><?php echo $row['order_item']; ?></td>
+                        <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
+                        <td><?php echo $row['category']; ?></td>
+                        <td><?php echo $row['quantity']; ?></td>
+                        <td><?php echo $row['remark']; ?></td>
+                        <td>
+                            <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
+                            <button type="button" class="btn btn-default btn-xs btnDelete" data-toggle="modal1" data-target="#editPurchase"><span class="glyphicon glyphicon-pencil"></span></button>
+                        </td>
+                    </tr>
+
+                    <?php
+                        }
+                    }
+                    else
+                    {
+                    ?>
+
+                    <tr>
+                        <td colspan="8">No requests submitted</td>
+                    </tr>
+
+                    <?php
+                        }
+                    ?>
+
+                    <tr>
+                        <td colspan="8">
+                            <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#addPurchase">Add</button>
+                        </td>
+                    </tr>
+                </table>
             </div>
             
             <div class="modal fade" id="addPurchase" tabindex="-1" role="dialog" aria-labelledby="addPurchaseTitle" aria-hidden="true">

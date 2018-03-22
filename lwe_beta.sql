@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2018 at 10:54 AM
+-- Generation Time: Mar 22, 2018 at 05:20 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -107,7 +107,7 @@ CREATE TABLE `item` (
 
 CREATE TABLE `order_item` (
   `order_item_id` int(11) NOT NULL,
-  `order_list_id` int(11) DEFAULT NULL,
+  `payment_id` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `order_item` varchar(50) NOT NULL,
   `link` varchar(255) NOT NULL,
@@ -116,19 +116,25 @@ CREATE TABLE `order_item` (
   `remark` varchar(255) NOT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `status` varchar(15) DEFAULT NULL,
-  `order_code` varchar(25) DEFAULT NULL
+  `order_code` varchar(25) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_item`
 --
 
-INSERT INTO `order_item` (`order_item_id`, `order_list_id`, `user_id`, `order_item`, `link`, `category`, `quantity`, `remark`, `price`, `status`, `order_code`) VALUES
-(22, 9337410, 10, 'ä¸ƒåŽŸç½ª', 'http://localhost/LWE_BUY/user/purchase.php?success', '1', 1, '', '111.00', 'Paid', NULL),
-(28, 4721710, 10, 'Test4', 'https://github.com/Neelie5196/lwebuy_beta', 'testing4', 2, '', '18.00', 'Ready to Pay', NULL),
-(29, 9397010, 10, 'Test1', 'https://en.wikipedia.org/wiki/Software_testing', 'testing', 1, '', '23.00', 'Paid', NULL),
-(30, 9397010, 10, 'Test2', 'https://en.wikipedia.org/wiki/Test', 'testing2', 4, '', '65.00', 'Paid', NULL),
-(31, 9397010, 10, 'Test3', 'https://www.google.com.my/search?source=hp&ei=xTOuWtmFL8rovgSr4oK4Cw&q=testing&oq=testing&gs_l=psy-ab.3..0l10.1638.3281.0.3564.8.7.0.0.0.0.217.745.0j3j1.4.0....0...1c.1.64.psy-ab..4.4.744.0..35i39k1j0i67k1.0.5iUMBMh6PJ4', 'testing3', 2, 'test 123', '72.00', 'Paid', NULL);
+INSERT INTO `order_item` (`order_item_id`, `payment_id`, `user_id`, `order_item`, `link`, `category`, `quantity`, `remark`, `price`, `status`, `order_code`, `comment`) VALUES
+(22, 9337410, 10, 'ä¸ƒåŽŸç½ª', 'http://localhost/LWE_BUY/user/purchase.php?success', '1', 1, '', '111.00', 'Paid', NULL, NULL),
+(28, 4721710, 10, 'Test4', 'https://github.com/Neelie5196/lwebuy_beta', 'testing4', 2, '', '18.00', 'Ready to Pay', NULL, NULL),
+(29, 9397010, 10, 'Test1', 'https://en.wikipedia.org/wiki/Software_testing', 'testing', 1, '', '23.00', 'Paid', NULL, NULL),
+(30, 9397010, 10, 'Test2', 'https://en.wikipedia.org/wiki/Test', 'testing2', 4, '', '65.00', 'Paid', NULL, NULL),
+(31, 9397010, 10, 'Test3', 'https://www.google.com.my/search?source=hp&ei=xTOuWtmFL8rovgSr4oK4Cw&q=testing&oq=testing&gs_l=psy-ab.3..0l10.1638.3281.0.3564.8.7.0.0.0.0.217.745.0j3j1.4.0....0...1c.1.64.psy-ab..4.4.744.0..35i39k1j0i67k1.0.5iUMBMh6PJ4', 'testing3', 2, 'test 123', '72.00', 'Paid', NULL, NULL),
+(46, NULL, 1, 'test1', 'http://localhost/lwebuy_beta/user/main.php#purchase', 'Others', 2, 'lwe', NULL, 'Request', NULL, NULL),
+(47, NULL, 1, 'test2', 'https://github.com/Neelie5196/lwebuy_beta', 'Others', 3, 'git', '50.00', 'Ready to Pay', NULL, NULL),
+(49, NULL, 1, 'test3', 'www.google.com', 'Others', 1, 'google', '32.00', 'Paid', NULL, NULL),
+(50, NULL, 1, 'test4', 'www.youtube.com', 'Others', 2, 'youtube', '53.00', 'Received', NULL, NULL),
+(51, NULL, 1, 'test5', 'www.facebook.com', 'Others', 2, 'facebook', NULL, 'Declined', NULL, 'declined');
 
 -- --------------------------------------------------------
 
@@ -349,6 +355,13 @@ CREATE TABLE `users` (
   `login_status` varchar(55) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`, `type`, `image`, `country_id`, `login_status`) VALUES
+(1, 'clement', 'chuo', '0123456789', 'clement@email.com', '$2y$10$yG7C0WYk8rXQto6qF2sZo..3v0vy14./JXjRrRQQZz7dax695zIHy', 'customer', '', 0, 'Online');
+
 -- --------------------------------------------------------
 
 --
@@ -514,7 +527,7 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `order_list`
@@ -574,7 +587,7 @@ ALTER TABLE `shipping_update_summary`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `warehouse`

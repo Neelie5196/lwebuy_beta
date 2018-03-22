@@ -1,5 +1,64 @@
 <?php
+require_once '../connection/config.php';
+session_start();
+$user_id = $_SESSION['user_id'];
 
+$query = "SELECT *
+          FROM request
+          WHERE user_id='$user_id' AND status = 'request'";
+$result = mysqli_query($con, $query);
+
+if(isset($_POST['request']))
+{    
+
+    $name = $_POST['name'];
+    $trackcode = $_POST['trackcode'];
+    $remark = $_POST['remark'];
+    $status = 'Request';
+	
+	$result1 = mysqli_query($con, "INSERT INTO request SET user_id='$user_id', order_item='$name', order_code='$trackcode', remark='$remark', status='$status'") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    window.location.href='main.php#inventory';
+    </script>
+    <?php
+}
+
+if (isset($_GET['request_id']))
+{
+    $request_id = $_GET['request_id'];
+
+    $result2 = mysqli_query($con, "DELETE FROM request WHERE request_id=$request_id") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    window.location.href='main.php#inventory';
+    </script>
+    <?php
+
+}
+
+if(isset($_POST['edit']))
+{   
+    $request_id = $_POST['request_id'];
+    $name = $_POST['name'];
+    $trackcode = $_POST['trackcode'];
+    $remark = $_POST['remark'];
+    
+    $result3 = mysqli_query($con, "UPDATE request SET order_item='$name', order_code='$trackcode', remark='$remark' WHERE request_id='$request_id'") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    window.location.href='main.php#inventory';
+    </script>
+    <?php
+}
+
+$query4 = "SELECT *
+          FROM request
+          WHERE user_id='$user_id' AND status = 'received'";
+$result4 = mysqli_query($con, $query4);
 
 ?>
  <div class="col-xs-12 col-md-12 col-lg-12">
@@ -12,7 +71,7 @@
             <table class="tblITab">
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcIPending()">Pending</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcIReceive()">Received</button></td>
+                    <td><button class="btn-link btntab" onclick="funcIReceive()">Received</button></td>
                 </tr>
             </table>
         </div>
@@ -36,13 +95,14 @@
                             {
                     ?>
 
-                    <tr class="bodyrow" data-toggle="modal" data-target="#editRPurchase">
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                    <tr class="bodyrow">
+                        <td><?php echo $row['order_item']; ?></td>
+                        <td><?php echo $row['order_code']; ?></td>
+                        <td><?php echo $row['remark']; ?></td>
                         <td>
-                            <a href="" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
-                            <button type="button" class="btn btn-default btn-xs btnDelete" data-toggle="modal6" data-target="#editItem"><span class="glyphicon glyphicon-pencil"></span></button>
+                            <a href="inventory.php?request_id=<?php echo $row['request_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
+                            
+                            <a data-toggle="modal" data-id="<?php echo $row['request_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-trackcode="<?php echo $row['order_code']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btn-default btn-xs btnDelete editItem" href="#editItem"><span class="glyphicon glyphicon-pencil"></span></a>
                         </td>
                     </tr>
 
@@ -76,7 +136,7 @@
                             <h5 class="modal-title" id="addItemTitle">Add Item</h5>
                         </div>
 
-                        <form method="post" action="purchase.php">
+                        <form method="post" action="inventory.php">
                             <div class="modal-body left">
                                 <p><input class="formfield" name="name" type="text" placeholder="Name" required /></p>
 
@@ -87,32 +147,34 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-success btnSend" name="addItem" value="Send" />
+                                <input type="submit" class="btn btn-success btnSend" name="request" value="Request" />
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
 
-            <div class="modal fade" id="editItem" tabindex="-1" role="dialog" aria-labelledby="editRItemTitle" aria-hidden="true">
+            <div class="modal fade" id="editItem" tabindex="-1" role="dialog" aria-labelledby="editItemTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="EditItemTitle">Edit Item</h5>
+                            <h5 class="modal-title" id="editItemTitle">Edit Item</h5>
                         </div>
 
-                        <form method="post" action="purchase.php">
+                        <form method="post" action="inventory.php">
                             <div class="modal-body left">
-                                <p><input class="formfield" name="name" type="text" placeholder="Name" value="" required /></p>
+                                <input type="hidden" name="request_id" id="request_id" value=""/>
+                                
+                                <p><input class="formfield" name="name" id="name" type="text" placeholder="Name" value="" required /></p>
 
-                                <p><input class="formfield" name="trackcode" type="text" placeholder="Tracking Code" value="" required /></p>
+                                <p><input class="formfield" name="trackcode" id="trackcode" type="text" placeholder="Tracking Code" value="" required /></p>
 
-                                <p><input class="formfield" name="remark" type="text" placeholder="Remarks" value="" /></p>
+                                <p><input class="formfield" name="remark" type="text" id="remark" placeholder="Remarks" value="" /></p>
                             </div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-success btnSend" name="addItem" value="Send" />
+                                <input type="submit" class="btn btn-success btnSend" name="edit" value="Save" />
                             </div>
                         </form>
                     </div>
@@ -124,26 +186,24 @@
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
                     <tr class="center">
-                        <th></th>
                         <th>Name</th>
                         <th>Tracking Code</th>
-                        <th>Weight (kg)</th>
                         <th>Remarks</th>
+                        <th>Received On</th>
                     </tr>
 
                     <?php
-                        if(mysqli_num_rows($result) > 0)
+                        if(mysqli_num_rows($result4) > 0)
                         {
-                            while($row = mysqli_fetch_array($result))
+                            while($row = mysqli_fetch_array($result4))
                             {
                     ?>
 
                     <tr class="bodyrow">
-                        <td><input type="checkbox" name="pay" /></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td><?php echo $row['order_item']; ?></td>
+                        <td><?php echo $row['order_code']; ?></td>
+                        <td><?php echo $row['remark']; ?></td>
+                        <td><?php echo $row['datetime']; ?></td>
                     </tr>
 
                     <?php
@@ -160,41 +220,21 @@
                     <?php
                         }
                     ?>
-                    
-                    <tr>
-                        <td colspan="5">
-                            <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#addShipping">Ship</button>
-                        </td>
-                    </tr>
                 </table>
-            </div>
-            
-            <div class="modal fade" id="addShipping" tabindex="-1" role="dialog" aria-labelledby="addShippingTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addShippingTitle">Shipping Form</h5>
-                        </div>
-
-                        <form method="post" action="purchase.php">
-                            <div class="modal-body left">
-                                <p><input class="formfield" name="name" type="text" placeholder="Recipient Name" value="" required /></p>
-
-                                <p><input class="formfield" name="contact" type="text" placeholder="Recipient Contact" value="" required /></p>
-
-                                <p><input class="formfield" name="address" type="text" placeholder="Recipient Address" value="" required /></p>
-
-                                <p><input class="formfield" name="remark" type="text" placeholder="Remarks" value="" /></p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-success btnSend" name="addItem" value="Pay now" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+$(document).on("click", ".editItem", function () {
+    var orderItemRequestId = $(this).data('id');
+    var orderItemName = $(this).data('name');
+    var orderItemTrackCode = $(this).data('trackcode');
+    var orderItemRemark = $(this).data('remark');
+    $(".modal-body #request_id").val( orderItemRequestId );
+    $(".modal-body #name").val( orderItemName );
+    $(".modal-body #trackcode").val( orderItemTrackCode );
+    $(".modal-body #remark").val( orderItemRemark );
+    $('#editItem').modal('show');
+});
+</script>

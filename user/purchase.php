@@ -15,6 +15,12 @@ if(isset($_POST['add']))
     
 	
 	$result1 = mysqli_query($con, "INSERT INTO order_item SET user_id='$user_id', order_item='$name', link='$link', category='$category', quantity='$quantity', remark='$remark'") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    window.location.href='main.php#purchase';
+    </script>
+    <?php
 }
 
 $query = "SELECT *
@@ -30,7 +36,7 @@ if (isset($_GET['order_item_id']))
     
     ?>
     <script>
-    window.location.href='purchase.php?';
+    window.location.href='main.php#purchase';
     </script>
     <?php
 
@@ -43,7 +49,7 @@ if (isset($_GET['empty']))
     
     ?>
     <script>
-    window.location.href='purchase.php';
+    window.location.href='main.php#purchase';
     </script>
     <?php
 
@@ -66,6 +72,27 @@ if(isset($_POST['request']))
 $query5 = "SELECT * FROM category";
 $result5 = mysqli_query($con, $query5);
 
+$query6 = "SELECT * FROM category";
+$result6 = mysqli_query($con, $query6);
+
+if(isset($_POST['edit']))
+{   
+    $order_item_id = $_POST['orderItemId'];
+    $name = $_POST['name'];
+    $link = $_POST['link'];
+    $category = $_POST['category'];
+    $quantity = $_POST['quantity'];
+    $remark = $_POST['remark'];
+    
+    $result7 = mysqli_query($con, "UPDATE order_item SET order_item='$name', link='$link', category='$category', quantity='$quantity', remark='$remark' WHERE order_item_id='$order_item_id'") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    alert('Success to Update');
+    window.location.href='main.php#purchase';
+    </script>
+    <?php
+}
 ?>
 
 
@@ -73,7 +100,6 @@ $result5 = mysqli_query($con, $query5);
     <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Purchase</h2>
     
     <h2 class="smh2 pagetitle hidden-md hidden-lg">Purchase</h2>
-    
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-12">
             <table class="tblTab">
@@ -108,7 +134,7 @@ $result5 = mysqli_query($con, $query5);
                             {
                     ?>
 
-                    <tr class="bodyrow" data-toggle="modal" data-target="#editRPurchase">
+                    <tr class="bodyrow">
                         <td><?php echo $row['order_item']; ?></td>
                         <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
                         <td><?php echo $row['category']; ?></td>
@@ -116,7 +142,8 @@ $result5 = mysqli_query($con, $query5);
                         <td><?php echo $row['remark']; ?></td>
                         <td>
                             <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
-                            <button type="button" class="btn btn-default btn-xs btnDelete" data-toggle="modal1" data-target="#editRPurchase"><span class="glyphicon glyphicon-pencil"></span></button>
+                            
+                            <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-link="<?php echo $row['link']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btn-default btn-xs btnDelete editRPurchase" href="#editRPurchase"><span class="glyphicon glyphicon-pencil"></span></a>
                         </td>
                     </tr>
 
@@ -177,7 +204,7 @@ $result5 = mysqli_query($con, $query5);
 
                                 <p><input class="formfield" name="quantity" type="number" placeholder="Quantity" required /></p>
 
-                                <p><input class="formfield" name="remark" type="text" placeholder="Remarks" /></p>
+                                <p><input class="formfield" name="remark" type="text" placeholder="Remarks" required /></p>
                             </div>
 
                             <div class="modal-footer">
@@ -198,9 +225,11 @@ $result5 = mysqli_query($con, $query5);
 
                         <form method="post" action="purchase.php">
                             <div class="modal-body left">
-                                <p><input class="formfield" name="name" type="text" placeholder="Name" required /></p>
+                                <input type="hidden" name="orderItemId" id="orderItemId" value=""/>
+                                
+                                <p><input class="formfield" name="name" id="name" type="text" placeholder="Name" required /></p>
 
-                                <p><input class="formfield" name="link" type="text" placeholder="URL" required /></p>
+                                <p><input class="formfield" name="link" id="link" type="text" placeholder="URL" required /></p>
 
                                 <p>
                                     <select name="category" class="formselect" required>
@@ -221,14 +250,14 @@ $result5 = mysqli_query($con, $query5);
                                     </select>
                                 </p>
 
-                                <p><input class="formfield" name="quantity" type="number" placeholder="Quantity" required /></p>
+                                <p><input class="formfield" name="quantity" id="quantity" type="number" placeholder="Quantity" required /></p>
 
-                                <p><input class="formfield" name="remark" type="text" placeholder="Remarks" /></p>
+                                <p><input class="formfield" name="remark" id="remark" type="text" placeholder="Remarks" required /></p>
                             </div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-success btnSend" name="edit" value="Send" />
+                                <input type="submit" class="btn btn-success btnSend" name="edit" value="Save" />
                             </div>
                         </form>
                     </div>
@@ -426,7 +455,6 @@ $result5 = mysqli_query($con, $query5);
                     <tr>
                         <td colspan="6">No purchases received.</td>
                     </tr>
-
                     <?php
                         }
                     ?>
@@ -434,6 +462,8 @@ $result5 = mysqli_query($con, $query5);
             </div>
             
             <div class="modal fade" id="pfeedback" tabindex="-1" role="dialog" aria-labelledby="pfeedbackTitle" aria-hidden="true">
+
+            <div class="modal fade" id="pfeeedback" tabindex="-1" role="dialog" aria-labelledby="pfeedbackTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -502,3 +532,20 @@ $result5 = mysqli_query($con, $query5);
         </div>
     </div>
 </div>
+<script>
+$(document).on("click", ".editRPurchase", function () {
+    var orderItemId = $(this).data('id');
+    var orderItemName = $(this).data('name');
+    var orderItemLink = $(this).data('link');
+    var orderItemCategory = $(this).data('category');
+    var orderItemQuantity = $(this).data('quantity');
+    var orderItemRemark = $(this).data('remark');
+    $(".modal-body #orderItemId").val( orderItemId );
+    $(".modal-body #name").val( orderItemName );
+    $(".modal-body #link").val( orderItemLink );
+    $(".modal-body #category").val( orderItemCategory );
+    $(".modal-body #quantity").val( orderItemQuantity );
+    $(".modal-body #remark").val( orderItemRemark );
+    $('#editRPurchase').modal('show');
+});
+</script>

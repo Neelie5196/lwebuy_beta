@@ -83,7 +83,7 @@ $result4 = mysqli_query($con, $query4);
                 <table class="purchasetable">
                     <tr class="center">
                         <th>Name</th>
-                        <th>Tracking Code</th>
+                        <th>Tracking No.</th>
                         <th>Remarks</th>
                         <th></th>
                     </tr>
@@ -187,7 +187,7 @@ $result4 = mysqli_query($con, $query4);
                 <table class="purchasetable">
                     <tr class="center">
                         <th>Name</th>
-                        <th>Tracking Code</th>
+                        <th>Tracking No.</th>
                         <th>Remarks</th>
                         <th>Received On</th>
                     </tr>
@@ -214,7 +214,7 @@ $result4 = mysqli_query($con, $query4);
                     ?>
 
                     <tr>
-                        <td colspan="5">No items inventory.</td>
+                        <td colspan="5">No items in inventory.</td>
                     </tr>
 
                     <?php

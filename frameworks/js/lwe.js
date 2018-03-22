@@ -100,3 +100,57 @@ function funcIReceive() {
     document.getElementById("ipending").style.display = "none";
     document.getElementById("ireceive").style.display = "block";
 }
+
+function funcSItem() {
+    document.getElementById("sitem").style.display = "block";
+    document.getElementById("srequest").style.display = "none";
+    document.getElementById("spayment").style.display = "none";
+    document.getElementById("sproceed").style.display = "none";
+    document.getElementById("sreceive").style.display = "none";
+    document.getElementById("sdevline").style.display = "none";
+}
+
+function funcSRequest() {
+    document.getElementById("sitem").style.display = "none";
+    document.getElementById("srequest").style.display = "block";
+    document.getElementById("spayment").style.display = "none";
+    document.getElementById("sproceed").style.display = "none";
+    document.getElementById("sreceive").style.display = "none";
+    document.getElementById("sdevline").style.display = "none";
+}
+
+function funcSPayment() {
+    document.getElementById("sitem").style.display = "none";
+    document.getElementById("srequest").style.display = "none";
+    document.getElementById("spayment").style.display = "block";
+    document.getElementById("sproceed").style.display = "none";
+    document.getElementById("sreceive").style.display = "none";
+    document.getElementById("sdevline").style.display = "none";
+}
+
+function funcSProceed() {
+    document.getElementById("sitem").style.display = "none";
+    document.getElementById("srequest").style.display = "none";
+    document.getElementById("spayment").style.display = "none";
+    document.getElementById("sproceed").style.display = "block";
+    document.getElementById("sreceive").style.display = "none";
+    document.getElementById("sdevline").style.display = "none";
+}
+
+function funcSReceive() {
+    document.getElementById("sitem").style.display = "none";
+    document.getElementById("srequest").style.display = "none";
+    document.getElementById("spayment").style.display = "none";
+    document.getElementById("sproceed").style.display = "none";
+    document.getElementById("sreceive").style.display = "block";
+    document.getElementById("sdevline").style.display = "none";
+}
+
+function funcSDecline() {
+    document.getElementById("sitem").style.display = "none";
+    document.getElementById("srequest").style.display = "none";
+    document.getElementById("spayment").style.display = "none";
+    document.getElementById("sproceed").style.display = "none";
+    document.getElementById("sreceive").style.display = "none";
+    document.getElementById("sdecline").style.display = "block";
+}

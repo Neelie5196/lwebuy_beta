@@ -456,6 +456,10 @@ body {
     width: 15%;
 }
 
+.purchasecol25 {
+    width: 25%;
+}
+
 .purchasecol3 {
     width: 30%;
 }
@@ -472,14 +476,20 @@ body {
     width: 15%;    
 }
 
+.tblSTab {
+    margin-left: 5%;
+    margin-bottom: 1%;
+    width: 50%;    
+}
+
 .wborder {
     border-right: solid 1px #2f9142;
 }
 
-#prequest, #ipending {
+#prequest, #ipending, #sitem {
     display: block;
 }
 
-#ppayment, #pproceed, #preceive, #pdecline, #ireceive {
+#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #spayment, #sproceed, #sreceive, #sdecline {
     display: none;
 }

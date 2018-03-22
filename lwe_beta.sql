@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2018 at 05:20 AM
+-- Generation Time: Mar 22, 2018 at 11:53 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -125,39 +125,11 @@ CREATE TABLE `order_item` (
 --
 
 INSERT INTO `order_item` (`order_item_id`, `payment_id`, `user_id`, `order_item`, `link`, `category`, `quantity`, `remark`, `price`, `status`, `order_code`, `comment`) VALUES
-(22, 9337410, 10, 'ä¸ƒåŽŸç½ª', 'http://localhost/LWE_BUY/user/purchase.php?success', '1', 1, '', '111.00', 'Paid', NULL, NULL),
-(28, 4721710, 10, 'Test4', 'https://github.com/Neelie5196/lwebuy_beta', 'testing4', 2, '', '18.00', 'Ready to Pay', NULL, NULL),
-(29, 9397010, 10, 'Test1', 'https://en.wikipedia.org/wiki/Software_testing', 'testing', 1, '', '23.00', 'Paid', NULL, NULL),
-(30, 9397010, 10, 'Test2', 'https://en.wikipedia.org/wiki/Test', 'testing2', 4, '', '65.00', 'Paid', NULL, NULL),
-(31, 9397010, 10, 'Test3', 'https://www.google.com.my/search?source=hp&ei=xTOuWtmFL8rovgSr4oK4Cw&q=testing&oq=testing&gs_l=psy-ab.3..0l10.1638.3281.0.3564.8.7.0.0.0.0.217.745.0j3j1.4.0....0...1c.1.64.psy-ab..4.4.744.0..35i39k1j0i67k1.0.5iUMBMh6PJ4', 'testing3', 2, 'test 123', '72.00', 'Paid', NULL, NULL),
 (46, NULL, 1, 'test1', 'http://localhost/lwebuy_beta/user/main.php#purchase', 'Others', 2, 'lwe', NULL, 'Request', NULL, NULL),
-(47, NULL, 1, 'test2', 'https://github.com/Neelie5196/lwebuy_beta', 'Others', 3, 'git', '50.00', 'Ready to Pay', NULL, NULL),
-(49, NULL, 1, 'test3', 'www.google.com', 'Others', 1, 'google', '32.00', 'Paid', NULL, NULL),
+(47, NULL, 1, 'test2', 'https://github.com/Neelie5196/lwebuy_beta', 'Others', 4, 'git', '50.00', 'Ready to Pay', NULL, NULL),
+(49, 761871, 1, 'test3', 'https://stackoverflow.com/questions/19633983/how-to-open-a-link-in-new-windownot-in-new-tab-in-html-css', 'Others', 1, 'google', '32.00', 'Paid', NULL, NULL),
 (50, NULL, 1, 'test4', 'www.youtube.com', 'Others', 2, 'youtube', '53.00', 'Received', NULL, NULL),
 (51, NULL, 1, 'test5', 'www.facebook.com', 'Others', 2, 'facebook', NULL, 'Declined', NULL, 'declined');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order_list`
---
-
-CREATE TABLE `order_list` (
-  `order_list_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `status` varchar(15) NOT NULL,
-  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `price` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `order_list`
---
-
-INSERT INTO `order_list` (`order_list_id`, `user_id`, `status`, `datetime`, `price`) VALUES
-(4721710, 10, 'Ready to Pay', '2018-03-18 10:04:44', '36.00'),
-(9337410, 10, 'Paid', '2018-03-18 09:38:10', '111.00'),
-(9397010, 10, 'Paid', '2018-03-18 10:07:18', '427.00');
 
 -- --------------------------------------------------------
 
@@ -183,21 +155,18 @@ CREATE TABLE `payment` (
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `title` varchar(45) NOT NULL,
   `amount` varchar(10) NOT NULL,
-  `file` varchar(150) NOT NULL,
-  `type` varchar(30) NOT NULL,
+  `file` varchar(150) DEFAULT NULL,
+  `type` varchar(30) DEFAULT NULL,
   `status` varchar(20) NOT NULL,
-  `from_order_list_id` int(11) DEFAULT NULL,
-  `from_shipping_id` int(11) DEFAULT NULL,
-  `current_rate` decimal(10,2) NOT NULL
+  `from_shipping_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `payment`
 --
 
-INSERT INTO `payment` (`payment_id`, `user_id`, `datetime`, `title`, `amount`, `file`, `type`, `status`, `from_order_list_id`, `from_shipping_id`, `current_rate`) VALUES
-(2, 10, '2018-03-18 09:38:51', 'Pay Order 9337410', 'MYR 68.82', '87908-receipt.jpg', 'image/jpeg', 'Waiting for Accept', 9337410, NULL, '0.62'),
-(5, 10, '2018-03-18 10:07:18', 'Pay by Points', '', '213.50 Points', '', 'Completed', 9397010, NULL, '0.50');
+INSERT INTO `payment` (`payment_id`, `user_id`, `datetime`, `title`, `amount`, `file`, `type`, `status`, `from_shipping_id`) VALUES
+(761871, 1, '2018-03-22 08:16:17', 'Pay Order', '32.00', '77664-receipt.jpg', 'image/jpeg', 'Waiting for Accept', NULL);
 
 -- --------------------------------------------------------
 
@@ -216,7 +185,7 @@ CREATE TABLE `point` (
 --
 
 INSERT INTO `point` (`point_id`, `user_id`, `point`) VALUES
-(1, 10, '99723.00');
+(1, 1, '999593.00');
 
 -- --------------------------------------------------------
 
@@ -249,8 +218,16 @@ CREATE TABLE `request` (
   `order_item` varchar(50) NOT NULL,
   `order_code` varchar(25) NOT NULL,
   `status` varchar(20) NOT NULL,
-  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `remark` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `request`
+--
+
+INSERT INTO `request` (`request_id`, `user_id`, `order_item`, `order_code`, `status`, `datetime`, `remark`) VALUES
+(2, 1, 'test1', '123', 'Request', '2018-03-22 10:53:39', 'blue');
 
 -- --------------------------------------------------------
 
@@ -424,12 +401,6 @@ ALTER TABLE `order_item`
   ADD PRIMARY KEY (`order_item_id`);
 
 --
--- Indexes for table `order_list`
---
-ALTER TABLE `order_list`
-  ADD PRIMARY KEY (`order_list_id`);
-
---
 -- Indexes for table `package`
 --
 ALTER TABLE `package`
@@ -530,22 +501,10 @@ ALTER TABLE `order_item`
   MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- AUTO_INCREMENT for table `order_list`
---
-ALTER TABLE `order_list`
-  MODIFY `order_list_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9397011;
-
---
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
   MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `payment`
---
-ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `point`
@@ -563,7 +522,7 @@ ALTER TABLE `rate`
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `shipping`

@@ -167,7 +167,7 @@ $result10 = mysqli_query($con, $query10);
                     <?php
                         }
                     ?>
-                    
+
                     <tr>
                         <td colspan="8">
                             <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#addPurchase">Add</button>
@@ -273,64 +273,66 @@ $result10 = mysqli_query($con, $query10);
         
         <div id="ppayment">
             <div class="col-xs-12 col-md-12 col-lg-12">
-                <table class="purchasetable">
-                    <tr class="center">
-                        <th class="purchasecol05"></th>
-                        <th class="purchasecol1.5">Name</th>
-                        <th class="purchasecol1.5">Link</th>
-                        <th class="purchasecol1">Category</th>
-                        <th class="purchasecol05">Quantity</th>
-                        <th class="purchasecol1">Unit Price</th>
-                        <th class="purchasecol1">Total Price</th>
-                        <th class="purchasecol2">Remark</th>
-                        <th class="purchasecol1"></th>
-                    </tr>
+                <form action="payment.php" method="post" target="_blank">
+                    <table class="purchasetable">
+                        <tr class="center">
+                            <th class="purchasecol05"></th>
+                            <th class="purchasecol1.5">Name</th>
+                            <th class="purchasecol1.5">Link</th>
+                            <th class="purchasecol1">Category</th>
+                            <th class="purchasecol05">Quantity</th>
+                            <th class="purchasecol1">Unit Price</th>
+                            <th class="purchasecol1">Total Price</th>
+                            <th class="purchasecol2">Remark</th>
+                            <th class="purchasecol1"></th>
+                        </tr>
 
-                    <?php
-                        if(mysqli_num_rows($result6) > 0)
-                        {
-                            while($row = mysqli_fetch_array($result6))
+                        <?php
+                            if(mysqli_num_rows($result6) > 0)
                             {
-                                $total_price = $row['quantity']*$row['price'];
-                    ?>
+                                while($row = mysqli_fetch_array($result6))
+                                {
+                                    $total_price = $row['quantity']*$row['price'];
+                        ?>
 
-                    <tr class="bodyrow">
-                        <td><input type="checkbox" value="<?php echo $row['order_item_id']; ?>" name="item[]"></td>
-                        <td><?php echo $row['order_item']; ?></td>
-                        <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
-                        <td><?php echo $row['category']; ?></td>
-                        <td><?php echo $row['quantity']; ?></td>
-                        <td><?php echo $row['price']; ?></td>
-                        <td><?php echo number_format((float)$total_price, 2, '.', ''); ?></td>
-                        <td><?php echo $row['remark']; ?></td>
-                        <td>
-                            <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
-                            
-                            <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-quantity="<?php echo $row['quantity']; ?>" class="btn btn-default btn-xs btnDelete editPPurchase" href="#editPPurchase"><span class="glyphicon glyphicon-pencil"></span></a>
-                        </td>
-                    </tr>
+                        <tr class="bodyrow">
+                            <td><input type="checkbox" value="<?php echo $row['order_item_id']; ?>" name="order_item[]"></td>
+                            <td><?php echo $row['order_item']; ?></td>
+                            <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
+                            <td><?php echo $row['category']; ?></td>
+                            <td><?php echo $row['quantity']; ?></td>
+                            <td><?php echo $row['price']; ?></td>
+                            <td><?php echo number_format((float)$total_price, 2, '.', ''); ?></td>
+                            <td><?php echo $row['remark']; ?></td>
+                            <td>
+                                <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
 
-                    <?php
+                                <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-quantity="<?php echo $row['quantity']; ?>" class="btn btn-default btn-xs btnDelete editPPurchase" href="#editPPurchase"><span class="glyphicon glyphicon-pencil"></span></a>
+                            </td>
+                        </tr>
+
+                        <?php
+                            }
                         }
-                    }
-                    else
-                    {
-                    ?>
+                        else
+                        {
+                        ?>
 
-                    <tr>
-                        <td colspan="8">No pending payments.</td>
-                    </tr>
+                        <tr>
+                            <td colspan="8">No pending payments.</td>
+                        </tr>
 
-                    <?php
-                        }
-                    ?>
-                    
-                    <tr>
-                        <td colspan="9">
-                            <a href="payment.php" class="btn btn-default btnAdd">Pay</a>
-                        </td>
-                    </tr>
-                </table>
+                        <?php
+                            }
+                        ?>
+
+                        <tr>
+                            <td colspan="9">
+                                <input type="submit" class="btn btn-default btnAdd" name="pay" value="Pay" onclick="return val();">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
         
             <div class="modal fade" id="editPPurchase" tabindex="-1" role="dialog" aria-labelledby="editPPurchaseTitle" aria-hidden="true">
@@ -349,7 +351,7 @@ $result10 = mysqli_query($con, $query10);
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-success btnSend" name="edit1" value="Save   " />
+                                <input type="submit" class="btn btn-success btnSend" name="edit1" value="Save" />
                             </div>
                         </form>
                     </div>
@@ -412,15 +414,13 @@ $result10 = mysqli_query($con, $query10);
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
                     <tr class="center">
-                        <th class="purchasecol1.5">Name</th>
-                        <th class="purchasecol1">Link</th>
+                        <th class="purchasecol2">Name</th>
+                        <th class="purchasecol2">Link</th>
                         <th class="purchasecol1">Category</th>
                         <th class="purchasecol05">Quantity</th>
                         <th class="purchasecol1">Unit Price</th>
                         <th class="purchasecol1">Total Price</th>
-                        <th class="purchasecol1.5">Remark</th>
-                        <th class="purchasecol1">Status</th>
-                        <th class="purchasecol1"></th>
+                        <th class="purchasecol2">Remark</th>
                     </tr>
 
                     <?php
@@ -439,7 +439,6 @@ $result10 = mysqli_query($con, $query10);
                         <td><?php echo $row['price']; ?></td>
                         <td><?php echo number_format((float)$total_price, 2, '.', ''); ?></td>
                         <td><?php echo $row['remark']; ?></td>
-                        <td><?php echo $row['status']; ?></td>
                     </tr>
 
                     <?php
@@ -448,9 +447,9 @@ $result10 = mysqli_query($con, $query10);
                     else
                     {
                     ?>
-                    
+
                     <tr>
-                        <td colspan="6">No purchases received.</td>
+                        <td colspan="8">No purchases received.</td>
                     </tr>
                     <?php
                         }
@@ -496,7 +495,7 @@ $result10 = mysqli_query($con, $query10);
                     ?>
 
                     <tr>
-                        <td colspan="6">No declined purchases.</td>
+                        <td colspan="8">No declined purchases.</td>
                     </tr>
 
                     <?php
@@ -534,26 +533,9 @@ $(document).on("click", ".editPPurchase", function () {
 });
 </script>
 <script>
-    /*Weight*/
-    $(document).ready(function() {
-        function recalculate() {
-            var sum = 0;
-
-            $("input[type=checkbox]:checked").each(function() {
-                sum += parseFloat($(this).attr("weight"));
-            });
-            document.getElementById('totalweight').value = sum;
-        }
-
-        $("input[type=checkbox]").change(function() {
-            recalculate();
-        });
-    });
-
-
     /*Validate*/
     function val(){
-        var items = document.getElementsByName('item[]');
+        var items = document.getElementsByName('order_item[]');
         var hasChecked = false;
 
         for (var i = 0; i < items.length; i++)

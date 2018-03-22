@@ -142,7 +142,9 @@ $result10 = mysqli_query($con, $query10);
 
                     <tr class="bodyrow">
                         <td><?php echo $row['order_item']; ?></td>
-                        <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
+                        <td>
+                            <a href="#" onclick="window.open('<?php echo $row['link']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,Width=550,Height=400');">View item</a>
+                        </td>
                         <td><?php echo $row['category']; ?></td>
                         <td><?php echo $row['quantity']; ?></td>
                         <td><?php echo $row['remark']; ?></td>
@@ -298,7 +300,9 @@ $result10 = mysqli_query($con, $query10);
                         <tr class="bodyrow">
                             <td><input type="checkbox" value="<?php echo $row['order_item_id']; ?>" name="order_item[]"></td>
                             <td><?php echo $row['order_item']; ?></td>
-                            <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
+                            <td>
+                                <a href="#" onclick="window.open('<?php echo $row['link']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,Width=550,Height=400');">View item</a>
+                            </td>
                             <td><?php echo $row['category']; ?></td>
                             <td><?php echo $row['quantity']; ?></td>
                             <td><?php echo $row['price']; ?></td>
@@ -383,7 +387,9 @@ $result10 = mysqli_query($con, $query10);
 
                     <tr class="bodyrow">
                         <td><?php echo $row['order_item']; ?></td>
-                        <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
+                        <td>
+                            <a href="#" onclick="window.open('<?php echo $row['link']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,Width=550,Height=400');">View item</a>
+                        </td>
                         <td><?php echo $row['category']; ?></td>
                         <td><?php echo $row['quantity']; ?></td>
                         <td><?php echo $row['price']; ?></td>
@@ -433,7 +439,9 @@ $result10 = mysqli_query($con, $query10);
 
                     <tr class="bodyrow">
                         <td><?php echo $row['order_item']; ?></td>
-                        <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
+                        <td>
+                            <a href="#" onclick="window.open('<?php echo $row['link']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,Width=550,Height=400');">View item</a>
+                        </td>
                         <td><?php echo $row['category']; ?></td>
                         <td><?php echo $row['quantity']; ?></td>
                         <td><?php echo $row['price']; ?></td>
@@ -479,7 +487,9 @@ $result10 = mysqli_query($con, $query10);
 
                     <tr class="bodyrow">
                         <td><?php echo $row['order_item']; ?></td>
-                        <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
+                        <td>
+                            <a href="#" onclick="window.open('<?php echo $row['link']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,Width=550,Height=400');">View item</a>
+                        </td>
                         <td><?php echo $row['category']; ?></td>
                         <td><?php echo $row['quantity']; ?></td>
                         <td><?php echo $row['remark']; ?></td>

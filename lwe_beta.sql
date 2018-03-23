@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2018 at 11:53 AM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Generation Time: Mar 23, 2018 at 12:18 PM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -34,9 +34,16 @@ CREATE TABLE `address` (
   `address` varchar(100) NOT NULL,
   `state` varchar(100) NOT NULL,
   `city` varchar(100) NOT NULL,
-  `country_id` int(11) NOT NULL,
+  `country` varchar(50) NOT NULL,
   `postcode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `address`
+--
+
+INSERT INTO `address` (`address_id`, `user_id`, `address`, `state`, `city`, `country`, `postcode`) VALUES
+(50, 1, 'cityone', 'Sarawak', 'kuching', 'Malaysia', 93350);
 
 -- --------------------------------------------------------
 
@@ -78,8 +85,7 @@ CREATE TABLE `country` (
 --
 
 INSERT INTO `country` (`country_id`, `country_name`, `country_currency`, `bank`, `account_no`, `account_name`) VALUES
-(1, 'MYR', '0.62', 'MYR bank', 123456789, 'Logistics Worldwide Express(M) Sdn Bhd'),
-(2, 'USD', '0.16', 'USD bank', 987654321, 'Logistics Worldwide Express(M) Sdn Bhd');
+(1, 'Malaysia', '0.62', 'Maybank', 123456789, 'Logistics Worldwide Express(M) Sdn Bhd');
 
 -- --------------------------------------------------------
 
@@ -95,9 +101,16 @@ CREATE TABLE `item` (
   `order_code` varchar(25) NOT NULL,
   `weight` decimal(10,2) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `shipping_id` int(11) NOT NULL,
+  `payment_id` int(11) DEFAULT NULL,
   `action` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `item`
+--
+
+INSERT INTO `item` (`item_id`, `slot_id`, `from_order`, `item_description`, `order_code`, `weight`, `datetime`, `payment_id`, `action`) VALUES
+(1, 1, 'Order Item', 'casing', '12345', '4.20', '2018-03-23 11:18:31', NULL, 'In');
 
 -- --------------------------------------------------------
 
@@ -126,7 +139,7 @@ CREATE TABLE `order_item` (
 
 INSERT INTO `order_item` (`order_item_id`, `payment_id`, `user_id`, `order_item`, `link`, `category`, `quantity`, `remark`, `price`, `status`, `order_code`, `comment`) VALUES
 (46, NULL, 1, 'test1', 'http://localhost/lwebuy_beta/user/main.php#purchase', 'Others', 2, 'lwe', NULL, 'Request', NULL, NULL),
-(47, NULL, 1, 'test2', 'https://github.com/Neelie5196/lwebuy_beta', 'Others', 4, 'git', '50.00', 'Ready to Pay', NULL, NULL),
+(47, NULL, 1, 'test2', 'https://github.com/Neelie5196/lwebuy_beta', 'Others', 4, 'git', '50.00', 'Ready to pay', NULL, NULL),
 (49, 761871, 1, 'test3', 'https://stackoverflow.com/questions/19633983/how-to-open-a-link-in-new-windownot-in-new-tab-in-html-css', 'Others', 1, 'google', '32.00', 'Paid', NULL, NULL),
 (50, NULL, 1, 'test4', 'www.youtube.com', 'Others', 2, 'youtube', '53.00', 'Received', NULL, NULL),
 (51, NULL, 1, 'test5', 'www.facebook.com', 'Others', 2, 'facebook', NULL, 'Declined', NULL, 'declined');
@@ -157,16 +170,15 @@ CREATE TABLE `payment` (
   `amount` varchar(10) NOT NULL,
   `file` varchar(150) DEFAULT NULL,
   `type` varchar(30) DEFAULT NULL,
-  `status` varchar(20) NOT NULL,
-  `from_shipping_id` int(11) DEFAULT NULL
+  `status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `payment`
 --
 
-INSERT INTO `payment` (`payment_id`, `user_id`, `datetime`, `title`, `amount`, `file`, `type`, `status`, `from_shipping_id`) VALUES
-(761871, 1, '2018-03-22 08:16:17', 'Pay Order', '32.00', '77664-receipt.jpg', 'image/jpeg', 'Waiting for Accept', NULL);
+INSERT INTO `payment` (`payment_id`, `user_id`, `datetime`, `title`, `amount`, `file`, `type`, `status`) VALUES
+(761871, 1, '2018-03-22 08:16:17', 'Pay Order', '32.00', '77664-receipt.jpg', 'image/jpeg', 'Waiting for Accept');
 
 -- --------------------------------------------------------
 
@@ -185,7 +197,7 @@ CREATE TABLE `point` (
 --
 
 INSERT INTO `point` (`point_id`, `user_id`, `point`) VALUES
-(1, 1, '999593.00');
+(1, 1, '9775.00');
 
 -- --------------------------------------------------------
 
@@ -204,7 +216,8 @@ CREATE TABLE `rate` (
 --
 
 INSERT INTO `rate` (`rate_id`, `rate_name`, `rate`) VALUES
-(1, 'LWE point', '0.50');
+(1, 'LWE point', '0.50'),
+(2, '1kg', '50.00');
 
 -- --------------------------------------------------------
 
@@ -240,12 +253,16 @@ CREATE TABLE `shipping` (
   `user_id` int(11) NOT NULL,
   `receipient_name` varchar(50) NOT NULL,
   `receipient_contact` varchar(15) NOT NULL,
+  `remark` varchar(255) DEFAULT NULL,
   `address_id` int(11) NOT NULL,
   `weight` decimal(10,2) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` varchar(20) NOT NULL,
   `status` text NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `tracking_code` varchar(25) NOT NULL
+  `tracking_code` varchar(25) DEFAULT NULL,
+  `payment_id` int(11) NOT NULL,
+  `feedback` text,
+  `topup` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -312,6 +329,45 @@ CREATE TABLE `slot` (
   `status` varchar(10) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `slot`
+--
+
+INSERT INTO `slot` (`slot_id`, `slot_code`, `slot_num`, `status`, `user_id`) VALUES
+(1, 1000, 1, 'In Use', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `state`
+--
+
+CREATE TABLE `state` (
+  `state_id` int(11) NOT NULL,
+  `state_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `state`
+--
+
+INSERT INTO `state` (`state_id`, `state_name`) VALUES
+(1, 'Selangor'),
+(2, 'Kuala Lumpur'),
+(3, 'Sarawak'),
+(4, 'Johor'),
+(5, 'Penang'),
+(6, 'Sabah'),
+(7, 'Perak'),
+(8, 'Pahang'),
+(9, 'Negeri Sembilan'),
+(10, 'Kedah'),
+(11, 'Melaka'),
+(12, 'Terengganu'),
+(13, 'Kelantan'),
+(14, 'Labuan'),
+(15, 'Perlis');
 
 -- --------------------------------------------------------
 
@@ -449,6 +505,18 @@ ALTER TABLE `shipping_update_summary`
   ADD PRIMARY KEY (`sum_id`);
 
 --
+-- Indexes for table `slot`
+--
+ALTER TABLE `slot`
+  ADD PRIMARY KEY (`slot_id`);
+
+--
+-- Indexes for table `state`
+--
+ALTER TABLE `state`
+  ADD PRIMARY KEY (`state_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -474,7 +542,7 @@ ALTER TABLE `work_station`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -492,7 +560,7 @@ ALTER TABLE `country`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `order_item`
@@ -516,7 +584,7 @@ ALTER TABLE `point`
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
-  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `request`
@@ -528,7 +596,7 @@ ALTER TABLE `request`
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
-  MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `shipping_update_details`
@@ -541,6 +609,18 @@ ALTER TABLE `shipping_update_details`
 --
 ALTER TABLE `shipping_update_summary`
   MODIFY `sum_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `slot`
+--
+ALTER TABLE `slot`
+  MODIFY `slot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `state`
+--
+ALTER TABLE `state`
+  MODIFY `state_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`

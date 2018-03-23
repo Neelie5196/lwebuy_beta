@@ -76,7 +76,7 @@ $results4 = mysqli_fetch_assoc($result4);
                 </div>
             </div>
             <section class="content">
-                <form action="payments.php" method="post" class="botmar">
+                <form action="payments.php" method="post" class="botmar" onsubmit="payments_popup(this)">
                     <div class="row botmar">
                         <div class="col-xs-12 col-md-12 col-lg-12">
                             <strong>Address</strong>
@@ -307,4 +307,10 @@ $results4 = mysqli_fetch_assoc($result4);
         }
         return true;
     }
+</script>
+<script>
+function payments_popup(form) {
+    window.open('', 'paymentspopup', 'fullscreen=yes,resizeable,scrollbars');
+    form.target = 'paymentspopup';
+}
 </script>

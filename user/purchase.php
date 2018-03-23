@@ -276,7 +276,7 @@ $result10 = mysqli_query($con, $query10);
         
         <div id="ppayment">
             <div class="col-xs-12 col-md-12 col-lg-12">
-                <form action="payment.php" method="post">
+                <form action="payment.php" method="post" onsubmit="payment_popup(this)">
                     <table class="purchasetable">
                         <tr class="center">
                             <th class="purchasecol05"></th>
@@ -564,4 +564,10 @@ $(document).on("click", ".editPPurchase", function () {
         }
         return true;
     }
+</script>
+<script>
+function payment_popup(form) {
+    window.open('', 'paymentpopup', 'fullscreen=yes,resizeable,scrollbars');
+    form.target = 'paymentpopup';
+}
 </script>

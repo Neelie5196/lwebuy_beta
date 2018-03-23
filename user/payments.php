@@ -73,7 +73,7 @@ if(isset($_POST['submit']))
 		?>
 		<script>
 		alert('Successfully Submit');
-        window.location.href='main.php#ship';
+        window.parent.location.reload();window.close();
         </script>
 		<?php
 	}
@@ -103,7 +103,7 @@ if(isset($_POST['point_pay']))
     ?>
     <script>
     alert('Successfully Submit');
-    window.location.href='main.php#ship';
+    window.parent.location.reload();window.close();
     </script>
     <?php
 }

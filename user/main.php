@@ -11,6 +11,9 @@
 
         <meta name="viewport" content="width=device-width, initialscale=1.0"/>
 
+        <!-- Angularjs -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -35,16 +38,6 @@
         
         <div class="row userrow2 center" id="mainview">
             
-        </div>
-        
-        <div class="row userrow4">
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                <p>
-                    <a href="contact1.php"><span class="glyphicon glyphicon-envelope btnfoot" title="Email us"></span></a>
-                    <a href="contact2.php"><span class="glyphicon glyphicon-earphone btnfoot" title="Call us"></span></a>
-                    Copyright &copy; 2018 Logistics Worldwide Express. All Rights Reserved | Web Design by Clement, Samuel & Eileen
-                </p>
-            </div>
         </div>
     </body>
 </html>

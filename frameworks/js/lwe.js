@@ -15,6 +15,14 @@ $(document).ready(function(){
         {
             $("#mainview").load('inventory.php');
         }
+    else if (window.location.hash == "#user")
+        {
+            $("#mainview").load('user.php');
+        }
+    else if (window.location.hash == "#credit")
+        {
+            $("#mainview").load('credit.php');
+        }
     else
         {
             $("#mainview").load('dashboard.php');
@@ -48,6 +56,18 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("#btninventory").click(function(){
         $("#mainview").load('inventory.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnuser").click(function(){
+        $("#mainview").load('user.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btncredit").click(function(){
+        $("#mainview").load('credit.php');
     });
 });
 
@@ -153,4 +173,61 @@ function funcSDecline() {
     document.getElementById("sproceed").style.display = "none";
     document.getElementById("sreceive").style.display = "none";
     document.getElementById("sdecline").style.display = "block";
+}
+
+function funcShowChgPassword() {
+    document.getElementById("chgPass").style.display = "block";
+    document.getElementById("btnShowChg").style.display = "none";
+    document.getElementById("curpassword").required = true;
+    document.getElementById("newpassword").required = true;
+    document.getElementById("renewpassword").required = true;
+}
+
+function funcHideChgPassword() {
+    document.getElementById("chgPass").style.display = "none";
+    document.getElementById("btnShowChg").style.display = "block";
+    document.getElementById("curpassword").required = false;
+    document.getElementById("newpassword").required = false;
+    document.getElementById("renewpassword").required = false;
+}
+
+
+function funcShowChgPasswords() {
+    document.getElementById("chgPasss").style.display = "block";
+    document.getElementById("btnShowChgs").style.display = "none";
+    document.getElementById("curpasswords").required = true;
+    document.getElementById("newpasswords").required = true;
+    document.getElementById("renewpasswords").required = true;
+}
+
+function funcHideChgPasswords() {
+    document.getElementById("chgPasss").style.display = "none";
+    document.getElementById("btnShowChgs").style.display = "block";
+    document.getElementById("curpasswords").required = false;
+    document.getElementById("newpasswords").required = false;
+    document.getElementById("renewpasswords").required = false;
+}
+
+function checkPass() {
+
+    if (document.getElementById("newpassword").value == document.getElementById("renewpassword").value)
+        {
+            document.getElementById("passno").style.display = "none";
+        }
+    else
+        {
+            document.getElementById("passno").style.display = "block";
+        }
+}
+
+function checkPasss() {
+
+    if (document.getElementById("newpasswords").value == document.getElementById("renewpasswords").value)
+        {
+            document.getElementById("passnos").style.display = "none";
+        }
+    else
+        {
+            document.getElementById("passnos").style.display = "block";
+        }
 }

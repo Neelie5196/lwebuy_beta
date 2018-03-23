@@ -96,17 +96,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 <div class="logincontainer">
                     <form class="form-inline" action="register.php" method="post">
                         <p>
-                            <label for="fname">First name</label><br/>
+                            <label for="fname">First Name</label><br/>
                             <input type="text" class="formfield" id="fname" name="fname" required autofocus/>
                         </p>
 
                         <p>
-                            <label for="lname">Last name</label><br/>
+                            <label for="lname">Last Name</label><br/>
                             <input type="text" class="formfield" id="lname" name="lname" required/>
                         </p>
 
                         <p>
-                            <label for="contact">Contact number </label><br/>
+                            <label for="contact">Contact Number </label><br/>
                             <input type="text" class="formfield" id="contact" name="contact" required/>
                         </p>
                         
@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         </p>
 
                         <p>
-                            <label for="repassword">Retype password </label><br/>
+                            <label for="repassword">Retype Password </label><br/>
                             <input type="password" class="formfield" id="repassword" name="repassword" data-ng-model="repassword" required/><br/>
                             <span data-ng-show="password!=repassword">Password does not match</span>
                         </p>

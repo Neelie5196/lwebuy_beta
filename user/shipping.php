@@ -271,7 +271,7 @@ if(isset($_POST['feedback']))
                         <td><?php echo $row['weight']; ?></td>
                         <td><?php echo $row['price']; ?></td>
                         <td>
-                            <a class="btn btn-default btn-xs" href="#"><?php echo $row['tracking_code']; ?></a>
+                            <a class="btn btn-default btn-xs" href="javascript: void(0)" onclick="window.open('viewtracking.php?tracking_code=<?php echo $row['tracking_code']; ?>','windowname1','fullscreen=yes'); return false;"><?php echo $row['tracking_code']; ?></a>
                         </td>
                     </tr>
 

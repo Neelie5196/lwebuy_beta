@@ -106,6 +106,7 @@ $result10 = mysqli_query($con, $query10);
     <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Purchase</h2>
     
     <h2 class="smh2 pagetitle hidden-md hidden-lg">Purchase</h2>
+    
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-12">
             <table class="tblTab">
@@ -143,7 +144,7 @@ $result10 = mysqli_query($con, $query10);
                     <tr class="bodyrow">
                         <td><?php echo $row['order_item']; ?></td>
                         <td>
-                            <a href="#" onclick="window.open('<?php echo $row['link']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,Width=550,Height=400');">View item</a>
+                            <a href="#" class="btntab" onclick="window.open('<?php echo $row['link']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,Width=550,Height=400');">View item</a>
                         </td>
                         <td><?php echo $row['category']; ?></td>
                         <td><?php echo $row['quantity']; ?></td>
@@ -151,7 +152,7 @@ $result10 = mysqli_query($con, $query10);
                         <td>
                             <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
                             
-                            <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-link="<?php echo $row['link']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btn-default btn-xs btnDelete editRPurchase" href="#editRPurchase"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-link="<?php echo $row['link']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btn-default btn-xs btnDelete" href="#editRPurchase"><span class="glyphicon glyphicon-pencil"></span></a>
                         </td>
                     </tr>
 

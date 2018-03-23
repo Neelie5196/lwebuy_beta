@@ -175,6 +175,16 @@ function funcSDecline() {
     document.getElementById("sdecline").style.display = "block";
 }
 
+function funcCRequest() {
+    document.getElementById("crequest").style.display = "block";
+    document.getElementById("chistory").style.display = "none";
+}
+
+function funcCHistory() {
+    document.getElementById("crequest").style.display = "none";
+    document.getElementById("chistory").style.display = "block";
+}
+
 function funcShowChgPassword() {
     document.getElementById("chgPass").style.display = "block";
     document.getElementById("btnShowChg").style.display = "none";
@@ -190,7 +200,6 @@ function funcHideChgPassword() {
     document.getElementById("newpassword").required = false;
     document.getElementById("renewpassword").required = false;
 }
-
 
 function funcShowChgPasswords() {
     document.getElementById("chgPasss").style.display = "block";

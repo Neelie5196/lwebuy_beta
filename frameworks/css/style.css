@@ -181,6 +181,24 @@ body {
     text-decoration: none;
 }
 
+.btnfile, .btnfile:focus {
+    color: #8bb836!important;
+    font-weight: normal!important;
+    outline: none!important;
+    border: solid 1px #8bb836;
+    background: none!important;
+}
+
+.btnfile:hover {
+    color: #fff!important;
+    outline: none!important;
+    background: #8bb836!important;
+}
+
+input[type="file"] {
+    display: none;
+}
+
 .glyphicon {
     color: #fff;
     font-size: 150%;
@@ -515,6 +533,12 @@ body {
     width: 50%;    
 }
 
+.tblCTab {
+    margin-left: 5%;
+    margin-bottom: 1%;
+    width: 20%;    
+}
+
 .wborder {
     border-right: solid 1px #2f9142;
 }
@@ -523,7 +547,7 @@ body {
     display: block;
 }
 
-#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #spayment, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos {
+#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #spayment, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory {
     display: none;
 }
 

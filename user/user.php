@@ -19,9 +19,9 @@ if (isset($_POST['saveprofile']))
     $lname = $_POST['lname'];
     $email = $_POST['email'];
     $contact = $_POST['contact'];
-	$cp = $_POST['cp'];
-    $np = $_POST['np'];
-    $cnp = $_POST['cnp'];
+	$cp = $_POST['curpassword'];
+    $np = $_POST['newpassword'];
+    $cnp = $_POST['renewpassword'];
 	
     $result = mysqli_query($con, "UPDATE users SET fname='$fname', lname='$lname', contact='$contact', email='$email' WHERE user_id=$user_id") or die(mysqli_error($con));
 	
@@ -32,7 +32,7 @@ if (isset($_POST['saveprofile']))
         {
             if($np==$cnp)
             {
-				$password = $_POST['np'];
+				$password = $_POST['newpassword'];
 				$password = password_hash($password, PASSWORD_DEFAULT); 
                 $result = mysqli_query($con, "UPDATE users SET password='$password' WHERE user_id=$user_id") or die(mysqli_error($con));
             }
@@ -51,7 +51,7 @@ if (isset($_POST['saveprofile']))
             ?>
             <script>
             alert('Make sure new password different with old password.');
-            window.location.href='main.php#user';
+			window.location.href='main.php#user';
             </script>
             <?php
         }
@@ -99,17 +99,17 @@ if (isset($_POST['saveprofile']))
             <div id="chgPass">
                 <p>
                     <label for="password">Current Password </label><br/>
-                    <input type="password" class="formfield" id="cp" name="cp"value="<?php echo $results['password']; ?>" readonly required/>
+                    <input type="password" class="formfield" id="curpassword" name="curpassword"value="<?php echo $results['password']; ?>" readonly required/>
                 </p>
 
                 <p>
                     <label for="password">New Password </label><br/>
-                    <input type="password" class="formfield" id="np" name="np" onkeyup="checkPass()" />
+                    <input type="password" class="formfield" id="newpassword" name="newpassword" onkeyup="checkPass()" />
                 </p>
 
                 <p>
                     <label for="repassword">Retype New Password </label><br/>
-                    <input type="password" class="formfield" id="cnp" name="cnp" onkeyup="checkPass()" /><br/>
+                    <input type="password" class="formfield" id="renewpassword" name="renewpassword" onkeyup="checkPass()" /><br/>
                     <span id="passno">Password does not match</span>
                 </p>
                 
@@ -124,22 +124,22 @@ if (isset($_POST['saveprofile']))
         <form class="form-inline left" action="user.php" method="post">
             <p>
                 <label for="fname">First name</label><br/>
-                <input type="text" class="formfield" id="fname" name="fname" required/>
+                <input type="text" class="formfield" id="fname" name="fname" value="<?php echo $results['fname']; ?>" required/>
             </p>
 
             <p>
                 <label for="lname">Last name</label><br/>
-                <input type="text" class="formfield" id="lname" name="lname" required/>
+                <input type="text" class="formfield" id="lname" name="lname" value="<?php echo $results['lname']; ?>" required/>
             </p>
 
             <p>
                 <label for="contact">Contact number </label><br/>
-                <input type="text" class="formfield" id="contact" name="contact" required/>
+                <input type="text" class="formfield" id="contact" name="contact" value="<?php echo $results['contact']; ?>" required/>
             </p>
 
             <p>
                 <label for="email">Email </label><br/>
-                <input type="email" class="formfield" id="email" name="email" required/>
+                <input type="email" class="formfield" id="email" name="email" value="<?php echo $results['email']; ?>" required/>
             </p>
             
             <p><button type="button" class="btn btn-link btntab" onclick="funcShowChgPasswords()" id="btnShowChgs">Click here to change password</button></p>
@@ -147,17 +147,17 @@ if (isset($_POST['saveprofile']))
             <div id="chgPasss">
                 <p>
                     <label for="password">Current Password </label><br/>
-                    <input type="password" class="formfield" id="curpasswords" name="curpassword"/>
+                    <input type="password" class="formfield" id="curpasswords" name="curpassword" value="<?php echo $results['password']; ?>"/>
                 </p>
 
                 <p>
                     <label for="password">New Password </label><br/>
-                    <input type="password" class="formfield" id="newpasswords" name="newpassword" onkeyup="checkPasss()" />
+                    <input type="password" class="formfield" id="newpassword" name="newpassword" onkeyup="checkPasss()" />
                 </p>
 
                 <p>
                     <label for="repassword">Retype New Password </label><br/>
-                    <input type="password" class="formfield" id="renewpasswords" name="renewpassword" onkeyup="checkPasss()" /><br/>
+                    <input type="password" class="formfield" id="renewpassword" name="renewpassword" onkeyup="checkPasss()" /><br/>
                     <span id="passnos">Password does not match</span>
                 </p>
                 

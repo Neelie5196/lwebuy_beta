@@ -1,3 +1,7 @@
+<?php
+$type = $_SESSION['type'];
+?>
+
 <nav class="navbar navbar-default userbar">
     <div class="navbar-header">
         <a class="navbar-brand" href="#home" id="btnlogo"><img src="../resources/img/logo.png" alt="logo" width="50%"/></a>
@@ -8,6 +12,10 @@
         <li><a href="#purchase" id="btnpurchase">Purchase</a></li>
         <li><a href="#inventory" id="btninventory">Inventory</a></li>
         <li><a href="#ship" id="btnship">Ship</a></li>
+        
+        <?php if($type == 'admin') { ?>
+        <li><a href="#accounts" id="btnaccount">Accounts</a></li>
+        <?php } ?>
     </ul>
     
     <ul class="nav navbar-nav navbar-right useritem right">

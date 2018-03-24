@@ -676,3 +676,25 @@ input[type="file"] {
 .paytrans {
     margin: 10%;
 }
+
+.bigadstats {
+    margin: 5% auto 0 auto;
+    width: 80%;
+}
+
+.bigadstats p, .bigadstats h6, .smadstats p, .smadstats h6 {
+    color: #b1b2b4;
+}
+
+.bigadstats h6 {
+    font-size: 900%;
+}
+
+.smadstats {
+    width: 90%;
+    margin: 1% auto 0 auto;
+}
+
+.smadstats h6 {
+    font-size: 400%;
+}

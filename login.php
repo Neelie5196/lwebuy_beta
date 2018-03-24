@@ -38,14 +38,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					$result = mysqli_query($con, "UPDATE users
 													SET login_status = 'Online'
 													WHERE user_id = '$_SESSION[user_id]';");
-                    header("location: admin/dashboard.php");
+                    header("location: admin/main.php");
                 }
                 else if($user['type'] == 'staff')
                 {	
 					$result = mysqli_query($con, "UPDATE users
 								SET login_status = 'Online'
 								WHERE user_id = '$_SESSION[user_id]';");
-                    header("location: admin/dashboard.php");
+                    header("location: admin/main.php");
                 }
                 else if($user['type'] == 'customer')
                 {

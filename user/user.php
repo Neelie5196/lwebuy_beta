@@ -94,7 +94,7 @@ if (isset($_POST['saveprofile']))
                 <input type="email" class="formfield" id="email" name="email" value="<?php echo $results['email']; ?>" required/>
             </p>
 
-            <p><button class="btn btn-link btntab" onclick="funcShowChgPassword()" id="btnShowChg">Click here to change password</button></p>
+            <p><button type="button" class="btn btn-link btntab" onclick="funcShowChgPassword()" id="btnShowChg">Click here to change password</button></p>
             
             <div id="chgPass">
                 <p>
@@ -113,7 +113,7 @@ if (isset($_POST['saveprofile']))
                     <span id="passno">Password does not match</span>
                 </p>
                 
-                <p><button class="btn btn-link btntab" onclick="funcHideChgPassword()">Click here hide password section</button></p>
+                <p><button type="button" class="btn btn-link btntab" onclick="funcHideChgPassword()">Click here hide password section</button></p>
             </div>
             
             <p><button type="submit" class="btn btn-default btnAdd" name="saveprofile">Save</button></p>
@@ -142,7 +142,7 @@ if (isset($_POST['saveprofile']))
                 <input type="email" class="formfield" id="email" name="email" required/>
             </p>
             
-            <p><button class="btn btn-link btntab" onclick="funcShowChgPasswords()" id="btnShowChgs">Click here to change password</button></p>
+            <p><button type="button" class="btn btn-link btntab" onclick="funcShowChgPasswords()" id="btnShowChgs">Click here to change password</button></p>
             
             <div id="chgPasss">
                 <p>
@@ -161,7 +161,7 @@ if (isset($_POST['saveprofile']))
                     <span id="passnos">Password does not match</span>
                 </p>
                 
-                <p><button class="btn btn-link btntab" onclick="funcHideChgPasswords()">Click here hide password section</button></p>
+                <p><button type="button" class="btn btn-link btntab" onclick="funcHideChgPasswords()">Click here hide password section</button></p>
             </div>
 
             <p><button type="submit" class="btn btn-default btnAdd" name="saveprofile">Save</button></p>

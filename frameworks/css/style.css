@@ -195,6 +195,27 @@ body {
     background: #8bb836!important;
 }
 
+.btnpayment {
+    background: rgba(139, 184, 54, 0.3);
+    border-radius: 0;
+    width: 100%;
+    padding-top: 25%;
+    padding-bottom: 25%;
+}
+
+.btnpayment:hover {
+    background: rgba(139, 184, 54, 0.6);
+}
+
+.btnpayment .glyphicon {
+    color: #2f9142!important;
+    font-size: 200%;
+}
+
+.btnpayment:hover .glyphicon {
+    color: #fff!important;
+}
+
 input[type="file"] {
     display: none;
 }
@@ -228,11 +249,6 @@ input[type="file"] {
 
 .glyphicon-pencil:hover, .glyphicon-edit:hover {
     color: #8bb836!important;
-}
-
-.dollaricon {
-    font-size: 120%;
-    font-weight: bold;
 }
 
 .loginrow1 {
@@ -305,6 +321,24 @@ input[type="file"] {
 
 .profilecontainer .formfield:focus, .profilecontainers .formfield:focus{
     border-bottom: solid 0.5px #2f9142;
+}
+
+.paymentcontainer {
+    color: #2f9142;
+    background: #f4f9eb;
+    margin-top: 1%;
+}
+
+.pdetailscontainer {
+    color: #8bb836;
+    background: #f4f9eb;
+    margin-top: 1%;
+    margin-left: 1%;
+    border: solid 2px #8bb836;
+}
+
+.btnpaymentcontainer > div {
+    padding: 0 0.5%;
 }
 
 .formfield {
@@ -559,4 +593,28 @@ input[type="file"] {
     padding: 10px;
     width: 200px;
     height: 140px;
+}
+
+.pricetable {
+    width: 100%;
+    margin-top: 10%;
+    margin-bottom: 3%;
+}
+
+.itemstable {
+    width: 100%;
+    margin-bottom: 3%;
+}
+
+.ptoprow {
+    border-top: solid 1px #8bb836;
+    border-bottom: solid 1px #8bb836;
+}
+.itemstable caption {
+    color: #8bb836;
+}
+
+.coltotal {
+    border-top: solid 1px #8bb836;
+    border-bottom: solid 1px #8bb836;
 }

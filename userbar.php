@@ -11,7 +11,7 @@
     </ul>
     
     <ul class="nav navbar-nav navbar-right useritem right">
-        <li><a id="btncredit" href="#credit"><span class="dollaricon">$</span></a></li>
+        <li><a id="btncredit" href="#credit"><span class="glyphicon glyphicon-piggy-bank"></span></a></li>
         <li><a id="btnuser" href="#user"><span class="glyphicon glyphicon-user"></span></a></li>
         <li><a href="../logout.php"><span class="glyphicon glyphicon-log-out"></span></a></li>
     </ul>

@@ -1,4 +1,5 @@
 <?php
+/*
 
 require_once '../connection/config.php';
 session_start();
@@ -39,6 +40,7 @@ $query4 = "SELECT *
           WHERE rate_name = '1kg'";
 $result4 = mysqli_query($con, $query4);
 $results4 = mysqli_fetch_assoc($result4);
+*/
 
 
 
@@ -68,224 +70,206 @@ $results4 = mysqli_fetch_assoc($result4);
         <![endif]-->
     </head>
 
-    <body background="../resources/img/bg.jpg" ng-app="">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <h2>Shipping Details</h2>
-                </div>
+    <body class="userbg" ng-app="">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12 center">
+                <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Shipping Details</h2>
+                
+                <h2 class="smh2 pagetitle hidden-md hidden-lg">Shipping Details</h2>
             </div>
-            <section class="content">
-                <form action="payments.php" method="post" class="botmar" onsubmit="payments_popup(this)">
-                    <div class="row botmar">
-                        <div class="col-xs-12 col-md-12 col-lg-12">
-                            <strong>Address</strong>
-                        </div>
-                    </div>
-                    <div class="row botmar">
-                        <div class="col-xs-12 col-md-12 col-lg-12">
+        </div>
+        
+        <div class="row">
+            <form action="shippingdetail.php" method="post">
+                <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-2 col-lg-push-2 shipformcontainer">
+                    <p>
+                        <label>Recipient Name: </label><br/>
+                        <input class="formfield" name="name" type="text" required />
+                    </p>
+
+                    <p>
+                        <label>Recipient Contact: </label><br/>
+                        <input class="formfield" name="contact" type="text" required />
+                    </p>
+
+                    <p>
+                        <label>Address:</label><br/>
+                        <select class="formselects">
                             <?php
-                                if(mysqli_num_rows($result) > 0)
+                            if(mysqli_num_rows($result) > 0)
+                            {
+                                while($row = mysqli_fetch_array($result))
                                 {
-                                    while($row = mysqli_fetch_array($result))
-                                    {
-                                        ?>
-                                            <div class="col-xs-2 col-md-2 col-lg-2 adcontainer">
-                                                <div>
-                                                    <p>
-                                                        <?php echo $row["address"]; ?>,<br/>
-                                                        <?php echo $row["postcode"]; ?>, <?php echo $row["city"]; ?>,<br/>
-                                                        <?php echo $row["state"]; ?>, <?php echo $row["country"]; ?><br/>
-                                                    </p>
-                                                    <p><input type="checkbox" value="<?php echo $row["address_id"]; ?>" name="address[]" class="address"></p>
-                                                </div>
-                                            </div>
-                                        <?php
-                                    }
-                                }
-                            ?>
-                            <div class="col-xs-2 col-md-2 col-lg-2 adcontainer">
-                                <br/>
-                                <br/>
-                                <button class="btn btn-default" type="button" data-toggle="modal" data-target="#addAddress">+</button>
-                            </div>
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="row botmar">
-                        <div class="col-xs-12 col-md-12 col-lg-12">
-                            <strong>Recipient Information</strong>
-                        </div>
-                    </div>
-                    <div class="row botmar">
-                        <div class="col-xs-12 col-md-6 col-lg-4">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <p><input class="formfield" name="name" type="text" placeholder="Recipient Name" required /></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-md-6 col-lg-4">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <p><input class="formfield" name="contact" type="text" placeholder="Recipient Contact" required /></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-md-6 col-lg-4">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <p><input class="formfield" name="remark" type="text" placeholder="Remarks" value="" /></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="row botmar">
-                        <div class="col-xs-12 col-md-8 col-lg-8">
-                            <strong>Shipping Item</strong>
-                        </div>
-                        <div class="col-xs-12 col-md-4 col-lg-4">
-                            <strong>Shipping Price</strong>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <center>
+                                    ?>
+
+                            <option class="formoptions"></option>
+
                             <?php
-                                if(mysqli_num_rows($result3) > 0)
-                                    {
+                                }
+                            }
                             ?>
-                            <div class="col-xs-8 col-md-8 col-lg-8 jumbotron">
-                                <table class="purchasetable">
-                                    <tr class="center">
-                                        <th>Name</th>
-                                        <th>Order Code</th>
-                                        <th>Received On</th>
-                                        <th>Weight (kg)</th>
-                                    </tr>
+                        </select>
+                        <button class="btn btnGo" type="button" data-toggle="modal" data-target="#addAddress">Add address</button>
+                    </p>
+
+                    <p>
+                        <label>Remarks: </label><br/>
+                        <input class="formfield" name="remark" type="text" />
+                    </p>
+                    
+                    <p><input type="submit" class="btn btnAdd" name="pay" value="Pay Now" onclick="return val();"></p>
+                </div>
+
+
+                <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-4 col-lg-push-2 pdetailscontainer">
+                    <h3>Selected Items</h3>
+
+                    <?php
+                        if(mysqli_num_rows($result3) > 0)
+                        {
+                    ?>
+
+                    <table class="itemstable center">
+                        <tr class="ptoprow">
+                            <td>Name</td>
+                            <td>Order Code</td>
+                            <td>Received On</td>
+                            <td>Weight (kg)</td>
+                        </tr>
+
+                        <?php
+                            while($row = mysqli_fetch_array($result3))
+                            {
+                        ?>
+
+                        <tr>
+                            <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
+                            <td><p><?php echo $row['item_description']; ?></p></td>
+                            <td><p><?php echo $row['order_code']; ?></p></td>
+                            <td><?php echo $row['datetime']; ?></td>
+                            <td><p><?php echo $row['weight']; ?></p></td>
+                        </tr>
+
+                        <?php
+                            }
+                        ?>
+
+                        <tr>
+                            <td colspan="3" class="left"><p>Total weight (kg)</p></td>
+                            <td class="coltotal">
+                                <p>
+                                    <input type="hidden" id="totalweight" name="totalweight" class="form-control" value="<?php echo $totalweight; ?>">
+                                    <?php echo $totalweight; ?>
+                                </p>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td colspan="3" class="left"><p>Total Price (MYR)</p></td>
+                            <td class="">
+                                <p>
+                                    <?php
+                                        $over = '0';
+                                        $over1 = '0.5';
+                                        if($totalweight <= 1)
+                                        {    
+                                    ?>
+
+                                    <input type="hidden" name="pricetotal" class="form-control" value="<?php echo $results4['rate']; ?>">
 
                                     <?php
+                                            echo $results4['rate'];
+                                        }
+                                        else
+                                        {
+                                            while ($over < $totalweight)
+                                            {
+                                                $over += $over1;
+                                            }
+                                    ?>
+
+                                    <input type="hidden" name="pricetotal" class="form-control" value="<?php echo number_format((float)$over*$results4['rate'], 2, '.', ''); ?>">
+
+                                    <?php
+                                            echo number_format((float)$over*$results4['rate'], 2, '.', '');
+                                        }
+                                    ?>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <?php
+                        }
+                    ?>
+                </div>
+            </form>
+            
+            <div class="modal fade" id="addAddress" tabindex="-1" role="dialog" aria-labelledby="addAddressTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="shippingdetail.php" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addShippingTitle">New Address</h5>
+                            </div>
+
+
+                            <div class="modal-body left">
+                                <?php
+                                    if(mysqli_num_rows($result3) > 0)
+                                    {
                                         while($row = mysqli_fetch_array($result3))
                                         {
-                                    ?>
-
-                                    <tr class="bodyrow">
-                                        <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
-                                        <td><?php echo $row['item_description']; ?></td>
-                                        <td><?php echo $row['order_code']; ?></td>
-                                        <td><?php echo $row['datetime']; ?></td>
-                                        <td><?php echo $row['weight']; ?></td>
-                                    </tr>
-                                    <?php
+                                            ?>
+                                                <input class="formfield" name="item[]" type="hidden" value="<?php echo $row['item_id']; ?>" />
+                                            <?php
                                         }
-                                    ?>
-                                    <tr>
-                                        <td>
-                                            <input type="hidden" id="totalweight" name="totalweight" class="form-control" value="<?php echo $totalweight; ?>">
-                                            <td colspan="8" style="text-align:right;"><strong>Total Weight:</strong> <h3><?php echo $totalweight; ?>KG</h3>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="col-xs-4 col-md-4 col-lg-4 jumbotron">
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-12 col-lg-12">
-                                        <?php
-                                            $over = '0';
-                                            $over1 = '0.5';
-                                            if($totalweight <= 1){
-                                        ?>
-                                            <input type="hidden" name="pricetotal" class="form-control" value="<?php echo $results4['rate']; ?>">
-                                            <h4>Total Shipping Fee: RM <?php echo $results4['rate']; ?></h4>
-                                        <?php
-                                            }else{
-                                                while ($over < $totalweight){
-                                                    $over += $over1;
-                                                }
-                                        ?>
-                                            <input type="hidden" name="pricetotal" class="form-control" value="<?php echo number_format((float)$over*$results4['rate'], 2, '.', ''); ?>">
-                                            <h4>Total Shipping Fee</h4>
-                                            <h3><small>RM </small><?php echo number_format((float)$over*$results4['rate'], 2, '.', ''); ?></h3>
-                                        <?php
-                                            }   
-                                        ?>
-                                        <br/>
-                                        <input type="submit" class="btn btn-success" name="pay" value="Pay Now" onclick="return val();">
-                                    </div>
-                                </div>
-                            </div>
-                            <?php
-                                }
-                            ?>
-                        </center>
-                    </div>
-                </form>
-                
-            </section>
-        </div>
-        <div class="modal fade" id="addAddress" tabindex="-1" role="dialog" aria-labelledby="addAddressTitle" aria-hidden="true">
-             <div class="modal-dialog" role="document">
-                 <div class="modal-content">
-                     <form action="shippingdetail.php" method="post">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addShippingTitle">New Address</h5>
-                        </div>
-
-
-                        <div class="modal-body left">
-                            
-                            <?php
-                                if(mysqli_num_rows($result3) > 0)
-                                {
-                                    while($row = mysqli_fetch_array($result3))
-                                    {
-                                        ?>
-                                            <input class="formfield" name="item[]" type="hidden" value="<?php echo $row['item_id']; ?>" />
-                                        <?php
                                     }
-                                }
-                            ?>
-                            <input type="hidden" name="totalweight" class="form-control" value="<?php echo $totalweight; ?>">
-                            
-                            <p><input class="formfield" name="address" type="text" placeholder="Address" required /></p>
+                                ?>
+                                <input type="hidden" name="totalweight" class="form-control" value="<?php echo $totalweight; ?>">
 
-                            <p><input class="formfield" name="postcode" type="text" placeholder="Postcode" required /></p>
+                                <p><input class="formfield" name="address" type="text" placeholder="Address" required /></p>
 
-                            <p><input class="formfield" name="city" type="text" placeholder="City" required /></p>
+                                <p><input class="formfield" name="postcode" type="text" placeholder="Postcode" required /></p>
 
-                            <p>
-                                <select name="state" class="formselect" required>
-                                    <option class="formoption" selected>Selangor</option>
-                                    <?php 
-                                        if(mysqli_num_rows($result1) > 0)
-                                        {
-                                            while($row = mysqli_fetch_array($result1))
+                                <p><input class="formfield" name="city" type="text" placeholder="City" required /></p>
+
+                                <p>
+                                    <select name="state" class="formselect" required>
+                                        <option class="formoption" selected>Selangor</option>
+                                        <?php 
+                                            if(mysqli_num_rows($result1) > 0)
                                             {
-                                                ?>
-                                                    <option class="formoption" value="<?php echo $row['state_name']; ?>">
-                                                        <?php echo $row['state_name']; ?>
-                                                    </option>
-                                                <?php
+                                                while($row = mysqli_fetch_array($result1))
+                                                {
+                                                    ?>
+                                                        <option class="formoption" value="<?php echo $row['state_name']; ?>">
+                                                            <?php echo $row['state_name']; ?>
+                                                        </option>
+                                                    <?php
+                                                }
                                             }
-                                        }
-                                    ?>
-                                </select>
-                            </p>
+                                        ?>
+                                    </select>
+                                </p>
 
-                            <p><input class="formfield" name="country" type="text" value="Malaysia" readonly /></p>
+                                <p><input class="formfield" name="country" type="text" value="Malaysia" readonly /></p>
 
-                        </div>
+                            </div>
 
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-success btnSend" name="addAddress" value="Save" />
-                        </div>
-                     </form>
-                 </div>
-             </div>
-         </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                                <input type="submit" class="btn btn-success btnSend" name="addAddress" value="Save" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
+
 <script>
     /*Validate*/
     function val(){
@@ -309,8 +293,3 @@ $results4 = mysqli_fetch_assoc($result4);
     }
 </script>
 <script>
-function payments_popup(form) {
-    window.open('', 'paymentspopup', 'fullscreen=yes,resizeable,scrollbars');
-    form.target = 'paymentspopup';
-}
-</script>

@@ -362,6 +362,36 @@ input[type="file"] {
     margin-top: 1%;
 }
 
+.shipformcontainer {
+    color: #2f9142;
+    background: #f4f9eb;
+    margin-top: 1%;
+    background: rgba(139, 184, 54, 0.3);
+    padding-top: 1%;
+}
+
+.shipformcontainer .formfield {
+    border-bottom-color: #2f9142;
+    color: #2f9142;
+}
+
+.shipformcontainer .formoptions {
+    background: rgba(139, 184, 54, 0.3)!important;
+    outline: none!important;
+}
+
+.shipformcontainer .formselects, .formselects:focus, .formselects:active {
+    outline: none!important;
+    width: 70%;
+    background: none;
+    height: 100%;
+    border-bottom: solid 1px #2f9142!important;
+    border: none;
+    padding: 2% 2% 2% 1%;
+    color: #2f9142!mportant;
+    margin-bottom: 1%;
+}
+
 .formfield {
     width: 100%;
     border: none;

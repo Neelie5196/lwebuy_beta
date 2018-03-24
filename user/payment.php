@@ -185,7 +185,7 @@ if(isset($_POST['point_pay']))
                 
                 <table class="itemstable center">
                     <tr class="ptoprow">
-                        <td class="left">Item name</td>
+                        <td class="left">Item</td>
                         <td>Quantity</td>
                         <td>Price (MYR)</td>
                     </tr>
@@ -197,7 +197,7 @@ if(isset($_POST['point_pay']))
                     </tr>
                     
                     <tr>
-                        <td class="left"><p>Total Price (MYR)</p></td>
+                        <td class="left"><p>Total price (MYR)</p></td>
                         <td></td>
                         <td class="coltotal"><p></p></td>
                     </tr>

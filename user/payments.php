@@ -1,5 +1,6 @@
 <?php
 
+/*
 require_once '../connection/config.php';
 session_start();
 $user_id = $_SESSION['user_id'];
@@ -113,6 +114,7 @@ $query11 = "SELECT *
           WHERE address_id IN (".implode(',',$address).")";
 $result11 = mysqli_query($con, $query11);
 $results11 = mysqli_fetch_assoc($result11);
+*/
 
 ?>
 
@@ -138,211 +140,101 @@ $results11 = mysqli_fetch_assoc($result11);
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]-->
-        <style>
-            .vl {
-                border-left: 1px solid lightgrey;
-                height: 200px;
-            }
-            .details p{
-                font-size: 100%;
-            }
-        </style>
+
+        <script src="../frameworks/js/lwe.js"></script>
     </head>
 
-    <body background="../resources/img/bg.jpg" ng-app="">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <h2>Payment</h2>
+
+    <body class="userbg" ng-app="">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12 center">
+                <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Payment</h2>
+                
+                <h2 class="smh2 pagetitle hidden-md hidden-lg">Payment</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-2 col-lg-push-2 paymentcontainer">
+                                
+                <div class="row center btnpaymentcontainer">
+                    <div class="col-xs-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btnpayment" onclick="funcCredit()" title="Pay by credits"><span class="glyphicon glyphicon-piggy-bank"></span></button>
+                    </div>
+                    
+                    <div class="col-xs-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btnpayment" onclick="funcCard()" title="Pay by card"><span class="glyphicon glyphicon-credit-card"></span></button>
+                    </div>
+                    
+                    <div class="col-xs-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btnpayment" onclick="funcTrans()" title="Pay by transaction"><span class="glyphicon glyphicon-open-file"></span></button>
+                    </div>                    
+                </div>
+                
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12 payformcontainer">
+                        <div id="pcredit">
+                            <h4>Your credit: </h4>
+                            <h4>Amount to pay (credits): </h4>
+                            
+                            <!-- show if not enough credit -->
+                            <p class="center warning">Insufficient credit.</p>
+                            <p class="center"><a class="btn btn-default btnGo" href="main.php#credit">Top up now</a></p>
+                            
+                            <!-- show if enough credit -->
+                            <p class="center"><a class="btn btn-default btnGo">Pay</a></p>
+                        </div>
+                        
+                        <div id="pcard">
+                            <!-- wait for client to give MolPay details first-->
+                        </div>
+                        
+                        <div id="ptrans">
+                            <form method="post" action="credit.php">
+                                <p class="center paytrans">
+                                    <label class="btn btnGo" for="treceipt">Upload Transaction Receipt</label>
+                                    <input type="file" id="treceipt" name="treceipt" required />
+                                </p>
+                            </form>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
             
-            <section class="content">
-                <div class="row botmar">
-                    <div class="col-xs-12 col-md-8 col-lg-8">
-                        <strong>Shipping Summary</strong>
-                    </div>
-                </div>
-                <div class="row">
-                    <center>
-                        <?php
-                            if(mysqli_num_rows($result1) > 0)
-                                    {
-                        ?>
-                        <div class="col-xs-8 col-md-8 col-lg-8 jumbotron">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-6" align="left">
-                                    <strong>Address : <?php echo $results11['address'].', '.$results11['postcode'].', '.$results11['city'].', '.$results11['state']; ?></strong><br/>
-                                    <strong>Country : <?php echo $results11['country']; ?></strong><br/>
-                                    <strong>Recipient Name : <?php echo $_POST['name']; ?></strong><br/>
-                                    <strong>Recipient Contact : <?php echo $_POST['contact']; ?></strong><br/>
-                                    <strong>Remark : <?php echo $_POST['remark']; ?></strong>
-                                </div>
-                                <div class="col-xs-12 col-md-12 col-lg-6" align="left">
-                                    <strong>Total Weight : <?php echo $_POST['totalweight']; ?>kg</strong><br/>
-                                    <strong>Total Pay : RM <?php echo $_POST['pricetotal']; ?></strong>
-
-                            <br/>
-                                </div>
-                            </div>
-                            <br/>
-                            <table class="purchasetable">
-                                <tr class="center">
-                                    <th>Name</th>
-                                    <th>Order Code</th>
-                                    <th>Received On</th>
-                                    <th>Weight (kg)</th>
-                                </tr>
-
-                                <?php
-                                    while($row = mysqli_fetch_array($result1))
-                                    {
-                                ?>
-
-                                <tr class="bodyrow">
-                                    <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
-                                    <td><?php echo $row['item_description']; ?></td>
-                                    <td><?php echo $row['order_code']; ?></td>
-                                    <td><?php echo $row['datetime']; ?></td>
-                                    <td><?php echo $row['weight']; ?></td>
-                                </tr>
-                                <?php
-                                    }
-                                ?>
-                            </table>
-                            <?php
-                                $point = $_POST['pricetotal']*$results4['rate'];
-                                if($results3['point'] >= $point){
-                                    ?>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-6 col-lg-6">
-                                            <form action="payments.php" method="post" enctype="multipart/form-data">
-                                                <h3>Upload Banking Receipt</h3>
-                                                <div class="row">
-                                                    <div class="col-xs-12 col-md-12 col-lg-12">
-                                                        <?php
-                                                            while($row = mysqli_fetch_array($result))
-                                                            {
-                                                        ?>
-                                                            <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
-                                                        <?php
-                                                            }
-
-                                                        ?>
-                                                        <input type="hidden" value="<?php echo $results11['address_id']; ?>" name="address">
-                                                        <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
-                                                        <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
-                                                        <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
-                                                        <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
-                                                        <input type="hidden" value="<?php echo $_POST['pricetotal']; ?>" name="pricetotal">
-                                                        <label>Transaction receipt: </label>
-                                                        <input type="file" name="file" required />
-                                                        <input class="form-control" name="total_pay" type="hidden" value="<?php echo number_format((float)$total_pay, 2, '.', ''); ?>">
-                                                        <br/>
-                                                        <input type="submit" class="btn btn-success" name="submit" value="Upload">
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="col-xs-12 col-md-1 col-lg-1">
-                                            <div class="vl"></div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-5 col-lg-5">
-                                            <form action="payments.php" method="post" enctype="multipart/form-data">
-                                                <div class="row">
-                                                    <div class="col-xs-12 col-md-12 col-lg-12">
-                                                        <br />
-                                                        <?php
-                                                            while($row = mysqli_fetch_array($result10))
-                                                            {
-                                                        ?>
-                                                            <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
-                                                        <?php
-                                                            }
-
-                                                        ?>
-                                                        <input type="hidden" value="<?php echo $results11['address_id']; ?>" name="address">
-                                                        <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
-                                                        <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
-                                                        <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
-                                                        <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
-                                                        <p><?php echo number_format((float)$point, 2, '.', ''); ?> point</p>
-                                                        <input class="form-control" name="point_pay" type="hidden" value="<?php echo number_format((float)$point, 2, '.', ''); ?>">
-                                                        <input type="submit" class="btn btn-success" name="pay" value="Pay by Point">
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }else{
-                                    ?>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <form action="payments.php" method="post" enctype="multipart/form-data">
-                                                <h3>Upload Banking Receipt</h3>
-                                                <div class="row">
-                                                    <div class="col-xs-12 col-md-12 col-lg-12">
-                                                        <?php
-                                                            while($row = mysqli_fetch_array($result))
-                                                            {
-                                                        ?>
-                                                            <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
-                                                        <?php
-                                                            }
-
-                                                        ?>
-                                                        <input type="hidden" value="<?php echo $results11['address_id']; ?>" name="address">
-                                                        <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
-                                                        <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
-                                                        <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
-                                                        <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
-                                                        <input type="hidden" value="<?php echo $_POST['pricetotal']; ?>" name="pricetotal">
-                                                        <label>Transaction receipt: </label>
-                                                        <input type="file" name="file" required />
-                                                        <input class="form-control" name="total_pay" type="hidden" value="<?php echo number_format((float)$total_pay, 2, '.', ''); ?>">
-                                                        <br/>
-                                                        <input type="submit" class="btn btn-success" name="submit" value="Upload">
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }
-                            ?>
-                        </div>
-                        <div class="col-xs-4 col-md-4 col-lg-4 jumbotron">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <p>Banking Details </p>
-                                    <div class="details">
-                                        <p>Bank: <?php echo $results2['bank']; ?></p>
-                                        <p>Account No: <?php echo $results2['account_no']; ?></p>
-                                        <p>Account Name: <?php echo $results2['account_name']; ?></p>
-                                        <?php
-                                            if($results3 > 0){
-                                                ?>
-                                                    <input type="hidden" name="point" class="form-control" value="<?php echo $results3['point']; ?>">
-                                                    <p>Current point: <?php echo $results3['point']; ?></p>
-                                                <?php
-                                            }else{
-                                                ?>
-                                                    <p>Current point: 0</p>
-                                                <?php
-                                            }
-                                        ?>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                            }
-                        ?>
-                    </center>
-                </div>
-            </section>
+            <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-4 col-lg-push-2 pdetailscontainer">
+                <h3>Payment Details</h3>
+                
+                <p>Recipient name: </p>
+                
+                <p>Recipient contact: </p>
+                
+                <p>Address: </p>
+                
+                <p>Country: </p>                
+                
+                <table class="shiptable center">
+                    <tr class="ptoprow">
+                        <td class="left">Item</td>
+                        <td>Weight (kg)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="left"><p></p></td>
+                        <td><p></p></td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="left"><p>Total weight (kg) </p></td>
+                        <td class="coltotal"><p></p></td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="left"><p>Total price (MYR)</p></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </body>
 </html>

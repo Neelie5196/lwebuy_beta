@@ -627,17 +627,20 @@ input[type="file"] {
     margin-bottom: 3%;
 }
 
+.shiptable {
+    width: 100%;
+    margin-bottom: 3%;
+    border-bottom: solid 1px #8bb836;
+}
+
 .ptoprow {
     border-top: solid 1px #8bb836;
     border-bottom: solid 1px #8bb836;
 }
-.itemstable caption {
-    color: #8bb836;
-}
 
 .coltotal {
     border-top: solid 1px #8bb836;
-    border-bottom: solid 1px #8bb836;
+    border-bottom: double 4px #8bb836;
 }
 
 .paytrans {

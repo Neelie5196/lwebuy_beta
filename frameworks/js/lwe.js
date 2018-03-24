@@ -217,6 +217,24 @@ function funcHideChgPasswords() {
     document.getElementById("renewpasswords").required = false;
 }
 
+function funcCredit() {
+    document.getElementById("pcredit").style.display ="block";
+    document.getElementById("pcard").style.display = "none";
+    document.getElementById("ptrans").style.display = "none";
+}
+
+function funcCard() {
+    document.getElementById("pcredit").style.display ="none";
+    document.getElementById("pcard").style.display = "block";
+    document.getElementById("ptrans").style.display = "none";
+}
+
+function funcTrans() {
+    document.getElementById("pcredit").style.display ="none";
+    document.getElementById("pcard").style.display = "none";
+    document.getElementById("ptrans").style.display = "block";
+}
+
 function checkPass() {
 
     if (document.getElementById("newpassword").value == document.getElementById("renewpassword").value)

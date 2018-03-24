@@ -79,6 +79,11 @@ $query6 = "SELECT *
            WHERE status='ready to pay' AND user_id='$user_id'";
 $result6 = mysqli_query($con, $query6);
 
+$query7 = "SELECT *
+           FROM order_item
+           WHERE status='paid' AND user_id='$user_id'";
+$result7 = mysqli_query($con, $query7);
+
 ?>
 
 <!DOCTYPE html>
@@ -135,6 +140,7 @@ $result6 = mysqli_query($con, $query6);
                                                             <th>Quantity</th>
                                                             <th>Remark</th>
                                                             <th>U.Price (RMB)</th>
+                                                            <th>U.Price (RM)</th>
                                                             <th>Total Price (RM)</th>
                                                             <th></th>
                                                         </tr>
@@ -156,6 +162,7 @@ $result6 = mysqli_query($con, $query6);
                                                                 <td><?php echo $row['remark']; ?></td>
                                                                 <td><input type="number" step="0.01" min="0.01" name="price[]" value="<?php echo number_format((float)$row['price']/$results2['country_currency'], 2, '.', ''); ?>" required/></td>
                                                                 <td><?php echo $row['price']; ?></td>
+                                                                <td><?php echo $row['price']*$row['quantity']; ?></td>
                                                                 <td>
                                                                     <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                                 </td>
@@ -212,6 +219,7 @@ $result6 = mysqli_query($con, $query6);
                                                         <th>Quantity</th>
                                                         <th>Remark</th>
                                                         <th>U.Price (RMB)</th>
+                                                        <th>U.Price (RM)</th>
                                                         <th>Total Price (RM)</th>
                                                         <th></th>
                                                     </tr>
@@ -233,6 +241,7 @@ $result6 = mysqli_query($con, $query6);
                                                             <td><?php echo $row['remark']; ?></td>
                                                             <td><?php echo number_format((float)$row['price']/$results2['country_currency'], 2, '.', ''); ?></td>
                                                             <td><?php echo $row['price']; ?></td>
+                                                            <td><?php echo $row['price']*$row['quantity']; ?></td>
                                                             <td>
                                                                 <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" href="#"><span class="glyphicon glyphicon-remove"></span></a>
                                                             </td>
@@ -267,45 +276,52 @@ $result6 = mysqli_query($con, $query6);
                                 <div class="row">
                                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                                         <?php 
-                                            if(mysqli_num_rows($result1) > 0)
+                                            if(mysqli_num_rows($result7) > 0)
                                             {
+                                                $counter = 0;
+                                                $total = 0;
+                                                $payment_id = 0;
                                             ?>
-                                            <form action="updateorder.php" method="post">
+                                            <form action="vieworder.php?user_id=<?php echo $user_id; ?>" method="post">
                                                 <table class="table thead-bordered table-hover">
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
                                                             <th>Name</th>
                                                             <th>Link</th>
-                                                            <th>Type</th>
-                                                            <th>Unit</th>
+                                                            <th>Category</th>
+                                                            <th>Quantity</th>
                                                             <th>Remark</th>
-                                                            <th>Price (RM)</th>
+                                                            <th>U.Price (RM)</th>
+                                                            <th>Total Price (RM)</th>
                                                             <th>Order Code</th>
                                                         </tr>
                                                     </thead>
                                                     <?php
-                                                        while($row = mysqli_fetch_array($result1))
+                                                        while($row = mysqli_fetch_array($result7))
                                                         {
                                                             $counter++;
                                                         ?>
                                                         <tbody>
                                                             <tr>
-                                                                <td width="5%"><?php echo $counter; ?></td>
-                                                                <td width="15%"><?php echo $row['name']; ?></td>
-                                                                <td width="15%"><a href="<?php echo $row['link']; ?>" target="_blank"><?php echo $row['link']; ?></a></td>
-                                                                <td width="8%"><?php echo $row['type']; ?></td>
-                                                                <td width="8%"><?php echo $row['unit']; ?></td>
-                                                                <td width="20%"><?php echo $row['remark']; ?></td>
-                                                                <td width="12%"><?php echo $row['price']; ?></td>
-                                                                <td width="12%"><input type="text" name="ordercode[]" value="<?php echo $row['order_code']; ?>" required></td>
-                                                                <td width="9%">
-                                                                    <input type="hidden" name="oi_id[]" value="<?php echo $row['oi_id']; ?>">
-                                                                    <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
+                                                                <td><?php echo $counter; ?></td>
+                                                                <td><?php echo $row['order_item']; ?></td>
+                                                                <td>
+                                                                    <a href="#" class="btntab" onclick="window.open('<?php echo $row['link']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,fullscreen=yes');">View item</a>
                                                                 </td>
+                                                                <td><?php echo $row['category']; ?></td>
+                                                                <td><?php echo $row['quantity']; ?></td>
+                                                                <td><?php echo $row['remark']; ?></td>
+                                                                <td><?php echo $row['price']; ?></td>
+                                                                <td><?php echo number_format((float)$row['price']*$row['quantity'], 2, '.', ''); ?></td>
+                                                                <td><input type="text" name="order_code[]" value="<?php echo $row['order_code']; ?>" required></td>
                                                             </tr>
+                                                            <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">
+                                                            <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>">
                                                         </tbody>
                                                         <?php
+                                                            $total += $row['price']*$row['quantity'];
+                                                            $payment_id = $row['payment_id'];
                                                     }
                                                 }else{
                                                     ?>
@@ -317,34 +333,26 @@ $result6 = mysqli_query($con, $query6);
                                             <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
                                             <input type="submit" class="btn btn-warning" value="Update">
                                         </form>
+                                        <h2 style="text-align: right; padding-right: 70px;"><small>RM</small> <?php echo number_format((float)$total, 2, '.', ''); ?></h2>
                                         <?php
-                                            $result = mysqli_query($con, "SELECT sum(price) FROM order_item WHERE order_id= $order_id") or die(mysqli_error($con));
-                                            while ($rows = mysqli_fetch_array($result)) {
+                                            $query8 = "SELECT *
+                                                        FROM payment
+                                                        WHERE payment_id='$payment_id'";
+                                            $result8 = mysqli_query($con, $query8);
+                                            $results8 = mysqli_fetch_assoc($result8);
                                         ?>
-                                        <h2 style="text-align: right; padding-right: 70px;"><small>RM</small> <?php echo $rows['sum(price)']; ?></h2>
-                                        <?php
-                                            }
-                                        ?>
-                                        <?php
-                                            if($results2 > 0){
-                                                ?>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td>
-                                                                <label style="float: left;">Bank in Receipt:</label> <em style="float:left;">
-                                                                <a href="#" class="pop">
-                                                                    <img src="../resources/img/receipts/<?php echo $results2['file']; ?>" style="width: 0px; height: 0px;"><?php echo $results2['title']; ?>
-                                                                </a></em>
-                                                            </td>
-                                                        </tr>
-                                                    </tfoot>
-                                                <?php
-                                            }else{
-
-                                            }
-                                        ?>                            
+                                        <tfoot>
+                                            <tr>
+                                                <td>
+                                                    <label style="float: left;">Bank in Receipt : </label> <em style="float:left;">
+                                                    <a href="#" class="pop">
+                                                        <img src="../resources/img/receipts/<?php echo $results8['file']; ?>" style="width: 0px; height: 0px;"> <?php echo $results8['title']; ?>
+                                                    </a></em>
+                                                </td>
+                                            </tr>
+                                        </tfoot>                            
                                     </div>
-                                    <form action="proceedorder.php" method="post">
+                                    <form action="vieworder.php?user_id=<?php echo $user_id; ?>" method="post">
                                         <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
                                         <input type="submit" class="btn btn-success" name="proceed" value="Proceed">
                                         <a href="orderpending.php" class="btn btn-default" name="back">Back</a>
@@ -352,6 +360,31 @@ $result6 = mysqli_query($con, $query6);
                                 </div>
                             </div>
                         </section>
+                        <div class="modal fade" id="imagedialog" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="vieworder.php?user_id=<?php echo $user_id; ?>" method="post">
+                                        <div class="modal-body">
+                                            <button type="button" class="close" data-dismiss="modal"></button>
+                                            <img src="" class="image" style="width: 100%;" data-dismiss="modal">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="hidden" name="p_id" value="<?php echo $results2['p_id']; ?>">
+                                            <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
+                                            <button type="submit" class="btn btn-success" name="approve">Approve</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            $(function() {
+                                $('.pop').on('click', function() {
+                                    $('.image').attr('src', $(this).find('img').attr('src'));
+                                    $('#imagedialog').modal('show');   
+                                });		
+                            });
+                        </script>
                     </center>
                 <?php
             }

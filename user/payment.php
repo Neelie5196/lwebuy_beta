@@ -184,9 +184,8 @@ if(isset($_POST['point_pay']))
                 <h3>Payment Details</h3>
                 
                 <table class="itemstable center">
-                    <caption>Items</caption>
                     <tr class="ptoprow">
-                        <td class="left">Name</td>
+                        <td class="left">Item name</td>
                         <td>Quantity</td>
                         <td>Price (MYR)</td>
                     </tr>

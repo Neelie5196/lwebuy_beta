@@ -20,7 +20,7 @@
                 <table class="purchasetable">
                     <tr class="center">
                         <th class="purchasecol2">Customer</th>
-                        <th class="purchasecol1">Name</th>
+                        <th class="purchasecol1">Item Name</th>
                         <th class="purchasecol3">Link</th>
                         <th class="purchasecol1">Category</th>
                         <th class="purchasecol05">Quantity</th>
@@ -110,7 +110,7 @@
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btnDecline" name="add" value="Decline" />
+                                <input type="submit" class="btn btnDecline" name="decline" value="Decline" />
                             </div>
                         </form>
                     </div>

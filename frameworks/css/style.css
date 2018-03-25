@@ -140,8 +140,8 @@ body {
     border: none;
 }
 
-.btnDelete:focus, .btnDelete:active {
-    background: none;
+.btnDelete:focus, .btnDelete:active, .btnDelete:hover {
+    background: none!important;
     border: none;
     outline: none!important;
 }
@@ -273,11 +273,11 @@ input[type="file"] {
     color: #f26522!important;
 }
 
-.glyphicon-pencil, .glyphicon-edit {
+.glyphicon-pencil, .glyphicon-edit, .glyphicon-eye-open {
     color: #2f9142!important;
 }
 
-.glyphicon-pencil:hover, .glyphicon-edit:hover {
+.glyphicon-pencil:hover, .glyphicon-edit:hover, .glyphicon-eye-open:hover {
     color: #8bb836!important;
 }
 
@@ -642,11 +642,11 @@ input[type="file"] {
     border-right: solid 1px #2f9142;
 }
 
-#prequest, #ipending, #sitem, pcredit, .rpurchase {
+#prequest, #ipending, #sitem, #pcredit, #rpurchase, #wpending {
     display: block;
 }
 
-#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #spayment, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory {
+#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #spayment, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory, #wslot, #wwarehouse {
     display: none;
 }
 
@@ -743,6 +743,6 @@ input[type="file"] {
     color: #fff;
 }
 
-.requestp {
-    color: #2f9142;
+.requestp, #wslot caption {
+    color: #2f9142!important;
 }

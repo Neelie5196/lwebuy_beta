@@ -43,6 +43,10 @@ $(document).ready(function(){
         {
             $("#mainview").load('feedback.php');
         }
+    else if (window.location.hash == "#adwarehouse")
+        {
+            $("#mainview").load('warehouse.php');
+        }
     else
         {
             $("#mainview").load('dashboard.php');
@@ -136,6 +140,12 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("#btnnotfeedback").click(function(){
         $("#mainview").load('feedback.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnadwarehouse").click(function(){
+        $("#mainview").load('warehouse.php');
     });
 });
 
@@ -311,6 +321,24 @@ function funcRPurchase() {
 function funcRHistory() {
     document.getElementById("rpurchase").style.display ="none";
     document.getElementById("rhistory").style.display ="block";
+}
+
+function funcWPending() {
+    document.getElementById("wpending").style.display = "block";
+    document.getElementById("wslot").style.display = "none";
+    document.getElementById("wwarehouse").style.display = "none";
+}
+
+function funcWSlot() {
+    document.getElementById("wpending").style.display = "none";
+    document.getElementById("wslot").style.display = "block";
+    document.getElementById("wwarehouse").style.display = "none";
+}
+
+function funcWWarehouse() {
+    document.getElementById("wpending").style.display = "none";
+    document.getElementById("wslot").style.display = "none";
+    document.getElementById("wwarehouse").style.display = "block";
 }
 
 function checkPass() {

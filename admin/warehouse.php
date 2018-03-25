@@ -26,7 +26,7 @@
                         <th>Remarks</th>
                     </tr>
 
-                    <tr class="bodyrow">
+                    <tr>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -156,7 +156,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="addWarehouse">Add Warehouse</h5>
+                            <h5 class="modal-title" id="addWarehouseTitle">Add Warehouse</h5>
                         </div>
 
                         <form method="post" action="warehouse.php">
@@ -191,7 +191,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editWarehouse">Edit Warehouse</h5>
+                            <h5 class="modal-title" id="editWarehouseTitle">Edit Warehouse</h5>
                         </div>
 
                         <form method="post" action="warehouse.php">
@@ -226,7 +226,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="warehouseStaff">Warehouse Staff</h5>
+                            <h5 class="modal-title" id="warehouseStafTitlef">Warehouse Staff</h5>
                         </div>
 
                         <form method="post" action="request.php">

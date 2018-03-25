@@ -620,6 +620,12 @@ input[type="file"] {
     width: 40%;
 }
 
+.tblATab {
+    margin-left: 5%;
+    margin-bottom: 1%;
+    width: 30%;
+}
+
 .tblITab {
     margin-left: 5%;
     margin-bottom: 1%;
@@ -642,11 +648,11 @@ input[type="file"] {
     border-right: solid 1px #2f9142;
 }
 
-#prequest, #ipending, #sitem, #pcredit, #rpurchase, #wpending {
+#prequest, #ipending, #sitem, #pcredit, #rpurchase, #wpending, #aadmin {
     display: block;
 }
 
-#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #spayment, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory, #wslot, #wwarehouse {
+#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #spayment, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory, #wslot, #wwarehouse, #acustomer, #astaff {
     display: none;
 }
 

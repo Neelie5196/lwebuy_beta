@@ -341,6 +341,24 @@ function funcWWarehouse() {
     document.getElementById("wwarehouse").style.display = "block";
 }
 
+function funcAAdmin() {
+    document.getElementById("aadmin").style.display = "block";
+    document.getElementById("astaff").style.display = "none";
+    document.getElementById("acustomer").style.display = "none";
+}
+
+function funcAStaff() {
+    document.getElementById("aadmin").style.display = "none";
+    document.getElementById("astaff").style.display = "block";
+    document.getElementById("acustomer").style.display = "none";
+}
+
+function funcACustomer() {
+    document.getElementById("aadmin").style.display = "none";
+    document.getElementById("astaff").style.display = "none";
+    document.getElementById("acustomer").style.display = "block";
+}
+
 function checkPass() {
 
     if (document.getElementById("newpassword").value == document.getElementById("renewpassword").value)

@@ -648,11 +648,11 @@ input[type="file"] {
     border-right: solid 1px #2f9142;
 }
 
-#prequest, #ipending, #sitem, #pcredit, #rpurchase, #wpending, #aadmin {
+#prequest, #ipending, #sitem, #pcredit, #rpurchase, #wpending, #aadmin, #ppurchase {
     display: block;
 }
 
-#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #spayment, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory, #wslot, #wwarehouse, #acustomer, #astaff {
+#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #spayment, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory, #wslot, #wwarehouse, #acustomer, #astaff, #pship, #phistory, #pcredit {
     display: none;
 }
 

@@ -192,7 +192,7 @@ if(isset($_POST['review']))
                         <th class="purchasecol2">Ricipient Name</th>
                         <th class="purchasecol1">Recipient Contact</th>
                         <th class="purchasecol2">Total Weight (kg)</th>
-                        <th class="purchasecol1">Total Pay</th>
+                        <th class="purchasecol1">Total Price</th>
                         <th class="purchasecol2">Topup Balance (RM)</th>
                         <th class="purchasecol05"></th>
                     </tr>
@@ -239,7 +239,7 @@ if(isset($_POST['review']))
                         <th class="purchasecol3">Recipient Address</th>
                         <th class="purchasecol1">No. of Items</th>
                         <th class="purchasecol1">Total Weight (kg)</th>
-                        <th class="purchasecol1">Total Pay</th>
+                        <th class="purchasecol1">Total Price</th>
                         <th class="purchasecol1">Tracking No.</th>
                     </tr>
 
@@ -303,7 +303,7 @@ if(isset($_POST['review']))
                         <th class="purchasecol3">Recipient Address</th>
                         <th class="purchasecol1">No. of Items</th>
                         <th class="purchasecol1">Total Weight (kg)</th>
-                        <th class="purchasecol1">Total Pay</th>
+                        <th class="purchasecol1">Total Price</th>
                         <th class="purchasecol1">Tracking No.</th>
                         <th></th>
                     </tr>

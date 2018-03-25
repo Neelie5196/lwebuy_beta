@@ -359,6 +359,34 @@ function funcACustomer() {
     document.getElementById("acustomer").style.display = "block";
 }
 
+function funcPPurchase() {
+    document.getElementById("ppurchase").style.display = "block";
+    document.getElementById("pship").style.display = "none";
+    document.getElementById("pcredit").style.display ="none";
+    document.getElementById("phistory").style.display = "none";
+}
+
+function funcPShip() {
+    document.getElementById("ppurchase").style.display = "none";
+    document.getElementById("pship").style.display = "block";
+    document.getElementById("pcredit").style.display ="none";
+    document.getElementById("phistory").style.display = "none";
+}
+
+function funcPCredit() {
+    document.getElementById("ppurchase").style.display = "none";
+    document.getElementById("pship").style.display = "none";
+    document.getElementById("pcredit").style.display ="block";
+    document.getElementById("phistory").style.display = "none";
+}
+
+function funcPHistory() {
+    document.getElementById("ppurchase").style.display = "none";
+    document.getElementById("pship").style.display = "none";
+    document.getElementById("pcredit").style.display ="none";
+    document.getElementById("phistory").style.display = "block";
+}
+
 function checkPass() {
 
     if (document.getElementById("newpassword").value == document.getElementById("renewpassword").value)

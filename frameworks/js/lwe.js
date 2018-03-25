@@ -1,56 +1,88 @@
 $(document).ready(function(){
-    if (window.location.hash == "#home")
-        {
-            $("#mainview").load('dashboard.php');
-        }
-    else if (window.location.hash == "#purchase")
-        {
-            $("#mainview").load('purchase.php');
-        }
-    else if (window.location.hash == "#ship")
-        {
-            $("#mainview").load('shipping.php');
-        }
-    else if (window.location.hash == "#inventory")
-        {
-            $("#mainview").load('inventory.php');
-        }
-    else if (window.location.hash == "#user")
-        {
-            $("#mainview").load('user.php');
-        }
-    else if (window.location.hash == "#credit")
-        {
-            $("#mainview").load('credit.php');
-        }
-    else if (window.location.hash == "#adrequest")
-        {
-            $("#mainview").load('request.php');
-        }
-    else if (window.location.hash == "#adpayment")
-        {
-            $("#mainview").load('payment.php');
-        }
-    else if (window.location.hash == "#adupdate")
-        {
-            $("#mainview").load('update.php');
-        }
-    else if (window.location.hash == "#adaccount")
-        {
-            $("#mainview").load('account.php');
-        }
-    else if (window.location.hash == "#adreview")
-        {
-            $("#mainview").load('review.php');
-        }
-    else if (window.location.hash == "#adwarehouse")
-        {
-            $("#mainview").load('warehouse.php');
-        }
-    else
-        {
-            $("#mainview").load('dashboard.php');
-        }
+        if (window.location.hash == "#home")
+            {
+                $("#mainview").load('dashboard.php');
+            }
+        else if (window.location.hash == "#purchase")
+            {
+                $("#mainview").load('purchase.php');
+            }
+        else if (window.location.hash == "#ship")
+            {
+                $("#mainview").load('shipping.php');
+            }
+        else if (window.location.hash == "#inventory")
+            {
+                $("#mainview").load('inventory.php');
+            }
+        else if (window.location.hash == "#user")
+            {
+                $("#mainview").load('user.php');
+            }
+        else if (window.location.hash == "#credit")
+            {
+                $("#mainview").load('credit.php');
+            }
+        else if (window.location.hash == "#adrequest")
+            {
+                $("#mainview").load('request.php');
+            }
+        else if (window.location.hash == "#adpayment")
+            {
+                $("#mainview").load('payment.php');
+            }
+        else if (window.location.hash == "#adupdate")
+            {
+                $("#mainview").load('update.php');
+            }
+        else if (window.location.hash == "#adaccount")
+            {
+                $("#mainview").load('account.php');
+            }
+        else if (window.location.hash == "#adreview")
+            {
+                $("#mainview").load('review.php');
+            }
+        else if (window.location.hash == "#adwarehouse")
+            {
+                $("#mainview").load('warehouse.php');
+            }
+        else if (window.location.hash == "#uinventory")
+            {
+                $("#updateview").load('uinventory.php');
+            }
+        else if (window.location.hash == "#registers")
+            {
+                $("#updateview").load('registers.php');
+            }
+        else if (window.location.hash == "#checkin")
+            {
+                $("#updateview").load('checkin.php');
+            }
+        else if (window.location.hash == "#designation")
+            {
+                $("#updateview").load('designation.php');
+            }
+        else if (window.location.hash == "#arrival")
+            {
+                $("#updateview").load('arrival.php');
+            }
+        else if (window.location.hash == "#departure")
+            {
+                $("#updateview").load('departure.php');
+            }
+        else if (window.location.hash == "#despatch")
+            {
+                $("#updateview").load('despatch.php');
+            }
+        else if (window.location.hash == "#delivered")
+            {
+                $("#updateview").load('delivered.php');
+            }
+        else
+            {
+                $("#mainview").load('dashboard.php');
+            }
 });
 
 $(document).ready(function(){

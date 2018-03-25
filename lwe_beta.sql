@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2018 at 12:18 PM
+-- Generation Time: Mar 25, 2018 at 12:09 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -110,7 +110,8 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`item_id`, `slot_id`, `from_order`, `item_description`, `order_code`, `weight`, `datetime`, `payment_id`, `action`) VALUES
-(1, 1, 'Order Item', 'casing', '12345', '4.20', '2018-03-23 11:18:31', NULL, 'In');
+(1, 1, 'Order Item', 'casing', '12345', '4.20', '2018-03-24 09:29:54', NULL, 'In'),
+(2, 3, 'Order Item', 'casing', '12345', '4.20', '2018-03-25 09:18:15', NULL, 'In');
 
 -- --------------------------------------------------------
 
@@ -130,19 +131,21 @@ CREATE TABLE `order_item` (
   `price` decimal(10,2) DEFAULT NULL,
   `status` varchar(15) DEFAULT NULL,
   `order_code` varchar(25) DEFAULT NULL,
-  `comment` varchar(255) DEFAULT NULL
+  `comment` varchar(255) DEFAULT NULL,
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_item`
 --
 
-INSERT INTO `order_item` (`order_item_id`, `payment_id`, `user_id`, `order_item`, `link`, `category`, `quantity`, `remark`, `price`, `status`, `order_code`, `comment`) VALUES
-(46, NULL, 1, 'test1', 'http://localhost/lwebuy_beta/user/main.php#purchase', 'Others', 2, 'lwe', NULL, 'Request', NULL, NULL),
-(47, NULL, 1, 'test2', 'https://github.com/Neelie5196/lwebuy_beta', 'Others', 4, 'git', '50.00', 'Ready to pay', NULL, NULL),
-(49, 761871, 1, 'test3', 'https://stackoverflow.com/questions/19633983/how-to-open-a-link-in-new-windownot-in-new-tab-in-html-css', 'Others', 1, 'google', '32.00', 'Paid', NULL, NULL),
-(50, NULL, 1, 'test4', 'www.youtube.com', 'Others', 2, 'youtube', '53.00', 'Received', NULL, NULL),
-(51, NULL, 1, 'test5', 'www.facebook.com', 'Others', 2, 'facebook', NULL, 'Declined', NULL, 'declined');
+INSERT INTO `order_item` (`order_item_id`, `payment_id`, `user_id`, `order_item`, `link`, `category`, `quantity`, `remark`, `price`, `status`, `order_code`, `comment`, `datetime`) VALUES
+(46, NULL, 1, 'test1', 'http://localhost/lwebuy_beta/user/main.php#purchase', 'Others', 2, 'lwe', NULL, 'Request', NULL, NULL, '2018-03-25 07:32:16'),
+(47, 761872, 1, 'test2', 'https://github.com/Neelie5196/lwebuy_beta', 'Others', 4, 'git', '50.00', 'paid', NULL, NULL, '2018-03-25 04:01:55'),
+(49, 761871, 1, 'test3', 'https://stackoverflow.com/questions/19633983/how-to-open-a-link-in-new-windownot-in-new-tab-in-html-css', 'Others', 1, 'google', '32.00', 'Paid', NULL, NULL, '2018-03-25 04:00:11'),
+(50, 761872, 1, 'test4', 'www.youtube.com', 'Others', 2, 'youtube', '25.00', 'proceed', '345', NULL, '2018-03-25 03:42:29'),
+(51, NULL, 1, 'test5', 'www.facebook.com', 'Others', 2, 'facebook', NULL, 'declined', NULL, 'declined', '2018-03-25 09:12:29'),
+(52, NULL, 1, 'Test6', 'https://www.google.com/search?rlz=1C1CHBF_enMY773MY773&ei=ZCa1WqbpMsnJvgSS2oGYAw&q=close+popup+window+and+refresh+parent+page&oq=close+popup+window+then+re&gs_l=psy-ab.3.0.0i22i30k1l10.87706.93941.0.97809.11.10.1.0.0.0.214.1490.0j9j1.10.0....0...1c.1.64.p', 'Others', 1, 'search', '12.00', 'received', NULL, NULL, '2018-03-25 09:14:24');
 
 -- --------------------------------------------------------
 
@@ -178,7 +181,8 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`payment_id`, `user_id`, `datetime`, `title`, `amount`, `file`, `type`, `status`) VALUES
-(761871, 1, '2018-03-22 08:16:17', 'Pay Order', '32.00', '77664-receipt.jpg', 'image/jpeg', 'Waiting for Accept');
+(761871, 1, '2018-03-25 03:32:11', 'Pay Order', '32.00', '77664-receipt.jpg', 'image/jpeg', 'Completed'),
+(761872, 1, '2018-03-25 03:45:37', 'Pay Order', '25.00', '11224-receipt.jpg', 'image/jpeg', 'Completed');
 
 -- --------------------------------------------------------
 
@@ -240,7 +244,7 @@ CREATE TABLE `request` (
 --
 
 INSERT INTO `request` (`request_id`, `user_id`, `order_item`, `order_code`, `status`, `datetime`, `remark`) VALUES
-(2, 1, 'test1', '123', 'Request', '2018-03-22 10:53:39', 'blue');
+(2, 1, 'test1', '123', 'Request', '2018-03-25 09:14:15', 'blue');
 
 -- --------------------------------------------------------
 
@@ -264,6 +268,13 @@ CREATE TABLE `shipping` (
   `review` text,
   `topup` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `shipping`
+--
+
+INSERT INTO `shipping` (`shipping_id`, `user_id`, `receipient_name`, `receipient_contact`, `remark`, `address_id`, `weight`, `price`, `status`, `datetime`, `tracking_code`, `payment_id`, `review`, `topup`) VALUES
+(5, 1, 'Test1', '12345', '4.2', 50, '4.20', '225.00', 'Proceed', '2018-03-23 15:19:06', '1234', 363171, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -324,18 +335,27 @@ CREATE TABLE `shipping_update_summary` (
 
 CREATE TABLE `slot` (
   `slot_id` int(11) NOT NULL,
-  `slot_code` int(100) NOT NULL,
+  `slot_aisle` int(100) NOT NULL,
   `slot_num` int(100) NOT NULL,
   `status` varchar(10) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `slot`
 --
 
-INSERT INTO `slot` (`slot_id`, `slot_code`, `slot_num`, `status`, `user_id`) VALUES
-(1, 1000, 1, 'In Use', 1);
+INSERT INTO `slot` (`slot_id`, `slot_aisle`, `slot_num`, `status`, `user_id`) VALUES
+(1, 1, 1, 'In Use', 1),
+(2, 1, 2, 'Not In Use', NULL),
+(3, 1, 3, 'In Use', 2),
+(4, 1, 4, 'Not In Use', NULL),
+(5, 1, 5, 'Not In Use', NULL),
+(6, 1, 6, 'Not In Use', NULL),
+(7, 1, 7, 'Not In Use', NULL),
+(8, 1, 8, 'Not In Use', NULL),
+(9, 1, 9, 'Not In Use', NULL),
+(10, 1, 10, 'Not In Use', NULL);
 
 -- --------------------------------------------------------
 
@@ -393,7 +413,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`, `type`, `image`, `country_id`, `login_status`) VALUES
-(1, 'clement', 'chuo', '0123456789', 'clement@email.com', '$2y$10$yG7C0WYk8rXQto6qF2sZo..3v0vy14./JXjRrRQQZz7dax695zIHy', 'customer', '', 0, 'Online');
+(1, 'clement', 'chuo', '0123456789', 'clement@email.com', '$2y$10$yG7C0WYk8rXQto6qF2sZo..3v0vy14./JXjRrRQQZz7dax695zIHy', 'admin', '', 0, 'Online'),
+(2, 'janice', 'low', '1234567', 'janice@email.com', '$2y$10$85paok2VnAH3rM8k1trOLeodixrMtDj1cOrRtV.mok.PrS5JxmeHW', 'customer', '', 0, 'Online');
 
 -- --------------------------------------------------------
 
@@ -404,11 +425,17 @@ INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`
 CREATE TABLE `warehouse` (
   `ware_id` int(11) NOT NULL,
   `station_code` varchar(10) NOT NULL,
-  `station_description` text NOT NULL,
-  `company_name` varchar(100) NOT NULL,
   `station_name` text NOT NULL,
-  `country_id` int(11) NOT NULL
+  `country` varchar(50) NOT NULL,
+  `address` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `warehouse`
+--
+
+INSERT INTO `warehouse` (`ware_id`, `station_code`, `station_name`, `country`, `address`) VALUES
+(1, 'MYS', 'LWE', 'Malaysia', 'jalan song');
 
 -- --------------------------------------------------------
 
@@ -421,6 +448,14 @@ CREATE TABLE `work_station` (
   `user_id` int(11) NOT NULL,
   `ware_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `work_station`
+--
+
+INSERT INTO `work_station` (`work_id`, `user_id`, `ware_id`) VALUES
+(1, 1, 1),
+(2, 2, 1);
 
 --
 -- Indexes for dumped tables
@@ -554,19 +589,19 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `country`
 --
 ALTER TABLE `country`
-  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `package`
@@ -590,13 +625,13 @@ ALTER TABLE `rate`
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
-  MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `shipping_update_details`
@@ -614,7 +649,7 @@ ALTER TABLE `shipping_update_summary`
 -- AUTO_INCREMENT for table `slot`
 --
 ALTER TABLE `slot`
-  MODIFY `slot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `slot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `state`
@@ -626,19 +661,19 @@ ALTER TABLE `state`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
-  MODIFY `ware_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ware_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `work_station`
 --
 ALTER TABLE `work_station`
-  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -110,10 +110,24 @@ body {
     outline: none!important;
 }
 
-.btnGo, .btno:visited, .btnGo:active, btnGo:focus {
+.btnGo, .btGo:visited, .btnGo:active, btnGo:focus {
     background: #329a47!important;
     color: #fff!important;
     outline: none!important;
+}
+
+.btnGo:hover {
+    background: #8bb836!important;
+}
+
+.btnDecline, .btnDecline:visited, .btnDecline:active, btnDecline:focus {
+    background: #f26522!important;
+    color: #fff!important;
+    outline: none!important;
+}
+
+.btnDecline:hover {
+    background: #ff8000!important;
 }
 
 .btnAdd:hover {
@@ -144,7 +158,7 @@ body {
 
 .btnCancel:hover {
     color: #fff;
-    background: #f26522;
+    background: #ff0000;
 }
 
 .btnSend {
@@ -628,11 +642,11 @@ input[type="file"] {
     border-right: solid 1px #2f9142;
 }
 
-#prequest, #ipending, #sitem, pcredit {
+#prequest, #ipending, #sitem, pcredit, .rpurchase {
     display: block;
 }
 
-#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #spayment, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans {
+#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #spayment, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory {
     display: none;
 }
 
@@ -727,4 +741,8 @@ input[type="file"] {
 
 .adnoti > a > div:hover .notititle, .adnoti > a > div:hover .notino {
     color: #fff;
+}
+
+.requestp {
+    color: #2f9142;
 }

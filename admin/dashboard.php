@@ -11,7 +11,7 @@
 
     <div class="row adrow1">
         <div class="col-xs-12 col-md-4 col-lg-4 adnoti">
-            <a href="">
+            <a href="#adrequest" id="btnnotrequest">
                 <div>
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 left">
@@ -29,7 +29,7 @@
         </div>
             
         <div class="col-xs-12 col-md-4 col-lg-4 adnoti">
-            <a href="">
+            <a href="#adpayment" id="btnnotpayment">
                 <div>                
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 left">
@@ -47,7 +47,7 @@
         </div>
             
         <div class="col-xs-12 col-md-4 col-lg-4 adnoti">
-            <a href="">
+            <a href="#adfeedback" id="btnnotfeedback">
                 <div>
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 left">

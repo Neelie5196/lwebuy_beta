@@ -23,6 +23,26 @@ $(document).ready(function(){
         {
             $("#mainview").load('credit.php');
         }
+    else if (window.location.hash == "#adrequest")
+        {
+            $("#mainview").load('request.php');
+        }
+    else if (window.location.hash == "#adpayment")
+        {
+            $("#mainview").load('payment.php');
+        }
+    else if (window.location.hash == "#adupdate")
+        {
+            $("#mainview").load('update.php');
+        }
+    else if (window.location.hash == "#adaccount")
+        {
+            $("#mainview").load('account.php');
+        }
+    else if (window.location.hash == "#adfeedback")
+        {
+            $("#mainview").load('feedback.php');
+        }
     else
         {
             $("#mainview").load('dashboard.php');
@@ -68,6 +88,54 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("#btncredit").click(function(){
         $("#mainview").load('credit.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnadrequest").click(function(){
+        $("#mainview").load('request.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnnotrequest").click(function(){
+        $("#mainview").load('request.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnadpayment").click(function(){
+        $("#mainview").load('payment.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnnotpayment").click(function(){
+        $("#mainview").load('payment.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnadupdate").click(function(){
+        $("#mainview").load('update.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnadaccount").click(function(){
+        $("#mainview").load('account.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnadfeedback").click(function(){
+        $("#mainview").load('feedback.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnnotfeedback").click(function(){
+        $("#mainview").load('feedback.php');
     });
 });
 
@@ -233,6 +301,16 @@ function funcTrans() {
     document.getElementById("pcredit").style.display ="none";
     document.getElementById("pcard").style.display = "none";
     document.getElementById("ptrans").style.display = "block";
+}
+
+function funcRPurchase() {
+    document.getElementById("rpurchase").style.display ="block";
+    document.getElementById("rhistory").style.display ="none";
+}
+
+function funcRHistory() {
+    document.getElementById("rpurchase").style.display ="none";
+    document.getElementById("rhistory").style.display ="block";
 }
 
 function checkPass() {

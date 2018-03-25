@@ -134,7 +134,7 @@ if(isset($_POST['feedback']))
                         <th class="purchasecol3">Recipient Address</th>
                         <th class="purchasecol1">No. of Items</th>
                         <th class="purchasecol2">Total Weight (kg)</th>
-                        <th class="purchasecol2">Total Pay</th>
+                        <th class="purchasecol2">Total Price</th>
                     </tr>
 
                     <?php

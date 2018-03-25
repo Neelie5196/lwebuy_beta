@@ -1,3 +1,73 @@
+<?php
+require_once '../connection/config.php';
+session_start();
+$user_id = $_SESSION['user_id'];
+
+$query = "SELECT *
+          FROM payment
+          WHERE user_id='$user_id' AND status !='Completed'";
+$result = mysqli_query($con, $query);
+
+$query1 = "SELECT *
+          FROM payment
+          WHERE user_id='$user_id' AND status='Completed'";
+$result1 = mysqli_query($con, $query1);
+?>
+<?php
+if(isset($_POST["amount"]))
+{    
+		$file = $_FILES['treceipt'];
+		$fileName = $file['name'];
+		$fileTmpName = $file['tmp_name'];
+		$fileError = $file['error'];
+		$fileType = $file['type'];
+
+		$fileExt = explode('.', $fileName);
+		$fileActualExt = strtolower(end($fileExt));
+
+		$allowed = array('jpg', 'jpeg', 'png', 'pdf');
+
+		if (in_array($fileActualExt, $allowed)) {
+			if ($fileError === 0) {
+					$fileNameNew = uniqid('', true).".".$fileActualExt;
+					$fileDestination = '../resources/receipts/'.$fileNameNew;
+					move_uploaded_file($fileTmpName, $fileDestination);
+			} else {
+				echo "There was an error uploading your file!";
+			}
+		} else {
+			echo "You cannot upload files of this type!";
+		}
+	
+	$user_id = $_SESSION['user_id'];
+	$title = 'Reload Point';
+	$amount = $_POST['amount'];
+	$file = $fileName;
+	$type = $fileType;
+	$status = 'Waiting for approval';
+	
+	$result = mysqli_query($con, "INSERT INTO payment SET user_id='$user_id', datetime=now(), title='$title', amount='$amount', file = '$file', type = '$type',status='$status'") or die(mysqli_error($con));
+    ?>
+    <script>
+    alert('Request Sent!');
+    window.location.href='main.php#credit';
+    </script>
+    <?php
+}
+?>
+<?php
+if (isset($_GET['payment_id']))
+{
+    $payment_id = $_GET['payment_id'];
+    $result2 = mysqli_query($con, "DELETE FROM payment WHERE payment_id=$payment_id") or die(mysqli_error($con));
+    ?>
+    <script>
+    window.location.href='main.php#credit';
+    </script>
+    <?php
+
+}
+?>
 <div class="col-xs-12 col-md-12 col-lg-12">
     <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Credits</h2>
     
@@ -34,12 +104,12 @@
                     ?>
                     
                     <tr class="bodyrow">
-                        <td></td>
-                        <td></td>
+                        <td><?php echo $row['title']; ?></td>
+                        <td>RM <?php echo $row['amount']; ?></td>
                         <td><a href="" class="btntab" target="_blank">View receipt</a></td>
-                        <td></td>
+                        <td><?php echo $row['datetime']; ?></td>
                         <td>
-                            <a href="" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
+                           <a href="credit.php?payment_id=<?php echo $row['payment_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
                     
@@ -75,7 +145,7 @@
 
                         <form method="post" action="credit.php">
                             <div class="modal-body left">
-                                <p><input class="formfield" name="Amount" type="text" placeholder="Enter top up amount" required /></p>
+                                <p><input class="formfield" id ="amount "name="amount" type="text" placeholder="Enter top up amount" required /></p>
 
                                 <p>
                                     <label class="btnfile btn btn-sm" for="treceipt">Upload Transaction Receipt</label>
@@ -105,17 +175,18 @@
                     </tr>
                     
                     <?php
-                        if(mysqli_num_rows($result) > 0)
+                        if(mysqli_num_rows($result1) > 0)
                         {
-                            while($row = mysqli_fetch_array($result))
+                            while($row1 = mysqli_fetch_array($result1))
                             {
                     ?>
                     
                     <tr class="bodyrow">
-                        <td></td>
-                        <td></td>
+                        <td><?php echo $row1['title']; ?></td>
+                        <td><?php echo $row1['amount']; ?></td>
                         <td><a href="" class="btntab" target="_blank">View receipt</a></td>
-                        <td></td>
+                        <td><?php echo $row1['datetime']; ?></td>
+						<td><?php echo $row1['datetime']; ?></td>
                         <td></td>
                     </tr>
                     

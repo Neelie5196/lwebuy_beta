@@ -132,7 +132,7 @@ $result4 = mysqli_query($con, $query4);
                         <form method="post" action="request.php">
                             <div class="modal-body left">
                                 <input type="hidden" name="order_item_id" id="orderItemId" value="">
-                                <p class="requestp">Item name:<output name="name" id="name"></output></p>
+                                <p class="requestp">Item name: <output name="name" id="name"></output></p>
 
                                 <p class="requestp">URL: <output name="link" id="link"></output></p>
 

@@ -39,9 +39,9 @@ $(document).ready(function(){
         {
             $("#mainview").load('account.php');
         }
-    else if (window.location.hash == "#adfeedback")
+    else if (window.location.hash == "#adreview")
         {
-            $("#mainview").load('feedback.php');
+            $("#mainview").load('review.php');
         }
     else if (window.location.hash == "#adwarehouse")
         {
@@ -132,14 +132,14 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-    $("#btnadfeedback").click(function(){
-        $("#mainview").load('feedback.php');
+    $("#btnadreview").click(function(){
+        $("#mainview").load('review.php');
     });
 });
 
 $(document).ready(function(){
-    $("#btnnotfeedback").click(function(){
-        $("#mainview").load('feedback.php');
+    $("#btnnotreview").click(function(){
+        $("#mainview").load('review.php');
     });
 });
 

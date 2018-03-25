@@ -14,7 +14,7 @@
         <li><a href="#adwarehouse" id="btnadwarehouse">Warehouse</a></li>
         <li><a href="#adupdate" id="btnadupdate">Updates</a></li>
         <li><a href="#adaccount" id="btnadaccount">Accounts</a></li>
-        <li><a href="#adfeedback" id="btnadfeedback">Feedbacks</a></li>
+        <li><a href="#adreview" id="btnadreview">Reviews</a></li>
     </ul>
     
     <ul class="nav navbar-nav navbar-right useritem right">

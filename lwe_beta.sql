@@ -261,7 +261,7 @@ CREATE TABLE `shipping` (
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `tracking_code` varchar(25) DEFAULT NULL,
   `payment_id` int(11) NOT NULL,
-  `feedback` text,
+  `review` text,
   `topup` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

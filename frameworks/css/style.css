@@ -752,3 +752,20 @@ input[type="file"] {
 .requestp, #wslot caption {
     color: #2f9142!important;
 }
+
+.adreview {
+    width: 80%;
+    margin: 1% auto;
+    background: #f4f9eb;
+    border: solid 2px #2f9142;
+    padding: 1%;
+    color: #2f9142;
+}
+
+.adreview h5 {
+    font-weight: bold;
+}
+
+.adreview p {
+    font-size: 110%;
+}

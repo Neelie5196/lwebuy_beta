@@ -36,13 +36,13 @@ $query7 = "SELECT *
            WHERE user_id='$user_id' AND status = 'topup'";
 $result7 = mysqli_query($con, $query7);
 
-if(isset($_POST['feedback']))
+if(isset($_POST['review']))
 {    
 
     $shipping_id = $_POST['shipping_id'];
-    $feedback = $_POST['feedbacks'];
+    $review = $_POST['reviews'];
 	
-	$result7 = mysqli_query($con, "UPDATE shipping SET feedback='$feedback' WHERE shipping_id = '$shipping_id'") or die(mysqli_error($con));
+	$result7 = mysqli_query($con, "UPDATE shipping SET review='$review' WHERE shipping_id = '$shipping_id'") or die(mysqli_error($con));
     
     ?>
     <script>
@@ -337,10 +337,10 @@ if(isset($_POST['feedback']))
                         <td><?php echo $row['price']; ?></td>
                         <td><?php echo $row['tracking_code']; ?></td>
                         <?php
-                          if($row['feedback']==NULL){
+                          if($row['review']==NULL){
                             ?>
                                 <td>
-                                    <a data-toggle="modal" data-id="<?php echo $row['shipping_id']; ?>" class="btn btn-default btn-xs btnDelete sfeedback" href="#sfeedback"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a data-toggle="modal" data-id="<?php echo $row['shipping_id']; ?>" class="btn btn-default btn-xs btnDelete sreview" href="#sreview"><span class="glyphicon glyphicon-edit"></span></a>
                                 </td>
                             <?php
                           }else{
@@ -366,22 +366,22 @@ if(isset($_POST['feedback']))
                 </table>
             </div>
             
-            <div class="modal fade" id="sfeedback" tabindex="-1" role="dialog" aria-labelledby="sfeedbackTitle" aria-hidden="true">
+            <div class="modal fade" id="sreview" tabindex="-1" role="dialog" aria-labelledby="sreviewTitle" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                       <div class="modal-content">
                           <div class="modal-header">
-                              <h5 class="modal-title" id="sfeedbackTitle">Feedback Form</h5>
+                              <h5 class="modal-title" id="sreviewTitle">review Form</h5>
                          </div>
                           
                           <form method="post" action="shipping.php">
                               <div class="modal-body left">
                                   <p><input class="formfield" name="shipping_id" id="shipping_id" type="hidden" value="" /></p>
-                                  <p><input class="formfield" name="feedbacks" type="textarea" rows="3" placeholder="Enter your comments here..." /></p>
+                                  <p><input class="formfield" name="reviews" type="textarea" rows="3" placeholder="Enter your comments here..." /></p>
                               </div>
                               
                               <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                                  <input type="submit" class="btn btn-success btnSend" name="feedback" value="Send feedback" />
+                                  <input type="submit" class="btn btn-success btnSend" name="review" value="Send review" />
                               </div>
                           </form>
                       </div>
@@ -429,9 +429,9 @@ if(isset($_POST['feedback']))
     }
 </script>
 <script>
-$(document).on("click", ".sfeedback", function () {
+$(document).on("click", ".sreview", function () {
     var shippingId = $(this).data('id');
     $(".modal-body #shipping_id").val( shippingId );
-    $('#sfeedback').modal('show');
+    $('#sreview').modal('show');
 });
 </script>

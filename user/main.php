@@ -32,7 +32,7 @@ session_start();
 
     <body class="userbg">
         <div class="row">
-            <?php include_once "../userbar.php" ?>
+            <?php include_once "userbar.php" ?>
         </div>
         
         <div class="row userrow2 center" id="mainview">

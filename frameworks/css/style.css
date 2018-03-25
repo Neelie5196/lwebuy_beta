@@ -698,3 +698,33 @@ input[type="file"] {
 .smadstats h6 {
     font-size: 400%;
 }
+
+.adrow1 {
+    width: 80%;
+    margin: 1% auto 0 auto;
+}
+
+.adnoti > a > div {
+    margin: 1%;
+    padding: 5%;
+    border: solid 2px #2f9142;
+}
+
+.adnoti > a > div:hover {
+    background: #2f9142;
+}
+
+.notititle {
+    color: #2f9142;
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.notino {
+    color: #2f9142;
+    font-size: 200%;
+}
+
+.adnoti > a > div:hover .notititle, .adnoti > a > div:hover .notino {
+    color: #fff;
+}

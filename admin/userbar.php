@@ -1,5 +1,5 @@
 <?php
-$type = $_SESSION['type'];
+//$type = $_SESSION['type'];
 ?>
 
 <nav class="navbar navbar-default userbar">
@@ -9,13 +9,11 @@ $type = $_SESSION['type'];
 
     <ul class="nav navbar-nav center menuitem">
         <li><a href="#home" id="btnhome">Home</a></li>
-        <li><a href="#purchase" id="btnpurchase">Purchase</a></li>
-        <li><a href="#inventory" id="btninventory">Inventory</a></li>
-        <li><a href="#ship" id="btnship">Ship</a></li>
-        
-        <?php if($type == 'admin') { ?>
-        <li><a href="#accounts" id="btnaccount">Accounts</a></li>
-        <?php } ?>
+        <li><a href="#adrequest" id="btnadrequest">Requests</a></li>
+        <li><a href="#adpayment" id="btnadpayment">Payments</a></li>
+        <li><a href="#adupdate" id="btnadupdate">Updates</a></li>
+        <li><a href="#adaccount" id="btnadaccount">Accounts</a></li>
+        <li><a href="#adfeedback" id="btnadfeedback">Feedbacks</a></li>
     </ul>
     
     <ul class="nav navbar-nav navbar-right useritem right">

@@ -192,8 +192,8 @@ $results11 = mysqli_fetch_assoc($result11);
                         <div id="ptrans">
                             <form method="post" action="credit.php">
                                 <p class="center paytrans">
-                                    <label class="btn btnGo" for="treceipt">Upload Transaction Receipt</label>
-                                    <input type="file" id="treceipt" name="treceipt" required />
+                                    <label>Upload Transaction Receipt</label><br/>
+                                    <input type="file" name="file" class="center" />
                                 </p>
                             </form>
                         </div>

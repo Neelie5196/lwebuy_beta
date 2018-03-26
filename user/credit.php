@@ -148,8 +148,8 @@ if (isset($_GET['payment_id']))
                                 <p><input class="formfield" id ="amount "name="amount" type="text" placeholder="Enter top up amount" required /></p>
 
                                 <p>
-                                    <label class="btnfile btn btn-sm" for="treceipt">Upload Transaction Receipt</label>
-                                    <input type="file" id="treceipt" name="treceipt" required />
+                                    <label>Upload Transaction Receipt</label><br/>
+                                    <input type="file" name="file" class="center" />
                                 </p>
                             </div>
 

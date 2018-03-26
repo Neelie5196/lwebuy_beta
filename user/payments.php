@@ -193,7 +193,7 @@ $results11 = mysqli_fetch_assoc($result11);
                             <form method="post" action="credit.php">
                                 <p class="center paytrans">
                                     <label>Upload Transaction Receipt</label><br/>
-                                    <input type="file" name="file" class="center" />
+                                    <input type="file" name="file" class="center" required />
                                 </p>
                             </form>
                         </div>

@@ -30,7 +30,7 @@ if(isset($_POST["amount"]))
 		if (in_array($fileActualExt, $allowed)) {
 			if ($fileError === 0) {
 					$fileNameNew = uniqid('', true).".".$fileActualExt;
-					$fileDestination = '../resources/receipts/'.$fileNameNew;
+					$fileDestination = '../receipts/'.$fileNameNew;
 					move_uploaded_file($fileTmpName, $fileDestination);
 			} else {
 				echo "There was an error uploading your file!";
@@ -149,7 +149,7 @@ if (isset($_GET['payment_id']))
 
                                 <p>
                                     <label>Upload Transaction Receipt</label><br/>
-                                    <input type="file" name="file" class="center" />
+                                    <input type="file" name="file" class="center" required />
                                 </p>
                             </div>
 

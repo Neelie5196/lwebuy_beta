@@ -4,7 +4,7 @@
     <h2 class="smh2 pagetitle hidden-md hidden-lg">Delivered Shipments Update</h2>
     
     <div class="row">
-        <div class="col-xs-12 col-md-6 col-lg-6 col-md-push-3 col-lg-push-3 updatecontainer">
+        <div class="col-xs-6 col-md-6 col-lg-6 col-xs-push-6 col-md-push-3 col-lg-push-3 updatecontainer">
             <form action="delivered.php" method="post">
                 <p><input type="text" name="search" class="formfield" placeholder="Enter tracking code here" required /></p>
             </form>

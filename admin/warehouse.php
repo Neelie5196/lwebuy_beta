@@ -277,10 +277,8 @@ if (isset($_GET['ware_id']))
                     <?php
                         if(mysqli_num_rows($result6) > 0)
                         {
-                            $warehouse_id = 0;
                             while($row = mysqli_fetch_array($result6))
                             {
-                                $warehouse_id = $row['ware_id'];
                                 ?>
                                 <tr>
                                     <td><?php echo $row['station_code']; ?></td>
@@ -288,8 +286,6 @@ if (isset($_GET['ware_id']))
                                     <td><?php echo $row['country']; ?></td>
                                     <td><?php echo $row['address']; ?></td>
                                     <td>
-                                        <a data-toggle="modal" class="btn btn-default btn-xs btnDelete" href="#warehouseStaff"><span class="glyphicon glyphicon-eye-open"></span></a>
-
                                         <a data-toggle="modal" data-id="<?php echo $row['ware_id']; ?>" data-code="<?php echo $row['station_code']; ?>" data-name="<?php echo $row['station_name']; ?>" data-country="<?php echo $row['country']; ?>" data-address="<?php echo $row['address']; ?>" class="btn btn-default btn-xs btnDelete editWarehouse" href="#editWarehouse"><span class="glyphicon glyphicon-pencil"></span></a>
 
                                         <a href="warehouse.php?ware_id=<?php echo $row['ware_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
@@ -382,62 +378,7 @@ if (isset($_GET['ware_id']))
                         </form>
                     </div>
                 </div>
-            </div>
-            
-            <div class="modal fade" id="warehouseStaff" tabindex="-1" role="dialog" aria-labelledby="warehouseStaffTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="warehouseStaffTitle">Warehouse Staff</h5>
-                        </div>
-
-                        <form method="post" action="request.php">
-                            <div class="modal-body left">
-                                <table class="purchasetable">
-                                    <tr class="center">
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Contact</th>
-                                    </tr>
-                                    <?php
-                                        $query10 = "SELECT *
-                                                   FROM warehouse wh
-                                                   JOIN work_station ws
-                                                   ON ws.ware_id=wh.ware_id
-                                                   JOIN users us
-                                                   ON us.user_id = ws.user_id
-                                                   WHERE ws.ware_id='$warehouse_id'";
-                                        $result10 = mysqli_query($con, $query10);
-                                        if(mysqli_num_rows($result10) > 0)
-                                        {
-                                            while($row = mysqli_fetch_array($result10))
-                                            {
-                                                ?>
-                                                <tr>
-                                                    <td><?php echo $row['fname']. " " .$row['lname']; ?></td>
-                                                    <td><?php echo $row['email']; ?></td>
-                                                    <td><?php echo $row['contact']; ?></td>
-                                                </tr>
-                                                <?php
-                                            }
-                                        }else{
-                                            ?>
-                                                <tr>
-                                                    <td colspan="3">No staff.</td>
-                                                </tr>
-                                            <?php
-                                        }
-                                    ?>  
-                                </table>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Close</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>            
+            </div>          
         </div>
     </div>
 </div>

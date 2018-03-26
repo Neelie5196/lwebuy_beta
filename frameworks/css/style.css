@@ -246,10 +246,6 @@ body {
     color: #fff!important;
 }
 
-input[type="file"] {
-    display: none;
-}
-
 .glyphicon {
     color: #fff;
     font-size: 150%;

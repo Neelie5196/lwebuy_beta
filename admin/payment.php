@@ -1,3 +1,28 @@
+<?php
+require_once '../connection/config.php';
+session_start();
+
+$query = "SELECT *
+        FROM order_item oi
+        JOIN payment p
+        ON p.payment_id = oi.payment_id
+        JOIN users us
+        ON us.user_id = p.user_id
+        WHERE oi.status = 'paid'
+        GROUP BY oi.payment_id";
+$result = mysqli_query($con, $query);
+
+$query1 = "SELECT *
+        FROM shipping s
+        JOIN payment p
+        ON p.payment_id = s.payment_id
+        JOIN users us
+        ON us.user_id = p.user_id
+        WHERE s.status = 'paid'";
+$result1 = mysqli_query($con, $query1);
+
+?>
+
 <div class="col-xs-12 col-md-12 col-lg-12">
     <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Payments</h2>
     
@@ -22,86 +47,35 @@
                 <table class="purchasetable">
                     <tr class="center">
                         <th>Customer</th>
-                        <th>Item Name</th>
-                        <th>Link</th>
-                        <th>Category</th>
-                        <th>Quantity</th>
-                        <th>Remarks</th>
-                        <th>Total Price</th>
+                        <th>Payment ID</th>
+                        <th>Total Price (RM)</th>
                         <th>Payment Details</th>
                     </tr>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <a data-toggle="modal" class="btn btn-default btn-xs btnDelete" href="#purchasepay"><span class="glyphicon glyphicon-eye-open"></span></a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="8">No new payments for purchase.</td>
-                    </tr>
+                    <?php 
+                        if(mysqli_num_rows($result) > 0)
+                        {
+                            while($row = mysqli_fetch_array($result))
+                            {
+                                ?>
+                                <tr>
+                                    <td><?php echo $row['fname']." ".$row['lname']; ?></td>
+                                    <td><?php echo $row['payment_id']; ?></td>
+                                    <td><?php echo $row['amount']; ?></td>
+                                    <td>
+                                        <a href="#" class="btntab" onclick="window.open('paymentview.php?payment_id=<?php echo $row['payment_id']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,fullscreen=yes');"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        }else{
+                            ?>
+                                <tr>
+                                    <td colspan="4">No new payments for purchase.</td>
+                                </tr>
+                            <?php
+                        }
+                    ?>
                 </table>
-            </div>
-            
-            <div class="modal fade" id="purchasepay" tabindex="-1" role="dialog" aria-labelledby="purchasepayTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="purchasepayTitle">Purchase Payment Details</h5>
-                        </div>
-
-                        <form method="post" action="payment.php">
-                            <div class="modal-body left">
-                                <p class="requestp">Payment Type: </p>
-
-                                <p class="requestp">Amount to be paid: </p>
-
-                                <p class="requestp">Paid amount: </p>
-
-                                <!-- for transaction receipts type only -->
-                                <p class="requestp">Receipt:</p>
-                                
-                                <p class="center"><img src="" /></p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-success btnSend" name="approve" value="Proceed" />
-                                
-                                <a class="btn btnDecline" href="#declinePPayment" data-dismiss="modal" data-toggle="modal">Decline</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="modal fade" id="declinePPayment" tabindex="-1" role="dialog" aria-labelledby="declinePPaymentTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="declinePPaymentTitle">Decline Payment</h5>
-                        </div>
-
-                        <form method="post" action="payment.php">
-                            <div class="modal-body left">
-                                <p><input class="formfield" name="reason" type="text" placeholder="Reason" required /></p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-
-                                <input type="submit" class="btn btn-success btnSend" name="sendc" value="Send" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
         
@@ -110,31 +84,45 @@
                 <table class="purchasetable">
                     <tr class="center">
                         <th>Customer</th>
-                        <th>Recipient Name</th>
-                        <th>Recipient Contact</th>
-                        <th>Recipient Address</th>
+                        <th>Receipient Name</th>
+                        <th>Receipient Contact</th>
                         <th>No. of Items</th>
                         <th>Total Weight (kg)</th>
                         <th>Total Price</th>
                         <th>Payment Details</th>
                     </tr>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <a data-toggle="modal" class="btn btn-default btn-xs btnDelete" href="#shippingpay"><span class="glyphicon glyphicon-eye-open"></span></a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="8">No new payments for shipping.</td>
-                    </tr>
+                    <?php 
+                        if(mysqli_num_rows($result1) > 0)
+                        {
+                            while($row = mysqli_fetch_array($result1))
+                            {
+                                $payment_id = $row['payment_id'];
+                                $query2 = "SELECT *
+                                        FROM item
+                                        WHERE payment_id = '$payment_id'";
+                                $result2 = mysqli_query($con, $query2);
+                                ?>
+                                <tr>
+                                    <td><?php echo $row['fname']." ".$row['lname']; ?></td>
+                                    <td><?php echo $row['receipient_name']; ?></td>
+                                    <td><?php echo $row['receipient_contact']; ?></td>
+                                    <td><?php echo mysqli_num_rows($result2); ?></td>
+                                    <td><?php echo $row['weight']; ?></td>
+                                    <td><?php echo $row['price']; ?></td>
+                                    <td>
+                                        <a data-toggle="modal" class="btn btn-default btn-xs btnDelete" href="#shippingpay"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        }else{
+                            ?>
+                                <tr>
+                                    <td colspan="8">No new payments for shipping.</td>
+                                </tr>
+                            <?php
+                        }
+                    ?>
                 </table>
             </div>
             

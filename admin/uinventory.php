@@ -31,7 +31,7 @@ if(isset($_POST['receivesave']))
     ?>
     <script>
     alert('Success to Save');
-    window.location.href='updatedetails.php#uinventory';
+    window.location.href='uinventory.php';
     </script>
     <?php
 }

@@ -1,3 +1,72 @@
+<?php
+require_once '../connection/config.php';
+session_start();
+
+$query = "SELECT *
+           FROM shipping sh
+           JOIN address ad
+           ON sh.address_id = ad.address_id
+           WHERE sh.status='Proceed'";
+$result = mysqli_query($con, $query);
+
+$query1 = "SELECT *
+           FROM work_station ws
+           JOIN users us
+           ON ws.user_id = us.user_id
+           JOIN warehouse wh
+           ON ws.ware_id = us.ware_id";
+$result1 = mysqli_query($con, $query1);
+
+if(isset($_POST['register']))
+    {
+        $s_id = $_POST['shippingids'];
+        
+        $ostationid = $_POST['originstation'];
+        
+        $query2 = "SELECT * FROM warehouse WHERE ware_id = '$ostationid'";
+        $result2 = mysqli_query($con, $query2);
+        $results2 = mysqli_fetch_assoc($result2);
+        
+        $ostationname = $results2['station_name'];
+        $ostationcode = $results2['station_code'];
+        $ocountryname =  $results2['country_name'];
+        $ocountrycode = $results2['country_code'];
+                
+        $eventDesc = 'Shipment info registered at ' . $ostationname . '.';
+        
+        foreach ($s_id as $s)
+        {
+            $update0 = mysqli_query($con, "UPDATE shipping SET status = 'SHIPMENT REGISTERED' WHERE shipping_id = $s") or die(mysqli_error($con));
+            
+            $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$s', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='RDL', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
+            
+            $query3 = "SELECT *
+            FROM warehouse wh
+            JOIN shipping sh
+            ON wh.station_name = sh.destination_station
+            WHERE shipping_id = '$s'";
+            $result3 = mysqli_query($con, $query3);
+            $results3 = mysqli_fetch_assoc($result3);
+
+            $recipientname = $results3['recipient_name'];
+            $dstationname = $results3['destination_station'];
+            $dstationcode = $results3['station_code'];
+            $dcountryname = $results3['country_name'];
+            $dcountrycode = $results3['country_code'];
+            
+            $update2 = mysqli_query($con, "INSERT INTO shipping_update_summary SET HawbNo='$s', DeliveryDate='', RecipientName='$recipientname', SignedName='', OriginStationCode='$ostationcode', OriginStationDescription='$ostationname', OriginCountryCode='$ocountrycode', OriginCountryDescription='$ocountryname', DestinationStationCode='$dstationcode', DestinationStationDescription='$dstationname', DestinationCountryCode='$dcountrycode', DestinationCountryDescription='$dcountryname', EventCode='IP', EventDescription='In Proceed', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
+        }
+        ?>
+        
+<script>
+alert('Shipment Registered');
+window.location.href='registers.php';
+</script>
+
+<?php
+    }
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -38,7 +107,7 @@
                 </p>
             </div>
         </div>
-        
+
         <div class="row userrow2 center" id="updateview">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Shipment Registration</h2>
@@ -47,7 +116,21 @@
 
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
-                        <form action="delivered.php" method="post">
+                        <form action="registers.php" method="post">
+                            <?php
+                            /*if(mysqli_num_rows($result1) > 0)
+                            {
+                                while($row1 = mysqli_fetch_array($result1))
+                                {*/
+                                    ?>
+                                    
+                            <input type="hidden" name="originstation" value="<?php /*echo $result1['station_name'];*/ ?> 1">
+                            
+                            <?php
+                               /* }
+                            }*/
+                            ?>
+                            
                             <table class="purchasetable">
                                 <tr>
                                     <th></th>
@@ -56,28 +139,42 @@
                                     <th>Recipient Contact</th>
                                     <th>Recipient Address</th>
                                     <th>Total Weight (kg)</th>
-                                    <th>Destination Station</th>
                                     <th>Parcel Tag</th>
                                 </tr>
 
-                                <tr class="bodyrow">
-                                    <td>
-                                        <input type="checkbox" />
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <select class="tblformselect">
-                                            <option class="formoption"></option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <a data-toggle="modal" class="btn btn-default btn-xs btnDelete" href="#printtag"><span class="glyphicon glyphicon-print"></span></a>
-                                    </td>
-                                </tr>
+                                <?php
+                                    if(mysqli_num_rows($result) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result))
+                                        {
+                                            ?>
+                                
+                                        <tr class="bodyrow">
+                                            <td>
+                                                <input type="checkbox" name="shippingids[]" value="<?php echo $row['shipping_id']?>" />
+                                            <td><?php echo $row['shipping_id']; ?></td>
+                                            </td>
+                                            <td><?php echo $row['recipient_name'];?></td>
+                                            <td><?php echo $row['recipient_contact'];?></td>
+                                            <td><?php echo $row['address'].", ".$row['postcode']." ".$row['city'].", ".$row['state'].", ".$row['country'];;?></td>
+                                            <td><?php echo $row['weight']?></td>
+                                            <td>
+                                                <a href="tag.php?s_id=<?php echo $row['shipping_id']; ?>" class="btn btn-default btn-xs btnDelete" target="_blank"><span class="glyphicon glyphicon-print"></span></button>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    }
+                                    else
+                                    {
+                                    ?>
+                                    
+                                    <tr>
+                                        <td colspan="7">No shipments ready for registration.</td>
+                                    </tr>
+                                <?php
+                                    }
+                                ?>
 
                                 <tr>
                                     <td colspan="8">
@@ -86,90 +183,6 @@
                                 </tr>
                             </table>
                         </form>
-
-                        <div class="modal fade" id="printtag" tabindex="-1" role="dialog" aria-labelledby="printtagTitle" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="printtagTitle">Tag Preview</h5>
-                                    </div>
-
-                                    <form method="post" action="account.php">
-                                        <div class="modal-body left">
-                                            <div id="parceltag">
-                                                <div class="parceltag">
-                                                    <h1>
-                                                        <img src="../resources/img/logo-black.png"/>
-                                                        Logistics Worldwide Express
-                                                    </h1>
-                                                    <hr/>
-
-                                                    <p>Weight(KG): </p>
-
-                                                    <script type="text/javascript">
-                                                        function printDiv(parceltag)
-                                                        {
-                                                            var printContents = document.getElementById(parceltag).innerHTML;
-                                                            var originalContents = document.body.innerHTML;
-                                                            document.body.innerHTML = printContents;
-                                                            window.print();
-                                                            location.reload(true);
-                                                        }
-                                                        function generateBarcode()
-                                                        {
-                                                            $("barcode").update();
-                                                            var value = '214124';
-                                                            var btype = 'code128';
-                                                            var renderer ='css';
-                                                            var settings = 
-                                                            {
-                                                              output:renderer,
-                                                              bgColor: '#FFFFFF',
-                                                              color: '#000000',
-                                                              barWidth: 2,
-                                                              barHeight: 100,
-                                                              addQuietZone: false
-                                                            };
-                                                            $("barcode").update().show().barcode(value, btype, settings);      
-                                                        }
-                                                        $(function()
-                                                          {
-                                                            generateBarcode();
-                                                            }
-                                                         );
-                                                    </script>
-
-                                                    <div id="barcode" class="barcode">
-
-                                                    </div>
-
-                                                    <table>
-                                                        <tr>
-                                                            <td><h3>Ship to:</h3></td>
-                                                            <td><h3>Recipient contact:</h3></td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td><p></p></td>
-                                                            <td><p></p></td>
-                                                        </tr>
-                                                    </table>
-
-                                                    <h3>Address</h3>
-
-                                                    <p></p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                                            <button class="btn btn-success btnSend" onclick="printDiv('parceltag')">Print</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

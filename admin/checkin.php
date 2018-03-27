@@ -1,3 +1,57 @@
+<?php
+require_once '../connection/config.php';
+session_start();
+
+$query = "SELECT *
+           FROM shipping sh
+           JOIN address ad
+           ON sh.address_id = ad.address_id
+           WHERE sh.status='SHIPMENT REGISTERED'";
+$result = mysqli_query($con, $query);
+
+$query1 = "SELECT *
+           FROM work_station ws
+           JOIN users us
+           ON ws.user_id = us.user_id
+           JOIN warehouse wh
+           ON ws.ware_id = us.ware_id";
+$result1 = mysqli_query($con, $query1);
+
+
+if(isset($_POST['checkin']))
+    {
+        $s_id = $_POST['shippingids'];
+        
+        $ostationid = $_POST['originstation'];
+        
+        $query2 = "SELECT * FROM warehouse WHERE ware_id = '$ostationid'";
+        $result2 = mysqli_query($con, $query2);
+        $results2 = mysqli_fetch_assoc($result2);
+        
+        $ostationname = $results2['station_name'];
+        $ostationcode = $results2['station_code'];
+        $ocountryname =  $results2['country_name'];
+        $ocountrycode = $results2['country_code'];
+                
+        $eventDesc = 'Pickup shipment checked in at ' . $ostationname . '.';
+        
+        foreach ($s_id as $s)
+        {
+            $update0 = mysqli_query($con, "UPDATE shipping SET status = 'SHIPMENT RECEIVED' WHERE shipping_id = $s") or die(mysqli_error($con));
+            
+            $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$s', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='PKI', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
+        }
+?>
+        
+<script>
+alert('Shipment check in!');
+window.location.href='registers.php';
+</script>
+
+<?php
+    }
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,9 +79,7 @@
         <![endif]-->
         
         <script src="../frameworks/js/lwe.js"></script>
-        <script src="../frameworks/js/prototype-barcode.js"></script>
-        <script src="../frameworks/js/prototype.js"></script>
-
+        
     </head>
 
     <body class="userbg">
@@ -47,17 +99,19 @@
 
                 <div class="row">
                     <div class="col-xs-6 col-md-6 col-lg-6 col-xs-push-6 col-md-push-3 col-lg-push-3 updatecontainer">
-                        <form action="delivered.php" method="post">
-                            <p><input type="text" name="search" class="formfield" placeholder="Enter tracking code here" required /></p>
-                        </form>
+                        <p>
+                            <input type="text" name="search" class="formfield" placeholder="Enter tracking code here" id="codeinput" required autofocus />
+                            <button id="myBtn" class="hidden-xs hidden-sm hidden-md hidden-lg" onclick="selectItem()"></button>
+                        </p>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
                         <form action="checkin.php" method="post">
-                            <table class="purchasetable">
+                            <table class="purchasetable" id="checkintable">
                                 <tr>
+                                    <th></th>
                                     <th>Tracking Code</th>
                                     <th>Recipient Name</th>
                                     <th>Recipient Contact</th>
@@ -65,19 +119,42 @@
                                     <th>Total Weight (kg)</th>
                                     <th>Destination Station</th>
                                 </tr>
-
-                                <tr class="bodyrow">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-
+                                
+                                <?php
+                                    if(mysqli_num_rows($result) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result))
+                                        {
+                                            ?>
+                                
+                                        <tr class="bodyrow">
+                                            <td>
+                                                <input type="checkbox" class="trackcheck" name="shippingids[]" value="<?php echo $row['tracking_code']?>" disabled />
+                                            </td>
+                                            <td><?php echo $row['tracking_code']; ?></td>
+                                            <td><?php echo $row['recipient_name'];?></td>
+                                            <td><?php echo $row['recipient_contact'];?></td>
+                                            <td><?php echo $row['address'].", ".$row['postcode']." ".$row['city'].", ".$row['state'].", ".$row['country'];;?></td>
+                                            <td><?php echo $row['weight']?></td>
+                                            <td><?php echo $row['destination_station']?></td>
+                                        </tr>
+                                    <?php
+                                        }
+                                    }
+                                    else
+                                    {
+                                    ?>
+                                    
+                                    <tr>
+                                        <td colspan="7">No shipments ready for check in.</td>
+                                    </tr>
+                                <?php
+                                    }
+                                ?>
+                        
                                 <tr>
-                                    <td colspan="6">
-                                        <input type="submit" class="btn btnAdd" name="update" value="Update" />
+                                    <td colspan="7">
+                                        <input type="submit" class="btn btnAdd" name="checkin" value="Check In" />
                                     </td>
                                 </tr>
                             </table>
@@ -86,5 +163,31 @@
                 </div>
             </div>
         </div>
+        
+        
+        <script>
+        document.getElementById("codeinput").addEventListener("keyup", function(event) {
+          event.preventDefault();
+          if (event.keyCode === 13) {
+            document.getElementById("myBtn").click();
+              }
+            });
+
+        function selectItem()
+        {
+            var checkboxes = document.getElementsByClassName("trackcheck");
+            var count = checkboxes.length;
+
+            for (var i = 0; i < count; i++)
+                {
+                    if (checkboxes[i].value == document.getElementById("codeinput").value)
+                        {
+                            checkboxes[i].checked = true;
+                        }
+                }
+            
+            document.getElementById("codeinput").select();
+        }
+        </script> 
     </body>
 </html>

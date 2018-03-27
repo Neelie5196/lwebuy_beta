@@ -59,7 +59,7 @@ if(isset($_POST['register']))
         ?>
         
 <script>
-alert('Shipment Registered');
+alert('Shipment registered!');
 window.location.href='registers.php';
 </script>
 
@@ -118,17 +118,17 @@ window.location.href='registers.php';
                     <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
                         <form action="registers.php" method="post">
                             <?php
-                            /*if(mysqli_num_rows($result1) > 0)
+                            if(mysqli_num_rows($result1) > 0)
                             {
                                 while($row1 = mysqli_fetch_array($result1))
-                                {*/
+                                {
                                     ?>
                                     
-                            <input type="hidden" name="originstation" value="<?php /*echo $result1['station_name'];*/ ?> 1">
+                            <input type="hidden" name="originstation" value="<?php echo $result1['station_name']; ?>">
                             
                             <?php
-                               /* }
-                            }*/
+                                }
+                            }
                             ?>
                             
                             <table class="purchasetable">
@@ -151,9 +151,8 @@ window.location.href='registers.php';
                                 
                                         <tr class="bodyrow">
                                             <td>
-                                                <input type="checkbox" name="shippingids[]" value="<?php echo $row['shipping_id']?>" />
-                                            <td><?php echo $row['shipping_id']; ?></td>
-                                            </td>
+                                                <input type="checkbox" name="shippingids[]" value="<?php echo $row['shipping_id']?>" /></td>
+                                            <td><?php echo $row['tracking_code']; ?></td>
                                             <td><?php echo $row['recipient_name'];?></td>
                                             <td><?php echo $row['recipient_contact'];?></td>
                                             <td><?php echo $row['address'].", ".$row['postcode']." ".$row['city'].", ".$row['state'].", ".$row['country'];;?></td>

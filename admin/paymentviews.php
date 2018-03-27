@@ -4,71 +4,55 @@ session_start();
 $payment_id = $_GET['payment_id'];
 
 $query = "SELECT *
-           FROM order_item
+           FROM item
            WHERE payment_id='$payment_id'";
 $result = mysqli_query($con, $query);
 
-if(isset($_POST['updateordercode']))
-{   
-    $query1 = "SELECT *
-                FROM payment
-                WHERE payment_id='$payment_id'";
-    $result1 = mysqli_query($con, $query1);
-    $results1 = mysqli_fetch_assoc($result1);
-    
-    if($results1['status'] != 'Waiting for Accept'){
-        $order_item_id = $_POST['order_item_id'];
-        $order_code = $_POST['order_code'];
+$query1 = "SELECT * 
+        FROM shipping s
+        JOIN address a
+        ON a.address_id = s.address_id
+        WHERE payment_id='$payment_id'";
+$result1 = mysqli_query($con, $query1);
+$results1 = mysqli_fetch_assoc($result1);
 
-        for($i=0; $i<$_POST['numbers']; $i++){
-            $result2 = mysqli_query($con, "UPDATE order_item SET order_code='$order_code[$i]' WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
-        }
-
-        ?>
-        <script>
-        alert('Success to Update');
-        window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
-        </script>
-        <?php 
-    }else{
-        ?>
-        <script>
-        alert('Please approve the payment before proceed');
-        window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
-        </script>
-        <?php 
-    }
-}
+$query6 = "SELECT * FROM payment WHERE payment_id='$payment_id'";
+$result6 = mysqli_query($con, $query6);
+$results6 = mysqli_fetch_assoc($result6);
 
 if(isset($_POST['approve']))
 {
     $payment_id = $_POST['payment_id'];
+    $station = $_POST['station'];
     $status = 'Completed';
     
     $result3 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
+    $result7 = mysqli_query($con, "UPDATE shipping SET destination_station = '$station' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Update');
-    window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
+    window.location.href='paymentviews.php?payment_id=<?php echo $payment_id; ?>';
     </script>
     <?php
 }
 
+$query2 = "SELECT * FROM shipping WHERE payment_id='$payment_id'";
+$result2 = mysqli_query($con, $query2);
+$results2 = mysqli_fetch_assoc($result2);
+
 if(isset($_POST['proceed']))
 {   
     $query4 = "SELECT *
-              FROM order_item
-              WHERE status='paid' AND payment_id = '$payment_id'";
+                FROM payment
+                WHERE payment_id='$payment_id'";
     $result4 = mysqli_query($con, $query4);
     $results4 = mysqli_fetch_assoc($result4);
     
-    if($results4['order_code'] != NULL){
-        $order_item_id = $_POST['order_item_id'];
+    if($results1['status'] != 'Waiting for Accept'){
         $status = 'Proceed';
+        $statuss = 'Completed';
 
-        for($i=0; $i<$_POST['numbers']; $i++){
-            $result5 = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
-        }
+        $result5 = mysqli_query($con, "UPDATE shipping SET status='$status' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
         ?>
         <script>
         alert('Success to Update');
@@ -79,17 +63,16 @@ if(isset($_POST['proceed']))
     }else{
         ?>
         <script>
-        alert(Please update the order code before proceed');
-        window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
+        alert('Please approve the payment before proceed');
+        window.location.href='paymentviews.php?payment_id=<?php echo $payment_id; ?>';
         </script>
         <?php
     }
     
 }
 
-$query6 = "SELECT * FROM payment WHERE payment_id='$payment_id'";
+$query6 = "SELECT * FROM warehouse";
 $result6 = mysqli_query($con, $query6);
-$results6 = mysqli_fetch_assoc($result6);
 
 ?>
 
@@ -133,47 +116,39 @@ $results6 = mysqli_fetch_assoc($result6);
         </div>
         
         <div class="row">
-            <form action="paymentview.php?payment_id=<?php echo $payment_id; ?>" method="post">
+            <form action="paymentviews.php?payment_id=<?php echo $payment_id; ?>" method="post">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
                         <table class="purchasetable">
                             <caption>                                    
                                 <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
                             </caption>
+                            <p>Receipient Name : <?php echo $results1['receipient_name']; ?></p>
+                            <p>Receipient Contact : <?php echo $results1['receipient_contact']; ?></p>
+                            <p>Remark : <?php echo $results1['remark']; ?></p>
+                            <p>Address : <?php echo $results1['address'].", ".$results1['postcode'].", ".$results1['city'].", ".$results1['state']; ?></p>
+                            <p>Country : <?php echo $results1['country']; ?></p>
                             <tr>
-                                <th>Name</th>
-                                <th>Link</th>
-                                <th>Category</th>
-                                <th>Quantity</th>
-                                <th>Remark</th>
-                                <th>Unit Price (MYR)</th>
-                                <th>Total Price (MYR)</th>
+                                <th>Item Name</th>
                                 <th>Order Code</th>
+                                <th>Weight</th>
                             </tr>
 
                             <?php 
                                 if(mysqli_num_rows($result) > 0)
                                 {
                                     $counter = 0;
-                                    $total = 0;
 
                                     while($row = mysqli_fetch_array($result))
                                     {
                                         $counter++;
-                                        $total += $row['price']*$row['quantity'];
+                                        
                             ?>
                             <tr class="bodyrow">
-                                <td><?php echo $row['order_item']; ?></td>
-                                <td><a href="#" class="btntab" onclick="window.open('<?php echo $row['link']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,fullscreen=yes');">View item</a></td>
-                                <td><?php echo $row['category']; ?></td>
-                                <td><?php echo $row['quantity']; ?></td>
-                                <td><?php echo $row['remark']; ?></td>
-                                <td><?php echo $row['price']; ?></td>
-                                <td><?php echo number_format((float)$row['price']*$row['quantity'], 2, '.', ''); ?></td>
-                                <td><input type="text" class="tblformfield" name="order_code[]" value="<?php echo $row['order_code']; ?>" required></td>
+                                <td><?php echo $row['item_description']; ?></td>
+                                <td><?php echo $row['order_code']; ?></td>
+                                <td><?php echo $row['weight']; ?></td>
                             </tr>
-
-                            <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">
                             <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
                             <?php
                                     }
@@ -191,13 +166,12 @@ $results6 = mysqli_fetch_assoc($result6);
                             }
                             ?>
                             <tr>
-                                <td colspan="7" class="right">Total Outstanding Payment (MYR) :</td>
-                                <td class="right"><?php echo number_format((float)$total, 2, '.', ''); ?></td>
+                                <td colspan="2" class="right">Total Weight (KG) :</td>
+                                <td><?php echo $results1['weight']; ?></td>
                             </tr>
                             <tr>
-                                <td colspan="8">
-                                    <input type="submit" class="btn btnAdd" name="updateordercode" value="Update" />
-                                </td>
+                                <td colspan="2" class="right">Total Outstanding Payment (MYR) :</td>
+                                <td><?php echo $results1['price']; ?></td>
                             </tr>
                         </table>
 
@@ -220,10 +194,26 @@ $results6 = mysqli_fetch_assoc($result6);
                         <h5 class="modal-title center" id="verifyPaymentTitle">Verify Payment</h5>
                     </div>
 
-                    <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
+                    <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
                         <div class="modal-body left">
                             <img src="../receipts/<?php echo $results6['file']; ?>" style="width: 500px; height: 450px;">
                             <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
+                            <select class="formselect" name="station" >
+                                <option class="formoption" selected required>Station</option>
+                                <?php 
+                                    if(mysqli_num_rows($result6) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result6))
+                                        {
+                                            ?>
+                                                <option class="formoption" value="<?php echo $row['station_name']; ?>">
+                                                    <?php echo $row['station_name']; ?>
+                                                </option>
+                                            <?php
+                                        }
+                                    }
+                                ?>
+                            </select>
                         </div>
 
                         <div class="modal-footer">
@@ -242,7 +232,7 @@ $results6 = mysqli_fetch_assoc($result6);
                         <h5 class="modal-title center" id="declinePPaymentTitle">Decline Payment</h5>
                     </div>
 
-                    <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
+                    <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
                         <div class="modal-body left">
                             <p><input class="formfield" name="reason" type="text" placeholder="Reason" required /></p>
                         </div>

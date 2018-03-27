@@ -74,6 +74,15 @@ if(isset($_POST['proceed']))
 $query6 = "SELECT * FROM warehouse";
 $result6 = mysqli_query($con, $query6);
 
+$query7 = "SELECT *
+            FROM payment
+            WHERE payment_id='$payment_id'";
+$result7 = mysqli_query($con, $query7);
+$results7 = mysqli_fetch_assoc($result7);
+
+$query8 = "SELECT * FROM warehouse";
+$result8 = mysqli_query($con, $query8);
+
 ?>
 
 <!DOCTYPE html>
@@ -116,13 +125,44 @@ $result6 = mysqli_query($con, $query6);
         </div>
         
         <div class="row">
-            <form action="paymentviews.php?payment_id=<?php echo $payment_id; ?>" method="post">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
-                        <table class="purchasetable">
-                            <caption>                                    
-                                <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
-                            </caption>
+            
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
+                    <table class="purchasetable">
+                        <caption> 
+                            <?php
+                                if($results7['title'] != 'Pay shipping by Points'){
+                                    ?>
+                                        <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
+                                    <?php
+                                }else{
+                                    ?>
+                                        <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
+                                            <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
+                                            <input type="submit" class="btn btn-success btnSend" name="approve" value="Pay by LWE point" />
+                                            <select class="formselect" name="station" >
+                                                <option class="formoption" selected required>Station</option>
+                                                <?php 
+                                                    if(mysqli_num_rows($result8) > 0)
+                                                    {
+                                                        while($row = mysqli_fetch_array($result8))
+                                                        {
+                                                            ?>
+                                                                <option class="formoption" value="<?php echo $row['station_name']; ?>">
+                                                                    <?php echo $row['station_name']; ?>
+                                                                </option>
+                                                            <?php
+                                                        }
+                                                    }
+                                                ?>
+                                            </select>
+                                            
+                                        </form>
+                                    <?php
+                                }
+                            ?>
+                        </caption>
+                        <form action="paymentviews.php?payment_id=<?php echo $payment_id; ?>" method="post">
                             <p>Receipient Name : <?php echo $results1['receipient_name']; ?></p>
                             <p>Receipient Contact : <?php echo $results1['receipient_contact']; ?></p>
                             <p>Remark : <?php echo $results1['remark']; ?></p>
@@ -142,7 +182,7 @@ $result6 = mysqli_query($con, $query6);
                                     while($row = mysqli_fetch_array($result))
                                     {
                                         $counter++;
-                                        
+
                             ?>
                             <tr class="bodyrow">
                                 <td><?php echo $row['item_description']; ?></td>
@@ -173,18 +213,18 @@ $result6 = mysqli_query($con, $query6);
                                 <td colspan="2" class="right">Total Outstanding Payment (MYR) :</td>
                                 <td><?php echo $results1['price']; ?></td>
                             </tr>
-                        </table>
+                        </form>
+                    </table>
 
-                        <div class="btnpayview">
-                            <p class="right">
-                                <button type="button" class="btn btn-secondary btnCancel btnmargin" onclick="window.close()" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-success btnSend btnmargin" name="proceed" value="Proceed" />
-                                <a class="btn btnDecline btnmargin" href="#declinePPayment" data-toggle="modal">Decline</a>
-                            </p>
-                        </div>
+                    <div class="btnpayview">
+                        <p class="right">
+                            <button type="button" class="btn btn-secondary btnCancel btnmargin" onclick="window.close()" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success btnSend btnmargin" name="proceed" value="Proceed" />
+                            <a class="btn btnDecline btnmargin" href="#declinePPayment" data-toggle="modal">Decline</a>
+                        </p>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
         
         <div class="modal fade" id="verifyPayment" tabindex="-1" role="dialog" aria-labelledby="verifyPaymentTitle" aria-hidden="true">

@@ -91,6 +91,13 @@ $query6 = "SELECT * FROM payment WHERE payment_id='$payment_id'";
 $result6 = mysqli_query($con, $query6);
 $results6 = mysqli_fetch_assoc($result6);
 
+$query7 = "SELECT *
+            FROM payment
+            WHERE payment_id='$payment_id'";
+$result7 = mysqli_query($con, $query7);
+$results7 = mysqli_fetch_assoc($result7);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -133,74 +140,90 @@ $results6 = mysqli_fetch_assoc($result6);
         </div>
         
         <div class="row">
-            <form action="paymentview.php?payment_id=<?php echo $payment_id; ?>" method="post">
+            
                 <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
+                    <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">                        
                         <table class="purchasetable">
-                            <caption>                                    
-                                <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
-                            </caption>
-                            <tr>
-                                <th>Name</th>
-                                <th>Link</th>
-                                <th>Category</th>
-                                <th>Quantity</th>
-                                <th>Remark</th>
-                                <th>Unit Price (MYR)</th>
-                                <th>Total Price (MYR)</th>
-                                <th>Order Code</th>
-                            </tr>
-
-                            <?php 
-                                if(mysqli_num_rows($result) > 0)
-                                {
-                                    $counter = 0;
-                                    $total = 0;
-
-                                    while($row = mysqli_fetch_array($result))
-                                    {
-                                        $counter++;
-                                        $total += $row['price']*$row['quantity'];
-                            ?>
-                            <tr class="bodyrow">
-                                <td><?php echo $row['order_item']; ?></td>
-                                <td><a href="#" class="btntab" onclick="window.open('<?php echo $row['link']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,fullscreen=yes');">View item</a></td>
-                                <td><?php echo $row['category']; ?></td>
-                                <td><?php echo $row['quantity']; ?></td>
-                                <td><?php echo $row['remark']; ?></td>
-                                <td><?php echo $row['price']; ?></td>
-                                <td><?php echo number_format((float)$row['price']*$row['quantity'], 2, '.', ''); ?></td>
-                                <td><input type="text" class="tblformfield" name="order_code[]" value="<?php echo $row['order_code']; ?>" required></td>
-                            </tr>
-
-                            <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">
-                            <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
+                            <caption> 
                             <?php
-                                    }
-
+                                if($results7['title'] != 'Pay order by Points'){
+                                    ?>
+                                        <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
+                                    <?php
+                                }else{
+                                    ?>
+                                        <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
+                                            <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
+                                            <input type="submit" class="btn btn-success btnSend" name="approve" value="Pay by LWE point" />
+                                        </form>
+                                    <?php
                                 }
-                            else
-                            {
                             ?>
+                            </caption>
+                            <form action="paymentview.php?payment_id=<?php echo $payment_id; ?>" method="post">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Link</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                    <th>Remark</th>
+                                    <th>Unit Price (MYR)</th>
+                                    <th>Total Price (MYR)</th>
+                                    <th>Order Code</th>
+                                </tr>
 
-                            <tr>
-                                <td colspan="8">Error!</td>
-                            </tr>
+                                <?php 
+                                    if(mysqli_num_rows($result) > 0)
+                                    {
+                                        $counter = 0;
+                                        $total = 0;
 
-                            <?php
-                            }
-                            ?>
-                            <tr>
-                                <td colspan="7" class="right">Total Outstanding Payment (MYR) :</td>
-                                <td class="right"><?php echo number_format((float)$total, 2, '.', ''); ?></td>
-                            </tr>
-                            <tr>
-                                <td colspan="8">
-                                    <input type="submit" class="btn btnAdd" name="updateordercode" value="Update" />
-                                </td>
-                            </tr>
+                                        while($row = mysqli_fetch_array($result))
+                                        {
+                                            $counter++;
+                                            $total += $row['price']*$row['quantity'];
+                                ?>
+                                <tr class="bodyrow">
+                                    <td><?php echo $row['order_item']; ?></td>
+                                    <td><a href="#" class="btntab" onclick="window.open('<?php echo $row['link']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,fullscreen=yes');">View item</a></td>
+                                    <td><?php echo $row['category']; ?></td>
+                                    <td><?php echo $row['quantity']; ?></td>
+                                    <td><?php echo $row['remark']; ?></td>
+                                    <td><?php echo $row['price']; ?></td>
+                                    <td><?php echo number_format((float)$row['price']*$row['quantity'], 2, '.', ''); ?></td>
+                                    <td><input type="text" class="tblformfield" name="order_code[]" value="<?php echo $row['order_code']; ?>" required></td>
+                                </tr>
+
+                                <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">
+                                <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
+                                <?php
+                                        }
+
+                                    }
+                                else
+                                {
+                                ?>
+
+                                <tr>
+                                    <td colspan="8">Error!</td>
+                                </tr>
+
+                                <?php
+                                }
+                                ?>
+                                <tr>
+                                    <td colspan="7" class="right">Total Outstanding Payment (MYR) :</td>
+                                    <td class="right"><?php echo number_format((float)$total, 2, '.', ''); ?></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8">
+                                        <input type="submit" class="btn btnAdd" name="updateordercode" value="Update" />
+                                    </td>
+                                </tr>
+                            </form>
                         </table>
 
+                        
                         <div class="btnpayview">
                             <p class="right">
                                 <button type="button" class="btn btn-secondary btnCancel btnmargin" onclick="window.close()" data-dismiss="modal">Cancel</button>
@@ -210,7 +233,6 @@ $results6 = mysqli_fetch_assoc($result6);
                         </div>
                     </div>
                 </div>
-            </form>
         </div>
         
         <div class="modal fade" id="verifyPayment" tabindex="-1" role="dialog" aria-labelledby="verifyPaymentTitle" aria-hidden="true">

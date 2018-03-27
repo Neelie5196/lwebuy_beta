@@ -1,6 +1,5 @@
 <?php
 require_once '../connection/config.php';
-session_start();
 
 $query = "SELECT *
         FROM order_item oi
@@ -18,7 +17,7 @@ $query1 = "SELECT *
         ON p.payment_id = s.payment_id
         JOIN users us
         ON us.user_id = p.user_id
-        WHERE s.status = 'paid'";
+        WHERE s.status = 'request'";
 $result1 = mysqli_query($con, $query1);
 
 $query3 = "SELECT *

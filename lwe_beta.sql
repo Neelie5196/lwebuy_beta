@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2018 at 06:00 AM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 5.6.31
+-- Generation Time: Mar 27, 2018 at 05:49 PM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.1.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,7 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `lwe_beta`
 --
-
+CREATE DATABASE IF NOT EXISTS `lwe_beta`;
+USE `lwe_beta`;
 -- --------------------------------------------------------
 
 --
@@ -143,7 +144,7 @@ INSERT INTO `order_item` (`order_item_id`, `payment_id`, `user_id`, `order_item`
 (46, NULL, 1, 'test1', 'http://localhost/lwebuy_beta/user/main.php#purchase', 'Others', 2, 'lwe', NULL, 'Request', NULL, NULL, '2018-03-25 07:32:16'),
 (47, 761872, 1, 'test2', 'https://github.com/Neelie5196/lwebuy_beta', 'Others', 4, 'git', '50.00', 'paid', NULL, NULL, '2018-03-25 04:01:55'),
 (49, 761871, 1, 'test3', 'https://stackoverflow.com/questions/19633983/how-to-open-a-link-in-new-windownot-in-new-tab-in-html-css', 'Others', 1, 'google', '32.00', 'Paid', NULL, NULL, '2018-03-25 04:00:11'),
-(50, 761872, 1, 'test4', 'www.youtube.com', 'Others', 2, 'youtube', '25.00', 'proceed', '345', NULL, '2018-03-25 03:42:29'),
+(50, 761872, 1, 'test4', 'www.youtube.com', 'Others', 2, 'youtube', '25.00', 'Proceed', '345', NULL, '2018-03-27 14:57:37'),
 (51, NULL, 1, 'test5', 'www.facebook.com', 'Others', 2, 'facebook', NULL, 'declined', NULL, 'declined', '2018-03-25 09:12:29'),
 (52, NULL, 1, 'Test6', 'https://www.google.com/search?rlz=1C1CHBF_enMY773MY773&ei=ZCa1WqbpMsnJvgSS2oGYAw&q=close+popup+window+and+refresh+parent+page&oq=close+popup+window+then+re&gs_l=psy-ab.3.0.0i22i30k1l10.87706.93941.0.97809.11.10.1.0.0.0.214.1490.0j9j1.10.0....0...1c.1.64.p', 'Others', 1, 'search', '12.00', 'received', NULL, NULL, '2018-03-25 09:14:24');
 
@@ -244,7 +245,7 @@ CREATE TABLE `request` (
 --
 
 INSERT INTO `request` (`request_id`, `user_id`, `order_item`, `order_code`, `status`, `datetime`, `remark`) VALUES
-(2, 1, 'test1', '123', 'Request', '2018-03-25 09:14:15', 'blue');
+(2, 1, 'test1', '123', 'Request', '2018-03-27 14:57:22', 'blue');
 
 -- --------------------------------------------------------
 
@@ -275,9 +276,9 @@ CREATE TABLE `shipping` (
 --
 
 INSERT INTO `shipping` (`shipping_id`, `user_id`, `recipient_name`, `recipient_contact`, `remark`, `address_id`, `weight`, `price`, `status`, `datetime`, `tracking_code`, `payment_id`, `review`, `topup`, `destination_station`) VALUES
-(1, 2, 'sdg', 'ewt', '', 50, '12.00', '123', 'Proceed', '2018-03-27 03:59:23', '2345', 2, NULL, NULL, ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA'),
-(3, 1, 'dfghj', '124', NULL, 50, '2.00', '124', 'Proceed', '2018-03-27 03:59:31', '345672', 0, NULL, NULL, ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA'),
-(5, 1, 'Test1', '12345', '4.2', 50, '4.20', '225.00', 'Proceed', '2018-03-27 03:59:54', '1234', 363171, NULL, NULL, 'SHENZHEN (LOGISTICS HUB), CHINA');
+(1, 2, 'sdg', 'ewt', '', 50, '12.00', '123', 'Proceed', '2018-03-27 15:48:25', '2345', 2, NULL, NULL, ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA'),
+(3, 1, 'dfghj', '124', NULL, 50, '2.00', '124', 'Proceed', '2018-03-27 15:48:37', '345672', 0, NULL, NULL, ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA'),
+(5, 1, 'Test1', '12345', '4.2', 50, '4.20', '225.00', 'Proceed', '2018-03-27 15:48:33', '1234', 363171, NULL, NULL, 'SHENZHEN (LOGISTICS HUB), CHINA');
 
 -- --------------------------------------------------------
 
@@ -429,7 +430,8 @@ CREATE TABLE `warehouse` (
   `ware_id` int(11) NOT NULL,
   `station_code` varchar(10) NOT NULL,
   `station_name` text NOT NULL,
-  `country` varchar(50) NOT NULL,
+  `country_code` varchar(10) NOT NULL,
+  `country_name` varchar(50) NOT NULL,
   `address` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -437,9 +439,9 @@ CREATE TABLE `warehouse` (
 -- Dumping data for table `warehouse`
 --
 
-INSERT INTO `warehouse` (`ware_id`, `station_code`, `station_name`, `country`, `address`) VALUES
-(1, 'MYS', ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA', 'Malaysia', 'No.4, (Block B) Lorong SS 13/6C\r\nSubang Jaya Industrial Estate\r\n47500 Subang\r\nSelangor Darul Ehsan, Malaysia'),
-(2, 'SZX', 'SHENZHEN (LOGISTICS HUB), CHINA', 'China', '7th, Second Road, Industrial Estate in Xin Mu Old Village, Ping Hu Town,\r\nLoggang District, Shenzhen, Guangdong, \r\n518111, China');
+INSERT INTO `warehouse` (`ware_id`, `station_code`, `station_name`, `country_code`, `country_name`, `address`) VALUES
+(1, 'KUL', ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA', 'MY', 'Malaysia', 'No.4, (Block B) Lorong SS 13/6C\r\nSubang Jaya Industrial Estate\r\n47500 Subang\r\nSelangor Darul Ehsan, Malaysia'),
+(2, 'SZX', 'SHENZHEN', 'CN', 'China', '7th, Second Road, Industrial Estate in Xin Mu Old Village, Ping Hu Town,\r\nLoggang District, Shenzhen, Guangdong, \r\n518111, China');
 
 -- --------------------------------------------------------
 
@@ -582,86 +584,103 @@ ALTER TABLE `work_station`
 --
 ALTER TABLE `address`
   MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `country`
 --
 ALTER TABLE `country`
   MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
   MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
   MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+
 --
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
   MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `point`
 --
 ALTER TABLE `point`
   MODIFY `point_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
   MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
   MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
   MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `shipping_update_details`
 --
 ALTER TABLE `shipping_update_details`
-  MODIFY `sud_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sud_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+
 --
 -- AUTO_INCREMENT for table `shipping_update_summary`
 --
 ALTER TABLE `shipping_update_summary`
-  MODIFY `sum_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sum_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
 --
 -- AUTO_INCREMENT for table `slot`
 --
 ALTER TABLE `slot`
   MODIFY `slot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
 --
 -- AUTO_INCREMENT for table `state`
 --
 ALTER TABLE `state`
   MODIFY `state_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
   MODIFY `ware_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `work_station`
 --
 ALTER TABLE `work_station`
-  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;COMMIT;
+  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

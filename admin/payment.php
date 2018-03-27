@@ -84,8 +84,8 @@ $result1 = mysqli_query($con, $query1);
                 <table class="purchasetable">
                     <tr class="center">
                         <th>Customer</th>
-                        <th>Receipient Name</th>
-                        <th>Receipient Contact</th>
+                        <th>Recipient Name</th>
+                        <th>Recipient Contact</th>
                         <th>No. of Items</th>
                         <th>Total Weight (kg)</th>
                         <th>Total Price</th>

@@ -40,6 +40,11 @@ $query4 = "SELECT *
 $result4 = mysqli_query($con, $query4);
 $results4 = mysqli_fetch_assoc($result4);
 
+$query5 = "SELECT *
+           FROM item
+           WHERE item_id IN (".implode(',',$item).")";
+$result5 = mysqli_query($con, $query5);
+
 
 
 ?>
@@ -78,7 +83,7 @@ $results4 = mysqli_fetch_assoc($result4);
         </div>
         
         <div class="row">
-            <form action="shippingdetail.php" method="post">
+            <form action="payments.php" method="post">
                 <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-2 col-lg-push-2 shipformcontainer">
                     <p>
                         <label>Recipient Name: </label><br/>
@@ -92,19 +97,20 @@ $results4 = mysqli_fetch_assoc($result4);
 
                     <p>
                         <label>Address:</label><br/>
-                        <select class="formselects">
-                            <?php
-                            if(mysqli_num_rows($result) > 0)
-                            {
-                                while($row = mysqli_fetch_array($result))
+                        <select class="formselects" name="address" >
+                            <option class="formoptions" selected required>Address</option>
+                            <?php 
+                                if(mysqli_num_rows($result) > 0)
                                 {
-                                    ?>
-
-                            <option class="formoptions"></option>
-
-                            <?php
+                                    while($row = mysqli_fetch_array($result))
+                                    {
+                                        ?>
+                                            <option class="formoption" value="<?php echo $row['address_id']; ?>">
+                                                <?php echo $row['address'].", ".$row['postcode'].", ".$row['city'].", ".$row['state']; ?>
+                                            </option>
+                                        <?php
+                                    }
                                 }
-                            }
                             ?>
                         </select>
                         <button class="btn btnGo" type="button" data-toggle="modal" data-target="#addAddress">Add address</button>
@@ -209,15 +215,15 @@ $results4 = mysqli_fetch_assoc($result4);
                     <div class="modal-content">
                         <form action="shippingdetail.php" method="post">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addShippingTitle">New Address</h5>
+                                <h5 class="modal-title" id="addAddressTitle">New Address</h5>
                             </div>
 
 
                             <div class="modal-body left">
                                 <?php
-                                    if(mysqli_num_rows($result3) > 0)
+                                    if(mysqli_num_rows($result5) > 0)
                                     {
-                                        while($row = mysqli_fetch_array($result3))
+                                        while($row = mysqli_fetch_array($result5))
                                         {
                                             ?>
                                                 <input class="formfield" name="item[]" type="hidden" value="<?php echo $row['item_id']; ?>" />
@@ -267,27 +273,3 @@ $results4 = mysqli_fetch_assoc($result4);
         </div>
     </body>
 </html>
-
-<script>
-    /*Validate*/
-    function val(){
-        var items = document.getElementsByName('address[]');
-        var hasChecked = false;
-
-        for (var i = 0; i < items.length; i++)
-        {
-            if (items[i].checked)
-            {
-                hasChecked = true;
-                break;
-            }
-        }
-        if (hasChecked == false)
-        {
-            alert("Please select at least one address");
-            return false;
-        }
-        return true;
-    }
-</script>
-<script>

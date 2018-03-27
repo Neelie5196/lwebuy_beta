@@ -1,5 +1,5 @@
 <?php
-/*
+
 
 require_once '../connection/config.php';
 session_start();
@@ -16,17 +16,6 @@ $query1 = "SELECT *
            WHERE order_item_id IN (".implode(',',$order_item).")";
 $result1 = mysqli_query($con, $query1);
 
-$query10 = "SELECT *
-           FROM order_item
-           WHERE order_item_id IN (".implode(',',$order_item).")";
-$result10 = mysqli_query($con, $query10);
-
-$query2 = "SELECT *
-          FROM country
-          WHERE country_name = 'Malaysia'";
-$result2 = mysqli_query($con, $query2);
-$results2 = mysqli_fetch_assoc($result2);
-
 $query3 = "SELECT * FROM point WHERE user_id='$user_id'";
 $result3 = mysqli_query($con, $query3);
 $results3 = mysqli_fetch_assoc($result3);
@@ -37,7 +26,35 @@ $query4 = "SELECT *
 $result4 = mysqli_query($con, $query4);
 $results4 = mysqli_fetch_assoc($result4);
 
-if(isset($_POST['submit']))
+if(isset($_POST['paybycredit']))
+{    
+    $unique_id = rand(10000,100000). $user_id;
+    $payment_id = $unique_id;
+    $status = 'Paid';
+    $point = $_POST['point'];
+    $title = 'Pay order by';
+    $points = 'Points';
+    $statuss = 'Waiting for Accept';
+    
+    $result5 = mysqli_query($con, "UPDATE order_item SET payment_id='$payment_id', status='$status' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
+    $result6 = mysqli_query($con, "UPDATE point SET point= point - '$point' WHERE user_id = '$user_id' ") or die(mysqli_error($con));
+    $result7 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id',user_id='$user_id', title='$title $points', amount='$point $points', status='$statuss'") or die(mysqli_error($con));
+    ?>
+    <script>
+    alert('Successfully Submit');
+    opener.window.location.href='main.php#purchase';
+    window.opener.location.reload(true); window.close();
+    </script>
+    <?php
+}
+
+$query8 = "SELECT *
+          FROM country
+          WHERE country_name = 'Malaysia'";
+$result8 = mysqli_query($con, $query8);
+$results8 = mysqli_fetch_assoc($result8);
+
+if(isset($_POST['uploadreceipt']))
 {   
     $unique_id = rand(10000,100000). $user_id;
     $payment_id = $unique_id;
@@ -49,7 +66,7 @@ if(isset($_POST['submit']))
 	$folder="../receipts/";
     
     $title = 'Pay Order';
-    $total_pay = $_POST['total_pay'];
+    $total = $_POST['total'];
     $statuss = 'Waiting for Accept';
 	
 	// make file name in lower case
@@ -58,41 +75,25 @@ if(isset($_POST['submit']))
 	
 	$final_file=str_replace(' ','-',$new_file_name);
     
-	$result5 = mysqli_query($con, "UPDATE order_item SET payment_id='$payment_id', status='$status' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
+	$result9 = mysqli_query($con, "UPDATE order_item SET payment_id='$payment_id', status='$status' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
     
 	if(move_uploaded_file($file_loc,$folder.$final_file))
 	{
-        $result6 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id', user_id='$user_id', title='$title', amount='$total_pay', file='$final_file', type='$file_type', status='$statuss'") or die(mysqli_error($con));
+        $result10 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id', user_id='$user_id', title='$title', amount='$total', file='$final_file', type='$file_type', status='$statuss'") or die(mysqli_error($con));
 		?>
 		<script>
 		alert('Successfully Submit');
-        window.parent.location.reload();window.close();
+        opener.window.location.href='main.php#purchase';
+        window.opener.location.reload(true); window.close();
         </script>
 		<?php
 	}
 }
 
-if(isset($_POST['point_pay']))
-{    
-    $unique_id = rand(10000,100000). $user_id;
-    $payment_id = $unique_id;
-    $status = 'Paid';
-    $point_pay = $_POST['point_pay'];
-    $title = 'Pay order by';
-    $points = 'Points';
-    $statuss = 'Waiting for Accept';
-    
-    $result7 = mysqli_query($con, "UPDATE order_item SET payment_id='$payment_id', status='$status' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
-    $result8 = mysqli_query($con, "UPDATE point SET point= point - '$point_pay' WHERE user_id = '$user_id' ") or die(mysqli_error($con));
-    $result9 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id',user_id='$user_id', title='$title $points', amount='$point_pay $points', status='$statuss'") or die(mysqli_error($con));
-    ?>
-    <script>
-    alert('Successfully Submit');
-    window.parent.location.reload();window.close();
-    </script>
-    <?php
-}
-*/
+$query11 = "SELECT *
+           FROM order_item
+           WHERE order_item_id IN (".implode(',',$order_item).")";
+$result11 = mysqli_query($con, $query11);
 
 ?>
 
@@ -152,15 +153,41 @@ if(isset($_POST['point_pay']))
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 payformcontainer">
                         <div id="pcredit">
-                            <h4>Your credit: </h4>
-                            <h4>Amount to pay (credits): </h4>
-                            
-                            <!-- show if not enough credit -->
-                            <p class="center warning">Insufficient credit.</p>
-                            <p class="center"><a class="btn btn-default btnGo" href="main.php#credit">Top up now</a></p>
-                            
-                            <!-- show if enough credit -->
-                            <p class="center"><a class="btn btn-default btnGo">Pay</a></p>
+                            <form method="post" action="payment.php">
+                                <?php
+                                    if(mysqli_num_rows($result1) > 0)
+                                    {
+                                        $total = 0;
+                                        while($row = mysqli_fetch_array($result1))
+                                        {
+                                            $total_price = $row['quantity']*$row['price'];
+                                    ?>
+                                    <input type="hidden" value="<?php echo $row['order_item_id']; ?>" name="order_item[]">
+                                    <input type="hidden" value="<?php echo $row['quantity']; ?>" name="quantity">
+                                    <input type="hidden" value="<?php echo $row['price']; ?>" name="price">
+                                    <?php
+                                            $total += number_format((float)$total_price, 2, '.', '');
+                                            $total_pay = $total;
+                                            $point = $total_pay*$results4['rate'];
+                                        }
+                                    }
+                                    if($results3['point'] < $point){
+                                        ?>
+                                        <!-- show if not enough credit -->
+                                        <p class="center warning">Insufficient credit.</p>
+                                        <p class="center"><a class="btn btn-default btnGo" href="main.php#credit">Top up now</a></p>
+                                        <?php
+                                    }else{
+                                        ?>
+                                        <!-- show if enough credit -->
+                                        <h4>Your credit: <?php echo $results3['point']; ?></h4>
+                                        <h4>Amount to pay (credits): <?php echo $point; ?></h4>
+                                        <input type="hidden" value="<?php echo $point; ?>" name="point">
+                                        <p class="center"><input type="submit" class="btn btn-success" name="paybycredit" value="Pay"></p>
+                                        <?php
+                                    }
+                                ?> 
+                            </form>
                         </div>
                         
                         <div id="pcard">
@@ -168,11 +195,36 @@ if(isset($_POST['point_pay']))
                         </div>
                         
                         <div id="ptrans">
-                            <form method="post" action="credit.php">
+                            <form method="post" action="payment.php">
+                                <br/>
+                                <p>Banking Details </p>
+                                <p>Bank: <?php echo $results8['bank']; ?></p>
+                                <p>Account No: <?php echo $results8['account_no']; ?></p>
+                                <p>Account Name: <?php echo $results8['account_name']; ?></p>
                                 <p class="center paytrans">
+                                
+                                <?php
+                                    if(mysqli_num_rows($result11) > 0)
+                                    {
+                                        $total = 0;
+                                        while($row = mysqli_fetch_array($result11))
+                                        {
+                                            $total_price = $row['quantity']*$row['price'];
+                                    ?>
+                                    <input type="hidden" value="<?php echo $row['order_item_id']; ?>" name="order_item[]">
+                                    <input type="hidden" value="<?php echo $row['quantity']; ?>" name="quantity">
+                                    <input type="hidden" value="<?php echo $row['price']; ?>" name="price">
+                                    <?php
+                                            $total += number_format((float)$total_price, 2, '.', '');
+                                            $total_pay = $total;
+                                        }
+                                    }
+                                ?>
                                     <label>Upload Transaction Receipt</label><br/>
-                                    <input type="file" name="file" class="center" required />
+                                    <input type="file" name="file" id="file" required />
+                                    <input type="hidden" name="total" value="<?php echo $total; ?>">
                                 </p>
+                                <p class="center"><input type="submit" class="btn btn-success" name="uploadreceipt" value="Upload"></p>
                             </form>
                         </div>
                         
@@ -189,16 +241,29 @@ if(isset($_POST['point_pay']))
                         <td>Quantity</td>
                         <td>Price (MYR)</td>
                     </tr>
-                    
+                    <?php
+                        if(mysqli_num_rows($result) > 0)
+                        {
+                            $total = 0;
+                            while($row = mysqli_fetch_array($result))
+                            {
+                                $total_price = $row['quantity']*$row['price'];
+                        ?>
                     <tr>
-                        <td class="left"><p></p></td>
-                        <td><p></p></td>
-                        <td><p></p></td>
+                        <input type="hidden" value="<?php echo $row['order_item_id']; ?>" name="order_item[]">
+                        <td class="left"><p><?php echo $row['order_item']; ?></p></td>
+                        <td><p><?php echo $row['quantity']; ?></p></td>
+                        <td><p><?php echo $row['price']; ?></p></td>
                     </tr>
-                    
+                    <?php
+                                $total += number_format((float)$total_price, 2, '.', '');
+                                $total_pay = $total;
+                            }
+                        }
+                    ?>
                     <tr>
-                        <td colspan="2" class="left"><p>Total price (MYR)</p></td>
-                        <td class="coltotal"><p></p></td>
+                        <td colspan="2" class="left"><p>Total Price (MYR)</p></td>
+                        <td class="coltotal"><p><?php echo number_format((float)$total_pay, 2, '.', ''); ?></p></td>
                     </tr>
                 </table>
             </div>

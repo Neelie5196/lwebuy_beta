@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2018 at 12:09 PM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.1.11
+-- Generation Time: Mar 27, 2018 at 06:00 AM
+-- Server version: 10.1.25-MariaDB
+-- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -255,8 +255,8 @@ INSERT INTO `request` (`request_id`, `user_id`, `order_item`, `order_code`, `sta
 CREATE TABLE `shipping` (
   `shipping_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `receipient_name` varchar(50) NOT NULL,
-  `receipient_contact` varchar(15) NOT NULL,
+  `recipient_name` varchar(50) NOT NULL,
+  `recipient_contact` varchar(15) NOT NULL,
   `remark` varchar(255) DEFAULT NULL,
   `address_id` int(11) NOT NULL,
   `weight` decimal(10,2) NOT NULL,
@@ -266,15 +266,18 @@ CREATE TABLE `shipping` (
   `tracking_code` varchar(25) DEFAULT NULL,
   `payment_id` int(11) NOT NULL,
   `review` text,
-  `topup` decimal(10,2) DEFAULT NULL
+  `topup` decimal(10,2) DEFAULT NULL,
+  `destination_station` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `shipping`
 --
 
-INSERT INTO `shipping` (`shipping_id`, `user_id`, `receipient_name`, `receipient_contact`, `remark`, `address_id`, `weight`, `price`, `status`, `datetime`, `tracking_code`, `payment_id`, `review`, `topup`) VALUES
-(5, 1, 'Test1', '12345', '4.2', 50, '4.20', '225.00', 'Proceed', '2018-03-23 15:19:06', '1234', 363171, NULL, NULL);
+INSERT INTO `shipping` (`shipping_id`, `user_id`, `recipient_name`, `recipient_contact`, `remark`, `address_id`, `weight`, `price`, `status`, `datetime`, `tracking_code`, `payment_id`, `review`, `topup`, `destination_station`) VALUES
+(1, 2, 'sdg', 'ewt', '', 50, '12.00', '123', 'Proceed', '2018-03-27 03:59:23', '2345', 2, NULL, NULL, ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA'),
+(3, 1, 'dfghj', '124', NULL, 50, '2.00', '124', 'Proceed', '2018-03-27 03:59:31', '345672', 0, NULL, NULL, ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA'),
+(5, 1, 'Test1', '12345', '4.2', 50, '4.20', '225.00', 'Proceed', '2018-03-27 03:59:54', '1234', 363171, NULL, NULL, 'SHENZHEN (LOGISTICS HUB), CHINA');
 
 -- --------------------------------------------------------
 
@@ -435,7 +438,8 @@ CREATE TABLE `warehouse` (
 --
 
 INSERT INTO `warehouse` (`ware_id`, `station_code`, `station_name`, `country`, `address`) VALUES
-(1, 'MYS', 'LWE', 'Malaysia', 'jalan song');
+(1, 'MYS', ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA', 'Malaysia', 'No.4, (Block B) Lorong SS 13/6C\r\nSubang Jaya Industrial Estate\r\n47500 Subang\r\nSelangor Darul Ehsan, Malaysia'),
+(2, 'SZX', 'SHENZHEN (LOGISTICS HUB), CHINA', 'China', '7th, Second Road, Industrial Estate in Xin Mu Old Village, Ping Hu Town,\r\nLoggang District, Shenzhen, Guangdong, \r\n518111, China');
 
 -- --------------------------------------------------------
 
@@ -578,103 +582,86 @@ ALTER TABLE `work_station`
 --
 ALTER TABLE `address`
   MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
-
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT for table `country`
 --
 ALTER TABLE `country`
   MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
   MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
   MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
-
 --
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
   MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `point`
 --
 ALTER TABLE `point`
   MODIFY `point_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
   MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
   MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT for table `shipping_update_details`
 --
 ALTER TABLE `shipping_update_details`
   MODIFY `sud_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `shipping_update_summary`
 --
 ALTER TABLE `shipping_update_summary`
   MODIFY `sum_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `slot`
 --
 ALTER TABLE `slot`
   MODIFY `slot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
 -- AUTO_INCREMENT for table `state`
 --
 ALTER TABLE `state`
   MODIFY `state_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
   MODIFY `ware_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `work_station`
 --
 ALTER TABLE `work_station`
-  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
+  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

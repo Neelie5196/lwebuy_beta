@@ -19,7 +19,7 @@ $result1 = mysqli_query($con, $query1);
 
 if(isset($_POST['register']))
     {
-        $s_id = $_POST['shippingids'];
+        $t_code = $_POST['tcode'];
         
         $ostationid = $_POST['originstation'];
         
@@ -34,17 +34,17 @@ if(isset($_POST['register']))
                 
         $eventDesc = 'Shipment info registered at ' . $ostationname . '.';
         
-        foreach ($s_id as $s)
+        foreach ($t_code as $t)
         {
-            $update0 = mysqli_query($con, "UPDATE shipping SET status = 'SHIPMENT REGISTERED' WHERE shipping_id = $s") or die(mysqli_error($con));
+            $update0 = mysqli_query($con, "UPDATE shipping SET status = 'SHIPMENT REGISTERED' WHERE tracking_code = $t") or die(mysqli_error($con));
             
-            $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$s', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='RDL', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
+            $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$t', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='RDL', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
             
             $query3 = "SELECT *
             FROM warehouse wh
             JOIN shipping sh
             ON wh.station_name = sh.destination_station
-            WHERE shipping_id = '$s'";
+            WHERE tracking_code = '$t'";
             $result3 = mysqli_query($con, $query3);
             $results3 = mysqli_fetch_assoc($result3);
 
@@ -54,7 +54,7 @@ if(isset($_POST['register']))
             $dcountryname = $results3['country_name'];
             $dcountrycode = $results3['country_code'];
             
-            $update2 = mysqli_query($con, "INSERT INTO shipping_update_summary SET HawbNo='$s', DeliveryDate='', RecipientName='$recipientname', SignedName='', OriginStationCode='$ostationcode', OriginStationDescription='$ostationname', OriginCountryCode='$ocountrycode', OriginCountryDescription='$ocountryname', DestinationStationCode='$dstationcode', DestinationStationDescription='$dstationname', DestinationCountryCode='$dcountrycode', DestinationCountryDescription='$dcountryname', EventCode='IP', EventDescription='In Proceed', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
+            $update2 = mysqli_query($con, "INSERT INTO shipping_update_summary SET HawbNo='$t', DeliveryDate='', RecipientName='$recipientname', SignedName='', OriginStationCode='$ostationcode', OriginStationDescription='$ostationname', OriginCountryCode='$ocountrycode', OriginCountryDescription='$ocountryname', DestinationStationCode='$dstationcode', DestinationStationDescription='$dstationname', DestinationCountryCode='$dcountrycode', DestinationCountryDescription='$dcountryname', EventCode='IP', EventDescription='In Proceed', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
         }
         ?>
         
@@ -151,14 +151,14 @@ window.location.href='registers.php';
                                 
                                         <tr class="bodyrow">
                                             <td>
-                                                <input type="checkbox" name="shippingids[]" value="<?php echo $row['shipping_id']?>" /></td>
+                                                <input type="checkbox" name="tcode[]" value="<?php echo $row['tracking_code']?>" /></td>
                                             <td><?php echo $row['tracking_code']; ?></td>
                                             <td><?php echo $row['recipient_name'];?></td>
                                             <td><?php echo $row['recipient_contact'];?></td>
                                             <td><?php echo $row['address'].", ".$row['postcode']." ".$row['city'].", ".$row['state'].", ".$row['country'];;?></td>
                                             <td><?php echo $row['weight']?></td>
                                             <td>
-                                                <a href="tag.php?s_id=<?php echo $row['shipping_id']; ?>" class="btn btn-default btn-xs btnDelete" target="_blank"><span class="glyphicon glyphicon-print"></span></button>
+                                                <a href="tag.php?s_id=<?php echo $row['tracking_code']; ?>" class="btn btn-default btn-xs btnDelete" target="_blank"><span class="glyphicon glyphicon-print"></span></button>
                                             </td>
                                         </tr>
                                     <?php

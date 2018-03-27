@@ -20,7 +20,7 @@ $result1 = mysqli_query($con, $query1);
 
 if(isset($_POST['checkin']))
     {
-        $s_id = $_POST['shippingids'];
+        $t_code = $_POST['tcode'];
         
         $ostationid = $_POST['originstation'];
         
@@ -35,17 +35,17 @@ if(isset($_POST['checkin']))
                 
         $eventDesc = 'Pickup shipment checked in at ' . $ostationname . '.';
         
-        foreach ($s_id as $s)
+        foreach ($t_code as $t)
         {
-            $update0 = mysqli_query($con, "UPDATE shipping SET status = 'SHIPMENT RECEIVED' WHERE shipping_id = $s") or die(mysqli_error($con));
+            $update0 = mysqli_query($con, "UPDATE shipping SET status = 'SHIPMENT RECEIVED' WHERE tracking_code = $t") or die(mysqli_error($con));
             
-            $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$s', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='PKI', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
+            $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$t', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='PKI', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
         }
 ?>
-        
+      
 <script>
-alert('Shipment check in!');
-window.location.href='registers.php';
+alert('Shipment checked in!');
+window.location.href='checkin.php';
 </script>
 
 <?php
@@ -109,6 +109,21 @@ window.location.href='registers.php';
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
                         <form action="checkin.php" method="post">
+                            
+                            <?php
+                            if(mysqli_num_rows($result1) > 0)
+                            {
+                                while($row1 = mysqli_fetch_array($result1))
+                                {
+                                    ?>
+                                    
+                            <input type="hidden" name="originstation" value="<?php echo $result1['station_name']; ?>">
+                            
+                            <?php
+                                }
+                            }
+                            ?>
+                            
                             <table class="purchasetable" id="checkintable">
                                 <tr>
                                     <th></th>
@@ -129,7 +144,7 @@ window.location.href='registers.php';
                                 
                                         <tr class="bodyrow">
                                             <td>
-                                                <input type="checkbox" class="trackcheck" name="shippingids[]" value="<?php echo $row['tracking_code']?>" disabled />
+                                                <input type="checkbox" class="trackcheck" name="tcode[]" value="<?php echo $row['tracking_code']?>" disabled />
                                             </td>
                                             <td><?php echo $row['tracking_code']; ?></td>
                                             <td><?php echo $row['recipient_name'];?></td>
@@ -182,6 +197,7 @@ window.location.href='registers.php';
                 {
                     if (checkboxes[i].value == document.getElementById("codeinput").value)
                         {
+                            checkboxes[i].disabled = false;
                             checkboxes[i].checked = true;
                         }
                 }

@@ -597,11 +597,6 @@ body {
     border: none;
     background: none;
     padding: 2%;
-    margin-bottom: 1%;
-}
-
-.tblformfield:hover, .tblformselect:hover {
-    background: rgba(139, 184, 54, 0.3);
 }
 
 .tblformfield:focus {

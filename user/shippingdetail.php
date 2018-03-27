@@ -1,5 +1,4 @@
 <?php
-/*
 
 require_once '../connection/config.php';
 session_start();
@@ -40,7 +39,6 @@ $query4 = "SELECT *
           WHERE rate_name = '1kg'";
 $result4 = mysqli_query($con, $query4);
 $results4 = mysqli_fetch_assoc($result4);
-*/
 
 
 

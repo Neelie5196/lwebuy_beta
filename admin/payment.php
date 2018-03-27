@@ -235,15 +235,17 @@ $result4 = mysqli_query($con, $query4);
                      <?php 
                         if(mysqli_num_rows($result4) > 0)
                         {
+                            $payment=0;
                             while($row = mysqli_fetch_array($result4))
                             {
+                                $payment = $row['payment_id'];
                                 ?>
                                 <tr>
                                     <td><?php echo $row['fname']." ".$row['lname']; ?></td>
                                     <td><?php echo $row['title']; ?></td>
                                     <td><?php echo $row['amount']; ?></td>
                                     <td>
-                                        <a data-toggle="modal" class="btn btn-default btn-xs btnDelete" href="#creditpay"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                        <a data-toggle="modal" class="btn btn-default btn-xs btnDelete creditpay" href="#creditPay"><span class="glyphicon glyphicon-eye-open"></span></a>
                                     </td>
                                 </tr>
                                 <?php
@@ -257,6 +259,27 @@ $result4 = mysqli_query($con, $query4);
                         }
                     ?>
                 </table>
+            </div>
+        </div>
+        <div class="modal fade" id="creditPay" tabindex="-1" role="dialog" aria-labelledby="creditpayTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="creditpayTitle">Receipt</h5>
+                    </div>
+                    <div class="modal-body left">
+                        <?php
+                            $query5 = "SELECT * FROM payment WHERE payment_id='$payment'";
+                            $result5 = mysqli_query($con, $query5);
+                            $results5 = mysqli_fetch_assoc($result5);
+                        ?>
+                        <img src="../receipts/<?php echo $results5['file']; ?>" style="width: 500px; height: 450px;">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

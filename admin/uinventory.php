@@ -226,7 +226,7 @@ if(isset($_POST['ordersave']))
                                         {
                                         ?>
                                             <div class="row">
-                                                <table class="table thead-bordered">
+                                                <table  class="purchasetable">
                                                     <thead>
                                                         <tr>
                                                             <th>Customer Name</th>

@@ -61,7 +61,7 @@ if(isset($_POST['review']))
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcSItem()">Items In-Store</button></td>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcSRequest()">Requests</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcSPayment()">Topup Request</button></td>
+                    <!--<td class="wborder"><button class="btn-link btntab" onclick="funcSPayment()">Topup Request</button></td>-->
                     <td class="wborder"><button class="btn-link btntab" onclick="funcSProceed()">Proceeded</button></td>
                     <td><button class="btn-link btntab" onclick="funcSReceive()">Received</button></td>
                 </tr>
@@ -184,7 +184,7 @@ if(isset($_POST['review']))
             </div>
         </div>
         
-        <div id="spayment">
+        <!--<div id="spayment">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
                     <tr class="center">
@@ -227,7 +227,7 @@ if(isset($_POST['review']))
                     ?>
                 </table>
             </div>
-        </div>
+        </div>-->
         
         <div id="sproceed">
             <div class="col-xs-12 col-md-12 col-lg-12">

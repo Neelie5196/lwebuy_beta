@@ -232,7 +232,7 @@ $results7 = mysqli_fetch_assoc($result7);
                             <p class="right">
                                 <button type="button" class="btn btn-secondary btnCancel btnmargin" onclick="window.close()" data-dismiss="modal">Cancel</button>
                                 <input type="submit" class="btn btn-success btnSend btnmargin" name="proceed" value="Proceed" />
-                                <a class="btn btnDecline btnmargin" href="#declinePPayment" data-toggle="modal">Decline</a>
+                                <!--<a class="btn btnDecline btnmargin" href="#declinePPayment" data-toggle="modal">Decline</a>-->
                             </p>
                         </div>
                     </div>

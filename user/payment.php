@@ -65,8 +65,7 @@ if(isset($_POST['submit']))
 		?>
 		<script>
 		alert('Successfully Submit');
-        opener.window.location.href='main.php#purchase';
-        window.opener.location.reload(true); window.close();
+        window.location.href='main.php#purchase';
         </script>
 		<?php
 	}
@@ -88,8 +87,7 @@ if(isset($_POST['point_pay']))
     ?>
     <script>
     alert('Successfully Submit');
-    opener.window.location.href='main.php#purchase';
-    window.opener.location.reload(true); window.close();
+    window.location.href='main.php#purchase';
     </script>
     <?php
 }

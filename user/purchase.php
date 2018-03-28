@@ -87,7 +87,7 @@ if(isset($_POST['edit1']))
 
 $query8 = "SELECT *
            FROM order_item
-           WHERE user_id='$user_id' AND status = 'paid' OR status = 'proceed'";
+           WHERE user_id='$user_id' AND status = 'paid' OR user_id='$user_id' AND status = 'proceed'";
 $result8 = mysqli_query($con, $query8);
 
 $query9 = "SELECT *
@@ -276,7 +276,7 @@ $result10 = mysqli_query($con, $query10);
         
         <div id="ppayment">
             <div class="col-xs-12 col-md-12 col-lg-12">
-                <form action="payment.php" method="post" onsubmit="payment_popup(this)">
+                <form action="payment.php" method="post">
                     <table class="purchasetable">
                         <tr class="center">
                             <th class="purchasecol05"></th>
@@ -471,8 +471,8 @@ $result10 = mysqli_query($con, $query10);
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
                     <tr class="center">
-                        <th class="purchasecol1">Name</th>
-                        <th class="purchasecol2">Link</th>
+                        <th class="purchasecol2">Name</th>
+                        <th class="purchasecol1">Link</th>
                         <th class="purchasecol1">Category</th>
                         <th class="purchasecol05">Quantity</th>
                         <th class="purchasecol2">Remark</th>
@@ -564,10 +564,4 @@ $(document).on("click", ".editPPurchase", function () {
         }
         return true;
     }
-</script>
-<script>
-function payment_popup(form) {
-    window.open('', 'paymentpopup', 'fullscreen=yes,resizeable,scrollbars');
-    form.target = 'paymentpopup';
-}
 </script>

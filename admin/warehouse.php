@@ -283,7 +283,7 @@ if (isset($_GET['ware_id']))
                                 <tr>
                                     <td><?php echo $row['station_code']; ?></td>
                                     <td><?php echo $row['station_name']; ?></td>
-                                    <td><?php echo $row['country']; ?></td>
+                                    <td><?php echo $row['country_name']; ?></td>
                                     <td><?php echo $row['address']; ?></td>
                                     <td>
                                         <a data-toggle="modal" data-id="<?php echo $row['ware_id']; ?>" data-code="<?php echo $row['station_code']; ?>" data-name="<?php echo $row['station_name']; ?>" data-country="<?php echo $row['country']; ?>" data-address="<?php echo $row['address']; ?>" class="btn btn-default btn-xs btnDelete editWarehouse" href="#editWarehouse"><span class="glyphicon glyphicon-pencil"></span></a>

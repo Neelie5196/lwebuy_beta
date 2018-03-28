@@ -75,7 +75,7 @@ $result4 = mysqli_query($con, $query4);
                                     <td><?php echo $row['payment_id']; ?></td>
                                     <td><?php echo $row['amount']; ?></td>
                                     <td>
-                                        <a href="#" class="btntab" onclick="window.open('paymentview.php?payment_id=<?php echo $row['payment_id']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,fullscreen=yes');"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                        <a href="paymentview.php?payment_id=<?php echo $row['payment_id']; ?>" class="btntab"><span class="glyphicon glyphicon-eye-open"></span></a>
                                     </td>
                                 </tr>
                                 <?php

@@ -55,7 +55,7 @@ $query4 = "SELECT *
            FROM order_item oi
            JOIN users us
            ON us.user_id = oi.user_id
-           WHERE oi.status='ready to pay' OR oi.status='declined'";
+           WHERE oi.status!='request'";
 $result4 = mysqli_query($con, $query4);
 
 ?>
@@ -81,8 +81,8 @@ $result4 = mysqli_query($con, $query4);
                 <table class="purchasetable">
                     <tr class="center">
                         <th class="purchasecol2">Customer</th>
-                        <th class="purchasecol1">Item Name</th>
-                        <th class="purchasecol3">Link</th>
+                        <th class="purchasecol3">Item Name</th>
+                        <th class="purchasecol1">Link</th>
                         <th class="purchasecol1">Category</th>
                         <th class="purchasecol05">Quantity</th>
                         <th class="purchasecol2">Remarks</th>
@@ -196,8 +196,8 @@ $result4 = mysqli_query($con, $query4);
                 <table class="purchasetable">
                     <tr class="center">
                         <th class="purchasecol1">Customer</th>
-                        <th class="purchasecol1">Item Name</th>
-                        <th class="purchasecol3">Link</th>
+                        <th class="purchasecol3">Item Name</th>
+                        <th class="purchasecol1">Link</th>
                         <th class="purchasecol1">Category</th>
                         <th class="purchasecol05">Quantity</th>
                         <th class="purchasecol1">Remarks</th>

@@ -44,6 +44,16 @@ $query6 = "SELECT *
         GROUP BY oi.payment_id";
 $result6 = mysqli_query($con, $query6);
 
+$query8 = "SELECT *
+        FROM shipping s
+        JOIN payment p
+        ON p.payment_id = s.payment_id
+        JOIN users us
+        ON us.user_id = p.user_id
+        WHERE s.status = 'top-up'
+        GROUP BY s.payment_id";
+$result8 = mysqli_query($con, $query8);
+
 ?>
 
 <div class="col-xs-12 col-md-12 col-lg-12">
@@ -134,7 +144,7 @@ $result6 = mysqli_query($con, $query6);
                                     <td><?php echo $row['weight']; ?></td>
                                     <td><?php echo $row['price']; ?></td>
                                     <td>
-                                        <a href="#" class="btntab" onclick="window.open('paymentviews.php?payment_id=<?php echo $row['payment_id']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,fullscreen=yes');"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                        <a href="paymentviews.php?payment_id=<?php echo $row['payment_id']; ?>" class="btntab"><span class="glyphicon glyphicon-eye-open"></span></a>
                                     </td>
                                 </tr>
                                 <?php
@@ -154,6 +164,7 @@ $result6 = mysqli_query($con, $query6);
         <div id="ptopup">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
+                    <strong>Purchase</strong>
                     <tr class="center">
                         <th>Customer</th>
                         <th>Payment ID</th>
@@ -185,7 +196,46 @@ $result6 = mysqli_query($con, $query6);
                         }else{
                             ?>
                                 <tr>
-                                    <td colspan="8">No top-up payment request.</td>
+                                    <td colspan="8">No top-up payment request from purchase.</td>
+                                </tr>
+                            <?php
+                        }
+                    ?>
+                </table>
+                <table class="purchasetable">
+                    <strong>Shipping</strong>
+                    <tr class="center">
+                        <th>Customer</th>
+                        <th>Payment ID</th>
+                        <th>Total Price (RM)</th>
+                        <th>Paid Price (RM)</th>
+                        <th>Top-up Price (RM)</th>
+                        <th>Reason</th>
+                    </tr>
+                    <?php 
+                        if(mysqli_num_rows($result8) > 0)
+                        {
+                            while($row = mysqli_fetch_array($result8))
+                            {
+                                $payment_id = $row['payment_id'];
+                                $query9 = "SELECT * FROM top_up WHERE payment_id='$payment_id'";
+                                $result9 = mysqli_query($con, $query9);
+                                $results9 = mysqli_fetch_assoc($result9);
+                                ?>
+                                <tr>
+                                    <td><?php echo $row['fname']." ".$row['lname']; ?></td>
+                                    <td><?php echo $row['payment_id']; ?></td>
+                                    <td><?php echo $row['amount']; ?></td>
+                                    <td><?php echo $results9['paid_amount']; ?></td>
+                                    <td><?php echo $results9['top_up_amount']; ?></td>
+                                    <td><?php echo $results9['top_up_reason']; ?></td>
+                                </tr>
+                                <?php
+                            }
+                        }else{
+                            ?>
+                                <tr>
+                                    <td colspan="8">No top-up payment request from shipping.</td>
                                 </tr>
                             <?php
                         }

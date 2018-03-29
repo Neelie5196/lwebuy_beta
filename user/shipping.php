@@ -50,6 +50,14 @@ if(isset($_POST['review']))
     </script>
     <?php
 }
+
+$query8 = "SELECT *
+           FROM shipping s
+           JOIN top_up tu
+           ON tu.payment_id = s.payment_id
+           WHERE user_id='$user_id' AND status = 'top-up'
+           GROUP BY s.payment_id";
+$result8 = mysqli_query($con, $query8);
 ?>
  <div class="col-xs-12 col-md-12 col-lg-12">
     <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Shipping</h2>
@@ -61,9 +69,9 @@ if(isset($_POST['review']))
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcSItem()">Items In-Store</button></td>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcSRequest()">Requests</button></td>
+                    <td class="wborder"><button class="btn-link btntab" onclick="funcSTopup()">Top-up Request</button></td>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcSProceed()">Proceeded</button></td>
                     <td><button class="btn-link btntab" onclick="funcSReceive()">Received</button></td>
-                    <!--<td class="wborder"><button class="btn-link btntab" onclick="funcSPayment()">Others</button></td>-->
                 </tr>
             </table>
         </div>
@@ -184,50 +192,48 @@ if(isset($_POST['review']))
             </div>
         </div>
         
-        <!--<div id="spayment">
+        <div id="ptopup">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
                     <tr class="center">
-                        <th class="purchasecol1">Shipping Code</th>
-                        <th class="purchasecol2">Ricipient Name</th>
-                        <th class="purchasecol1">Recipient Contact</th>
-                        <th class="purchasecol2">Total Weight (kg)</th>
-                        <th class="purchasecol1">Total Price</th>
-                        <th class="purchasecol2">Topup Balance (RM)</th>
-                        <th class="purchasecol05"></th>
+                        <th>Payment ID</th>
+                        <th>Total Price (RM)</th>
+                        <th>Paid Price (RM)</th>
+                        <th>Top-up Price (RM)</th>
+                        <th>Reason</th>
+                        <th>Payment Details</th>
                     </tr>
-                    <?php
-                        if(mysqli_num_rows($result7) > 0)
+                    <?php 
+                        if(mysqli_num_rows($result8) > 0)
                         {
-                            while($row = mysqli_fetch_array($result7))
+                            while($row = mysqli_fetch_array($result8))
                             {
-                    ?>
-                    <tr class="bodyrow">
-                        <td><?php echo $row['shipping_id']; ?></td>
-                        <td><?php echo $row['receipient_name']; ?></td>
-                        <td><?php echo $row['receipient_contact']; ?></td>
-                        <td><?php echo $row['weight']; ?></td>
-                        <td><?php echo $row['price']; ?></td>
-                        <td><?php echo $row['topup']; ?></td>
-                        <td>
-                            <a class="btn btn-default btn-xs" href="#">Pay</a>
-                        </td>
-                    </tr>
-                    <?php
-                        }
-                    }
-                    else
-                    {
-                    ?>
-                    <tr>
-                        <td colspan="8">No topup request.</td>
-                    </tr>
-                    <?php
+                                $payment_id = $row['payment_id'];
+                                $query9 = "SELECT * FROM payment WHERE payment_id='$payment_id'";
+                                $result9 = mysqli_query($con, $query9);
+                                $results9 = mysqli_fetch_assoc($result9);
+                                ?>
+                                <tr>
+                                    <td><?php echo $row['payment_id']; ?></td>
+                                    <td><?php echo $results9['amount']; ?></td>
+                                    <td><?php echo $row['paid_amount']; ?></td>
+                                    <td><?php echo $row['top_up_amount']; ?></td>
+                                    <td><?php echo $row['top_up_reason']; ?></td>
+                                    <td><a href="paymentviews.php?payment_id=<?php echo $row['payment_id']; ?>" class="btntab"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+                                </tr>
+                                <?php
+                            }
+                        }else{
+                            ?>
+                                <tr>
+                                    <td colspan="8">No top-up payment request.</td>
+                                </tr>
+                            <?php
                         }
                     ?>
                 </table>
             </div>
-        </div>-->
+        </div>
         
         <div id="sproceed">
             <div class="col-xs-12 col-md-12 col-lg-12">

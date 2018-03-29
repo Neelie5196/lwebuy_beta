@@ -56,8 +56,7 @@ if(isset($_POST['proceed']))
         ?>
         <script>
         alert('Success to Update');
-        opener.window.location.href='main.php#adpayment';
-        window.opener.location.reload(true); window.close();
+        window.location.href='main.php#adpayment';
         </script>
         <?php
     }else{
@@ -82,6 +81,46 @@ $results7 = mysqli_fetch_assoc($result7);
 
 $query8 = "SELECT * FROM warehouse";
 $result8 = mysqli_query($con, $query8);
+
+if(isset($_POST['topup']))
+{
+    $payment_id = $_POST['payment_id'];
+    $paid_amount = $_POST['paid_amount'];
+    $top_up_amount = $_POST['top_up_amount'];
+    $top_up_reason = $_POST['top_up_reason'];
+    $shipping_id = $_POST['shipping_id'];
+    $status = 'Top-up';
+
+    $result9 = mysqli_query($con, "INSERT INTO top_up SET payment_id='$payment_id', paid_amount='$paid_amount', top_up_amount='$top_up_amount', top_up_reason='$top_up_reason'") or die(mysqli_error($con));
+
+    $result11 = mysqli_query($con, "UPDATE shipping SET status='$status' WHERE shipping_id = $shipping_id") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    alert('Success to send request');
+    window.location.href='main.php#adpayment';
+    </script>
+    <?php
+}
+
+$query11 = "SELECT *
+           FROM shipping
+           WHERE payment_id='$payment_id' AND top_up_id IS NOT NULL";
+$result11 = mysqli_query($con, $query11);
+
+if(isset($_POST['approves']))
+{
+    $payments_id = $_POST['payments_id'];
+    $status = 'Completed';
+    
+    $result12 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payments_id ") or die(mysqli_error($con));
+    ?>
+    <script>
+    alert('Success to Update');
+    window.location.href='paymentviews.php?payment_id=<?php echo $payment_id; ?>';
+    </script>
+    <?php
+}
 
 ?>
 
@@ -159,6 +198,24 @@ $result8 = mysqli_query($con, $query8);
                                 <?php
                             }
                         ?>
+                        <?php 
+                            if(mysqli_num_rows($result11) > 0)
+                            {
+                                while($row = mysqli_fetch_array($result11))
+                                {
+                                    $top_up_id = $row['top_up_id'];
+                                    $query12 = "SELECT * FROM payment WHERE top_up_id='$top_up_id'";
+                                    $result12 = mysqli_query($con, $query12);
+                                    $results12 = mysqli_fetch_assoc($result12);
+                                    ?>
+                                    
+                                    <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment1" href="#verifyPayment1">View Receipt</a>
+                                    <?php
+                                }
+                            }else{
+
+                            }
+                        ?>
                     </caption>
                 </table>
             </div>
@@ -223,9 +280,9 @@ $result8 = mysqli_query($con, $query8);
 
                         <div class="btnpayview">
                             <p class="right">
-                                <button type="button" class="btn btn-secondary btnCancel btnmargin" onclick="window.close()" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary btnCancel btnmargin">Cancel</button>
                                 <input type="submit" class="btn btn-success btnSend btnmargin" name="proceed" value="Proceed" />
-                                <!--<a class="btn btnDecline btnmargin" href="#declinePPayment" data-toggle="modal">Decline</a>-->
+                                <a class="btn btnDecline btnmargin" href="#topupPPayment" data-toggle="modal">Top-up</a>
                             </p>
                         </div>
                     </div>
@@ -263,30 +320,55 @@ $result8 = mysqli_query($con, $query8);
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                            <a href="main.php#adpayment" class="btn btn-secondary btnCancel">Cancel</a>
                             <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve" />
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        
-        <div class="modal fade" id="declinePPayment" tabindex="-1" role="dialog" aria-labelledby="declinePPaymentTitle" aria-hidden="true">
+        <div class="modal fade" id="verifyPayment1" tabindex="-1" role="dialog" aria-labelledby="verifyPaymentTitle1" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title center" id="declinePPaymentTitle">Decline Payment</h5>
+                        <h5 class="modal-title center" id="verifyPaymentTitle1">Verify Payment1</h5>
                     </div>
 
                     <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
                         <div class="modal-body left">
-                            <p><input class="formfield" name="reason" type="text" placeholder="Reason" required /></p>
+                            <img src="../receipts/<?php echo $results12['file']; ?>" style="width: 500px; height: 450px;">
+                            <input type="text" name="payments_id" value="<?php echo $results12['payment_id']; ?>">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success btnSend" name="approves" value="Approve" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="topupPPayment" tabindex="-1" role="dialog" aria-labelledby="topupPPaymentTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title center" id="topupPPaymentTitle">Top-up Payment</h5>
+                    </div>
+
+                    <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
+                        <div class="modal-body left">
+                            <p><input class="formfield" name="shipping_id" type="hidden" value="<?php echo $results2['shipping_id']; ?>" /></p>
+                            <p><input class="formfield" name="payment_id" type="hidden" value="<?php echo $payment_id ?>" /></p>
+                            <p><input class="formfield" name="paid_amount" type="number" step="0.01" min="0" placeholder="Paid Amount" required /></p>
+                            <p><input class="formfield" name="top_up_amount" type="number" step="0.01" min="0.01" placeholder="Top-up Amount" required /></p>
+                            <p><input class="formfield" name="top_up_reason" type="text" placeholder="Reason" required /></p>
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
 
-                            <input type="submit" class="btn btn-success btnSend" name="sendc" value="Send" />
+                            <input type="submit" class="btn btn-success btnSend" name="topup" value="Submit request" />
                         </div>
                     </form>
                 </div>

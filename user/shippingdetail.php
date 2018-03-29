@@ -162,8 +162,8 @@ $result5 = mysqli_query($con, $query5);
                             <td colspan="3" class="left"><p>Total weight (kg)</p></td>
                             <td class="coltotal">
                                 <p>
-                                    <input type="hidden" id="totalweight" name="totalweight" class="form-control" value="<?php echo $totalweight; ?>">
-                                    <?php echo $totalweight; ?>
+                                    <input type="hidden" id="totalweight" name="totalweight" class="form-control" value="<?php echo number_format((float)$totalweight, 2, '.', ''); ?>">
+                                    <?php echo number_format((float)$totalweight, 2, '.', ''); ?>
                                 </p>
                             </td>
                         </tr>

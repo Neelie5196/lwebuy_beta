@@ -122,7 +122,7 @@ if(isset($_POST['ordersave']))
                 <div class="row">
                     <div class="col-xs-6 col-md-6 col-lg-6 col-xs-push-3 col-md-push-3 col-lg-push-3 updatecontainer">
                         <form action="uinventory.php" method="post">
-                            <p><input type="text" name="search" class="formfield" placeholder="Enter order code here" required /></p>
+                            <p><input type="text" name="search" class="formfield" placeholder="Enter order code here" autofocus required /></p>
                         </form>
                     </div>
                 </div>

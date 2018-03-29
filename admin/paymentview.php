@@ -124,6 +124,25 @@ $query10 = "SELECT *
            WHERE payment_id='$payment_id'";
 $result10 = mysqli_query($con, $query10);
 
+$query11 = "SELECT *
+           FROM order_item
+           WHERE payment_id='$payment_id' AND top_up_id IS NOT NULL";
+$result11 = mysqli_query($con, $query11);
+
+if(isset($_POST['approves']))
+{
+    $payments_id = $_POST['payments_id'];
+    $status = 'Completed';
+    
+    $result12 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payments_id ") or die(mysqli_error($con));
+    ?>
+    <script>
+    alert('Success to Update');
+    window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
+    </script>
+    <?php
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -180,6 +199,23 @@ $result10 = mysqli_query($con, $query10);
                                     <input type="submit" class="btn btn-success btnSend" name="approve" value="Pay by LWE point" />
                                 </form>
                             <?php
+                        }
+                    ?>
+                    <?php 
+                        if(mysqli_num_rows($result11) > 0)
+                        {
+                            while($row = mysqli_fetch_array($result11))
+                            {
+                                $top_up_id = $row['top_up_id'];
+                                $query12 = "SELECT * FROM payment WHERE top_up_id='$top_up_id'";
+                                $result12 = mysqli_query($con, $query12);
+                                $results12 = mysqli_fetch_assoc($result12);
+                                ?>
+                                <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment1" href="#verifyPayment1">View Receipt</a>
+                                <?php
+                            }
+                        }else{
+                            
                         }
                     ?>
                     </caption>
@@ -282,6 +318,28 @@ $result10 = mysqli_query($con, $query10);
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
                             <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="verifyPayment1" tabindex="-1" role="dialog" aria-labelledby="verifyPaymentTitle1" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title center" id="verifyPaymentTitle1">Verify Payment1</h5>
+                    </div>
+
+                    <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
+                        <div class="modal-body left">
+                            <img src="../receipts/<?php echo $results12['file']; ?>" style="width: 500px; height: 450px;">
+                            <input type="hidden" name="payments_id" value="<?php echo $results12['payment_id']; ?>">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success btnSend" name="approves" value="Approve" />
                         </div>
                     </form>
                 </div>

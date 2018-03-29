@@ -99,6 +99,14 @@ $query10 = "SELECT *
            FROM order_item
            WHERE user_id='$user_id' AND status = 'declined'";
 $result10 = mysqli_query($con, $query10);
+
+$query11 = "SELECT *
+           FROM order_item oi
+           JOIN top_up tu
+           ON tu.payment_id = oi.payment_id
+           WHERE user_id='$user_id' AND status = 'top-up'
+           GROUP BY oi.payment_id";
+$result11 = mysqli_query($con, $query11);
 ?>
 
 
@@ -113,6 +121,7 @@ $result10 = mysqli_query($con, $query10);
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcPRequest()">Requests</button></td>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcPPayment()">Pending Payments</button></td>
+                    <td class="wborder"><button class="btn-link btntab" onclick="funcPTopup()">Top-up Request</button></td>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcPProceed()">Proceeded</button></td>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcPReceive()">Received</button></td>
                     <td><button class="btn-link btntab" onclick="funcPDecline()">Declined</button></td>
@@ -364,6 +373,49 @@ $result10 = mysqli_query($con, $query10);
             </div>
         </div>
         
+        <div id="ptopup">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <table class="purchasetable">
+                    <tr class="center">
+                        <th>Payment ID</th>
+                        <th>Total Price (RM)</th>
+                        <th>Paid Price (RM)</th>
+                        <th>Top-up Price (RM)</th>
+                        <th>Reason</th>
+                        <th>Payment Details</th>
+                    </tr>
+                    <?php 
+                        if(mysqli_num_rows($result11) > 0)
+                        {
+                            while($row = mysqli_fetch_array($result11))
+                            {
+                                $payment_id = $row['payment_id'];
+                                $query12 = "SELECT * FROM payment WHERE payment_id='$payment_id'";
+                                $result12 = mysqli_query($con, $query12);
+                                $results12 = mysqli_fetch_assoc($result12);
+                                ?>
+                                <tr>
+                                    <td><?php echo $row['payment_id']; ?></td>
+                                    <td><?php echo $results12['amount']; ?></td>
+                                    <td><?php echo $row['paid_amount']; ?></td>
+                                    <td><?php echo $row['top_up_amount']; ?></td>
+                                    <td><?php echo $row['top_up_reason']; ?></td>
+                                    <td><a href="paymentview.php?payment_id=<?php echo $row['payment_id']; ?>" class="btntab"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+                                </tr>
+                                <?php
+                            }
+                        }else{
+                            ?>
+                                <tr>
+                                    <td colspan="8">No top-up payment request.</td>
+                                </tr>
+                            <?php
+                        }
+                    ?>
+                </table>
+            </div>
+        </div>
+        
         <div id="pproceed">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
@@ -518,32 +570,31 @@ $result10 = mysqli_query($con, $query10);
     </div>
 </div>
 <script>
-    $(document).on("click", ".editRPurchase", function () {
-        var orderItemId = $(this).data('id');
-        var orderItemName = $(this).data('name');
-        var orderItemLink = $(this).data('link');
-        var orderItemCategory = $(this).data('category');
-        var orderItemQuantity = $(this).data('quantity');
-        var orderItemRemark = $(this).data('remark');
-        $(".modal-body #orderItemId").val( orderItemId );
-        $(".modal-body #name").val( orderItemName );
-        $(".modal-body #link").val( orderItemLink );
-        $(".modal-body #category").val( orderItemCategory );
-        $(".modal-body #quantity").val( orderItemQuantity );
-        $(".modal-body #remark").val( orderItemRemark );
-        $('#editRPurchase').modal('show');
-    });
-
-    $(document).on("click", ".editPPurchase", function () {
-        var orderItemId = $(this).data('id');
-        var orderItemQuantity = $(this).data('quantity');
-        $(".modal-body #orderItemId").val( orderItemId );
-        $(".modal-body #quantity").val( orderItemQuantity );
-        $('#editPPurchase').modal('show');
-    });
+$(document).on("click", ".editRPurchase", function () {
+    var orderItemId = $(this).data('id');
+    var orderItemName = $(this).data('name');
+    var orderItemLink = $(this).data('link');
+    var orderItemCategory = $(this).data('category');
+    var orderItemQuantity = $(this).data('quantity');
+    var orderItemRemark = $(this).data('remark');
+    $(".modal-body #orderItemId").val( orderItemId );
+    $(".modal-body #name").val( orderItemName );
+    $(".modal-body #link").val( orderItemLink );
+    $(".modal-body #category").val( orderItemCategory );
+    $(".modal-body #quantity").val( orderItemQuantity );
+    $(".modal-body #remark").val( orderItemRemark );
+    $('#editRPurchase').modal('show');
+});
     
+$(document).on("click", ".editPPurchase", function () {
+    var orderItemId = $(this).data('id');
+    var orderItemQuantity = $(this).data('quantity');
+    $(".modal-body #orderItemId").val( orderItemId );
+    $(".modal-body #quantity").val( orderItemQuantity );
+    $('#editPPurchase').modal('show');
+});
     setInterval(function(){ location.reload(true); }, 300000);
-
+    
     /*Validate*/
     function val(){
         var items = document.getElementsByName('order_item[]');

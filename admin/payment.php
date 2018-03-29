@@ -34,6 +34,16 @@ $query4 = "SELECT *
         WHERE p.status = 'Completed'";
 $result4 = mysqli_query($con, $query4);
 
+$query6 = "SELECT *
+        FROM order_item oi
+        JOIN payment p
+        ON p.payment_id = oi.payment_id
+        JOIN users us
+        ON us.user_id = p.user_id
+        WHERE oi.status = 'top-up'
+        GROUP BY oi.payment_id";
+$result6 = mysqli_query($con, $query6);
+
 ?>
 
 <div class="col-xs-12 col-md-12 col-lg-12">
@@ -47,6 +57,7 @@ $result4 = mysqli_query($con, $query4);
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcPPurchase()">Purchases</button></td>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcPShip()">Shipping</button></td>
+                    <td class="wborder"><button class="btn-link btntab" onclick="funcPTopup()">Top-up Request</button></td>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcPCredit()">Credit Reload</button></td>
                     <td><button class="btn-link btntab" onclick="funcPHistory()">History</button></td>
                 </tr>
@@ -132,6 +143,49 @@ $result4 = mysqli_query($con, $query4);
                             ?>
                                 <tr>
                                     <td colspan="8">No new payments for shipping.</td>
+                                </tr>
+                            <?php
+                        }
+                    ?>
+                </table>
+            </div>
+        </div>
+        
+        <div id="ptopup">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <table class="purchasetable">
+                    <tr class="center">
+                        <th>Customer</th>
+                        <th>Payment ID</th>
+                        <th>Total Price (RM)</th>
+                        <th>Paid Price (RM)</th>
+                        <th>Top-up Price (RM)</th>
+                        <th>Reason</th>
+                    </tr>
+                    <?php 
+                        if(mysqli_num_rows($result6) > 0)
+                        {
+                            while($row = mysqli_fetch_array($result6))
+                            {
+                                $payment_id = $row['payment_id'];
+                                $query7 = "SELECT * FROM top_up WHERE payment_id='$payment_id'";
+                                $result7 = mysqli_query($con, $query7);
+                                $results7 = mysqli_fetch_assoc($result7);
+                                ?>
+                                <tr>
+                                    <td><?php echo $row['fname']." ".$row['lname']; ?></td>
+                                    <td><?php echo $row['payment_id']; ?></td>
+                                    <td><?php echo $row['amount']; ?></td>
+                                    <td><?php echo $results7['paid_amount']; ?></td>
+                                    <td><?php echo $results7['top_up_amount']; ?></td>
+                                    <td><?php echo $results7['top_up_reason']; ?></td>
+                                </tr>
+                                <?php
+                            }
+                        }else{
+                            ?>
+                                <tr>
+                                    <td colspan="8">No top-up payment request.</td>
                                 </tr>
                             <?php
                         }

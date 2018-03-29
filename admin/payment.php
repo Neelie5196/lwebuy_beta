@@ -67,8 +67,8 @@ $result8 = mysqli_query($con, $query8);
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcPPurchase()">Purchases</button></td>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcPShip()">Shipping</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcPTopup()">Top-up Request</button></td>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcPCredit()">Credit Reload</button></td>
+                    <td class="wborder"><button class="btn-link btntab" onclick="funcPOutstand()">Payments for Outstanding Fees</button></td>
                     <td><button class="btn-link btntab" onclick="funcPHistory()">History</button></td>
                 </tr>
             </table>
@@ -161,10 +161,9 @@ $result8 = mysqli_query($con, $query8);
             </div>
         </div>
         
-        <div id="ptopup">
+        <div id="poutstand">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
-                    <strong>Purchase</strong>
                     <tr class="center">
                         <th>Customer</th>
                         <th>Payment ID</th>
@@ -193,25 +192,9 @@ $result8 = mysqli_query($con, $query8);
                                 </tr>
                                 <?php
                             }
-                        }else{
-                            ?>
-                                <tr>
-                                    <td colspan="8">No top-up payment request from purchase.</td>
-                                </tr>
-                            <?php
                         }
                     ?>
-                </table>
-                <table class="purchasetable">
-                    <strong>Shipping</strong>
-                    <tr class="center">
-                        <th>Customer</th>
-                        <th>Payment ID</th>
-                        <th>Total Price (RM)</th>
-                        <th>Paid Price (RM)</th>
-                        <th>Top-up Price (RM)</th>
-                        <th>Reason</th>
-                    </tr>
+                
                     <?php 
                         if(mysqli_num_rows($result8) > 0)
                         {
@@ -232,12 +215,15 @@ $result8 = mysqli_query($con, $query8);
                                 </tr>
                                 <?php
                             }
-                        }else{
-                            ?>
-                                <tr>
-                                    <td colspan="8">No top-up payment request from shipping.</td>
-                                </tr>
-                            <?php
+                        }
+                        
+                        if(mysqli_num_rows($result6) == 0 && mysqli_num_rows($result8) == 0)
+                        {
+                   ?>
+                    <tr>
+                        <td colspan="6">No payments for outstanding fees.</td>
+                    </tr>
+                    <?php
                         }
                     ?>
                 </table>

@@ -374,6 +374,7 @@ function funcPPurchase() {
     document.getElementById("pship").style.display = "none";
     document.getElementById("pcredit").style.display ="none";
     document.getElementById("phistory").style.display = "none";
+    document.getElementById("poutstand").style.display = "none";
 }
 
 function funcPShip() {
@@ -381,6 +382,7 @@ function funcPShip() {
     document.getElementById("pship").style.display = "block";
     document.getElementById("pcredit").style.display ="none";
     document.getElementById("phistory").style.display = "none";
+    document.getElementById("poutstand").style.display = "none";
 }
 
 function funcPCredit() {
@@ -388,6 +390,7 @@ function funcPCredit() {
     document.getElementById("pship").style.display = "none";
     document.getElementById("pcredit").style.display ="block";
     document.getElementById("phistory").style.display = "none";
+    document.getElementById("poutstand").style.display = "none";
 }
 
 function funcPHistory() {
@@ -395,6 +398,15 @@ function funcPHistory() {
     document.getElementById("pship").style.display = "none";
     document.getElementById("pcredit").style.display ="none";
     document.getElementById("phistory").style.display = "block";
+    document.getElementById("poutstand").style.display = "none";
+}
+
+function funcPOutstand() {
+    document.getElementById("ppurchase").style.display = "none";
+    document.getElementById("pship").style.display = "none";
+    document.getElementById("pcredit").style.display ="none";
+    document.getElementById("phistory").style.display = "none";
+    document.getElementById("poutstand").style.display = "block";
 }
 
 function checkPass() {

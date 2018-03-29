@@ -2,74 +2,149 @@
 require_once '../connection/config.php';
 session_start();
 
-if(isset($_POST['receivesave']))
-{	
-    $status = 'Received';
-    $statuss = 'In Use';
-    $request_id = $_POST['request_id'];
-    $from = 'Receive Request';
-    $user_id = $_POST['user_id'];
-    $slot_id = $_POST['slot_id'];
-    $order_item = $_POST['order_item'];
-    $order_code = $_POST['order_code'];
-    $weight = $_POST['weight'];
-    $action = 'In';
-    
-    $result = mysqli_query($con, "UPDATE request SET status = '$status' WHERE request_id = $request_id ") or die(mysqli_error($con));
-    
-    $query1 = "SELECT * 
-              FROM slot
-              WHERE user_id = '$user_id'";
-    $results1 = mysqli_query($con, $query1);
+$user_id = $_SESSION['user_id'];
 
-    if($resultss1 = mysqli_num_rows($results1) > 0){
-        $result1 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='$from', item_description='$order_item', order_code='$order_code', weight='$weight', action='$action'") or die(mysqli_error($con));
-    }else{
-        $result1 = mysqli_query($con, "UPDATE slot SET status = '$statuss', user_id = '$user_id' WHERE slot_id = $slot_id ") or die(mysqli_error($con));
-        $result2 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='$from', item_description='$order_item', order_code='$order_code', weight='$weight', action='$action'") or die(mysqli_error($con));
+$query = "SELECT *
+           FROM work_station ws
+           JOIN users us
+           ON ws.user_id = us.user_id
+           JOIN warehouse wh
+           ON wh.ware_id = ws.ware_id
+           WHERE us.user_id = '$user_id'";
+
+$result = mysqli_query($con, $query);
+
+$query1 = "SELECT *
+          FROM users us
+          JOIN order_item oi
+          ON oi.user_id = us.user_id
+          WHERE status = 'Proceed'";                    
+$result1 = mysqli_query($con, $query1);
+
+$query2 = "SELECT * 
+          FROM users us
+          JOIN request rq
+          ON rq.user_id = us.user_id
+          WHERE status = 'Request'";
+$result2 = mysqli_query($con, $query2);
+
+if(isset($_POST['update']))
+{
+    $o_codes = $_POST['ocode'];
+    $weights = $_POST['weight'];
+    
+    $count = sizeof($o_codes);
+    
+    for ($i = 0; $i < $count; $i++)
+    {
+        $query5 = "SELECT *
+                  FROM order_item 
+                  WHERE order_code = '$o_codes[$i]'";
+        $result5 = mysqli_query($con, $query5);
+        $results5 = mysqli_fetch_assoc($result5);
+        
+        $query6 = "SELECT *
+                  FROM request 
+                  WHERE order_code = '$o_codes[$i]'";
+        $result6 = mysqli_query($con, $query6);
+        $results6 = mysqli_fetch_assoc($result6);
+        
+        if(!empty($results5))
+        {
+            $user_id = $results5['user_id'];
+            $order_item = $results5['order_item'];
+            
+            $query7 = "SELECT * 
+                      FROM slot
+                      WHERE user_id = '$user_id'";
+            $result7 = mysqli_query($con, $query7);
+            $results7 = mysqli_fetch_assoc($result7);
+            
+            if (!empty($results7))
+            {
+                $slot_id = $results7['slot_id'];
+                
+                $update0 = mysqli_query($con, "UPDATE order_item SET status = 'Received' WHERE order_code = '$o_codes[$i]'") or die(mysqli_error($con));
+                
+                $update1 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Purchase Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weight[i]', action='In'") or die(mysqli_error($con));
+            }
+            else
+            {
+                $query9 = "SELECT *
+                           FROM slot
+                           WHERE status = 'Not in Use'
+                           ORDER BY RAND()
+                           LIMIT 1";
+                $result9 = mysqli_query($con, $query9);
+                $results9 = mysqli_fetch_assoc($result9);
+                
+                if(!empty($results9))
+                {
+                    $slot_id = $results9['slot_id'];
+                    
+                    $update0 = mysqli_query($con, "UPDATE order_item SET status = 'Received' WHERE order_code = '$o_codes[$i]'") or die(mysqli_error($con));
+                    
+                    $update1 = mysqli_query($con, "UPDATE slot SET status = 'In Use', user_id = '$user_id' WHERE slot_id = $slot_id ") or die(mysqli_error($con));
+                    
+                    $update2 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Purchase Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weight[i]', action='In'") or die(mysqli_error($con));
+                }
+                else
+                {
+                ?>
+
+                <script>
+                alert('No available slots. Add more slots to update order <?php echo $o_codes[$i] ?>');
+                </script>
+
+<?php
+                }
+            }
+        }
+        
+        if(!empty($results6))
+        {
+            $userid = $results6['user_id'];
+            $order_item = $results6['order_item'];
+            
+            
+            
+            $query8 = "SELECT * 
+                      FROM slot
+                      WHERE user_id = '$user_id'";
+            $result8 = mysqli_query($con, $query8);
+            $results8 = mysqli_fetch_assoc($result8);
+            
+            if (!empty($results8))
+            {
+                $slot_id = $results8['slot_id'];
+                
+                $update0 = mysqli_query($con, "UPDATE request SET status = 'Received' WHERE order_code = '$o_codes[$i]'") or die(mysqli_error($con));
+                
+                $update1 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Inventory Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weight[i]', action='In'") or die(mysqli_error($con));
+            }
+            if(!empty($results9))
+                {
+                    $slot_id = $results9['slot_id'];
+                    
+                    $update0 = mysqli_query($con, "UPDATE request SET status = 'Received' WHERE order_code = '$o_codes[$i]'") or die(mysqli_error($con));
+                    
+                    $update1 = mysqli_query($con, "UPDATE slot SET status = 'In Use', user_id = '$user_id' WHERE slot_id = $slot_id ") or die(mysqli_error($con));
+                    
+                    $update2 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Inventory Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weight[i]', action='In'") or die(mysqli_error($con));
+                }
+                else
+                {
+                ?>
+
+                <script>
+                alert('No available slots. Add more slots to update order <?php echo $o_codes[$i] ?>');
+                </script>
+
+<?php
+        }
+        
     }
-    ?>
-    <script>
-    alert('Success to Save');
-    window.location.href='uinventory.php';
-    </script>
-    <?php
 }
-
-if(isset($_POST['ordersave']))
-{	
-    $status = 'Received';
-    $statuss = 'In Use';
-    $order_item_id = $_POST['order_item_id'];
-    $from = 'Order Item';
-    $user_id = $_POST['user_id'];
-    $slot_id = $_POST['slot_id'];
-    $order_item = $_POST['order_item'];
-    $order_code = $_POST['order_code'];
-    $weight = $_POST['weight'];
-    $action = 'In';
-    
-    $result = mysqli_query($con, "UPDATE order_item SET status = '$status' WHERE order_item_id = $order_item_id ") or die(mysqli_error($con));
-    
-    $query2 = "SELECT * 
-              FROM slot
-              WHERE user_id = '$user_id'";
-    $results2 = mysqli_query($con, $query2);
-
-    if($resultss2 = mysqli_num_rows($results2) > 0){
-        $result1 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='$from', item_description='$order_item', order_code='$order_code', weight='$weight', action='$action'") or die(mysqli_error($con));
-    }else{
-        $result1 = mysqli_query($con, "UPDATE slot SET status = '$statuss', user_id = '$user_id' WHERE slot_id = $slot_id ") or die(mysqli_error($con));
-        $result2 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='$from', item_description='$order_item', order_code='$order_code', weight='$weight', action='$action'") or die(mysqli_error($con));
-    }
-    ?>
-    <script>
-    alert('Success to Save');
-    window.location.href='uinventory.php';
-    </script>
-    <?php
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -115,193 +190,189 @@ if(isset($_POST['ordersave']))
         
         <div class="row userrow2 center" id="updateview">
             <div class="col-xs-12 col-md-12 col-lg-12">
-                <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Inventory Items Arrival</h2>
+                <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Inventory Arrival Update</h2>
 
-                <h2 class="smh2 pagetitle hidden-md hidden-lg">Inventory Item Arrival</h2>
+                <h2 class="smh2 pagetitle hidden-md hidden-lg">Inventory Arrival Update</h2>
 
                 <div class="row">
-                    <div class="col-xs-6 col-md-6 col-lg-6 col-xs-push-3 col-md-push-3 col-lg-push-3 updatecontainer">
-                        <form action="uinventory.php" method="post">
-                            <p><input type="text" name="search" class="formfield" placeholder="Enter order code here" autofocus required /></p>
-                        </form>
+                    <div class="col-xs-6 col-md-6 col-lg-6 col-xs-push-6 col-md-push-3 col-lg-push-3 updatecontainer">
+                        <p>
+                            <input type="text" name="search" class="formfield" placeholder="Enter tracking code here" id="codeinput" required autofocus />
+                            <button id="myBtn" class="hidden-xs hidden-sm hidden-md hidden-lg" onclick="selectItem()"></button>
+                        </p>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
                         <form action="uinventory.php" method="post">
+                            
                             <?php
-                                if(isset($_POST['search']))
+                                if(mysqli_num_rows($result) > 0)
                                 {
-                                    $search = $_POST['search'];
-                                    $query = "SELECT * 
-                                              FROM users us
-                                              JOIN request rq
-                                              ON rq.user_id = us.user_id
-                                              WHERE rq.order_code = '$search' AND status = 'Request'";
-                                    $result = mysqli_query($con, $query);
-
-                                    $querys = "SELECT *
-                                              FROM users us
-                                              JOIN order_item oi
-                                              ON oi.user_id = us.user_id
-                                              WHERE oi.order_code = '$search' AND status = 'Proceed'";                    
-                                    $result1 = mysqli_query($con, $querys);
-
-
-
-                                    if($results = mysqli_num_rows($result) > 0){
-                                        while ($line = mysqli_fetch_array($result))
-                                        {
+                                    while($row = mysqli_fetch_array($result))
+                                    {
                                         ?>
-                                            <div class="row">
-                                                <table class="purchasetable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Customer Name</th>
-                                                            <th>Item Name</th>
-                                                            <th>Tracking Code</th>
-                                                            <th>Slot Aisle</th>
-                                                            <th>Slot Number</th>
-                                                            <th>Weight (kg)</th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <input type="hidden" name="request_id" value="<?php echo $line['request_id']; ?>">
-                                                            <input type="hidden" name="user_id" value="<?php echo $line['user_id']; ?>">
-                                                            <input type="hidden" name="order_item" value="<?php echo $line['order_item']; ?>">
-                                                            <input type="hidden" name="order_code" value="<?php echo $line['order_code']; ?>">
-                                                            <td><?php echo $line['fname']; ?> <?php echo $line['lname']; ?></td>
-                                                            <td><?php echo $line['order_item']; ?></td>
-                                                            <td><?php echo $line['order_code']; ?></td>
-                                                            <?php
-                                                                $user_id = $line['user_id'];
-                                                                $query4 = "SELECT *
-                                                                           FROM slot
-                                                                           WHERE user_id= '$user_id' ";
-                                                                $result4 = mysqli_query($con, $query4);
-                                                                $results4 = mysqli_fetch_assoc($result4);
 
-                                                                if(!empty($results4))
-                                                                {
-                                                                    ?>
-                                                                        <input type="hidden" name="slot_id" value="<?php echo $results4['slot_id']; ?>">
-                                                                        <td><?php echo $results4['slot_aisle']; ?></td>
-                                                                        <td><?php echo $results4['slot_num']; ?></td>
-                                                                    <?php
-                                                                }else{
-                                                                    $query5 = "SELECT *
-                                                                               FROM slot
-                                                                               WHERE status = 'Not in Use'
-                                                                               ORDER BY RAND()
-                                                                               LIMIT 1";
-                                                                    $result5 = mysqli_query($con, $query5);
-                                                                    $results5 = mysqli_fetch_assoc($result5);
+                                <input type="hidden" name="originstation" value="<?php echo $result['station_name']; ?>">
 
-                                                                    if(!empty($results5))
-                                                                    {
-                                                                        ?>
-                                                                            <input type="hidden" name="slot_id" value="<?php echo $results5['slot_id']; ?>">
-                                                                            <td><?php echo $results5['slot_aisle']; ?></td>
-                                                                            <td><?php echo $results5['slot_num']; ?></td>
-                                                                        <?php
-                                                                    }else{
-                                                                        echo '<p>There is no empty slot.</p>';
-                                                                    }
-                                                                }
-                                                            ?>
-
-                                                            <td><input type="text" name="weight" class="tblformfield" required /></td>
-                                                            <td><input type="submit" class="btn btn-xs btn-default" name="receivesave" value="Save"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        <?php  
-                                        }
-                                    }else if($resultss = mysqli_num_rows($result1) > 0){
-                                        while ($line = mysqli_fetch_array($result1)) 
-                                        {
-                                        ?>
-                                            <div class="row">
-                                                <table  class="purchasetable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Customer Name</th>
-                                                            <th>Item Name</th>
-                                                            <th>Tracking Code</th>
-                                                            <th>Slot Aisle</th>
-                                                            <th>Slot Number</th>
-                                                            <th>Weight (kg)</th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <input type="hidden" name="order_item_id" value="<?php echo $line['order_item_id']; ?>">
-                                                            <input type="hidden" name="user_id" value="<?php echo $line['user_id']; ?>">
-                                                            <input type="hidden" name="order_item" value="<?php echo $line['order_item']; ?>">
-                                                            <input type="hidden" name="order_code" value="<?php echo $line['order_code']; ?>">
-                                                            <td><?php echo $line['fname']; ?> <?php echo $line['lname']; ?></td>
-                                                            <td><?php echo $line['order_item']; ?></td>
-                                                            <td><?php echo $line['order_code']; ?></td>
-                                                            <?php
-                                                                $user_id = $line['user_id'];
-                                                                $query4 = "SELECT *
-                                                                           FROM slot
-                                                                           WHERE user_id= '$user_id' ";
-                                                                $result4 = mysqli_query($con, $query4);
-                                                                $results4 = mysqli_fetch_assoc($result4);
-
-                                                                if(!empty($results4))
-                                                                {
-                                                                    ?>
-                                                                        <input type="hidden" name="slot_id" value="<?php echo $results4['slot_id']; ?>">
-                                                                        <td><?php echo $results4['slot_aisle']; ?></td>
-                                                                        <td><?php echo $results4['slot_num']; ?></td>
-                                                                    <?php
-                                                                }else{
-                                                                    $query5 = "SELECT *
-                                                                               FROM slot
-                                                                               WHERE status = 'Not in Use'
-                                                                               ORDER BY RAND()
-                                                                               LIMIT 1";
-                                                                    $result5 = mysqli_query($con, $query5);
-                                                                    $results5 = mysqli_fetch_assoc($result5);
-
-                                                                    if(!empty($results5))
-                                                                    {
-                                                                        ?>
-                                                                            <input type="hidden" name="slot_id" value="<?php echo $results5['slot_id']; ?>">
-                                                                            <td><?php echo $results5['slot_aisle']; ?></td>
-                                                                            <td><?php echo $results5['slot_num']; ?></td>
-                                                                        <?php
-                                                                    }else{
-                                                                        echo '<p>There is no empty slot.</p>';
-                                                                    }
-                                                                }
-                                                            ?>
-                                                            <td><input type="text" name="weight" class="form-control" style="border-radius: 30px; width: 100%;" required></td>
-                                                            <td><input type="submit" class="btn btn-xs btn-default" name="ordersave" value="Save"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        <?php  
-                                        }
-                                    }else{
-                                        ?>
-                                            <p>Invalid item.</p>
-                                        <?php
+                                <?php
                                     }
                                 }
-                            ?>
+                                ?>
+                            
+                            <table class="purchasetable">
+                                <tr>
+                                    <th></th>
+                                    <th>Customer Name</th>
+                                    <th>Item Name</th>
+                                    <th>Order Code</th>
+                                    <th>Slot Aisle</th>
+                                    <th>Slot Number</th>
+                                    <th>Weight (kg)</th>
+                                </tr>
+                                
+                                <?php
+                                if(mysqli_num_rows($result1) > 0)
+                                {
+                                    while($row1 = mysqli_fetch_array($result1))
+                                    {
+                                        ?>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="trackcheck" name="ocode[]" value="<?php echo $row1['order_code']?>" disabled />
+                                    </td>
+                                    <td><?php echo $row1['fname'] . " " . $row1['lname']; ?></td>
+                                    <td><?php echo $row1['order_item']; ?></td>
+                                    <td><?php echo $row1['order_code']; ?></td>
+                                    
+                                    <?php
+                                        $user_id = $row1['user_id'];
+                                        $query3 = "SELECT *
+                                                   FROM slot
+                                                   WHERE user_id= '$user_id' ";
+                                        $result3 = mysqli_query($con, $query3);
+                                        $results3 = mysqli_fetch_assoc($result3);
+
+                                        if(!empty($results3))
+                                        {
+                                    ?>
+                                    <td><?php echo $results3['slot_aisle']; ?></td>
+                                    <td><?php echo $results3['slot_num']; ?></td>
+                                    
+                                    <?php
+                                        }
+                                        else
+                                        {
+                                    ?>
+                                    
+                                    <td colspan="2">User has no slot yet</td>
+                                    
+                                    <?php
+                                            
+                                        }
+                                ?>
+                                    
+                                    <td>
+                                        <input type="text" name="weight[]" class="tblformfield textinput" disabled />
+                                    </td>
+                                </tr>
+                                <?php
+                                    }
+                                }
+                                ?>
+                                
+                                <?php
+                                if(mysqli_num_rows($result2) > 0)
+                                {
+                                    while($row2 = mysqli_fetch_array($result2))
+                                    {
+                                        ?>
+                                
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="trackcheck" name="ocode[]" value="<?php echo $row2['order_code']?>" disabled />
+                                    </td>
+                                    <td><?php echo $row2['fname'] . " " . $row2['lname']; ?></td>
+                                    <td><?php echo $row2['order_item']; ?></td>
+                                    <td><?php echo $row2['order_code']; ?></td>
+                                    
+                                    <?php
+                                        $user_id = $row2['user_id'];
+                                        $query4 = "SELECT *
+                                                   FROM slot
+                                                   WHERE user_id= '$user_id' ";
+                                        $result4 = mysqli_query($con, $query4);
+                                        $results4 = mysqli_fetch_assoc($result4);
+
+                                        if(!empty($results4))
+                                        {
+                                    ?>
+                                    <td><?php echo $results4['slot_aisle']; ?></td>
+                                    <td><?php echo $results4['slot_num']; ?></td>
+                                    
+                                    <?php
+                                        }
+                                        else
+                                        {
+                                    ?>
+                                    
+                                    <td colspan="2">User has not slot yet</td>
+                                    
+                                    <?php
+                                        
+                                        }
+                                ?>
+                                    
+                                    <td>
+                                        <input type="text" name="weight[]" class="tblformfield textinput" disabled />
+                                    </td>
+                                </tr>
+                                
+                                <?php
+                                    }
+                                }
+                                ?>
+                                
+                                <tr>
+                                    <td colspan="7">
+                                        <input type="submit" class="btn btnAdd" name="update" value="Update" />
+                                    </td>
+                                </tr>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <script>
+        document.getElementById("codeinput").addEventListener("keyup", function(event) {
+          event.preventDefault();
+          if (event.keyCode === 13) {
+            document.getElementById("myBtn").click();
+              }
+            });
+
+        function selectItem()
+        {
+            var inputtext = document.getElementsByClassName("textinput");
+            var checkboxes = document.getElementsByClassName("trackcheck");
+            var count = checkboxes.length;
+
+            for (var i = 0; i < count; i++)
+                {
+                    if (checkboxes[i].value == document.getElementById("codeinput").value)
+                        {
+                            inputtext[i].disabled = false;
+                            inputtext[i].required = true;
+                            inputtext[i].style.backgroundColor = "rgba(139, 184, 54, 0.3)";
+                            checkboxes[i].disabled = false;
+                            checkboxes[i].checked = true;
+                        }
+                }
+            
+            document.getElementById("codeinput").select();
+        }
+        </script>
     </body>
 </html>

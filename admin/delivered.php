@@ -14,7 +14,8 @@ $query1 = "SELECT *
            JOIN users us
            ON ws.user_id = us.user_id
            JOIN warehouse wh
-           ON ws.ware_id = us.ware_id";
+           ON wh.ware_id = ws.ware_id
+           WHERE us.user_id = '$user_id'";
 $result1 = mysqli_query($con, $query1);
 
 

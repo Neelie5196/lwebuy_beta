@@ -113,7 +113,7 @@ if (isset($_GET['ware_id']))
     
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-12">
-            <table class="tblTab">
+            <table class="tblATab">
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcWPending()">Pending Items</button></td>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcWSlot()">Slots Management</button></td>

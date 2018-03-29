@@ -42,7 +42,7 @@ if(isset($_POST['review']))
     $shipping_id = $_POST['shipping_id'];
     $review = $_POST['reviews'];
 	
-	$result7 = mysqli_query($con, "UPDATE shipping SET review='$review' WHERE shipping_id = '$shipping_id'") or die(mysqli_error($con));
+	$result7 = mysqli_query($con, "UPDATE shipping SET review='$review', status='reviewed' WHERE shipping_id = '$shipping_id'") or die(mysqli_error($con));
     
     ?>
     <script>
@@ -61,9 +61,9 @@ if(isset($_POST['review']))
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcSItem()">Items In-Store</button></td>
                     <td class="wborder"><button class="btn-link btntab" onclick="funcSRequest()">Requests</button></td>
-                    <!--<td class="wborder"><button class="btn-link btntab" onclick="funcSPayment()">Topup Request</button></td>-->
                     <td class="wborder"><button class="btn-link btntab" onclick="funcSProceed()">Proceeded</button></td>
                     <td><button class="btn-link btntab" onclick="funcSReceive()">Received</button></td>
+                    <!--<td class="wborder"><button class="btn-link btntab" onclick="funcSPayment()">Others</button></td>-->
                 </tr>
             </table>
         </div>
@@ -370,7 +370,7 @@ if(isset($_POST['review']))
                   <div class="modal-dialog" role="document">
                       <div class="modal-content">
                           <div class="modal-header">
-                              <h5 class="modal-title" id="sreviewTitle">review Form</h5>
+                              <h5 class="modal-title" id="sreviewTitle">Review</h5>
                          </div>
                           
                           <form method="post" action="shipping.php">
@@ -427,11 +427,12 @@ if(isset($_POST['review']))
         }
         return true;
     }
-</script>
-<script>
+
 $(document).on("click", ".sreview", function () {
     var shippingId = $(this).data('id');
     $(".modal-body #shipping_id").val( shippingId );
     $('#sreview').modal('show');
 });
+    
+setInterval(function(){ location.reload(true); }, 300000);
 </script>

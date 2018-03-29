@@ -237,4 +237,6 @@ $(document).on("click", ".editItem", function () {
     $(".modal-body #remark").val( orderItemRemark );
     $('#editItem').modal('show');
 });
+
+setInterval(function(){ location.reload(true); }, 300000);
 </script>

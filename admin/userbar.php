@@ -1,3 +1,5 @@
+<?php
+?>
 <nav class="navbar navbar-default hidden-xs hidden-sm bigbar">
     <div class="navbar-header">
         <a class="navbar-brand" href="#home" id="btnlogo"><img src="../resources/img/logo.png" alt="logo" width="50%"/></a>

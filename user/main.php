@@ -31,7 +31,7 @@ session_start();
     </head>
 
     <body class="userbg">
-        <div class="row">
+        <div class="row" id="usernav">
             <?php include_once "userbar.php" ?>
         </div>
         

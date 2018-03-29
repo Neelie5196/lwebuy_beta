@@ -518,32 +518,32 @@ $result10 = mysqli_query($con, $query10);
     </div>
 </div>
 <script>
-$(document).on("click", ".editRPurchase", function () {
-    var orderItemId = $(this).data('id');
-    var orderItemName = $(this).data('name');
-    var orderItemLink = $(this).data('link');
-    var orderItemCategory = $(this).data('category');
-    var orderItemQuantity = $(this).data('quantity');
-    var orderItemRemark = $(this).data('remark');
-    $(".modal-body #orderItemId").val( orderItemId );
-    $(".modal-body #name").val( orderItemName );
-    $(".modal-body #link").val( orderItemLink );
-    $(".modal-body #category").val( orderItemCategory );
-    $(".modal-body #quantity").val( orderItemQuantity );
-    $(".modal-body #remark").val( orderItemRemark );
-    $('#editRPurchase').modal('show');
-});
-</script>
-<script>
-$(document).on("click", ".editPPurchase", function () {
-    var orderItemId = $(this).data('id');
-    var orderItemQuantity = $(this).data('quantity');
-    $(".modal-body #orderItemId").val( orderItemId );
-    $(".modal-body #quantity").val( orderItemQuantity );
-    $('#editPPurchase').modal('show');
-});
-</script>
-<script>
+    $(document).on("click", ".editRPurchase", function () {
+        var orderItemId = $(this).data('id');
+        var orderItemName = $(this).data('name');
+        var orderItemLink = $(this).data('link');
+        var orderItemCategory = $(this).data('category');
+        var orderItemQuantity = $(this).data('quantity');
+        var orderItemRemark = $(this).data('remark');
+        $(".modal-body #orderItemId").val( orderItemId );
+        $(".modal-body #name").val( orderItemName );
+        $(".modal-body #link").val( orderItemLink );
+        $(".modal-body #category").val( orderItemCategory );
+        $(".modal-body #quantity").val( orderItemQuantity );
+        $(".modal-body #remark").val( orderItemRemark );
+        $('#editRPurchase').modal('show');
+    });
+
+    $(document).on("click", ".editPPurchase", function () {
+        var orderItemId = $(this).data('id');
+        var orderItemQuantity = $(this).data('quantity');
+        $(".modal-body #orderItemId").val( orderItemId );
+        $(".modal-body #quantity").val( orderItemQuantity );
+        $('#editPPurchase').modal('show');
+    });
+    
+    setInterval(function(){ location.reload(true); }, 300000);
+
     /*Validate*/
     function val(){
         var items = document.getElementsByName('order_item[]');

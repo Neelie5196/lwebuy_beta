@@ -899,3 +899,42 @@ body {
 .tbltag td {
     padding-right: 80px;
 }
+
+.notify {
+    color: #fff;
+    background: #f26522;
+    padding: 3%;
+    margin-left: 5%;
+    border-radius: 30%;
+}
+
+.admainrow1 {
+    margin-top: 5%;
+}
+
+.trackfield, .trackfield:focus {
+    margin-top: 5%;
+    width: 80%;
+    background: none!important;
+    border: solid 2px #2f9142;
+    color: #8bb836;
+    outline: none!important;
+    padding: 1%;
+}
+
+.trackfield::placeholder {
+    color: #8bb836;
+}
+
+.bigtrackh2 {
+    color: #2f9142;
+    font-weight: bold;
+}
+
+.track {
+    color: #2f9142;
+}
+
+.tracktable {
+    width: 100%!important;
+}

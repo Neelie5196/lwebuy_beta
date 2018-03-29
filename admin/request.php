@@ -28,7 +28,7 @@ if(isset($_POST['approve']))
     
     ?>
     <script>
-    alert('Success to Update');
+    alert('Requests approved');
     window.location.href='main.php#adrequest';
     </script>
     <?php

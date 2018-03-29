@@ -47,37 +47,9 @@ $(document).ready(function(){
             {
                 $("#mainview").load('warehouse.php');
             }
-        else if (window.location.hash == "#uinventory")
+        else if (window.location.hash == "#track")
             {
-                $("#updateview").load('uinventory.php');
-            }
-        else if (window.location.hash == "#registers")
-            {
-                $("#updateview").load('registers.php');
-            }
-        else if (window.location.hash == "#checkin")
-            {
-                $("#updateview").load('checkin.php');
-            }
-        else if (window.location.hash == "#designation")
-            {
-                $("#updateview").load('designation.php');
-            }
-        else if (window.location.hash == "#arrival")
-            {
-                $("#updateview").load('arrival.php');
-            }
-        else if (window.location.hash == "#departure")
-            {
-                $("#updateview").load('departure.php');
-            }
-        else if (window.location.hash == "#despatch")
-            {
-                $("#updateview").load('despatch.php');
-            }
-        else if (window.location.hash == "#delivered")
-            {
-                $("#updateview").load('delivered.php');
+                $("#mainview").load('tracking.php');
             }
         else
             {
@@ -178,6 +150,12 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("#btnadwarehouse").click(function(){
         $("#mainview").load('warehouse.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btntrack").click(function(){
+        $("#mainview").load('tracking.php');
     });
 });
 

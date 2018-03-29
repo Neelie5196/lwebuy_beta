@@ -18,6 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         if ( $result->num_rows == 0 )
         {
             $_SESSION['message'] = "User does not exist!";
+            ?>
+
+            <script>
+            alert('Invalid user');
+            window.location.href='login.php?fail';
+            </script>
+
+        <?php
+                
         }
         else
         {

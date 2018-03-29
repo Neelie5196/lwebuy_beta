@@ -456,59 +456,103 @@ body {
     font-size: 150%!important;
 }
 
-.userbar > div {
+.bigbar > div {
     width: 10%;
     margin-left: 1%;
 }
 
-.useritem {
+.bigbar .useritem {
     width: 12%;
 }
 
-.userbar .menuitem {
+.bigbar .menuitem {
     margin: 0 auto;
     width: 74%;
 }
 
-.userbar li {
+.bigbar li {
     float: none;
     display:inline-block;
     vertical-align: middle;
     margin: 0 2%; 
 }
 
-.userbar > ul > li > a {
+.bigbar > ul > li > a {
     color: #8bb836!important;
     font-weight: bold;
 }
 
-.userbar > ul > li > a:hover {
+.bigbar > ul > li > a:hover {
     color: #2f9142!important;
 }
 
-.userbar {
+.bigbar {
     background: none!important;
     border-bottom: solid 2px #2f9142;
     margin-bottom: 0.5%;
 }
 
-.userbar .navbar-right {
+.bigbar .navbar-right {
     margin-right: 2%;
 }
 
-.userbar .glyphicon {
+.bigbar .glyphicon {
     color: #8bb836!important;
     font-size: 110%;
 }
 
-.userbar .glyphicon:hover {
+.bigbar .glyphicon:hover {
     color: #2f9142!important;
 }
 
-.userbar .glyphicon-user {
+.bigbar .glyphicon-user {
     margin-right: 0!important;
     border-right: none!important;
     padding-right: 0!important;
+}
+
+#myNavbar {
+    margin-left: 2%;
+}
+
+.navbar-toggle, .navbar-toggle:active, .navbar-toggle:visited, .navbar-toggle:focus {
+    border-color: #8bb836!important;
+    background: none!important;
+}
+
+.navbar-toggle:hover {
+    background: #8bb836!important;
+}
+
+.navbar-toggle:hover .icon-bar {
+    background: #fff!important;
+}
+
+.icon-bar {
+    background: #8bb836!important;
+}
+
+.smbar .menuitem {
+    margin: 0 auto;
+}
+
+.smbar > div > ul > li > a {
+    color: #8bb836!important;
+    font-weight: bold;
+}
+
+.smbar > div > ul > li > a:hover {
+    color: #2f9142!important;
+}
+
+.smbar {
+    background: none!important;
+    border-bottom: solid 2px #2f9142;
+    margin-bottom: 0.5%;
+}
+
+.smbar .navbar-brand {
+    width: 80%;
 }
 
 .userrow4 {

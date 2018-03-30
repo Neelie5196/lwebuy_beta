@@ -80,8 +80,3 @@ session_start();
         </div>
     </div>
 </div>
-
-
-<script>
-    setInterval(function(){ location.reload(true); }, 300000);
-</script>

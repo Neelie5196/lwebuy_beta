@@ -35,47 +35,47 @@ $count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_row
 
 <nav class="navbar navbar-default hidden-xs hidden-sm bigbar">
     <div class="navbar-header">
-        <a class="navbar-brand" href="#home" id="btnlogo"><img src="../resources/img/logo.png" alt="logo" width="50%"/></a>
+        <a class="navbar-brand" href="#home" id="btnlogo" onclick="resettimeoutimer()"><img src="../resources/img/logo.png" alt="logo" width="50%"/></a>
     </div>
     
     <ul class="nav navbar-nav center menuitem">
-        <li><a href="#home" id="btnhome">Home</a></li>
-        <li><a href="#adrequest" id="btnadrequest">Requests<?php if ($count > 0) { ?><span class="notify"><?php echo $count ?></span><?php } ?></a></li>
-        <li><a href="#adpayment" id="btnadpayment">Payments<?php if ($count1 > 0) { ?><span class="notify"><?php echo $count1 ?></span><?php } ?></a></li>
-        <li><a href="#adwarehouse" id="btnadwarehouse">Warehouse</a></li>
-        <li><a href="#adupdate" id="btnadupdate">Updates</a></li>
-        <li><a href="#adaccount" id="btnadaccount">Accounts</a></li>
-        <li><a href="#adreview" id="btnadreview">Reviews</a></li>
+        <li><a href="#home" id="btnhome" onclick="resettimeoutimer()">Home</a></li>
+        <li><a href="#adrequest" id="btnadrequest" onclick="resettimeoutimer()">Requests<?php if ($count > 0) { ?><span class="notify"><?php echo $count ?></span><?php } ?></a></li>
+        <li><a href="#adpayment" id="btnadpayment" onclick="resettimeoutimer()">Payments<?php if ($count1 > 0) { ?><span class="notify"><?php echo $count1 ?></span><?php } ?></a></li>
+        <li><a href="#adwarehouse" id="btnadwarehouse" onclick="resettimeoutimer()">Warehouse</a></li>
+        <li><a href="#adupdate" id="btnadupdate" onclick="resettimeoutimer()">Updates</a></li>
+        <li><a href="#adaccount" id="btnadaccount" onclick="resettimeoutimer()">Accounts</a></li>
+        <li><a href="#adreview" id="btnadreview" onclick="resettimeoutimer()">Reviews</a></li>
     </ul>
 
     <ul class="nav navbar-nav navbar-right useritem right">
-        <li><a id="btnuser" href="#user"><span class="glyphicon glyphicon-user"></span></a></li>
-        <li><a href="../logout.php"><span class="glyphicon glyphicon-log-out"></span></a></li>
+        <li><a id="btnuser" href="#user" onclick="resettimeoutimer()"><span class="glyphicon glyphicon-user"></span></a></li>
+        <li><a href="../logout.php" onclick="resettimeoutimer()"><span class="glyphicon glyphicon-log-out"></span></a></li>
     </ul>
 </nav>
 
 <nav class="navbar navbar-default hidden-lg hidden-md smbar">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" onclick="resettimeoutimer()">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>                        
         </button>
         
-        <a class="navbar-brand" href="#home" id="btnlogo"><img src="../resources/img/logo.png" alt="logo" width="10%"/></a>
+        <a class="navbar-brand" href="#home" id="btnlogo" onclick="resettimeoutimer()"><img src="../resources/img/logo.png" alt="logo" width="10%"/></a>
     </div>
     
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-            <li><a href="#home" id="btnhome">Home</a></li>
-            <li><a href="#adrequest" id="btnadrequest">Requests</a></li>
-            <li><a href="#adpayment" id="btnadpayment">Payments</a></li>
-            <li><a href="#adwarehouse" id="btnadwarehouse">Warehouse</a></li>
-            <li><a href="#adupdate" id="btnadupdate">Updates</a></li>
-            <li><a href="#adaccount" id="btnadaccount">Accounts</a></li>
-            <li><a href="#adreview" id="btnadreview">Reviews</a></li>
+            <li><a href="#home" id="btnhome" onclick="resettimeoutimer()">Home</a></li>
+            <li><a href="#adrequest" id="btnadrequest" onclick="resettimeoutimer()">Requests</a></li>
+            <li><a href="#adpayment" id="btnadpayment" onclick="resettimeoutimer()">Payments</a></li>
+            <li><a href="#adwarehouse" id="btnadwarehouse" onclick="resettimeoutimer()">Warehouse</a></li>
+            <li><a href="#adupdate" id="btnadupdate" onclick="resettimeoutimer()">Updates</a></li>
+            <li><a href="#adaccount" id="btnadaccount" onclick="resettimeoutimer()">Accounts</a></li>
+            <li><a href="#adreview" id="btnadreview" onclick="resettimeoutimer()">Reviews</a></li>
         
-            <li><a id="btnuser" href="#user">My Account</a></li>
+            <li><a id="btnuser" href="#user" onclick="resettimeoutimer()">My Account</a></li>
         <li><a href="../logout.php">Log Out</a></li>
         </ul>
     </div>

@@ -193,7 +193,7 @@ function funcPPayment() {
 
 function funcPInsuff() {
     document.getElementById("prequest").style.display = "none";
-    document.getElementById("ppayment").style.display = "block";
+    document.getElementById("ppayment").style.display = "none";
     document.getElementById("pinsuff").style.display = "block";
     document.getElementById("pproceed").style.display = "none";
     document.getElementById("preceive").style.display = "none";

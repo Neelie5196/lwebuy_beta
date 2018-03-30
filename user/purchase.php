@@ -407,7 +407,7 @@ $result11 = mysqli_query($con, $query11);
                         }else{
                             ?>
                                 <tr>
-                                    <td colspan="8">No top-up payment request.</td>
+                                    <td colspan="8">No insufficient payments made.</td>
                                 </tr>
                             <?php
                         }
@@ -593,7 +593,6 @@ $(document).on("click", ".editPPurchase", function () {
     $(".modal-body #quantity").val( orderItemQuantity );
     $('#editPPurchase').modal('show');
 });
-    setInterval(function(){ location.reload(true); }, 300000);
     
     /*Validate*/
     function val(){
@@ -616,3 +615,4 @@ $(document).on("click", ".editPPurchase", function () {
         return true;
     }
 </script>
+

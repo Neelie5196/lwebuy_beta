@@ -59,6 +59,7 @@ $query8 = "SELECT *
            GROUP BY s.payment_id";
 $result8 = mysqli_query($con, $query8);
 ?>
+
  <div class="col-xs-12 col-md-12 col-lg-12">
     <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Shipping</h2>
     

@@ -28,9 +28,10 @@ session_start();
         <![endif]-->
         
         <script src="../frameworks/js/lwe.js"></script>
+        <script src="../frameworks/js/refresh.js"></script>
     </head>
 
-    <body class="userbg">
+    <body class="userbg" onload="timeouttimer()">
         <div class="row" id="usernav">
             <?php include_once "userbar.php" ?>
         </div>
@@ -38,5 +39,7 @@ session_start();
         <div class="row userrow2 center" id="mainview">
             
         </div>
+        
+        
     </body>
 </html>

@@ -368,17 +368,8 @@ if(isset($_POST['declinepayment']))
                             <p class="right">
                                 <a href="main.php#adpayment" class="btn btn-secondary btnCancel btnmargin">Cancel</a>
                                 <input type="submit" class="btn btn-success btnSend btnmargin" name="proceed" value="Proceed" />
-                                <?php
-                                    if(mysqli_num_rows($result11) > 0){
-                                        ?>
-                                            <a class="btn btnmargin btn-danger" href="#declinePPayment" data-toggle="modal">Decline</a>
-                                        <?php
-                                    }else{
-                                        ?>
-                                            <a class="btn btnDecline btnmargin" href="#topupPPayment" data-toggle="modal">Top-up</a>
-                                        <?php
-                                    }
-                                ?>
+                                <a class="btn btnDecline btnmargin" href="#topupPPayment" data-toggle="modal">Top-up</a>
+                                <a class="btn btnmargin btn-danger" href="#declinePPayment" data-toggle="modal">Decline</a>
                             </p>
                         </div>
                     </div>

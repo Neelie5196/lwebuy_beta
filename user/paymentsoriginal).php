@@ -65,7 +65,7 @@ if(isset($_POST['submit']))
     
 	$result5 = mysqli_query($con, "UPDATE item SET payment_id='$payment_id' WHERE item_id IN (".implode(',',$item).")") or die(mysqli_error($con));
     
-    $result12 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', receipient_name='$rname', 	receipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$totalpay', status='$status', payment_id='$payment_id'") or die(mysqli_error($con));
+    $result12 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', 	recipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$totalpay', status='$status', payment_id='$payment_id'") or die(mysqli_error($con));
     
 	if(move_uploaded_file($file_loc,$folder.$final_file))
 	{
@@ -96,7 +96,7 @@ if(isset($_POST['point_pay']))
     
     $result7 = mysqli_query($con, "UPDATE item SET payment_id='$payment_id' WHERE item_id IN (".implode(',',$item).")") or die(mysqli_error($con));
     
-    $result13 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', receipient_name='$rname', 	receipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$point_pay $points', status='$status', payment_id='$payment_id'") or die(mysqli_error($con));
+    $result13 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', 	recipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$point_pay $points', status='$status', payment_id='$payment_id'") or die(mysqli_error($con));
     
     $result8 = mysqli_query($con, "UPDATE point SET point= point - '$point_pay' WHERE user_id = '$user_id' ") or die(mysqli_error($con));
     $result9 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id',user_id='$user_id', title='$title $points', amount='$point_pay $points', status='$statuss'") or die(mysqli_error($con));

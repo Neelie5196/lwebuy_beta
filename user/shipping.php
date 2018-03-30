@@ -166,8 +166,8 @@ $result8 = mysqli_query($con, $query8);
 
                     <tr class="bodyrow">
                         <td><?php echo $row['shipping_id']; ?></td>
-                        <td><?php echo $row['receipient_name']; ?></td>
-                        <td><?php echo $row['receipient_contact']; ?></td>
+                        <td><?php echo $row['recipient_name']; ?></td>
+                        <td><?php echo $row['recipient_contact']; ?></td>
                         <td><?php echo $results3['address'].', '.$results3['postcode'].', '.$results3['city'].', '.$results3['state']; ?></td>
                         <td><?php echo mysqli_num_rows($result4); ?></td>
                         <td><?php echo $row['weight']; ?></td>
@@ -270,8 +270,8 @@ $result8 = mysqli_query($con, $query8);
 
                     <tr class="bodyrow">
                         <td><?php echo $row['shipping_id']; ?></td>
-                        <td><?php echo $row['receipient_name']; ?></td>
-                        <td><?php echo $row['receipient_contact']; ?></td>
+                        <td><?php echo $row['recipient_name']; ?></td>
+                        <td><?php echo $row['recipient_contact']; ?></td>
                         <td><?php echo $results3['address'].', '.$results3['postcode'].', '.$results3['city'].', '.$results3['state']; ?></td>
                         <td><?php echo mysqli_num_rows($result4); ?></td>
                         <td><?php echo $row['weight']; ?></td>
@@ -335,8 +335,8 @@ $result8 = mysqli_query($con, $query8);
 
                     <tr class="bodyrow">
                         <td><?php echo $row['shipping_id']; ?></td>
-                        <td><?php echo $row['receipient_name']; ?></td>
-                        <td><?php echo $row['receipient_contact']; ?></td>
+                        <td><?php echo $row['recipient_name']; ?></td>
+                        <td><?php echo $row['recipient_contact']; ?></td>
                         <td><?php echo $results3['address'].', '.$results3['postcode'].', '.$results3['city'].', '.$results3['state']; ?></td>
                         <td><?php echo mysqli_num_rows($result4); ?></td>
                         <td><?php echo $row['weight']; ?></td>

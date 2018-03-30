@@ -298,8 +298,8 @@ INSERT INTO `request` (`request_id`, `user_id`, `order_item`, `order_code`, `sta
 CREATE TABLE `shipping` (
   `shipping_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `receipient_name` varchar(50) NOT NULL,
-  `receipient_contact` varchar(15) NOT NULL,
+  `recipient_name` varchar(50) NOT NULL,
+  `recipient_contact` varchar(15) NOT NULL,
   `remark` varchar(255) DEFAULT NULL,
   `address_id` int(11) NOT NULL,
   `weight` decimal(10,2) NOT NULL,
@@ -317,7 +317,7 @@ CREATE TABLE `shipping` (
 -- Dumping data for table `shipping`
 --
 
-INSERT INTO `shipping` (`shipping_id`, `user_id`, `receipient_name`, `receipient_contact`, `remark`, `address_id`, `weight`, `price`, `status`, `datetime`, `tracking_code`, `payment_id`, `review`, `top_up_id`, `destination_station`) VALUES
+INSERT INTO `shipping` (`shipping_id`, `user_id`, `recipient_name`, `recipient_contact`, `remark`, `address_id`, `weight`, `price`, `status`, `datetime`, `tracking_code`, `payment_id`, `review`, `top_up_id`, `destination_station`) VALUES
 (6, 2, 'janice', '121242', '2nd floor', 51, '1.10', '75.00', 'Proceed', '2018-03-29 10:43:28', NULL, 168112, NULL, '5', ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA'),
 (7, 3, 'test', '753265', 'careful', 52, '0.90', '50.00', 'Top-up', '2018-03-29 09:04:41', NULL, 877923, NULL, NULL, ''),
 (8, 2, 'Janice', '7152375', '', 51, '0.30', '50.00', 'Top-up', '2018-03-29 09:13:11', NULL, 512612, NULL, NULL, ''),

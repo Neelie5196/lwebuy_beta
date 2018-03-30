@@ -301,8 +301,8 @@ if(isset($_POST['declinepayment']))
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
                         <table class="purchasetable">
-                            <p>Receipient Name : <?php echo $results1['receipient_name']; ?></p>
-                            <p>Receipient Contact : <?php echo $results1['receipient_contact']; ?></p>
+                            <p>Receipient Name : <?php echo $results1['recipient_name']; ?></p>
+                            <p>Receipient Contact : <?php echo $results1['recipient_contact']; ?></p>
                             <p>Remark : <?php echo $results1['remark']; ?></p>
                             <p>Address : <?php echo $results1['address'].", ".$results1['postcode'].", ".$results1['city'].", ".$results1['state']; ?></p>
                             <p>Country : <?php echo $results1['country']; ?></p>

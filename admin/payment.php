@@ -138,8 +138,8 @@ $result8 = mysqli_query($con, $query8);
                                 ?>
                                 <tr>
                                     <td><?php echo $row['fname']." ".$row['lname']; ?></td>
-                                    <td><?php echo $row['receipient_name']; ?></td>
-                                    <td><?php echo $row['receipient_contact']; ?></td>
+                                    <td><?php echo $row['recipient_name']; ?></td>
+                                    <td><?php echo $row['recipient_contact']; ?></td>
                                     <td><?php echo mysqli_num_rows($result2); ?></td>
                                     <td><?php echo $row['weight']; ?></td>
                                     <td><?php echo $row['price']; ?></td>

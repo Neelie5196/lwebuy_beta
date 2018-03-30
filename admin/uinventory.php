@@ -141,9 +141,18 @@ if(isset($_POST['update']))
                 </script>
 
 <?php
+                }
         }
         
     }
+    ?>
+
+    <script>
+    alert('Inventories updated!');
+    window.location.href='uinventory.php';
+    </script>
+
+<?php
 }
 ?>
 
@@ -214,7 +223,7 @@ if(isset($_POST['update']))
                                     {
                                         ?>
 
-                                <input type="hidden" name="originstation" value="<?php echo $result['station_name']; ?>">
+                                <input type="hidden" name="originstation" value="<?php echo $row['station_name']; ?>">
 
                                 <?php
                                     }

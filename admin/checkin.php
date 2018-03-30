@@ -120,7 +120,7 @@ window.location.href='checkin.php';
                                 {
                                     ?>
                                     
-                            <input type="hidden" name="originstation" value="<?php echo $result1['station_name']; ?>">
+                            <input type="hidden" name="originstation" value="<?php echo $row1['station_name']; ?>">
                             
                             <?php
                                 }

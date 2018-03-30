@@ -2,6 +2,8 @@
 require_once '../connection/config.php';
 session_start();
 
+$user_id = $_SESSION['user_id'];
+
 $query = "SELECT *
            FROM shipping sh
            JOIN address ad
@@ -126,7 +128,7 @@ window.location.href='delivered.php';
                                     {
                                         ?>
 
-                                <input type="hidden" name="originstation" value="<?php echo $result1['station_name']; ?>">
+                                <input type="hidden" name="originstation" value="<?php echo $row1['station_name']; ?>">
 
                                 <?php
                                     }

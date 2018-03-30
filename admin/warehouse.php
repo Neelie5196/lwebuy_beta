@@ -115,9 +115,9 @@ if (isset($_GET['ware_id']))
         <div class="col-xs-12 col-md-12 col-lg-12">
             <table class="tblATab">
                 <tr>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcWPending()">Pending Items</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcWSlot()">Slots Management</button></td>
-                    <td><button class="btn-link btntab" onclick="funcWWarehouse()">Warehouses</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnwpending" onclick="funcWPending()">Pending Items</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnwslot" onclick="funcWSlot()">Slots Management</button></td>
+                    <td><button class="btn-link btntab" id="btnwwarehouse" onclick="funcWWarehouse()">Warehouses</button></td>
                 </tr>
             </table>
         </div>

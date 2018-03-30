@@ -162,115 +162,199 @@ $(document).ready(function(){
 function funcPRequest() {
     document.getElementById("prequest").style.display = "block";
     document.getElementById("ppayment").style.display = "none";
+    document.getElementById("pinsuff").style.display = "none";
     document.getElementById("pproceed").style.display = "none";
     document.getElementById("preceive").style.display = "none";
     document.getElementById("pdecline").style.display = "none";
+    
+    document.getElementById("btnprequest").style.fontWeight = "bold";
+    document.getElementById("btnppayment").style.fontWeight = "normal";
+    document.getElementById("btnpinsuff").style.fontWeight = "normal";
+    document.getElementById("btnpproceed").style.fontWeight = "normal";
+    document.getElementById("btnpreceive").style.fontWeight = "normal";
+    document.getElementById("btnpdecline").style.fontWeight = "normal";
 }
 
 function funcPPayment() {
     document.getElementById("prequest").style.display = "none";
     document.getElementById("ppayment").style.display = "block";
+    document.getElementById("pinsuff").style.display = "none";
     document.getElementById("pproceed").style.display = "none";
     document.getElementById("preceive").style.display = "none";
     document.getElementById("pdecline").style.display = "none";
+    
+    document.getElementById("btnprequest").style.fontWeight = "normal";
+    document.getElementById("btnppayment").style.fontWeight = "bold";
+    document.getElementById("btnpinsuff").style.fontWeight = "normal";
+    document.getElementById("btnpproceed").style.fontWeight = "normal";
+    document.getElementById("btnpreceive").style.fontWeight = "normal";
+    document.getElementById("btnpdecline").style.fontWeight = "normal";
+}
+
+function funcPInsuff() {
+    document.getElementById("prequest").style.display = "none";
+    document.getElementById("ppayment").style.display = "block";
+    document.getElementById("pinsuff").style.display = "block";
+    document.getElementById("pproceed").style.display = "none";
+    document.getElementById("preceive").style.display = "none";
+    document.getElementById("pdecline").style.display = "none";
+    
+    document.getElementById("btnprequest").style.fontWeight = "normal";
+    document.getElementById("btnppayment").style.fontWeight = "normal";
+    document.getElementById("btnpinsuff").style.fontWeight = "bold";
+    document.getElementById("btnpproceed").style.fontWeight = "normal";
+    document.getElementById("btnpreceive").style.fontWeight = "normal";
+    document.getElementById("btnpdecline").style.fontWeight = "normal";
 }
 
 function funcPProceed() {
     document.getElementById("prequest").style.display = "none";
     document.getElementById("ppayment").style.display = "none";
+    document.getElementById("pinsuff").style.display = "none";
     document.getElementById("pproceed").style.display = "block";
     document.getElementById("preceive").style.display = "none";
     document.getElementById("pdecline").style.display = "none";
+    
+    document.getElementById("btnprequest").style.fontWeight = "normal";
+    document.getElementById("btnppayment").style.fontWeight = "normal";
+    document.getElementById("btnpinsuff").style.fontWeight = "normal";
+    document.getElementById("btnpreceive").style.fontWeight = "normal";
+    document.getElementById("btnpproceed").style.fontWeight = "bold";
+    document.getElementById("btnpdecline").style.fontWeight = "normal";
 }
 
 function funcPReceive() {
     document.getElementById("prequest").style.display = "none";
     document.getElementById("ppayment").style.display = "none";
+    document.getElementById("pinsuff").style.display = "none";
     document.getElementById("pproceed").style.display = "none";
     document.getElementById("preceive").style.display = "block";
     document.getElementById("pdecline").style.display = "none";
+    
+    document.getElementById("btnprequest").style.fontWeight = "normal";
+    document.getElementById("btnppayment").style.fontWeight = "normal";
+    document.getElementById("btnpinsuff").style.fontWeight = "normal";
+    document.getElementById("btnpreceive").style.fontWeight = "bold";
+    document.getElementById("btnpproceed").style.fontWeight = "normal";
+    document.getElementById("btnpdecline").style.fontWeight = "normal";
 }
 
 function funcPDecline() {
     document.getElementById("prequest").style.display = "none";
     document.getElementById("ppayment").style.display = "none";
+    document.getElementById("pinsuff").style.display = "none";
     document.getElementById("pproceed").style.display = "none";
     document.getElementById("preceive").style.display = "none";
     document.getElementById("pdecline").style.display = "block";
+    
+    document.getElementById("btnprequest").style.fontWeight = "normal";
+    document.getElementById("btnppayment").style.fontWeight = "normal";
+    document.getElementById("btnpinsuff").style.fontWeight = "normal";
+    document.getElementById("btnpreceive").style.fontWeight = "normal";
+    document.getElementById("btnpproceed").style.fontWeight = "normal";
+    document.getElementById("btnpdecline").style.fontWeight = "bold";
 }
 
 function funcIPending() {
     document.getElementById("ipending").style.display = "block";
     document.getElementById("ireceive").style.display = "none";
+    
+    document.getElementById("btnipending").style.fontWeight = "bold";
+    document.getElementById("btnireceive").style.fontWeight = "normal";
 }
 
 function funcIReceive() {
     document.getElementById("ipending").style.display = "none";
     document.getElementById("ireceive").style.display = "block";
+    
+    document.getElementById("btnipending").style.fontWeight = "normal";
+    document.getElementById("btnireceive").style.fontWeight = "bold";
 }
 
 function funcSItem() {
     document.getElementById("sitem").style.display = "block";
     document.getElementById("srequest").style.display = "none";
-    document.getElementById("spayment").style.display = "none";
+    document.getElementById("sinsuff").style.display = "none";
     document.getElementById("sproceed").style.display = "none";
     document.getElementById("sreceive").style.display = "none";
-    document.getElementById("sdevline").style.display = "none";
+    
+    document.getElementById("btnsitem").style.fontWeight = "bold";
+    document.getElementById("btnsrequest").style.fontWeight = "normal";
+    document.getElementById("btnsinsuff").style.fontWeight = "normal";
+    document.getElementById("btnsproceed").style.fontWeight = "normal";
+    document.getElementById("btnsreceive").style.fontWeight = "normal";
 }
 
 function funcSRequest() {
     document.getElementById("sitem").style.display = "none";
     document.getElementById("srequest").style.display = "block";
-    document.getElementById("spayment").style.display = "none";
+    document.getElementById("sinsuff").style.display = "none";
     document.getElementById("sproceed").style.display = "none";
     document.getElementById("sreceive").style.display = "none";
-    document.getElementById("sdevline").style.display = "none";
+    
+    document.getElementById("btnsitem").style.fontWeight = "normal";
+    document.getElementById("btnsrequest").style.fontWeight = "bold";
+    document.getElementById("btnsinsuff").style.fontWeight = "normal";
+    document.getElementById("btnsproceed").style.fontWeight = "normal";
+    document.getElementById("btnsreceive").style.fontWeight = "normal";
 }
 
-function funcSPayment() {
+function funcSInsuff() {
     document.getElementById("sitem").style.display = "none";
     document.getElementById("srequest").style.display = "none";
-    document.getElementById("spayment").style.display = "block";
+    document.getElementById("sinsuff").style.display = "block";
     document.getElementById("sproceed").style.display = "none";
     document.getElementById("sreceive").style.display = "none";
-    document.getElementById("sdevline").style.display = "none";
+
+    document.getElementById("btnsitem").style.fontWeight = "normal";
+    document.getElementById("btnsrequest").style.fontWeight = "normal";
+    document.getElementById("btnsinsuff").style.fontWeight = "bold";
+    document.getElementById("btnsproceed").style.fontWeight = "normal";
+    document.getElementById("btnsreceive").style.fontWeight = "normal";
 }
 
 function funcSProceed() {
     document.getElementById("sitem").style.display = "none";
     document.getElementById("srequest").style.display = "none";
-    document.getElementById("spayment").style.display = "none";
+    document.getElementById("sinsuff").style.display = "none";
     document.getElementById("sproceed").style.display = "block";
     document.getElementById("sreceive").style.display = "none";
-    document.getElementById("sdevline").style.display = "none";
+
+    document.getElementById("btnsitem").style.fontWeight = "normal";
+    document.getElementById("btnsrequest").style.fontWeight = "normal";
+    document.getElementById("btnsinsuff").style.fontWeight = "normal";
+    document.getElementById("btnsproceed").style.fontWeight = "bold";
+    document.getElementById("btnsreceive").style.fontWeight = "normal";
 }
 
 function funcSReceive() {
     document.getElementById("sitem").style.display = "none";
     document.getElementById("srequest").style.display = "none";
-    document.getElementById("spayment").style.display = "none";
+    document.getElementById("sinsuff").style.display = "none";
     document.getElementById("sproceed").style.display = "none";
     document.getElementById("sreceive").style.display = "block";
-    document.getElementById("sdevline").style.display = "none";
-}
 
-function funcSDecline() {
-    document.getElementById("sitem").style.display = "none";
-    document.getElementById("srequest").style.display = "none";
-    document.getElementById("spayment").style.display = "none";
-    document.getElementById("sproceed").style.display = "none";
-    document.getElementById("sreceive").style.display = "none";
-    document.getElementById("sdecline").style.display = "block";
+    document.getElementById("btnsitem").style.fontWeight = "normal";
+    document.getElementById("btnsrequest").style.fontWeight = "normal";
+    document.getElementById("btnsinsuff").style.fontWeight = "normal";
+    document.getElementById("btnsproceed").style.fontWeight = "normal";
+    document.getElementById("btnsreceive").style.fontWeight = "bold";
 }
 
 function funcCRequest() {
     document.getElementById("crequest").style.display = "block";
     document.getElementById("chistory").style.display = "none";
+    
+    document.getElementById("btncrequest").style.fontWeight = "bold";
+    document.getElementById("btnchistory").style.fontWeight = "normal";
 }
 
 function funcCHistory() {
     document.getElementById("crequest").style.display = "none";
     document.getElementById("chistory").style.display = "block";
+
+    document.getElementById("btncrequest").style.fontWeight = "normal";
+    document.getElementById("btnchistory").style.fontWeight = "bold";
 }
 
 function funcShowChgPassword() {
@@ -324,89 +408,149 @@ function funcTrans() {
 }
 
 function funcRPurchase() {
-    document.getElementById("rpurchase").style.display ="block";
-    document.getElementById("rhistory").style.display ="none";
+    document.getElementById("rpurchase").style.display = "block";
+    document.getElementById("rhistory").style.display = "none";
+    
+    document.getElementById("btnrpurchase").style.fontWeight = "bold";
+    document.getElementById("btnrhistory").style.fontWeight = "normal";
 }
 
 function funcRHistory() {
     document.getElementById("rpurchase").style.display ="none";
     document.getElementById("rhistory").style.display ="block";
+    
+    document.getElementById("btnrpurchase").style.fontWeight = "normal";
+    document.getElementById("btnrhistory").style.fontWeight = "bold";
 }
 
 function funcWPending() {
     document.getElementById("wpending").style.display = "block";
     document.getElementById("wslot").style.display = "none";
     document.getElementById("wwarehouse").style.display = "none";
+    
+    document.getElementById("btnwpending").style.fontWeight = "bold";
+    document.getElementById("btnwslot").style.fontWeight = "normal";
+    document.getElementById("btnwwarehouse").style.fontWeight = "normal";
 }
 
 function funcWSlot() {
     document.getElementById("wpending").style.display = "none";
     document.getElementById("wslot").style.display = "block";
     document.getElementById("wwarehouse").style.display = "none";
+    
+    document.getElementById("btnwpending").style.fontWeight = "normal";
+    document.getElementById("btnwslot").style.fontWeight = "bold";
+    document.getElementById("btnwwarehouse").style.fontWeight = "normal";
 }
 
 function funcWWarehouse() {
     document.getElementById("wpending").style.display = "none";
     document.getElementById("wslot").style.display = "none";
     document.getElementById("wwarehouse").style.display = "block";
+    
+    document.getElementById("btnwpending").style.fontWeight = "normal";
+    document.getElementById("btnwslot").style.fontWeight = "normal";
+    document.getElementById("btnwwarehouse").style.fontWeight = "bold";
 }
 
 function funcAAdmin() {
     document.getElementById("aadmin").style.display = "block";
     document.getElementById("astaff").style.display = "none";
     document.getElementById("acustomer").style.display = "none";
+    
+    document.getElementById("btnaadmin").style.fontWeight = "bold";
+    document.getElementById("btnastaff").style.fontWeight = "normal";
+    document.getElementById("btnacustomer").style.fontWeight = "normal";
 }
 
 function funcAStaff() {
     document.getElementById("aadmin").style.display = "none";
     document.getElementById("astaff").style.display = "block";
     document.getElementById("acustomer").style.display = "none";
+    
+    document.getElementById("btnaadmin").style.fontWeight = "normal";
+    document.getElementById("btnastaff").style.fontWeight = "bold";
+    document.getElementById("btnacustomer").style.fontWeight = "normal";
 }
 
 function funcACustomer() {
     document.getElementById("aadmin").style.display = "none";
     document.getElementById("astaff").style.display = "none";
     document.getElementById("acustomer").style.display = "block";
+    
+    document.getElementById("btnaadmin").style.fontWeight = "normal";
+    document.getElementById("btnastaff").style.fontWeight = "normal";
+    document.getElementById("btnacustomer").style.fontWeight = "bold";
 }
 
 function funcPPurchase() {
     document.getElementById("ppurchase").style.display = "block";
     document.getElementById("pship").style.display = "none";
     document.getElementById("pcredit").style.display ="none";
-    document.getElementById("phistory").style.display = "none";
     document.getElementById("poutstand").style.display = "none";
+    document.getElementById("phistory").style.display = "none";
+    
+    document.getElementById("btnppurchase").style.fontWeight = "bold";
+    document.getElementById("btnpship").style.fontWeight = "normal";
+    document.getElementById("btnpcredit").style.fontWeight = "normal";
+    document.getElementById("btnpoutstand").style.fontWeight = "normal";
+    document.getElementById("btnphistory").style.fontWeight = "normal";
 }
 
 function funcPShip() {
     document.getElementById("ppurchase").style.display = "none";
     document.getElementById("pship").style.display = "block";
     document.getElementById("pcredit").style.display ="none";
-    document.getElementById("phistory").style.display = "none";
     document.getElementById("poutstand").style.display = "none";
+    document.getElementById("phistory").style.display = "none";
+    
+    document.getElementById("btnppurchase").style.fontWeight = "normal";
+    document.getElementById("btnpship").style.fontWeight = "bold";
+    document.getElementById("btnpcredit").style.fontWeight = "normal";
+    document.getElementById("btnpoutstand").style.fontWeight = "normal";
+    document.getElementById("btnphistory").style.fontWeight = "normal";
 }
 
 function funcPCredit() {
     document.getElementById("ppurchase").style.display = "none";
     document.getElementById("pship").style.display = "none";
     document.getElementById("pcredit").style.display ="block";
+    document.getElementById("poutstand").style.display = "none";
     document.getElementById("phistory").style.display = "none";
-    document.getElementById("poutstand").style.display = "none";
-}
-
-function funcPHistory() {
-    document.getElementById("ppurchase").style.display = "none";
-    document.getElementById("pship").style.display = "none";
-    document.getElementById("pcredit").style.display ="none";
-    document.getElementById("phistory").style.display = "block";
-    document.getElementById("poutstand").style.display = "none";
+    
+    document.getElementById("btnppurchase").style.fontWeight = "normal";
+    document.getElementById("btnpship").style.fontWeight = "normal";
+    document.getElementById("btnpcredit").style.fontWeight = "bold";
+    document.getElementById("btnpoutstand").style.fontWeight = "normal";
+    document.getElementById("btnphistory").style.fontWeight = "normal";
 }
 
 function funcPOutstand() {
     document.getElementById("ppurchase").style.display = "none";
     document.getElementById("pship").style.display = "none";
     document.getElementById("pcredit").style.display ="none";
-    document.getElementById("phistory").style.display = "none";
     document.getElementById("poutstand").style.display = "block";
+    document.getElementById("phistory").style.display = "none";
+    
+    document.getElementById("btnppurchase").style.fontWeight = "normal";
+    document.getElementById("btnpship").style.fontWeight = "normal";
+    document.getElementById("btnpcredit").style.fontWeight = "normal";
+    document.getElementById("btnpoutstand").style.fontWeight = "bold";
+    document.getElementById("btnphistory").style.fontWeight = "normal";
+}
+
+function funcPHistory() {
+    document.getElementById("ppurchase").style.display = "none";
+    document.getElementById("pship").style.display = "none";
+    document.getElementById("pcredit").style.display ="none";
+    document.getElementById("poutstand").style.display = "none";
+    document.getElementById("phistory").style.display = "block";
+    
+    document.getElementById("btnppurchase").style.fontWeight = "normal";
+    document.getElementById("btnpship").style.fontWeight = "normal";
+    document.getElementById("btnpcredit").style.fontWeight = "normal";
+    document.getElementById("btnpoutstand").style.fontWeight = "normal";
+    document.getElementById("btnphistory").style.fontWeight = "bold";
 }
 
 function checkPass() {

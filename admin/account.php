@@ -132,9 +132,9 @@ $result15 = mysqli_query($con, $query15);
         <div class="col-xs-12 col-md-12 col-lg-12">
             <table class="tblATab">
                 <tr>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcAAdmin()">Admins</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcAStaff()">Staffs</button></td>
-                    <td><button class="btn-link btntab" onclick="funcACustomer()">Customers</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnaadmin" onclick="funcAAdmin()">Admins</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnastaff" onclick="funcAStaff()">Staffs</button></td>
+                    <td><button class="btn-link btntab" id="btnacustomer" onclick="funcACustomer()">Customers</button></td>
                 </tr>
             </table>
         </div>

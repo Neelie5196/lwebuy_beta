@@ -65,11 +65,11 @@ $result8 = mysqli_query($con, $query8);
         <div class="col-xs-12 col-md-12 col-lg-12">
             <table class="tblATab">
                 <tr>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcPPurchase()">Purchases</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcPShip()">Shipping</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcPCredit()">Credit Reload</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcPOutstand()">Payments for Outstanding Fees</button></td>
-                    <td><button class="btn-link btntab" onclick="funcPHistory()">History</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnppurchase" onclick="funcPPurchase()">Purchases</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpship" onclick="funcPShip()">Shipping</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpcredit" onclick="funcPCredit()">Credit Reload</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpoutstand" onclick="funcPOutstand()">Payments for Outstanding Fees</button></td>
+                    <td><button class="btn-link btntab" id="btnphistory" onclick="funcPHistory()">History</button></td>
                 </tr>
             </table>
         </div>
@@ -161,75 +161,6 @@ $result8 = mysqli_query($con, $query8);
             </div>
         </div>
         
-        <div id="poutstand">
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                <table class="purchasetable">
-                    <tr class="center">
-                        <th>Customer</th>
-                        <th>Payment ID</th>
-                        <th>Total Price (RM)</th>
-                        <th>Paid Price (RM)</th>
-                        <th>Top-up Price (RM)</th>
-                        <th>Reason</th>
-                    </tr>
-                    <?php 
-                        if(mysqli_num_rows($result6) > 0)
-                        {
-                            while($row = mysqli_fetch_array($result6))
-                            {
-                                $payment_id = $row['payment_id'];
-                                $query7 = "SELECT * FROM top_up WHERE payment_id='$payment_id'";
-                                $result7 = mysqli_query($con, $query7);
-                                $results7 = mysqli_fetch_assoc($result7);
-                                ?>
-                                <tr>
-                                    <td><?php echo $row['fname']." ".$row['lname']; ?></td>
-                                    <td><?php echo $row['payment_id']; ?></td>
-                                    <td><?php echo $row['amount']; ?></td>
-                                    <td><?php echo $results7['paid_amount']; ?></td>
-                                    <td><?php echo $results7['top_up_amount']; ?></td>
-                                    <td><?php echo $results7['top_up_reason']; ?></td>
-                                </tr>
-                                <?php
-                            }
-                        }
-                    ?>
-                
-                    <?php 
-                        if(mysqli_num_rows($result8) > 0)
-                        {
-                            while($row = mysqli_fetch_array($result8))
-                            {
-                                $payment_id = $row['payment_id'];
-                                $query9 = "SELECT * FROM top_up WHERE payment_id='$payment_id'";
-                                $result9 = mysqli_query($con, $query9);
-                                $results9 = mysqli_fetch_assoc($result9);
-                                ?>
-                                <tr>
-                                    <td><?php echo $row['fname']." ".$row['lname']; ?></td>
-                                    <td><?php echo $row['payment_id']; ?></td>
-                                    <td><?php echo $row['amount']; ?></td>
-                                    <td><?php echo $results9['paid_amount']; ?></td>
-                                    <td><?php echo $results9['top_up_amount']; ?></td>
-                                    <td><?php echo $results9['top_up_reason']; ?></td>
-                                </tr>
-                                <?php
-                            }
-                        }
-                        
-                        if(mysqli_num_rows($result6) == 0 && mysqli_num_rows($result8) == 0)
-                        {
-                   ?>
-                    <tr>
-                        <td colspan="6">No payments for outstanding fees.</td>
-                    </tr>
-                    <?php
-                        }
-                    ?>
-                </table>
-            </div>
-        </div>
-        
         <div id="pcredit">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
@@ -310,6 +241,75 @@ $result8 = mysqli_query($con, $query8);
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+        
+        <div id="poutstand">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <table class="purchasetable">
+                    <tr class="center">
+                        <th>Customer</th>
+                        <th>Payment ID</th>
+                        <th>Total Price (RM)</th>
+                        <th>Paid Price (RM)</th>
+                        <th>Top-up Price (RM)</th>
+                        <th>Reason</th>
+                    </tr>
+                    <?php 
+                        if(mysqli_num_rows($result6) > 0)
+                        {
+                            while($row = mysqli_fetch_array($result6))
+                            {
+                                $payment_id = $row['payment_id'];
+                                $query7 = "SELECT * FROM top_up WHERE payment_id='$payment_id'";
+                                $result7 = mysqli_query($con, $query7);
+                                $results7 = mysqli_fetch_assoc($result7);
+                                ?>
+                                <tr>
+                                    <td><?php echo $row['fname']." ".$row['lname']; ?></td>
+                                    <td><?php echo $row['payment_id']; ?></td>
+                                    <td><?php echo $row['amount']; ?></td>
+                                    <td><?php echo $results7['paid_amount']; ?></td>
+                                    <td><?php echo $results7['top_up_amount']; ?></td>
+                                    <td><?php echo $results7['top_up_reason']; ?></td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                    ?>
+                
+                    <?php 
+                        if(mysqli_num_rows($result8) > 0)
+                        {
+                            while($row = mysqli_fetch_array($result8))
+                            {
+                                $payment_id = $row['payment_id'];
+                                $query9 = "SELECT * FROM top_up WHERE payment_id='$payment_id'";
+                                $result9 = mysqli_query($con, $query9);
+                                $results9 = mysqli_fetch_assoc($result9);
+                                ?>
+                                <tr>
+                                    <td><?php echo $row['fname']." ".$row['lname']; ?></td>
+                                    <td><?php echo $row['payment_id']; ?></td>
+                                    <td><?php echo $row['amount']; ?></td>
+                                    <td><?php echo $results9['paid_amount']; ?></td>
+                                    <td><?php echo $results9['top_up_amount']; ?></td>
+                                    <td><?php echo $results9['top_up_reason']; ?></td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                        
+                        if(mysqli_num_rows($result6) == 0 && mysqli_num_rows($result8) == 0)
+                        {
+                   ?>
+                    <tr>
+                        <td colspan="6">No payments for outstanding fees.</td>
+                    </tr>
+                    <?php
+                        }
+                    ?>
+                </table>
             </div>
         </div>
         

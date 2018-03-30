@@ -104,7 +104,7 @@ $query11 = "SELECT *
            FROM order_item oi
            JOIN top_up tu
            ON tu.payment_id = oi.payment_id
-           WHERE user_id='$user_id' AND status = 'top-up'
+           WHERE oi.user_id='$user_id' AND status = 'top-up'
            GROUP BY oi.payment_id";
 $result11 = mysqli_query($con, $query11);
 ?>
@@ -119,12 +119,12 @@ $result11 = mysqli_query($con, $query11);
         <div class="col-xs-12 col-md-12 col-lg-12">
             <table class="tblTab">
                 <tr>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcPRequest()">Requests</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcPPayment()">Pending Payments</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcPTopup()">Top-up Request</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcPProceed()">Proceeded</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcPReceive()">Received</button></td>
-                    <td><button class="btn-link btntab" onclick="funcPDecline()">Declined</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnprequest" onclick="funcPRequest()">Requests</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnppayment" onclick="funcPPayment()">Pending Payments</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpinsuff" onclick="funcPInsuff()">Insufficient Payments</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpproceed" onclick="funcPProceed()">Proceeded</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpreceive" onclick="funcPReceive()">Received</button></td>
+                    <td><button class="btn-link btntab" id="btnpdecline" onclick="funcPDecline()">Declined</button></td>
                 </tr>
             </table>
         </div>
@@ -373,7 +373,7 @@ $result11 = mysqli_query($con, $query11);
             </div>
         </div>
         
-        <div id="ptopup">
+        <div id="pinsuff">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
                     <tr class="center">

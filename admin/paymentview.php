@@ -30,13 +30,20 @@ if(isset($_POST['updateordercode']))
         window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
         </script>
         <?php 
+    }else if($results1['status'] == 'Declined'){
+        ?>
+        <script>
+        alert('Payment has been declined!!');
+        window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
+        </script>
+        <?php 
     }else{
         ?>
         <script>
         alert('Please approve the payment before proceed');
         window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
         </script>
-        <?php 
+        <?php
     }
 }
 
@@ -49,6 +56,20 @@ if(isset($_POST['approve']))
     ?>
     <script>
     alert('Success to Update');
+    window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
+    </script>
+    <?php
+}
+
+if(isset($_POST['declinereceipt']))
+{
+    $payment_id = $_POST['payment_id'];
+    $status = 'Declined';
+    
+    $result13 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
+    ?>
+    <script>
+    alert('Payment has been declined');
     window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
     </script>
     <?php
@@ -78,7 +99,7 @@ if(isset($_POST['proceed']))
     }else{
         ?>
         <script>
-        alert(Please update the order code before proceed');
+        alert('Please update the order code before proceed');
         window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
         </script>
         <?php
@@ -138,6 +159,20 @@ if(isset($_POST['approves']))
     ?>
     <script>
     alert('Success to Update');
+    window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
+    </script>
+    <?php
+}
+
+if(isset($_POST['declinereceipts']))
+{
+    $payments_id = $_POST['payments_id'];
+    $status = 'Declined';
+    
+    $result14 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payments_id ") or die(mysqli_error($con));
+    ?>
+    <script>
+    alert('Payment has been declined');
     window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
     </script>
     <?php
@@ -294,7 +329,17 @@ if(isset($_POST['approves']))
                             <p class="right">
                                 <a href="main.php#adpayment" class="btn btn-secondary btnCancel btnmargin">Cancel</a>
                                 <input type="submit" class="btn btn-success btnSend btnmargin" name="proceed" value="Proceed" />
-                                <a class="btn btnDecline btnmargin" href="#topupPPayment" data-toggle="modal">Top-up</a>
+                                <?php
+                                    if(mysqli_num_rows($result11) > 0){
+                                        ?>
+                                            <a class="btn btnmargin btn-danger" href="#declinePPayment" data-toggle="modal">Decline</a>
+                                        <?php
+                                    }else{
+                                        ?>
+                                            <a class="btn btnDecline btnmargin" href="#topupPPayment" data-toggle="modal">Top-up</a>
+                                        <?php
+                                    }
+                                ?>
                             </p>
                         </div>
                     </div>
@@ -317,6 +362,7 @@ if(isset($_POST['approves']))
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-danger" name="declinereceipt" value="Decline" />
                             <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve" />
                         </div>
                     </form>
@@ -339,6 +385,7 @@ if(isset($_POST['approves']))
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-danger" name="declinereceipts" value="Decline" />
                             <input type="submit" class="btn btn-success btnSend" name="approves" value="Approve" />
                         </div>
                     </form>
@@ -380,6 +427,45 @@ if(isset($_POST['approves']))
                             <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
 
                             <input type="submit" class="btn btn-success btnSend" name="topup" value="Submit request" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="declinePPayment" tabindex="-1" role="dialog" aria-labelledby="declinePPaymentTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title center" id="declinePPaymentTitle">Decline Payment</h5>
+                    </div>
+
+                    <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
+                        <div class="modal-body left">
+                            <?php 
+                                if(mysqli_num_rows($result10) > 0)
+                                {
+                                    $counter = 0;
+                                    while($row = mysqli_fetch_array($result10))
+                                    {
+                                        $counter++;
+                                        ?>
+                                            <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">
+                                            <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
+                                        <?php
+                                    }
+
+                                }
+                            ?>
+                            <p><input class="formfield" name="payment_id" type="hidden" value="<?php echo $payment_id ?>" /></p>
+                            <p><input class="formfield" name="refund_amount" type="number" step="0.01" min="0" placeholder="Refund Amount" required /></p>
+                            <p><input class="formfield" name="admin_charge" type="number" step="0.01" min="0.01" placeholder="Admin Charge" required /></p>
+                            <p><input class="formfield" name="refund_reason" type="text" placeholder="Reason" required /></p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+
+                            <input type="submit" class="btn btn-danger" name="declinepayment" value="Decline payment" />
                         </div>
                     </form>
                 </div>

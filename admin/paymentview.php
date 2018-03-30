@@ -26,7 +26,7 @@ if(isset($_POST['updateordercode']))
 
         ?>
         <script>
-        alert('Order in proceed');
+        alert('Success to Update');
         window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
         </script>
         <?php 
@@ -55,7 +55,7 @@ if(isset($_POST['approve']))
     $result3 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
     ?>
     <script>
-    alert('Payment approved');
+    alert('Success to Update');
     window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
     </script>
     <?php

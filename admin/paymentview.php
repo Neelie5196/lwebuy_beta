@@ -111,12 +111,6 @@ $query6 = "SELECT * FROM payment WHERE payment_id='$payment_id'";
 $result6 = mysqli_query($con, $query6);
 $results6 = mysqli_fetch_assoc($result6);
 
-$query7 = "SELECT *
-            FROM payment
-            WHERE payment_id='$payment_id'";
-$result7 = mysqli_query($con, $query7);
-$results7 = mysqli_fetch_assoc($result7);
-
 if(isset($_POST['topup']))
 {
     $payment_id = $_POST['payment_id'];
@@ -178,6 +172,51 @@ if(isset($_POST['declinereceipts']))
     <?php
 }
 
+$query15 = "SELECT *
+           FROM order_item
+           WHERE payment_id='$payment_id'";
+$result15 = mysqli_query($con, $query15);
+
+if(isset($_POST['declinepayment']))
+{   
+    $query7 = "SELECT *
+            FROM payment
+            WHERE payment_id='$payment_id'";
+    $result7 = mysqli_query($con, $query7);
+    $results7 = mysqli_fetch_assoc($result7);
+    
+    if($results7['status'] == 'Declined'){
+        $order_item_id = $_POST['order_item_id'];
+        $user_id = $_POST['user_id'];
+        $total_amount = $_POST['total_amount'];
+        $refund_amount = $_POST['refund_amount'];
+        $admin_charge = $_POST['admin_charge'];
+        $refund_reason = $_POST['refund_reason'];
+        $status = 'Ready to Pay';
+
+        $result7 = mysqli_query($con, "INSERT INTO refund SET user_id='$user_id', total_amount='$total_amount', refund_amount='$refund_amount', admin_charge='$admin_charge', refund_reason='$refund_reason'") or die(mysqli_error($con));
+        
+        for($i=0; $i<$_POST['numbers']; $i++){
+            $result16 = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
+            
+        }
+        ?>
+        <script>
+        alert('Success to Declined');
+        window.location.href='main.php#adpayment';
+        </script>
+        <?php
+    }else{
+        ?>
+        <script>
+        alert('Please decline the payment, before submit decline request');
+        window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
+        </script>
+        <?php
+    }
+    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -223,7 +262,7 @@ if(isset($_POST['declinereceipts']))
                 <table class="purchasetable">
                     <caption> 
                     <?php
-                        if($results7['title'] != 'Pay order by Points'){
+                        if($results6['title'] != 'Pay order by Points'){
                             ?>
                                 <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
                             <?php
@@ -432,6 +471,7 @@ if(isset($_POST['declinereceipts']))
                 </div>
             </div>
         </div>
+        
         <div class="modal fade" id="declinePPayment" tabindex="-1" role="dialog" aria-labelledby="declinePPaymentTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -442,13 +482,14 @@ if(isset($_POST['declinereceipts']))
                     <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
                         <div class="modal-body left">
                             <?php 
-                                if(mysqli_num_rows($result10) > 0)
+                                if(mysqli_num_rows($result15) > 0)
                                 {
                                     $counter = 0;
-                                    while($row = mysqli_fetch_array($result10))
+                                    while($row = mysqli_fetch_array($result15))
                                     {
                                         $counter++;
                                         ?>
+                                            <input type="hidden" name="user_id" value="<?php echo $results6['user_id']; ?>">
                                             <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">
                                             <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
                                         <?php
@@ -457,6 +498,7 @@ if(isset($_POST['declinereceipts']))
                                 }
                             ?>
                             <p><input class="formfield" name="payment_id" type="hidden" value="<?php echo $payment_id ?>" /></p>
+                            <p><input class="formfield" name="total_amount" type="number" step="0.01" min="0" placeholder="Total Amount" required /></p>
                             <p><input class="formfield" name="refund_amount" type="number" step="0.01" min="0" placeholder="Refund Amount" required /></p>
                             <p><input class="formfield" name="admin_charge" type="number" step="0.01" min="0.01" placeholder="Admin Charge" required /></p>
                             <p><input class="formfield" name="refund_reason" type="text" placeholder="Reason" required /></p>

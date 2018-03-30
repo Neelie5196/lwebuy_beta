@@ -67,11 +67,11 @@ $result8 = mysqli_query($con, $query8);
         <div class="col-xs-12 col-md-12 col-lg-12">
             <table class="tblSTab">
                 <tr>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcSItem()">Items In-Store</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcSRequest()">Requests</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcSTopup()">Top-up Request</button></td>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcSProceed()">Proceeded</button></td>
-                    <td><button class="btn-link btntab" onclick="funcSReceive()">Received</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnsitem" onclick="funcSItem()">Items In-Store</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnsrequest" onclick="funcSRequest()">Requests</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnsinsuff" onclick="funcSInsuff()">Insufficient Payments</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnsproceed" onclick="funcSProceed()">Proceeded</button></td>
+                    <td><button class="btn-link btntab" id="btnsreceive" onclick="funcSReceive()">Received</button></td>
                 </tr>
             </table>
         </div>
@@ -192,7 +192,7 @@ $result8 = mysqli_query($con, $query8);
             </div>
         </div>
         
-        <div id="ptopup">
+        <div id="sinsuff">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
                     <tr class="center">

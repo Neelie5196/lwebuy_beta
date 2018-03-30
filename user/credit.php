@@ -77,8 +77,8 @@ if (isset($_GET['payment_id']))
         <div class="col-xs-12 col-md-12 col-lg-12">
             <table class="tblCTab">
                 <tr>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcCRequest()">Requests</button></td>
-                    <td><button class="btn-link btntab" onclick="funcCHistory()">Transaction History</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btncrequest" onclick="funcCRequest()">Requests</button></td>
+                    <td><button class="btn-link btntab" id="btnchistory" onclick="funcCHistory()">Transaction History</button></td>
                 </tr>
             </table>
         </div>

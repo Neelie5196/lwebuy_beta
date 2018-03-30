@@ -70,8 +70,8 @@ $result4 = mysqli_query($con, $query4);
         <div class="col-xs-12 col-md-12 col-lg-12">
             <table class="tblITab">
                 <tr>
-                    <td class="wborder"><button class="btn-link btntab" onclick="funcIPending()">Pending</button></td>
-                    <td><button class="btn-link btntab" onclick="funcIReceive()">Received</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnipending" onclick="funcIPending()">Pending</button></td>
+                    <td><button class="btn-link btntab" id="btnireceive" onclick="funcIReceive()">Received</button></td>
                 </tr>
             </table>
         </div>

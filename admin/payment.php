@@ -31,7 +31,7 @@ $query4 = "SELECT *
         FROM payment p
         JOIN users us
         ON us.user_id = p.user_id
-        WHERE p.status = 'Completed'";
+        WHERE p.status = 'Completed' OR p.status = 'Declined'";
 $result4 = mysqli_query($con, $query4);
 
 $query6 = "SELECT *
@@ -320,6 +320,7 @@ $result8 = mysqli_query($con, $query8);
                         <th>Customer</th>
                         <th>Payment Event</th>
                         <th>Amount (MYR)</th>
+                        <th>Status</th>
                         <th>Payment Receipt</th>
                     </tr>
                      <?php 
@@ -334,6 +335,7 @@ $result8 = mysqli_query($con, $query8);
                                     <td><?php echo $row['fname']." ".$row['lname']; ?></td>
                                     <td><?php echo $row['title']; ?></td>
                                     <td><?php echo $row['amount']; ?></td>
+                                    <td><?php echo $row['status']; ?></td>
                                     <td>
                                         <a data-toggle="modal" class="btn btn-default btn-xs btnDelete creditpay" href="#creditPay"><span class="glyphicon glyphicon-eye-open"></span></a>
                                     </td>

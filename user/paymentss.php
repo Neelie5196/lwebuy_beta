@@ -179,7 +179,7 @@ if(isset($_POST['topupsubmit']))
                                                 <label>Transaction receipt: </label>
                                                 <input type="file" name="file" required/>
                                                 <input class="form-control" name="top_up_amount" type="hidden" value="<?php echo number_format((float)$top_up_amount, 2, '.', ''); ?>">
-                                                <input type="text" name="top_up_id" value="<?php echo $top_up_id; ?>">
+                                                <input type="hidden" name="top_up_id" value="<?php echo $top_up_id; ?>">
                                                 <input type="hidden" name="paid_amount" value="<?php echo $paid_amount; ?>">
                                                 <input type="hidden" name="payments_id" value="<?php echo $payments_id; ?>">
                                                 <br/>

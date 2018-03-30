@@ -5,12 +5,12 @@ $user_id = $_SESSION['user_id'];
 
 $query = "SELECT *
           FROM payment
-          WHERE user_id='$user_id' AND status !='Completed'";
+          WHERE user_id='$user_id' AND status = 'Waiting for approval'";
 $result = mysqli_query($con, $query);
 
 $query1 = "SELECT *
           FROM payment
-          WHERE user_id='$user_id' AND status='Completed'";
+          WHERE user_id='$user_id' AND status='Completed' OR user_id='$user_id' AND status='Declined'";
 $result1 = mysqli_query($con, $query1);
 ?>
 <?php
@@ -46,7 +46,7 @@ if(isset($_POST["amount"]))
 	$type = $fileType;
 	$status = 'Waiting for approval';
 	
-	$result = mysqli_query($con, "INSERT INTO payment SET user_id='$user_id', datetime=now(), title='$title', amount='$amount', file = '$file', type = '$type',status='$status'") or die(mysqli_error($con));
+	$result = mysqli_query($con, "INSERT INTO payment SET user_id='$user_id', title='$title', amount='$amount', file = '$file', type = '$type',status='$status'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Request Sent!');
@@ -170,8 +170,7 @@ if (isset($_GET['payment_id']))
                         <th class="purchasecol3">Event</th>
                         <th class="purchasecol2">Amount</th>
                         <th class="purchasecol2">Transaction Receipt</th>
-                        <th class="purchasecol25">Submission Date</th>
-                        <th class="purchasecol25">Approval Date</th>
+                        <th class="purchasecol25">Status</th>
                     </tr>
                     
                     <?php
@@ -185,8 +184,7 @@ if (isset($_GET['payment_id']))
                         <td><?php echo $row1['title']; ?></td>
                         <td><?php echo $row1['amount']; ?></td>
                         <td><a href="" class="btntab" target="_blank">View receipt</a></td>
-                        <td><?php echo $row1['datetime']; ?></td>
-						<td><?php echo $row1['datetime']; ?></td>
+                        <td><?php echo $row1['status']; ?></td>
                         <td></td>
                     </tr>
                     

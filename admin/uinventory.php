@@ -155,10 +155,10 @@ if(isset($_POST['update']))
     }
     ?>
 
-    <!--<script>
+    <script>
     alert('Inventories updated!');
     window.location.href='uinventory.php';
-    </script>-->
+    </script>
 
 <?php
 }
@@ -191,9 +191,26 @@ if(isset($_POST['update']))
         <![endif]-->
         
         <script src="../frameworks/js/lwe.js"></script>
-        <script src="../frameworks/js/prototype-barcode.js"></script>
-        <script src="../frameworks/js/prototype.js"></script>
-
+        <script>
+            $(document).ready(function(){
+                $(".trackcheck").click(function(){
+                    var inputtext1 = document.getElementsByClassName("textinput");
+                    var checkboxes1 = document.getElementsByClassName("trackcheck");
+                    
+                    for (var a = 0; a < checkboxes1.length; a++)
+                    {
+                        
+                        if (checkboxes1[a].checked == false)
+                            {
+                                checkboxes1[a].disabled = true;
+                                inputtext1[a].disabled = true;
+                                inputtext1[a].required = false;
+                                inputtext1[a].style.background = "none";
+                            }
+                    }
+                });
+            });
+        </script>
     </head>
 
     <body class="userbg">
@@ -257,7 +274,7 @@ if(isset($_POST['update']))
                                         ?>
                                 <tr>
                                     <td>
-                                        <input type="checkbox" class="trackcheck" name="ocode[]" value="<?php echo $row1['order_code']?>" disabled />
+                                        <input type="checkbox" class="trackcheck" name="ocode[]" value="<?php echo $row1['order_code']?>" onclick="alert('clicked')" disabled />
                                     </td>
                                     <td><?php echo $row1['fname'] . " " . $row1['lname']; ?></td>
                                     <td><?php echo $row1['order_item']; ?></td>
@@ -363,33 +380,36 @@ if(isset($_POST['update']))
         </div>
         
         <script>
-        document.getElementById("codeinput").addEventListener("keyup", function(event) {
-          event.preventDefault();
-          if (event.keyCode === 13) {
-            document.getElementById("myBtn").click();
-              }
-            });
+            document.getElementById("codeinput").addEventListener("keyup", function(event) {
+              event.preventDefault();
+              if (event.keyCode === 13) {
+                document.getElementById("myBtn").click();
+                  }
+                });
 
-        function selectItem()
-        {
-            var inputtext = document.getElementsByClassName("textinput");
-            var checkboxes = document.getElementsByClassName("trackcheck");
-            var count = checkboxes.length;
+            function selectItem()
+            {
+                var inputtext = document.getElementsByClassName("textinput");
+                var checkboxes = document.getElementsByClassName("trackcheck");
+                var count = checkboxes.length;
 
-            for (var i = 0; i < count; i++)
-                {
-                    if (checkboxes[i].value == document.getElementById("codeinput").value)
-                        {
-                            inputtext[i].disabled = false;
-                            inputtext[i].required = true;
-                            inputtext[i].style.backgroundColor = "rgba(139, 184, 54, 0.3)";
-                            checkboxes[i].disabled = false;
-                            checkboxes[i].checked = true;
-                        }
-                }
+                for (var i = 0; i < count; i++)
+                    {
+                        if (checkboxes[i].value == document.getElementById("codeinput").value)
+                            {
+                                inputtext[i].disabled = false;
+                                inputtext[i].required = true;
+                                inputtext[i].style.backgroundColor = "rgba(139, 184, 54, 0.3)";
+                                checkboxes[i].disabled = false;
+                                checkboxes[i].checked = true;
+                            }
+                    }
+
+                document.getElementById("codeinput").select();
+            }
             
-            document.getElementById("codeinput").select();
-        }
+            
+            
         </script>
     </body>
 </html>

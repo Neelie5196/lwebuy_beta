@@ -107,6 +107,11 @@ $query11 = "SELECT *
            WHERE oi.user_id='$user_id' AND status = 'top-up'
            GROUP BY oi.payment_id";
 $result11 = mysqli_query($con, $query11);
+
+$query20 = "SELECT * 
+          FROM country";
+$result20 = mysqli_query($con, $query20);
+$results20 = mysqli_fetch_assoc($result20);
 ?>
 
 
@@ -133,6 +138,7 @@ $result11 = mysqli_query($con, $query11);
     <div class="row">
         <div id="prequest">
             <div class="col-xs-12 col-md-12 col-lg-12">
+                <p class="requestp">Today's exchange rate (RMB : MYR) = 1 : <?php echo $results20['country_currency']; ?></p>
                 <table class="purchasetable">
                     <tr class="center">
                         <th class="purchasecol2">Name</th>

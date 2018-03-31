@@ -1,7 +1,6 @@
 <?php
 
-
-require_once '../connection/config.php';
+/*require_once '../connection/config.php';
 session_start();
 $user_id = $_SESSION['user_id'];
 $order_item = $_POST['order_item'];
@@ -93,7 +92,7 @@ if(isset($_POST['uploadreceipt']))
 $query11 = "SELECT *
            FROM order_item
            WHERE order_item_id IN (".implode(',',$order_item).")";
-$result11 = mysqli_query($con, $query11);
+$result11 = mysqli_query($con, $query11);*/
 
 ?>
 
@@ -195,9 +194,8 @@ $result11 = mysqli_query($con, $query11);
                         </div>
                         
                         <div id="ptrans">
-                            <form method="post" action="payment.php" enctype="multipart/form-data">
-                                <br/>
-                                <p>Banking Details </p>
+                            <form method="post" action="payment.php">
+                                <h3>Banking Details </h3>
                                 <p>Bank: <?php echo $results8['bank']; ?></p>
                                 <p>Account No: <?php echo $results8['account_no']; ?></p>
                                 <p>Account Name: <?php echo $results8['account_name']; ?></p>
@@ -224,7 +222,7 @@ $result11 = mysqli_query($con, $query11);
                                     <input type="file" name="file" id="file" required />
                                     <input type="hidden" name="total" value="<?php echo $total; ?>">
                                 </p>
-                                <p class="center"><input type="submit" class="btn btn-success" name="uploadreceipt" value="Upload"></p>
+                                <p class="center"><input type="submit" class="btn btn-success" name="uploadreceipt" value="Submit"></p>
                             </form>
                         </div>
                         

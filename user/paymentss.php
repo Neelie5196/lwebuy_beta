@@ -93,122 +93,99 @@ if(isset($_POST['topupsubmit']))
         <![endif]-->
     </head>
 
-    <body background="../resources/img/bg.jpg" ng-app="">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <h2>Payment</h2>
+    <body class="userbg">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12 center">
+                <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Payment</h2>
+                
+                <h2 class="smh2 pagetitle hidden-md hidden-lg">Payment</h2>
+            </div>
+        </div>
+                
+        
+        <div class="row">
+            <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-2 col-lg-push-2 paymentcontainer">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12 payformcontainer">
+                        <form method="post" action="payment.php">
+                            <h3>Banking Details</h3>
+                            <p>Bank: <?php echo $results2['bank']; ?></p>
+                            <p>Account No: <?php echo $results2['account_no']; ?></p>
+                            <p>Account Name: <?php echo $results2['account_name']; ?></p>
+                                
+                            <?php
+                                while($row = mysqli_fetch_array($result))
+                                {
+                            ?>
+                                <input type="hidden" value="<?php echo $row['order_item_id']; ?>" name="order_item_id[]">
+                            <?php
+                                }
+
+                            ?>
+                            <p class="center paytrans">
+                                <label>Upload Transaction Receipt</label><br/>
+                                <input type="file" name="file" id="file" required/>
+                                <input name="top_up_amount" type="hidden" value="<?php echo number_format((float)$top_up_amount, 2, '.', ''); ?>">
+                                <input type="hidden" name="top_up_id" value="<?php echo $top_up_id; ?>">
+                                <input type="hidden" name="paid_amount" value="<?php echo $paid_amount; ?>">
+                                <input type="hidden" name="payments_id" value="<?php echo $payments_id; ?>">
+                            </p>
+                            
+                            <p class="center paytrans"><input type="submit" class="btn btn-success" name="topupsubmit" value="Submit"></p>
+                        </form>
+                    </div>
                 </div>
             </div>
             
-            <section class="content">
-                <div class="row">
-                    <center>
-                        <?php
-                            if(mysqli_num_rows($result1) > 0)
-                                    {
-                                        $total = 0;
-                        ?>
-                        <div class="col-xs-8 col-md-8 col-lg-8 jumbotron">
-                            <h3>Purchase Product List</h3>
-                            <table class="purchasetable">
-                                <tr class="center">
-                                    <th class="purchasecol2">Name</th>
-                                    <th class="purchasecol1">Link</th>
-                                    <th class="purchasecol2">Category</th>
-                                    <th class="purchasecol1">Quantity</th>
-                                    <th class="purchasecol1">U.Price</th>
-                                    <th class="purchasecol1">T.Price</th>
-                                    <th class="purchasecol2">Remark</th>
-                                </tr>
-
-                                <?php
-                                        while($row = mysqli_fetch_array($result1))
-                                        {
-                                            $total_price = $row['quantity']*$row['price'];
-                                ?>
-
-                                <tr class="bodyrow">
-                                    <input type="hidden" value="<?php echo $row['order_item_id']; ?>" name="order_item[]">
-                                    <td><?php echo $row['order_item']; ?></td>
-                                    <td><a href="<?php echo $row['link']; ?>" target="_blank">View item</a></td>
-                                    <td><?php echo $row['category']; ?></td>
-                                    <td><?php echo $row['quantity']; ?></td>
-                                    <td><?php echo $row['price']; ?></td>
-                                    <td><?php echo number_format((float)$total_price, 2, '.', ''); ?></td>
-                                    <td><?php echo $row['remark']; ?></td>
-                                </tr>
-                                <?php
-                                        $total += number_format((float)$total_price, 2, '.', '');
-                                        $total_pay = $total;
-                                        $point = $total*$results4['rate'];
-                                        }
-
-                                ?>
-                                <tr>
-                                    <td colspan="6" class="right">Total Amount (MYR) :</td>
-                                    <td class="right"><?php echo number_format((float)$total_pay, 2, '.', ''); ?></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="6" class="right">Total Paid (MYR) :</td>
-                                    <td class="right"><?php echo number_format((float)$paid_amount, 2, '.', ''); ?></td>
-                                    <input type="hidden" name="paid_amount" value="<?php echo number_format((float)$paid_amount, 2, '.', ''); ?>">
-                                </tr>
-                                <tr>
-                                    <td colspan="6" class="right">Total Top-up (MYR) :</td>
-                                    <td class="right"><?php echo number_format((float)$top_up_amount, 2, '.', ''); ?></td>
-                                    <input type="hidden" name="top_up_amount" value="<?php echo number_format((float)$top_up_amount, 2, '.', ''); ?>">
-                                </tr>
-                            </table>
-                            
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <form action="paymentss.php" method="post" enctype="multipart/form-data">
-                                        <h3>Upload Banking Receipt</h3>
-                                        <div class="row">
-                                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                                <?php
-                                                    while($row = mysqli_fetch_array($result))
-                                                    {
-                                                ?>
-                                                    <input type="hidden" value="<?php echo $row['order_item_id']; ?>" name="order_item_id[]">
-                                                <?php
-                                                    }
-
-                                                ?>
-                                                <label>Transaction receipt: </label>
-                                                <input type="file" name="file" required/>
-                                                <input class="form-control" name="top_up_amount" type="hidden" value="<?php echo number_format((float)$top_up_amount, 2, '.', ''); ?>">
-                                                <input type="hidden" name="top_up_id" value="<?php echo $top_up_id; ?>">
-                                                <input type="hidden" name="paid_amount" value="<?php echo $paid_amount; ?>">
-                                                <input type="hidden" name="payments_id" value="<?php echo $payments_id; ?>">
-                                                <br/>
-                                                <input type="submit" class="btn btn-success" name="topupsubmit" value="Upload">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-4 col-md-4 col-lg-4 jumbotron">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <p>Banking Details </p>
-                                    <div class="details">
-                                        <p>Bank: <?php echo $results2['bank']; ?></p>
-                                        <p>Account No: <?php echo $results2['account_no']; ?></p>
-                                        <p>Account Name: <?php echo $results2['account_name']; ?></p>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                            }
-                        ?>
-                    </center>
-                </div>
-            </section>
+            <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-4 col-lg-push-2 pdetailscontainer">
+                <h3>Payment Details</h3>
+                
+                <table class="itemstable center">
+                    <tr class="ptoprow">
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Total Price</th>
+                        <th>Remarks</th>
+                    </tr>
+                    
+                    <?php
+                        while($row = mysqli_fetch_array($result1))
+                        {
+                            $total_price = $row['quantity']*$row['price'];
+                    ?>
+                    
+                    <tr>
+                        <input type="hidden" value="<?php echo $row['order_item_id']; ?>" name="order_item[]">
+                        <td><?php echo $row['order_item']; ?></td>
+                        <td><?php echo $row['category']; ?></td>
+                        <td><?php echo $row['quantity']; ?></td>
+                        <td><?php echo number_format((float)$total_price, 2, '.', ''); ?></td>
+                        <td><?php echo $row['remark']; ?></td>
+                    </tr>
+                    
+                    <?php
+                            $total += number_format((float)$total_price, 2, '.', '');
+                            $total_pay = $total;
+                        }
+                    ?>
+                    
+                    <tr>
+                        <td colspan="4" class="right">Total Amount (MYR)</td>
+                        <td class="right"><?php echo number_format((float)$total_pay, 2, '.', ''); ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="right">Total Paid (MYR)</td>
+                        <td class="right"><?php echo number_format((float)$paid_amount, 2, '.', ''); ?></td>
+                        <input type="hidden" name="paid_amount" value="<?php echo number_format((float)$paid_amount, 2, '.', ''); ?>">
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="right">Total Outstanding (MYR)</td>
+                        <td class="right coltotal"><?php echo number_format((float)$top_up_amount, 2, '.', ''); ?></td>
+                        <input type="hidden" name="top_up_amount" value="<?php echo number_format((float)$top_up_amount, 2, '.', ''); ?>">
+                    </tr>
+                </table>
+            </div>
         </div>
     </body>
 </html>

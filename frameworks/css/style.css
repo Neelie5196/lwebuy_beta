@@ -471,6 +471,10 @@ body {
     font-size: 150%!important;
 }
 
+.smh3 {
+    font-size: 120%!important;
+}
+
 .bigbar > div {
     width: 10%;
     margin-left: 1%;
@@ -663,6 +667,24 @@ body {
     background: rgba(139, 184, 54, 0.3);
 }
 
+.ratefield {
+    width: 40%;
+    border: none;
+    background: rgba(139, 184, 54, 0.3);
+    padding: 1% 2%;
+}
+
+.bankfield {
+    width: 95%;
+    border: none;
+    background: rgba(139, 184, 54, 0.3);
+    padding: 1% 2%;
+}
+
+.ratefield:focus, .bankfield:focus {
+    outline: none!important;
+}
+
 .formselect, .formselect:focus, .formselect:active {
     outline: none!important;
     width: 100%;
@@ -776,6 +798,7 @@ body {
 .itemstable {
     width: 100%;
     margin-bottom: 3%;
+    color: #8bb836;
 }
 
 .shiptable {
@@ -852,6 +875,18 @@ body {
 
 .requestp, #wslot caption {
     color: #2f9142!important;
+}
+
+.rateoutcontainer {
+    margin: 0 2%;
+}
+
+.ratecontainer {
+    margin: 5% auto 0 auto;
+    background: #f4f9eb;
+    border: solid 2px #2f9142;
+    padding: 1%;
+    color: #2f9142;
 }
 
 .adreview {
@@ -956,4 +991,12 @@ body {
 
 .tracktable {
     width: 100%!important;
+}
+
+.rateline {
+    margin: 5% 0;
+}
+
+.banktable {
+    margin: auto;
 }

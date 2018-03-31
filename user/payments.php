@@ -211,9 +211,8 @@ if(isset($_POST['uploadreceipt']))
                         </div>
                         
                         <div id="ptrans">
-                            <form method="post" action="payments.php" enctype="multipart/form-data">
-                                <br/>
-                                <p>Banking Details </p>
+                            <form method="post" action="payments.php">
+                                <h3>Banking Details </h3>
                                 <p>Bank: <?php echo $results8['bank']; ?></p>
                                 <p>Account No: <?php echo $results8['account_no']; ?></p>
                                 <p>Account Name: <?php echo $results8['account_name']; ?></p>

@@ -1,5 +1,4 @@
 <?php
-
 require_once '../connection/config.php';
 session_start();
 $user_id = $_SESSION['user_id'];
@@ -11,21 +10,10 @@ $query = "SELECT *
            WHERE item_id IN (".implode(',',$item).")";
 $result = mysqli_query($con, $query);
 
-$query1 = "SELECT *
-           FROM item
-           WHERE item_id IN (".implode(',',$item).")";
-$result1 = mysqli_query($con, $query1);
-
-$query10 = "SELECT *
-           FROM item
-           WHERE item_id IN (".implode(',',$item).")";
-$result10 = mysqli_query($con, $query10);
-
 $query2 = "SELECT *
-          FROM country
-          WHERE country_name = 'Malaysia'";
+           FROM item
+           WHERE item_id IN (".implode(',',$item).")";
 $result2 = mysqli_query($con, $query2);
-$results2 = mysqli_fetch_assoc($result2);
 
 $query3 = "SELECT * FROM point WHERE user_id='$user_id'";
 $result3 = mysqli_query($con, $query3);
@@ -37,7 +25,53 @@ $query4 = "SELECT *
 $result4 = mysqli_query($con, $query4);
 $results4 = mysqli_fetch_assoc($result4);
 
-if(isset($_POST['submit']))
+$query5 = "SELECT *
+           FROM item
+           WHERE item_id IN (".implode(',',$item).")";
+$result5 = mysqli_query($con, $query5);
+
+$query8 = "SELECT *
+          FROM country
+          WHERE country_name = 'Malaysia'";
+$result8 = mysqli_query($con, $query8);
+$results8 = mysqli_fetch_assoc($result8);
+
+$query11 = "SELECT *
+          FROM address
+          WHERE address_id = '$address'";
+$result11 = mysqli_query($con, $query11);
+$results11 = mysqli_fetch_assoc($result11);
+
+if(isset($_POST['paybycredit']))
+{    
+    $unique_id = rand(10000,100000). $user_id;
+    $payment_id = $unique_id;
+    $status = 'Request';
+    $rname = $_POST['name'];
+    $rcontact = $_POST['contact'];
+    $rremark = $_POST['remark'];
+    $address = $_POST['address'];
+    $totalweight = $_POST['totalweight'];
+    $point = $_POST['point'];
+    $title = 'Pay shipping by';
+    $points = 'Points';
+    $statuss = 'Waiting for Accept';
+    
+    $result7 = mysqli_query($con, "UPDATE item SET payment_id='$payment_id' WHERE item_id IN (".implode(',',$item).")") or die(mysqli_error($con));
+    
+    $result13 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', 	recipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$point $points', status='$status', payment_id='$payment_id'") or die(mysqli_error($con));
+    
+    $result8 = mysqli_query($con, "UPDATE point SET point= point - '$point' WHERE user_id = '$user_id' ") or die(mysqli_error($con));
+    $result9 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id',user_id='$user_id', title='$title $points', amount='$point $points', status='$statuss'") or die(mysqli_error($con));
+    ?>
+    <script>
+    alert('Successfully Submit');
+    window.location.href='main.php#ship';
+    </script>
+    <?php
+}
+
+if(isset($_POST['uploadreceipt']))
 {   
     $unique_id = rand(10000,100000). $user_id;
     $payment_id = $unique_id;
@@ -78,42 +112,6 @@ if(isset($_POST['submit']))
 		<?php
 	}
 }
-
-if(isset($_POST['point_pay']))
-{    
-    $unique_id = rand(10000,100000). $user_id;
-    $payment_id = $unique_id;
-    $status = 'Request';
-    $rname = $_POST['name'];
-    $rcontact = $_POST['contact'];
-    $rremark = $_POST['remark'];
-    $address = $_POST['address'];
-    $totalweight = $_POST['totalweight'];
-    $point_pay = $_POST['point_pay'];
-    $title = 'Pay shipping by';
-    $points = 'Points';
-    $statuss = 'Waiting for Accept';
-    
-    $result7 = mysqli_query($con, "UPDATE item SET payment_id='$payment_id' WHERE item_id IN (".implode(',',$item).")") or die(mysqli_error($con));
-    
-    $result13 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', 	recipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$point_pay $points', status='$status', payment_id='$payment_id'") or die(mysqli_error($con));
-    
-    $result8 = mysqli_query($con, "UPDATE point SET point= point - '$point_pay' WHERE user_id = '$user_id' ") or die(mysqli_error($con));
-    $result9 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id',user_id='$user_id', title='$title $points', amount='$point_pay $points', status='$statuss'") or die(mysqli_error($con));
-    ?>
-    <script>
-    alert('Successfully Submit');
-    window.location.href='main.php#ship';
-    </script>
-    <?php
-}
-
-$query11 = "SELECT *
-          FROM address
-          WHERE address_id ='$address'";
-$result11 = mysqli_query($con, $query11);
-$results11 = mysqli_fetch_assoc($result11);
-
 ?>
 
 <!DOCTYPE html>
@@ -138,211 +136,164 @@ $results11 = mysqli_fetch_assoc($result11);
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]-->
-        <style>
-            .vl {
-                border-left: 1px solid lightgrey;
-                height: 200px;
-            }
-            .details p{
-                font-size: 100%;
-            }
-        </style>
+
+        <script src="../frameworks/js/lwe.js"></script>
     </head>
 
-    <body background="../resources/img/bg.jpg" ng-app="">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <h2>Payment</h2>
+
+    <body class="userbg" ng-app="">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12 center">
+                <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Payment</h2>
+                
+                <h2 class="smh2 pagetitle hidden-md hidden-lg">Payment</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-2 col-lg-push-2 paymentcontainer">
+                                
+                <div class="row center btnpaymentcontainer">
+                    <div class="col-xs-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btnpayment" onclick="funcCredit()" title="Pay by credits"><span class="glyphicon glyphicon-piggy-bank"></span></button>
+                    </div>
+                    
+                    <div class="col-xs-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btnpayment" onclick="funcCard()" title="Pay by card"><span class="glyphicon glyphicon-credit-card"></span></button>
+                    </div>
+                    
+                    <div class="col-xs-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btnpayment" onclick="funcTrans()" title="Pay by transaction"><span class="glyphicon glyphicon-open-file"></span></button>
+                    </div>                    
+                </div>
+                
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12 payformcontainer">
+                        <div id="pcredit">
+                            <form method="post" action="payments.php">
+                                <?php
+                                    if(mysqli_num_rows($result2) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result2))
+                                        {
+                                    ?>
+                                    <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
+                                    <?php
+                                            $point = $_POST['pricetotal']*$results4['rate'];
+                                        }
+                                    }
+                                    if($results3['point'] < $point){
+                                        ?>
+                                        <!-- show if not enough credit -->
+                                        <p class="center warning">Insufficient credit.</p>
+                                        <p class="center"><a class="btn btn-default btnGo" href="main.php#credit">Top up now</a></p>
+                                        <?php
+                                    }else{
+                                        ?>
+                                        <!-- show if enough credit -->
+                                        <h4>Your credit: <?php echo $results3['point']; ?></h4>
+                                        <h4>Amount to pay (credits): <?php echo $point; ?></h4>
+                                        <input type="hidden" value="<?php echo $point; ?>" name="point">
+                                        <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
+                                        <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
+                                        <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
+                                        <input type="hidden" value="<?php echo $_POST['address']; ?>" name="address">
+                                        <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
+                                        <p class="center"><input type="submit" class="btn btn-success" name="paybycredit" value="Pay"></p>
+                                        <?php
+                                    }
+                                ?> 
+                            </form>
+                        </div>
+                        
+                        <div id="pcard">
+                            <!-- wait for client to give MolPay details first-->
+                        </div>
+                        
+                        <div id="ptrans">
+                            <form method="post" action="payments.php" enctype="multipart/form-data">
+                                <br/>
+                                <p>Banking Details </p>
+                                <p>Bank: <?php echo $results8['bank']; ?></p>
+                                <p>Account No: <?php echo $results8['account_no']; ?></p>
+                                <p>Account Name: <?php echo $results8['account_name']; ?></p>
+                                <p class="center paytrans">
+                                
+                                <?php
+                                    if(mysqli_num_rows($result5) > 0)
+                                    {
+                                        $total = 0;
+                                        while($row = mysqli_fetch_array($result5))
+                                        {
+                                    ?>
+                                    <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
+                                    <?php
+                                        }
+                                    }
+                                ?>
+                                    <label>Upload Transaction Receipt</label><br/>
+                                    <input type="file" name="file" id="file" required />
+                                    <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
+                                    <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
+                                    <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
+                                    <input type="hidden" value="<?php echo $_POST['address']; ?>" name="address">
+                                    <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
+                                    <input type="hidden" value="<?php echo $_POST['pricetotal']; ?>" name="pricetotal">
+                                </p>
+                                <p class="center"><input type="submit" class="btn btn-success" name="uploadreceipt" value="Upload"></p>
+                            </form>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
             
-            <section class="content">
-                <div class="row botmar">
-                    <div class="col-xs-12 col-md-8 col-lg-8">
-                        <strong>Shipping Summary</strong>
-                    </div>
-                </div>
-                <div class="row">
-                    <center>
+            <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-4 col-lg-push-2 pdetailscontainer">
+                <h3>Payment Details</h3>
+                
+                <p>Recipient name: <?php echo $_POST['name']; ?></p>
+                
+                <p>Recipient contact: <?php echo $_POST['contact']; ?></p>
+                
+                <p>Recipient contact: <?php echo $_POST['remark']; ?></p>
+                
+                <p>Address: <?php echo $results11['address'].', '.$results11['postcode'].', '.$results11['city'].', '.$results11['state']; ?></p>
+                
+                <p>Country: <?php echo $results11['country']; ?></p>                
+                <?php
+                    if(mysqli_num_rows($result) > 0)
+                    {
+                ?>
+                    <table class="shiptable center">
+                        <tr class="ptoprow">
+                            <td class="left">Item</td>
+                            <td>Weight (kg)</td>
+                        </tr>
                         <?php
-                            if(mysqli_num_rows($result1) > 0)
-                                    {
+                            while($row = mysqli_fetch_array($result))
+                            {
                         ?>
-                        <div class="col-xs-8 col-md-8 col-lg-8 jumbotron">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-6" align="left">
-                                    <strong>Address : <?php echo $results11['address'].', '.$results11['postcode'].', '.$results11['city'].', '.$results11['state']; ?></strong><br/>
-                                    <strong>Country : <?php echo $results11['country']; ?></strong><br/>
-                                    <strong>Recipient Name : <?php echo $_POST['name']; ?></strong><br/>
-                                    <strong>Recipient Contact : <?php echo $_POST['contact']; ?></strong><br/>
-                                    <strong>Remark : <?php echo $_POST['remark']; ?></strong>
-                                </div>
-                                <div class="col-xs-12 col-md-12 col-lg-6" align="left">
-                                    <strong>Total Weight : <?php echo $_POST['totalweight']; ?>kg</strong><br/>
-                                    <strong>Total Pay : RM <?php echo $_POST['pricetotal']; ?></strong>
-
-                            <br/>
-                                </div>
-                            </div>
-                            <br/>
-                            <table class="purchasetable">
-                                <tr class="center">
-                                    <th>Name</th>
-                                    <th>Order Code</th>
-                                    <th>Received On</th>
-                                    <th>Weight (kg)</th>
-                                </tr>
-
-                                <?php
-                                    while($row = mysqli_fetch_array($result1))
-                                    {
-                                ?>
-
-                                <tr class="bodyrow">
-                                    <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
-                                    <td><?php echo $row['item_description']; ?></td>
-                                    <td><?php echo $row['order_code']; ?></td>
-                                    <td><?php echo $row['datetime']; ?></td>
-                                    <td><?php echo $row['weight']; ?></td>
-                                </tr>
-                                <?php
-                                    }
-                                ?>
-                            </table>
-                            <?php
-                                $point = $_POST['pricetotal']*$results4['rate'];
-                                if($results3['point'] >= $point){
-                                    ?>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-6 col-lg-6">
-                                            <form action="payments.php" method="post" enctype="multipart/form-data">
-                                                <h3>Upload Banking Receipt</h3>
-                                                <div class="row">
-                                                    <div class="col-xs-12 col-md-12 col-lg-12">
-                                                        <?php
-                                                            while($row = mysqli_fetch_array($result))
-                                                            {
-                                                        ?>
-                                                            <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
-                                                        <?php
-                                                            }
-
-                                                        ?>
-                                                        <input type="hidden" value="<?php echo $results11['address_id']; ?>" name="address">
-                                                        <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
-                                                        <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
-                                                        <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
-                                                        <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
-                                                        <input type="hidden" value="<?php echo $_POST['pricetotal']; ?>" name="pricetotal">
-                                                        <label>Transaction receipt: </label>
-                                                        <input type="file" name="file" required />
-                                                        <input class="form-control" name="total_pay" type="hidden" value="<?php echo number_format((float)$total_pay, 2, '.', ''); ?>">
-                                                        <br/>
-                                                        <input type="submit" class="btn btn-success" name="submit" value="Upload">
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="col-xs-12 col-md-1 col-lg-1">
-                                            <div class="vl"></div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-5 col-lg-5">
-                                            <form action="payments.php" method="post" enctype="multipart/form-data">
-                                                <div class="row">
-                                                    <div class="col-xs-12 col-md-12 col-lg-12">
-                                                        <br />
-                                                        <?php
-                                                            while($row = mysqli_fetch_array($result10))
-                                                            {
-                                                        ?>
-                                                            <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
-                                                        <?php
-                                                            }
-
-                                                        ?>
-                                                        <input type="hidden" value="<?php echo $results11['address_id']; ?>" name="address">
-                                                        <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
-                                                        <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
-                                                        <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
-                                                        <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
-                                                        <p><?php echo number_format((float)$point, 2, '.', ''); ?> point</p>
-                                                        <input class="form-control" name="point_pay" type="hidden" value="<?php echo number_format((float)$point, 2, '.', ''); ?>">
-                                                        <input type="submit" class="btn btn-success" name="pay" value="Pay by Point">
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }else{
-                                    ?>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <form action="payments.php" method="post" enctype="multipart/form-data">
-                                                <h3>Upload Banking Receipt</h3>
-                                                <div class="row">
-                                                    <div class="col-xs-12 col-md-12 col-lg-12">
-                                                        <?php
-                                                            while($row = mysqli_fetch_array($result))
-                                                            {
-                                                        ?>
-                                                            <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
-                                                        <?php
-                                                            }
-
-                                                        ?>
-                                                        <input type="hidden" value="<?php echo $results11['address_id']; ?>" name="address">
-                                                        <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
-                                                        <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
-                                                        <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
-                                                        <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
-                                                        <input type="hidden" value="<?php echo $_POST['pricetotal']; ?>" name="pricetotal">
-                                                        <label>Transaction receipt: </label>
-                                                        <input type="file" name="file" required />
-                                                        <input class="form-control" name="total_pay" type="hidden" value="<?php echo number_format((float)$total_pay, 2, '.', ''); ?>">
-                                                        <br/>
-                                                        <input type="submit" class="btn btn-success" name="submit" value="Upload">
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }
-                            ?>
-                        </div>
-                        <div class="col-xs-4 col-md-4 col-lg-4 jumbotron">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <p>Banking Details </p>
-                                    <div class="details">
-                                        <p>Bank: <?php echo $results2['bank']; ?></p>
-                                        <p>Account No: <?php echo $results2['account_no']; ?></p>
-                                        <p>Account Name: <?php echo $results2['account_name']; ?></p>
-                                        <?php
-                                            if($results3 > 0){
-                                                ?>
-                                                    <input type="hidden" name="point" class="form-control" value="<?php echo $results3['point']; ?>">
-                                                    <p>Current point: <?php echo $results3['point']; ?></p>
-                                                <?php
-                                            }else{
-                                                ?>
-                                                    <p>Current point: 0</p>
-                                                <?php
-                                            }
-                                        ?>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <tr>
+                                <td class="left"><p><?php echo $row['item_description']; ?></p></td>
+                                <td><p><?php echo $row['weight']; ?></p></td>
+                            </tr>
                         <?php
                             }
                         ?>
-                    </center>
-                </div>
-            </section>
+                        <tr>
+                            <td class="left"><p>Total weight (kg) </p></td>
+                            <td class="coltotal"><p><?php echo $_POST['totalweight']; ?></p></td>
+                        </tr>
+
+                        <tr>
+                            <td class="left"><p>Total price (MYR)</p></td>
+                            <td><?php echo $_POST['pricetotal']; ?></td>
+                        </tr>
+                    </table>
+                <?php
+                    }
+                ?>
+            </div>
         </div>
     </body>
 </html>

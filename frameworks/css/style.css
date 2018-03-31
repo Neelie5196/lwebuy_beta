@@ -230,6 +230,20 @@ body {
     text-decoration: none;
 }
 
+.btnpagi, .btnpagi:visited, .btnpagi:active, .btnpagi:focus {
+    color: #2f9142!important;
+    margin: 0 0.1%;
+    text-decoration: none;
+    outline: none!important;
+    background: none!important;
+    box-shadow: none!important;
+}
+
+.btnpagi:hover {
+    color: #8bb836!important;
+    text-decoration: none;
+}
+
 .btnfile, .btnfile:focus {
     color: #8bb836!important;
     font-weight: normal!important;

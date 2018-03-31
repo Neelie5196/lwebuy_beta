@@ -373,6 +373,7 @@ if(isset($_POST['update']))
                                         <input type="submit" class="btn btnAdd" name="update" value="Update" />
                                     </td>
                                 </tr>
+                            </table>
                         </form>
                     </div>
                 </div>

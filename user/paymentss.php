@@ -124,7 +124,7 @@ if(isset($_POST['topupsubmit']))
                             ?>
                             <p class="center paytrans">
                                 <label>Upload Transaction Receipt</label><br/>
-                                <input type="file" name="file" id="file" required/>
+                                <input type="file" name="file" id="file" accept="image/*" required/>
                                 <input name="top_up_amount" type="hidden" value="<?php echo number_format((float)$top_up_amount, 2, '.', ''); ?>">
                                 <input type="hidden" name="top_up_id" value="<?php echo $top_up_id; ?>">
                                 <input type="hidden" name="paid_amount" value="<?php echo $paid_amount; ?>">

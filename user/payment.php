@@ -218,7 +218,7 @@ $result11 = mysqli_query($con, $query11);
                                     }
                                 ?>
                                     <label>Upload Transaction Receipt</label><br/>
-                                    <input type="file" name="file" id="file" required />
+                                    <input type="file" name="file" id="file" accept="image/*" required />
                                     <input type="hidden" name="total" value="<?php echo $total; ?>">
                                 </p>
                                 <p class="center"><input type="submit" class="btn btn-success" name="uploadreceipt" value="Submit"></p>

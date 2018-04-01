@@ -157,7 +157,7 @@ if (isset($_GET['payment_id']))
 
                                 <p>
                                     <label>Upload Transaction Receipt</label><br/>
-                                    <input type="file" name="file" class="center" required />
+                                    <input type="file" name="file" class="center" accept="image/*" required />
                                 </p>
                             </div>
 

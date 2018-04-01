@@ -231,7 +231,7 @@ if(isset($_POST['uploadreceipt']))
                                     }
                                 ?>
                                     <label>Upload Transaction Receipt</label><br/>
-                                    <input type="file" name="file" id="file" required />
+                                    <input type="file" name="file" id="file" accept="image/*" required />
                                     <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
                                     <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
                                     <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">

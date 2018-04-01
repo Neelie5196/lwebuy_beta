@@ -75,6 +75,7 @@ if (isset($_GET['payment_id']))
 
 }
 ?>
+<link rel="stylesheet" href="../frameworks/css/lightbox.min.css">
 <div class="col-xs-12 col-md-12 col-lg-12">
     <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Credits</h2>
     
@@ -190,7 +191,9 @@ if (isset($_GET['payment_id']))
                     <tr class="bodyrow">
                         <td><?php echo $row1['title']; ?></td>
                         <td><?php echo $row1['amount']; ?></td>
-						<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">View Receipt</button></td>
+						<td>
+                            <a href="../receipts/<?php echo $row1['file']; ?>" data-lightbox="receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        </td>
                         <td><?php echo $row1['status']; ?></td>
                         <td></td>
                     </tr>
@@ -214,23 +217,4 @@ if (isset($_GET['payment_id']))
         </div>
     </div>
 </div>
-
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Your Receipt</h4>
-      </div>
-      <div class="modal-body">
-        <img src="../receipts/<?php echo $results2['file']; ?>"><?php echo $results2['title']; ?>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+<script src="../frameworks/js/lightbox-plus-jquery.min.js"></script>

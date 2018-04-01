@@ -114,7 +114,7 @@ if (isset($_GET['payment_id']))
                     <tr class="bodyrow">
                         <td><?php echo $row['title']; ?></td>
                         <td>RM <?php echo $row['amount']; ?></td>
-                        <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">View Receipt</button></td>
+                        <td><button type="button" class="btn btntab" data-toggle="modal" data-target="#myModal" onclick="passimg('<?php echo $row['file']; ?>')">View Receipt</button></td>
                         <td><?php echo $row['datetime']; ?></td>
                         <td>
                            <a href="credit.php?payment_id=<?php echo $row['payment_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
@@ -169,6 +169,26 @@ if (isset($_GET['payment_id']))
                     </div>
                 </div>
             </div>
+            
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myModalTitle">Receipt</h5>
+                        </div>
+
+                        <div class="modal-body left">
+                            <p class="center">
+                                <img id="imgcontain" width="80%" />
+                            </p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div id="chistory">
@@ -218,3 +238,10 @@ if (isset($_GET['payment_id']))
     </div>
 </div>
 <script src="../frameworks/js/lightbox-plus-jquery.min.js"></script>
+
+<script>
+    function passimg(filename)
+    {
+        document.getElementById("imgcontain").setAttribute("src", "../receipts/" + filename);
+    }
+</script>

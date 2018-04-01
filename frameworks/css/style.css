@@ -230,6 +230,8 @@ body {
     margin: 0 2%;
     text-decoration: none;
     outline: none!important;
+    background: none!important;
+    box-shadow: none;
 }
 
 .btntab:hover {

@@ -74,6 +74,14 @@ $result5 = mysqli_query($con, $query5);
     </head>
 
     <body class="userbg" ng-app="">
+        <div class="row updaterow1">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <p>
+                    <a href="main.php#ship" class="aback">&lt;&emsp;Back to main page</a>
+                </p>
+            </div>
+        </div>
+        
         <div class="row">
             <div class="col-xs-12 col-md-12 col-lg-12 center">
                 <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Shipping Details</h2>

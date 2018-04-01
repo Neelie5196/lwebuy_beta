@@ -44,6 +44,7 @@ $count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_row
         <li><a href="#adpayment" id="btnadpayment" onclick="resettimeoutimer()">Payments<?php if ($count1 > 0) { ?><span class="notify"><?php echo $count1 ?></span><?php } ?></a></li>
         <li><a href="#adwarehouse" id="btnadwarehouse" onclick="resettimeoutimer()">Warehouse</a></li>
         <li><a href="#adupdate" id="btnadupdate" onclick="resettimeoutimer()">Updates</a></li>
+        <li><a href="#adother" id="btnadother" onclick="resettimeoutimer()">Others</a></li>
         <li><a href="#adaccount" id="btnadaccount" onclick="resettimeoutimer()">Accounts</a></li>
         <li><a href="#adreview" id="btnadreview" onclick="resettimeoutimer()">Reviews</a></li>
     </ul>
@@ -72,6 +73,7 @@ $count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_row
             <li><a href="#adpayment" id="btnadpayment" onclick="resettimeoutimer()">Payments</a></li>
             <li><a href="#adwarehouse" id="btnadwarehouse" onclick="resettimeoutimer()">Warehouse</a></li>
             <li><a href="#adupdate" id="btnadupdate" onclick="resettimeoutimer()">Updates</a></li>
+            <li><a href="#adother" id="btnadother" onclick="resettimeoutimer()">Others</a></li>
             <li><a href="#adaccount" id="btnadaccount" onclick="resettimeoutimer()">Accounts</a></li>
             <li><a href="#adreview" id="btnadreview" onclick="resettimeoutimer()">Reviews</a></li>
         

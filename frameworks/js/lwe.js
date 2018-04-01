@@ -51,6 +51,10 @@ $(document).ready(function(){
             {
                 $("#mainview").load('tracking.php');
             }
+        else if (window.location.hash == "#adother")
+            {
+                $("#mainview").load('rate.php');
+            }
         else
             {
                 $("#mainview").load('dashboard.php');
@@ -156,6 +160,11 @@ $(document).ready(function(){
 $(document).ready(function(){
     $("#btntrack").click(function(){
         $("#mainview").load('tracking.php');
+    });
+});
+$(document).ready(function(){
+    $("#btnadother").click(function(){
+        $("#mainview").load('rate.php');
     });
 });
 

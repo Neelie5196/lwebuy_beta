@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
         if (window.location.hash == "#home")
             {
                 $("#mainview").load('dashboard.php');
@@ -53,7 +53,7 @@ $(document).ready(function(){
             }
         else if (window.location.hash == "#adother")
             {
-                $("#mainview").load('rate.php');
+                $("#mainview").load('other.php');
             }
         else
             {
@@ -164,7 +164,7 @@ $(document).ready(function(){
 });
 $(document).ready(function(){
     $("#btnadother").click(function(){
-        $("#mainview").load('rate.php');
+        $("#mainview").load('other.php');
     });
 });
 
@@ -227,8 +227,8 @@ function funcPProceed() {
     document.getElementById("btnprequest").style.fontWeight = "normal";
     document.getElementById("btnppayment").style.fontWeight = "normal";
     document.getElementById("btnpinsuff").style.fontWeight = "normal";
-    document.getElementById("btnpreceive").style.fontWeight = "normal";
     document.getElementById("btnpproceed").style.fontWeight = "bold";
+    document.getElementById("btnpreceive").style.fontWeight = "normal";
     document.getElementById("btnpdecline").style.fontWeight = "normal";
 }
 
@@ -267,17 +267,31 @@ function funcPDecline() {
 function funcIPending() {
     document.getElementById("ipending").style.display = "block";
     document.getElementById("ireceive").style.display = "none";
+    document.getElementById("iwarehouse").style.display = "none";
     
     document.getElementById("btnipending").style.fontWeight = "bold";
     document.getElementById("btnireceive").style.fontWeight = "normal";
+    document.getElementById("btniwarehouse").style.fontWeight = "normal";
 }
 
 function funcIReceive() {
     document.getElementById("ipending").style.display = "none";
     document.getElementById("ireceive").style.display = "block";
+    document.getElementById("iwarehouse").style.display = "none";
     
     document.getElementById("btnipending").style.fontWeight = "normal";
     document.getElementById("btnireceive").style.fontWeight = "bold";
+    document.getElementById("btniwarehouse").style.fontWeight = "normal";
+}
+
+function funcIWarehouse() {
+    document.getElementById("ipending").style.display = "none";
+    document.getElementById("ireceive").style.display = "none";
+    document.getElementById("iwarehouse").style.display = "block";
+    
+    document.getElementById("btnipending").style.fontWeight = "normal";
+    document.getElementById("btnireceive").style.fontWeight = "normal";
+    document.getElementById("btniwarehouse").style.fontWeight = "bold";
 }
 
 function funcSItem() {
@@ -497,13 +511,17 @@ function funcPPurchase() {
     document.getElementById("pship").style.display = "none";
     document.getElementById("pcredit").style.display ="none";
     document.getElementById("poutstand").style.display = "none";
+    document.getElementById("prefund").style.display = "none";
     document.getElementById("phistory").style.display = "none";
+    document.getElementById("prhistory").style.display = "none";
     
     document.getElementById("btnppurchase").style.fontWeight = "bold";
     document.getElementById("btnpship").style.fontWeight = "normal";
     document.getElementById("btnpcredit").style.fontWeight = "normal";
     document.getElementById("btnpoutstand").style.fontWeight = "normal";
+    document.getElementById("btnprefund").style.fontWeight = "normal";
     document.getElementById("btnphistory").style.fontWeight = "normal";
+    document.getElementById("btnprhistory").style.fontWeight = "normal";
 }
 
 function funcPShip() {
@@ -511,13 +529,17 @@ function funcPShip() {
     document.getElementById("pship").style.display = "block";
     document.getElementById("pcredit").style.display ="none";
     document.getElementById("poutstand").style.display = "none";
+    document.getElementById("prefund").style.display = "none";
     document.getElementById("phistory").style.display = "none";
+    document.getElementById("prhistory").style.display = "none";
     
     document.getElementById("btnppurchase").style.fontWeight = "normal";
     document.getElementById("btnpship").style.fontWeight = "bold";
     document.getElementById("btnpcredit").style.fontWeight = "normal";
+    document.getElementById("btnprefund").style.fontWeight = "normal";
     document.getElementById("btnpoutstand").style.fontWeight = "normal";
     document.getElementById("btnphistory").style.fontWeight = "normal";
+    document.getElementById("btnprhistory").style.fontWeight = "normal";
 }
 
 function funcPCredit() {
@@ -525,13 +547,17 @@ function funcPCredit() {
     document.getElementById("pship").style.display = "none";
     document.getElementById("pcredit").style.display ="block";
     document.getElementById("poutstand").style.display = "none";
+    document.getElementById("prefund").style.display = "none";
     document.getElementById("phistory").style.display = "none";
+    document.getElementById("prhistory").style.display = "none";
     
     document.getElementById("btnppurchase").style.fontWeight = "normal";
     document.getElementById("btnpship").style.fontWeight = "normal";
     document.getElementById("btnpcredit").style.fontWeight = "bold";
+    document.getElementById("btnprefund").style.fontWeight = "normal";
     document.getElementById("btnpoutstand").style.fontWeight = "normal";
     document.getElementById("btnphistory").style.fontWeight = "normal";
+    document.getElementById("btnprhistory").style.fontWeight = "normal";
 }
 
 function funcPOutstand() {
@@ -539,13 +565,35 @@ function funcPOutstand() {
     document.getElementById("pship").style.display = "none";
     document.getElementById("pcredit").style.display ="none";
     document.getElementById("poutstand").style.display = "block";
+    document.getElementById("prefund").style.display = "none";
     document.getElementById("phistory").style.display = "none";
+    document.getElementById("prhistory").style.display = "none";
     
     document.getElementById("btnppurchase").style.fontWeight = "normal";
     document.getElementById("btnpship").style.fontWeight = "normal";
     document.getElementById("btnpcredit").style.fontWeight = "normal";
+    document.getElementById("btnprefund").style.fontWeight = "normal";
     document.getElementById("btnpoutstand").style.fontWeight = "bold";
     document.getElementById("btnphistory").style.fontWeight = "normal";
+    document.getElementById("btnprhistory").style.fontWeight = "normal";
+}
+
+function funcPRefund() {
+    document.getElementById("ppurchase").style.display = "none";
+    document.getElementById("pship").style.display = "none";
+    document.getElementById("pcredit").style.display ="none";
+    document.getElementById("poutstand").style.display = "none";
+    document.getElementById("prefund").style.display = "block";
+    document.getElementById("phistory").style.display = "none";
+    document.getElementById("prhistory").style.display = "none";
+    
+    document.getElementById("btnppurchase").style.fontWeight = "normal";
+    document.getElementById("btnpship").style.fontWeight = "normal";
+    document.getElementById("btnpcredit").style.fontWeight = "normal";
+    document.getElementById("btnpoutstand").style.fontWeight = "normal";
+    document.getElementById("btnprefund").style.fontWeight = "bold";
+    document.getElementById("btnphistory").style.fontWeight = "normal";
+    document.getElementById("btnprhistory").style.fontWeight = "normal";
 }
 
 function funcPHistory() {
@@ -553,13 +601,51 @@ function funcPHistory() {
     document.getElementById("pship").style.display = "none";
     document.getElementById("pcredit").style.display ="none";
     document.getElementById("poutstand").style.display = "none";
+    document.getElementById("prefund").style.display = "none";
     document.getElementById("phistory").style.display = "block";
+    document.getElementById("prhistory").style.display = "none";
     
     document.getElementById("btnppurchase").style.fontWeight = "normal";
     document.getElementById("btnpship").style.fontWeight = "normal";
     document.getElementById("btnpcredit").style.fontWeight = "normal";
+    document.getElementById("btnprefund").style.fontWeight = "normal";
     document.getElementById("btnpoutstand").style.fontWeight = "normal";
     document.getElementById("btnphistory").style.fontWeight = "bold";
+    document.getElementById("btnprhistory").style.fontWeight = "normal";
+}
+
+function funcPRHistory() {
+    document.getElementById("ppurchase").style.display = "none";
+    document.getElementById("pship").style.display = "none";
+    document.getElementById("pcredit").style.display ="none";
+    document.getElementById("poutstand").style.display = "none";
+    document.getElementById("prefund").style.display = "none";
+    document.getElementById("phistory").style.display = "none";
+    document.getElementById("prhistory").style.display = "block";
+    
+    document.getElementById("btnppurchase").style.fontWeight = "normal";
+    document.getElementById("btnpship").style.fontWeight = "normal";
+    document.getElementById("btnpcredit").style.fontWeight = "normal";
+    document.getElementById("btnprefund").style.fontWeight = "normal";
+    document.getElementById("btnpoutstand").style.fontWeight = "normal";
+    document.getElementById("btnphistory").style.fontWeight = "normal";
+    document.getElementById("btnprhistory").style.fontWeight = "bold";
+}
+
+function funcORate() {
+    document.getElementById("orate").style.display = "block";
+    document.getElementById("omessage").style.display = "none";
+    
+    document.getElementById("btnorate").style.fontWeight = "bold";
+    document.getElementById("btnomessage").style.fontWeight = "normal";
+}
+
+function funcOMessage() {
+    document.getElementById("orate").style.display = "none";
+    document.getElementById("omessage").style.display = "block";
+    
+    document.getElementById("btnorate").style.fontWeight = "normal";
+    document.getElementById("btnomessage").style.fontWeight = "bold";
 }
 
 function checkPass() {

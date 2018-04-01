@@ -12,6 +12,10 @@ $query6 = "SELECT * FROM top_up WHERE payment_id='$payment_id'";
 $result6 = mysqli_query($con, $query6);
 $results6 = mysqli_fetch_assoc($result6);
 
+$query7 = "SELECT * FROM payment WHERE payment_id='$payment_id'";
+$result7 = mysqli_query($con, $query7);
+$results7 = mysqli_fetch_assoc($result7);
+
 ?>
 
 <!DOCTYPE html>
@@ -151,7 +155,7 @@ $results6 = mysqli_fetch_assoc($result6);
                     </div>
 
                     <div class="modal-body left">
-                        <img src="../receipts/<?php echo $results6['file']; ?>" style="width: 500px; height: 450px;">
+                        <img src="../receipts/<?php echo $results7['file']; ?>" style="width: 500px; height: 450px;">
                     </div>
 
                     <div class="modal-footer">

@@ -1,6 +1,6 @@
 <?php
 
-/*require_once '../connection/config.php';
+require_once '../connection/config.php';
 session_start();
 $user_id = $_SESSION['user_id'];
 $order_item = $_POST['order_item'];
@@ -41,8 +41,7 @@ if(isset($_POST['paybycredit']))
     ?>
     <script>
     alert('Successfully Submit');
-    opener.window.location.href='main.php#purchase';
-    window.opener.location.reload(true); window.close();
+    window.location.href='main.php#purchase';
     </script>
     <?php
 }
@@ -82,8 +81,8 @@ if(isset($_POST['uploadreceipt']))
 		?>
 		<script>
 		alert('Successfully Submit');
-        opener.window.location.href='main.php#purchase';
-        window.opener.location.reload(true); window.close();
+        alert('Successfully Submit');
+        window.location.href='main.php#purchase';
         </script>
 		<?php
 	}
@@ -92,7 +91,7 @@ if(isset($_POST['uploadreceipt']))
 $query11 = "SELECT *
            FROM order_item
            WHERE order_item_id IN (".implode(',',$order_item).")";
-$result11 = mysqli_query($con, $query11);*/
+$result11 = mysqli_query($con, $query11);
 
 ?>
 

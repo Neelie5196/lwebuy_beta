@@ -329,7 +329,6 @@ $result8 = mysqli_query($con, $query8);
                             $payment=0;
                             while($row = mysqli_fetch_array($result4))
                             {
-                                $payment = $row['payment_id'];
                                 ?>
                                 <tr>
                                     <td><?php echo $row['fname']." ".$row['lname']; ?></td>
@@ -360,12 +359,7 @@ $result8 = mysqli_query($con, $query8);
                         <h5 class="modal-title" id="creditpayTitle">Receipt</h5>
                     </div>
                     <div class="modal-body left">
-                        <?php
-                            $query5 = "SELECT * FROM payment WHERE payment_id='$payment'";
-                            $result5 = mysqli_query($con, $query5);
-                            $results5 = mysqli_fetch_assoc($result5);
-                        ?>
-                        <img src="../receipts/<?php echo $results5['file']; ?>" style="width: 500px; height: 450px;">
+                        <img src="#" style="width: 500px; height: 450px;">
                     </div>
 
                     <div class="modal-footer">

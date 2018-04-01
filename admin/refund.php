@@ -53,6 +53,8 @@ if(isset($_POST['refundsave']))
                 <table class="purchasetable">
                     <tr class="center">
                         <th>Customer</th>
+                        <th>Contact</th>
+                        <th>Email</th>
                         <th>Total Amount (RM)</th>
                         <th>Refund Amount (RM)</th>
                         <th>Admin Charge (RM)</th>
@@ -67,6 +69,8 @@ if(isset($_POST['refundsave']))
                                 ?>
                                 <tr>
                                     <td><?php echo $row['fname']." ".$row['lname']; ?></td>
+                                    <td><?php echo $row['contact']; ?></td>
+                                    <td><?php echo $row['email']; ?></td>
                                     <td><?php echo $row['total_amount']; ?></td>
                                     <td><?php echo $row['refund_amount']; ?></td>
                                     <td><?php echo $row['admin_charge']; ?></td>
@@ -117,6 +121,8 @@ if(isset($_POST['refundsave']))
                 <table class="purchasetable">
                     <tr class="center">
                         <th>Customer</th>
+                        <th>Contact</th>
+                        <th>Email</th>
                         <th>Total Amount (RM)</th>
                         <th>Refund Amount (RM)</th>
                         <th>Admin Charge (RM)</th>
@@ -131,6 +137,8 @@ if(isset($_POST['refundsave']))
                                 ?>
                                 <tr>
                                     <td><?php echo $row['fname']." ".$row['lname']; ?></td>
+                                    <td><?php echo $row['contact']; ?></td>
+                                    <td><?php echo $row['email']; ?></td>
                                     <td><?php echo $row['total_amount']; ?></td>
                                     <td><?php echo $row['refund_amount']; ?></td>
                                     <td><?php echo $row['admin_charge']; ?></td>

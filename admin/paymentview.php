@@ -270,12 +270,11 @@ if(isset($_POST['declinepayment']))
                             ?>
                                 <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
                                     <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                                    <input type="submit" class="btn btn-success btnSend" name="approve" value="Pay by LWE point" />
+                                    <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
                                 </form>
                             <?php
                         }
-                    ?>
-                    <?php 
+                    
                         if(mysqli_num_rows($result11) > 0)
                         {
                             while($row = mysqli_fetch_array($result11))
@@ -335,7 +334,7 @@ if(isset($_POST['declinepayment']))
                             </tr>
 
                             <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">
-                            <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
+                            <input type="hidden" name="numbers" value="<?php /*echo $counter?;*/ ?>">
                             <?php
                                     }
 
@@ -375,7 +374,7 @@ if(isset($_POST['declinepayment']))
                                         ?>
                                         <a class="btn btnDecline btnmargin" href="#topupPPayment" data-toggle="modal">Top-up</a>
                                         <?php
-                                    }
+                                    /*}*/
                                 ?>
                                 <a class="btn btnmargin btn-danger" href="#declinePPayment" data-toggle="modal">Decline</a>
                             </p>

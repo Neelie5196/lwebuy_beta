@@ -273,8 +273,7 @@ if(isset($_POST['declinepayment']))
                                     </form>
                                 <?php
                             }
-                        ?>
-                        <?php 
+                        
                             if(mysqli_num_rows($result11) > 0)
                             {
                                 while($row = mysqli_fetch_array($result11))
@@ -296,16 +295,22 @@ if(isset($_POST['declinepayment']))
                 </table>
             </div>
         </div>
+        
+        <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12 payviewsdetails">
+                <p>Receipient Name : <?php echo $results1['recipient_name']; ?></p>
+                <p>Receipient Contact : <?php echo $results1['recipient_contact']; ?></p>
+                <p>Remark : <?php echo $results1['remark']; ?></p>
+                <p>Address : <?php echo $results1['address'].", ".$results1['postcode'].", ".$results1['city'].", ".$results1['state']; ?></p>
+                <p>Country : <?php echo $results1['country']; ?></p>
+            </div>
+        </div>
+        
         <div class="row">
             <form action="paymentviews.php?payment_id=<?php echo $payment_id; ?>" method="post">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
                         <table class="purchasetable">
-                            <p>Receipient Name : <?php echo $results1['recipient_name']; ?></p>
-                            <p>Receipient Contact : <?php echo $results1['recipient_contact']; ?></p>
-                            <p>Remark : <?php echo $results1['remark']; ?></p>
-                            <p>Address : <?php echo $results1['address'].", ".$results1['postcode'].", ".$results1['city'].", ".$results1['state']; ?></p>
-                            <p>Country : <?php echo $results1['country']; ?></p>
                             <tr>
                                 <th>Item Name</th>
                                 <th>Order Code</th>

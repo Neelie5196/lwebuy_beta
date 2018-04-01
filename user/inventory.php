@@ -8,6 +8,10 @@ $query = "SELECT *
           WHERE user_id='$user_id' AND status = 'request'";
 $result = mysqli_query($con, $query);
 
+$query5 = "SELECT *
+          FROM warehouse";
+$result5 = mysqli_query($con, $query5);
+
 if(isset($_POST['request']))
 {    
 
@@ -71,7 +75,8 @@ $result4 = mysqli_query($con, $query4);
             <table class="tblITab">
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" id="btnipending" onclick="funcIPending()">Pending</button></td>
-                    <td><button class="btn-link btntab" id="btnireceive" onclick="funcIReceive()">Received</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnireceive" onclick="funcIReceive()">Received</button></td>
+                    <td><button class="btn-link btntab" id="btniwarehouse" onclick="funcIWarehouse()">Warehouse Details</button></td>
                 </tr>
             </table>
         </div>
@@ -222,6 +227,34 @@ $result4 = mysqli_query($con, $query4);
                     ?>
                 </table>
             </div>
+        </div>
+        
+        <div id="iwarehouse">
+            <table class="purchasetable">
+                <tr>
+                    <th>Station Name</th>
+                    <th>Country</th>
+                    <th>Address</th>
+                </tr>
+                
+                <?php
+                    if(mysqli_num_rows($result5) > 0)
+                    {
+                        while($row5 = mysqli_fetch_array($result5))
+                        {
+                            ?>
+                    
+                <tr class="bodyrow">
+                    <td><?php echo $row5['station_name'] ?></td>
+                    <td><?php echo $row5['country_name'] ?></td>
+                    <td><?php echo $row5['address'] ?></td>
+                </tr>
+                
+                <?php
+                        }
+                    }
+                ?>
+            </table>
         </div>
     </div>
 </div>

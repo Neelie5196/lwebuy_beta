@@ -66,7 +66,7 @@ $result4 = mysqli_query($con, $query4);
     
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-12">
-            <table class="tblITab">
+            <table class="tblRTab">
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" id="btnrpurchase" onclick="funcRPurchase()">Purchases</button></td>
                     <td><button class="btn-link btntab" id="btnrhistory" onclick="funcRHistory()">History</button></td>

@@ -737,6 +737,12 @@ body {
 .tblITab {
     margin-left: 5%;
     margin-bottom: 1%;
+    width: 20%;    
+}
+
+.tblRTab {
+    margin-left: 5%;
+    margin-bottom: 1%;
     width: 15%;    
 }
 
@@ -760,12 +766,12 @@ body {
     display: block;
 }
 
-#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #sinsuff, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory, #wslot, #wwarehouse, #acustomer, #astaff, #pship, #phistory, #pcredit, #poutstand, #pinsuff, #omessage {
+#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #sinsuff, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory, #wslot, #wwarehouse, #acustomer, #astaff, #pship, #phistory, #pcredit, #poutstand, #pinsuff, #omessage, #iwarehouse {
     display: none;
 }
 
 #btnprequest, #btnipending, #btnsitem, #btncrequest, #btnrpurchase, #btnwpending, #btnaadmin, #btnppurchase, #btnorate {
-    font-weight: bold!important;
+    font-weight: bold;
 }
 
 .adcontainer {
@@ -1067,4 +1073,44 @@ body {
 
 .formfield::placeholder {
     color: rgba(255, 255, 255, 0.5);
+}
+
+.subtitle {
+    color: rgba(255, 255, 255);
+}
+
+.btnservice, .btnservice:focus, .btnservice:active, .btnservice:visited {
+    width: 100%;
+    font-weight: bold;
+    background: none;
+    color: rgba(255, 255, 255, 0.7);
+    outline: none!important;
+    box-shadow: none!important;
+}
+
+.btnservice:hover {
+    color: #fff;
+    outline: none!important;
+}
+
+.btnservice .glyphicon {
+    font-size: 90%;
+}
+
+.servicetbl td {
+    vertical-align: top;
+    padding: 1%;
+}
+
+.imgcol {
+    width: 20%;
+}
+
+.coltitle {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.serviceinfo {
+    padding-left: 4%;
 }

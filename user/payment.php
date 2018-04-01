@@ -194,7 +194,7 @@ $result11 = mysqli_query($con, $query11);*/
                         </div>
                         
                         <div id="ptrans">
-                            <form method="post" action="payment.php">
+                            <form method="post" action="payment.php" enctype="multipart/form-data">
                                 <h3>Banking Details </h3>
                                 <p>Bank: <?php echo $results8['bank']; ?></p>
                                 <p>Account No: <?php echo $results8['account_no']; ?></p>

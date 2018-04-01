@@ -68,7 +68,7 @@ $result8 = mysqli_query($con, $query8);
                     <td class="wborder"><button class="btn-link btntab" id="btnppurchase" onclick="funcPPurchase()">Purchases</button></td>
                     <td class="wborder"><button class="btn-link btntab" id="btnpship" onclick="funcPShip()">Shipping</button></td>
                     <td class="wborder"><button class="btn-link btntab" id="btnpcredit" onclick="funcPCredit()">Credit Reload</button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnpoutstand" onclick="funcPOutstand()">Payments for Outstanding Fees</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpoutstand" onclick="funcPOutstand()">Outstanding Payments</button></td>
                     <td><button class="btn-link btntab" id="btnphistory" onclick="funcPHistory()">History</button></td>
                 </tr>
             </table>

@@ -107,7 +107,7 @@ if(isset($_POST['topupsubmit']))
             <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-2 col-lg-push-2 paymentcontainer">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 payformcontainer">
-                        <form method="post" action="payment.php">
+                        <form method="post" action="paymentss.php" enctype="multipart/form-data">
                             <h3>Banking Details</h3>
                             <p>Bank: <?php echo $results2['bank']; ?></p>
                             <p>Account No: <?php echo $results2['account_no']; ?></p>

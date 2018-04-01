@@ -44,11 +44,10 @@
         </div>
         
         <div class="row homerow4">
-            <div class="col-xs-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-md-12 col-lg-12 left">
                 <p>
-                    <a href="tracking.php"><span class="glyphicon glyphicon-map-marker btnfoot" title="Track your item"></span></a>
-                    <a href="contact1.php"><span class="glyphicon glyphicon-envelope btnfoot" title="Email us"></span></a>
-                    <a href="contact2.php"><span class="glyphicon glyphicon-earphone btnfoot" title="Call us"></span></a>
+                    <a href="contact1.php" target="_blank"><span class="glyphicon glyphicon-envelope btnfoot" title="Leave us a message"></span></a>
+                    <a href="contact2.php" target="_blank"><span class="glyphicon glyphicon-earphone btnfoot" title="Call us"></span></a>
                     Copyright &copy; 2018 Logistics Worldwide Express. All Rights Reserved | Web Design by Clement, Samuel & Eileen
                 </p>
             </div>

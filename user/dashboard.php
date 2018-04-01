@@ -80,3 +80,13 @@ session_start();
         </div>
     </div>
 </div>
+
+<div class="row dashrow4">
+    <div class="col-xs-12 col-md-12 col-lg-12 left">
+        <p>
+            <a href="../contact1.php" target="_blank"><span class="glyphicon glyphicon-envelope btnfoot" title="Leave us a message"></span></a>
+            <a href="../contact2.php" target="_blank"><span class="glyphicon glyphicon-earphone btnfoot" title="Call us"></span></a>
+            Copyright &copy; 2018 Logistics Worldwide Express. All Rights Reserved | Web Design by Clement, Samuel & Eileen
+        </p>
+    </div>
+</div>

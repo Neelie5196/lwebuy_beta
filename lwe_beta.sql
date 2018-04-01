@@ -70,6 +70,31 @@ INSERT INTO `category` (`category_id`, `category_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `contact`
+--
+
+CREATE TABLE `contact` (
+  `m_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `contact` varchar(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `subject` varchar(20) NOT NULL,
+  `trackcode` varchar(20) DEFAULT NULL,
+  `message` text NOT NULL,
+  `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `contact`
+--
+
+INSERT INTO `contact` (`m_id`, `name`, `contact`, `email`, `subject`, `trackcode`, `message`, `datetime`) VALUES
+(0, 'e', '1', 'r@e', '1', '213', 'sgddfhgfjg', '0000-00-00 00:00:00'),
+(0, 'e2', '123', 'e@e', 'ssdgs', '', 'ssgdg', '2018-04-01 12:41:46');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `country`
 --
 

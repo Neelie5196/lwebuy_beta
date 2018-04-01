@@ -28,10 +28,10 @@ if(isset($_POST['update-point']))
     $pointratio = $_POST['pointratio'];
     $rate_id = $_POST['rate_id'];
 	
-	$result = mysqli_query($con, "UPDATE rate SET rate='$pointratio' WHERE rate_id = $rate_id ") or die(mysqli_error($con));
+	$update = mysqli_query($con, "UPDATE rate SET rate='$pointratio' WHERE rate_id = $rate_id ") or die(mysqli_error($con));
     ?>
     <script>
-    alert('Success to Update');
+    alert('Credit rates updated');
     window.location.href='rate.php?success';
     </script>
     <?php
@@ -42,10 +42,10 @@ if(isset($_POST['update-weight']))
     $weightratio = $_POST['weightratio'];
     $rate_id = $_POST['rate_id'];
 	
-	$result = mysqli_query($con, "UPDATE rate SET rate='$weightratio' WHERE rate_id = $rate_id ") or die(mysqli_error($con));
+	$update = mysqli_query($con, "UPDATE rate SET rate='$weightratio' WHERE rate_id = $rate_id ") or die(mysqli_error($con));
     ?>
     <script>
-    alert('Success to Update');
+    alert('Weight rates updated');
     window.location.href='rate.php?success';
     </script>
     <?php
@@ -54,15 +54,27 @@ if(isset($_POST['update-weight']))
 if(isset($_POST['update-currency']))
 {    
     $currency = $_POST['currency'];
+	
+	$update = mysqli_query($con, "UPDATE country SET country_currency='$currency'") or die(mysqli_error($con));
+    ?>
+    <script>
+    alert('Currency rates updated');
+    window.location.href='rate.php?success';
+    </script>
+    <?php
+}
+
+if(isset($_POST['update-bankdetails']))
+{    
 	$cname = $_POST['cname'];
 	$bname = $_POST['bname'];
 	$accno = $_POST['accno'];
     $country_id = $_POST['country_id'];
 	
-	$result = mysqli_query($con, "UPDATE country SET country_currency='$currency', country_name='$cname', bank='$bname', account_no='$accno' WHERE country_id = $country_id ") or die(mysqli_error($con));
+	$update = mysqli_query($con, "UPDATE country SET country_name='$cname', bank='$bname', account_no='$accno' WHERE country_id = $country_id ") or die(mysqli_error($con));
     ?>
     <script>
-    alert('Success to Update');
+    alert('Bank details updated');
     window.location.href='rate.php?success';
     </script>
     <?php
@@ -74,73 +86,70 @@ if(isset($_POST['update-currency']))
     <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Adjust Rate</h2>
     <h2 class="smh2 pagetitle hidden-md hidden-lg">Adjust Rate</h2>
     
-    <div class="adreview left">
-      <form action="rate.php" method="post">
-                    <div class="col-xs-12 col-md-6 col-lg-6">
-                        <div class="row udashrow1">
-                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                <h2>Point Ratio</h2>
-                                <hr/>
-                                <center>
-                                    <h4>
-                                        LWE points = RM <input type="number" name="pointratio" step="0.01" value="<?php echo $results['rate']; ?>" style="width: 20%;" />
-                                        <br/><br/>
-                                        <input type="hidden" name="rate_id" value="<?php echo $results['rate_id']; ?>"/>
-                                        <input type="submit" class="btn btn-success" name="update-point" value="Save">
-                                    </h4>
-                                </center>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-    <div align="center">
-    <br />
-
-    </div>
-    <br /><br />
-   </div>
-    </div>
-			<form action="rate.php" method="post">
-                    <div class="col-xs-12 col-md-6 col-lg-6">
-                        <div class="row udashrow1">
-                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                <h2>Weight Ratio</h2>
-                                <hr/>
-                                <center>
-                                    <h4>
-                                        1KG = RM <input type="number" name="weightratio" step="0.01" value="<?php echo $results1['rate']; ?>" style="width: 20%;" />
-                                        <br/><br/>
-                                        <input type="hidden" name="rate_id" value="<?php echo $results1['rate_id']; ?>"/>
-                                        <input type="submit" class="btn btn-success" name="update-weight" value="Save">
-                                    </h4>
-                                </center>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-		
-		<div class="row">
-                <form action="rate.php" method="post">
-                    <div class="col-xs-12 col-md-6 col-lg-6">
-                        <div class="row udashrow1">
-                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                <h2>Bank Details</h2>
-                                <hr/>
-								<center>
-                                    <h4>
-                                        1 RMB = RM <input type="number" name="currency" step="0.01" value="<?php echo $results2['country_currency']; ?>" style="width: 20%;" />
-                                        Country Name : <input type="text" name="cname" step="0.01" value="<?php echo $results2['country_name']; ?>" style="width: 20%;" />
-										Bank Name : <input type="text" name="bname" step="0.01" value="<?php echo $results2['bank']; ?>" style="width: 20%;" />
-										Account Number: <input type="number" name="accno" step="0.01" value="<?php echo $results2['account_no']; ?>" style="width: 20%;" />
-										<br/><br/>
-                                        <input type="hidden" name="country_id" value="<?php echo $results2['country_id']; ?>"/>
-                                        <input type="submit" class="btn btn-success" name="update-currency" value="Save">
-                                    </h4>
-                                </center>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+    <div class="row rateoutcontainer">
+        <div class="col-xs-12 col-md-3 col-lg-3">
+            <div class="ratecontainer">
+                <h3 class="bigh3 hidden-xs hidden-sm">Currency Ratio</h3>
+                <h3 class="smh3 hidden-md hidden-lg">Currency Ratio</h3>
+                
+                <p class="rateline">1 RMB = RM <input type="number" class="ratefield" name="currency" step="0.01" value="<?php echo $results2['country_currency']; ?>" /></p>
+                
+                <input type="hidden" name="rate_id" value="<?php echo $results['rate_id']; ?>"/>
+                <p><input type="submit" class="btn btnGo" name="update-currency" value="Save"></p>
             </div>
-
-
+        </div>
+        
+        <div class="col-xs-12 col-md-3 col-lg-3">
+            <div class="ratecontainer">
+                <h3 class="bigh3 hidden-xs hidden-sm">Weight Ratio</h3>
+                <h3 class="smh3 hidden-md hidden-lg">Weight Ratio</h3>
+                
+                <p class="rateline">1KG = RM <input type="number" class="ratefield" name="weightratio" step="0.01" value="<?php echo $results1['rate']; ?>" /></p>
+                
+                <input type="hidden" name="rate_id" value="<?php echo $results['rate_id']; ?>"/>
+                <p><input type="submit" class="btn btnGo" name="update-weight" value="Save"></p>
+            </div>
+        </div>
+        
+        <div class="col-xs-12 col-md-3 col-lg-3">
+            <div class="ratecontainer">
+                <h3 class="bigh3 hidden-xs hidden-sm">Credit Ratio</h3>
+                <h3 class="smh3 hidden-md hidden-lg">Credit Ratio</h3>
+                
+                <p class="rateline">LWE points = RM <input type="number" class="ratefield" name="pointratio" step="0.01" value="<?php echo $results['rate']; ?>" /></p>
+                
+                <input type="hidden" name="rate_id" value="<?php echo $results['rate_id']; ?>"/>
+                <p><input type="submit" class="btn btnGo" name="update-point" value="Save"></p>
+            </div>
+        </div>
+        
+        <div class="col-xs-12 col-md-3 col-lg-3">
+            <div class="ratecontainer">
+                <h3 class="bigh3 hidden-xs hidden-sm">Bank Details</h3>
+                <h3 class="smh3 hidden-md hidden-lg">Bank Details</h3>
+                
+                <table class="banktable">
+                    <tr>
+                        <td class="left"><p>Country Name:</p></td>
+                        <td><p><input type="text" name="cname" class="bankfield" step="0.01" value="<?php echo $results2['country_name']; ?>" /></p></td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="left"><p>Bank Name : </p></td>
+                        <td><p><input type="text" name="bname" class="bankfield" step="0.01" value="<?php echo $results2['bank']; ?>" /></p></td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="left"><p>Account Number: </p></td>
+                        <td><p><input type="number" name="accno" class="bankfield" step="0.01" value="<?php echo $results2['account_no']; ?>" /></p></td>
+                    </tr>                    
+                </table>
+                
+                
+                <input type="hidden" name="country_id" value="<?php echo $results2['country_id']; ?>"/>
+                
+                <p><input type="submit" class="btn btnGo" name="update-bankdetails" value="Save"></p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,11 +12,17 @@ $query1 = "SELECT *
           FROM payment
           WHERE user_id='$user_id' AND status='Completed' OR user_id='$user_id' AND status='Declined'";
 $result1 = mysqli_query($con, $query1);
+
+$query2 = "SELECT *
+          FROM payment
+          WHERE user_id='$user_id'";
+$result2 = mysqli_query($con, $query2);
+$results2 = mysqli_fetch_assoc($result2);
 ?>
 <?php
 if(isset($_POST["amount"]))
 {    
-		$file = $_FILES['treceipt'];
+		$file = $_FILES['file'];
 		$fileName = $file['name'];
 		$fileTmpName = $file['tmp_name'];
 		$fileError = $file['error'];
@@ -38,7 +44,8 @@ if(isset($_POST["amount"]))
 		} else {
 			echo "You cannot upload files of this type!";
 		}
-	
+	$unique_id = rand(10000,100000). $user_id;
+    $payment_id = $unique_id;
 	$user_id = $_SESSION['user_id'];
 	$title = 'Reload Point';
 	$amount = $_POST['amount'];
@@ -46,7 +53,7 @@ if(isset($_POST["amount"]))
 	$type = $fileType;
 	$status = 'Waiting for approval';
 	
-	$result = mysqli_query($con, "INSERT INTO payment SET user_id='$user_id', title='$title', amount='$amount', file = '$file', type = '$type',status='$status'") or die(mysqli_error($con));
+	$result = mysqli_query($con, "INSERT INTO payment SET  payment_id='$payment_id', user_id='$user_id', title='$title', amount='$amount', file = '$file', type = '$type',status='$status'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Request Sent!');
@@ -106,7 +113,7 @@ if (isset($_GET['payment_id']))
                     <tr class="bodyrow">
                         <td><?php echo $row['title']; ?></td>
                         <td>RM <?php echo $row['amount']; ?></td>
-                        <td><a href="" class="btntab" target="_blank">View receipt</a></td>
+                        <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">View Receipt</button></td>
                         <td><?php echo $row['datetime']; ?></td>
                         <td>
                            <a href="credit.php?payment_id=<?php echo $row['payment_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
@@ -143,7 +150,7 @@ if (isset($_GET['payment_id']))
                             <h5 class="modal-title" id="addCreditTitle">Top Up Credit</h5>
                         </div>
 
-                        <form method="post" action="credit.php">
+                        <form method="post" action="credit.php" enctype="multipart/form-data">
                             <div class="modal-body left">
                                 <p><input class="formfield" id ="amount "name="amount" type="text" placeholder="Enter top up amount" required /></p>
 
@@ -183,7 +190,7 @@ if (isset($_GET['payment_id']))
                     <tr class="bodyrow">
                         <td><?php echo $row1['title']; ?></td>
                         <td><?php echo $row1['amount']; ?></td>
-                        <td><a href="" class="btntab" target="_blank">View receipt</a></td>
+						<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">View Receipt</button></td>
                         <td><?php echo $row1['status']; ?></td>
                         <td></td>
                     </tr>
@@ -206,4 +213,24 @@ if (isset($_GET['payment_id']))
             </div>
         </div>
     </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Your Receipt</h4>
+      </div>
+      <div class="modal-body">
+        <img src="../receipts/<?php echo $results2['file']; ?>"><?php echo $results2['title']; ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>

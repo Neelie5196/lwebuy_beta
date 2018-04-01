@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2018 at 09:39 AM
+-- Generation Time: Apr 01, 2018 at 08:50 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -79,18 +79,10 @@ CREATE TABLE `contact` (
   `contact` varchar(11) NOT NULL,
   `email` varchar(50) NOT NULL,
   `subject` varchar(20) NOT NULL,
-  `trackcode` varchar(20) DEFAULT NULL,
+  `trackcode` varchar(20) NOT NULL,
   `message` text NOT NULL,
-  `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `contact`
---
-
-INSERT INTO `contact` (`m_id`, `name`, `contact`, `email`, `subject`, `trackcode`, `message`, `datetime`) VALUES
-(0, 'e', '1', 'r@e', '1', '213', 'sgddfhgfjg', '0000-00-00 00:00:00'),
-(0, 'e2', '123', 'e@e', 'ssdgs', '', 'ssgdg', '2018-04-01 12:41:46');
 
 -- --------------------------------------------------------
 
@@ -141,10 +133,12 @@ INSERT INTO `item` (`item_id`, `slot_id`, `from_order`, `item_description`, `ord
 (4, 10, 'Order Item', 'é”èˆžiPhoneXæ‰‹æœºå£³è‹¹æžœXæ–°æ¬¾é€æ˜Žå¥—ç¡…èƒ¶', '546', '0.30', '2018-03-29 07:57:02', 168112, 'In'),
 (5, 2, 'Order Item', 'è‹¹æžœ6æ‰‹æœºå£³æŒ‚ç»³å¥³æ¬¾éŸ©å›½å¡é€šé•¶é’»å¸¦ç', '71523875', '0.50', '2018-03-29 09:03:58', 877923, 'In'),
 (6, 10, 'Order Item', 'vivox20æ‰‹æœºå£³x20plusè¶…è–„ç£¨ç ‚å£³vivo x9så…¨å', '762345871', '0.80', '2018-03-29 07:57:02', 168112, 'In'),
-(7, 10, 'Order Item', 'ç«‹ä½“å¯çˆ±å¡é€šè¶´è¶´è“å…‰é•œé¢iphoneX/6sæ‰‹æ', '238468753', '0.30', '2018-03-29 09:12:43', 512612, 'In'),
+(7, 10, 'Order Item', 'ç«‹ä½“å¯çˆ±å¡é€šè¶´è¶´è“å…‰é•œé¢iphoneX/6sæ‰‹æ', '238468753', '0.30', '2018-03-30 08:42:59', NULL, 'In'),
 (8, 2, 'Receive Request', 'iphone casing', '1237634', '0.20', '2018-03-29 09:03:58', 877923, 'In'),
 (9, 10, 'Order Item', 'test1', '13647', '23.00', '2018-03-29 09:27:21', 496642, 'In'),
-(10, 10, 'Purchase Request', 'test1', '6152374', '1.20', '2018-03-30 06:32:51', NULL, 'In');
+(10, 10, 'Purchase Request', 'test1', '6152374', '1.20', '2018-03-30 06:32:51', NULL, 'In'),
+(11, 2, 'Purchase Request', 'bagpack', '12345', '1.30', '2018-04-01 05:28:26', 163783, 'In'),
+(12, 2, 'Purchase Request', 't-shirt', '12365', '0.20', '2018-04-01 05:28:26', 163783, 'In');
 
 -- --------------------------------------------------------
 
@@ -182,7 +176,9 @@ INSERT INTO `order_item` (`order_item_id`, `payment_id`, `user_id`, `order_item`
 (60, 710602, 2, 'é”èˆžiPhoneXæ‰‹æœºå£³è‹¹æžœXæ–°æ¬¾é€æ˜Žå¥—ç¡…èƒ¶é˜²æ‘”iPhone Xå¥³8Xæ½®ç‰Œè¶…è–„', 'https://detail.tmall.com/item.htm?spm=a230r.1.14.117.655d24997niGCK&id=558190398563&ns=1&abbucket=1', 'Others', 1, 'x transparent', '21.70', 'Received', '546', NULL, '2018-03-29 07:13:37', 2),
 (61, 864932, 2, 'test1', 'http://localhost/lwebuy_beta/user/main.php#purchase', 'Others', 2, 'try', '14.26', 'Received', '13647', NULL, '2018-03-29 09:26:46', 8),
 (62, 626932, 2, 'test1', '1234', 'Clothes', 2, '63', '6.20', 'Received', '6152374', NULL, '2018-03-30 06:33:11', 9),
-(63, 631612, 2, 'test2', '752378', 'Others', 1, '53', '2.48', 'Ready to Pay', NULL, NULL, '2018-03-30 07:34:04', 10);
+(63, 631612, 2, 'test2', '752378', 'Others', 1, '53', '2.48', 'Ready to Pay', NULL, NULL, '2018-03-30 07:34:04', 10),
+(64, 412293, 3, 'bagpack', 'http://localhost/lwebuy_beta/user/main.php#purchase', 'Bag', 1, 'blue', '21.08', 'Received', '12345', NULL, '2018-04-01 05:27:27', NULL),
+(65, 433243, 3, 't-shirt', 'http://localhost/lwebuy_beta/user/main.php#purchase', 'Clothes', 1, 'red', '6.20', 'Received', '12365', NULL, '2018-04-01 05:27:39', 11);
 
 -- --------------------------------------------------------
 
@@ -219,17 +215,24 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`payment_id`, `user_id`, `datetime`, `title`, `amount`, `file`, `type`, `status`, `top_up_id`) VALUES
+(111193, 3, '2018-04-01 05:26:01', 'Top-Up payment 433243', '1.20', '78808-receipt1.jpg', 'image/jpeg', 'Completed', 11),
 (161732, 2, '2018-03-29 10:43:25', 'Top-Up payment 168112', '5.00', '98577-receipt.jpg', 'image/jpeg', 'Completed', 5),
+(163783, 3, '2018-04-01 05:55:26', 'Pay Shipping', '75.00', '78525-receipt.jpg', 'image/jpeg', 'Completed', NULL),
 (164332, 2, '2018-03-29 06:46:48', 'Top-Up payment ', '3.70', '60456-receipt.jpg', 'image/jpeg', 'Completed', 2),
 (168112, 2, '2018-03-29 10:43:21', 'Pay Shipping', '75.00', '86743-receipt1.jpg', 'image/jpeg', 'Completed', NULL),
 (291973, 3, '2018-03-29 06:43:03', 'Pay Order', '17.36', '22046-receipt.jpg', 'image/jpeg', 'Completed', NULL),
 (316542, 2, '2018-03-30 05:09:08', 'Top-Up payment 626932', '1.40', '42782-receipt.jpg', 'image/jpeg', 'Completed', 9),
+(320183, 3, '2018-04-01 05:55:30', 'Top-Up payment 163783', '7.00', '94497-receipt1.jpg', 'image/jpeg', 'Completed', 12),
 (382662, 2, '2018-03-29 09:26:05', 'Top-Up payment 864932', '0.52', '76267-receipt.jpg', 'image/jpeg', 'Completed', 8),
+(412293, 3, '2018-04-01 05:22:27', 'Pay Order', '21.08', '78539-receipt1.jpg', 'image/jpeg', 'Completed', NULL),
 (427063, 3, '2018-03-29 06:43:11', 'Top-Up payment 291973', '2.36', '41498-receipt.jpg', 'image/jpeg', 'Completed', 1),
 (431582, 2, '2018-03-29 04:57:16', 'Pay Order', '53.32', '79069-receipt.jpg', 'image/jpeg', 'Completed', NULL),
+(433243, 3, '2018-04-01 05:25:58', 'Pay Order', '6.2', '44216-receipt.jpg', 'image/jpeg', 'Completed', NULL),
+(457173, 3, '2018-04-01 04:57:02', 'Top-Up payment 877923', '12.00', '64682-receipt1.jpg', 'image/jpeg', 'Waiting for Accept', 6),
 (474272, 2, '2018-03-30 06:00:52', 'Top-Up payment 631612', '0.48', '99039-receipt.jpg', 'image/jpeg', 'Declined', 10),
+(488042, 2, '2018-03-30 08:03:40', 'Top-Up payment 512612', '25.00', '97315-receipt.jpg', 'image/jpeg', 'Declined', 7),
 (496642, 2, '2018-03-29 09:28:47', 'Pay Shipping', '1150.00', '28131-receipt.jpg', 'image/jpeg', 'Completed', NULL),
-(512612, 2, '2018-03-29 09:12:43', 'Pay Shipping', '50.00', '5246-receipt1.jpg', 'image/jpeg', 'Waiting for Accept', NULL),
+(512612, 2, '2018-03-30 08:41:43', 'Pay Shipping', '50.00', '5246-receipt1.jpg', 'image/jpeg', 'Declined', NULL),
 (626932, 2, '2018-03-30 05:09:03', 'Pay Order', '12.40', '45590-receipt1.jpg', 'image/jpeg', 'Completed', NULL),
 (631612, 2, '2018-03-30 07:33:45', 'Pay Order', '2.48', '81055-receipt1.jpg', 'image/jpeg', 'Declined', NULL),
 (684783, 3, '2018-03-29 04:57:20', 'Pay Order', '23.56', '37041-receipt.jpg', 'image/jpeg', 'Completed', NULL),
@@ -281,15 +284,17 @@ CREATE TABLE `refund` (
   `total_amount` decimal(10,2) NOT NULL,
   `refund_amount` decimal(10,2) NOT NULL,
   `admin_charge` decimal(10,2) NOT NULL,
-  `refund_reason` varchar(255) NOT NULL
+  `refund_reason` varchar(255) NOT NULL,
+  `transaction_code` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `refund`
 --
 
-INSERT INTO `refund` (`refund_id`, `user_id`, `total_amount`, `refund_amount`, `admin_charge`, `refund_reason`) VALUES
-(1, 2, '2.00', '1.80', '0.20', 'test');
+INSERT INTO `refund` (`refund_id`, `user_id`, `total_amount`, `refund_amount`, `admin_charge`, `refund_reason`, `transaction_code`) VALUES
+(1, 2, '2.00', '1.80', '0.20', 'test', '12635'),
+(2, 2, '30.00', '22.00', '8.00', 'try', NULL);
 
 -- --------------------------------------------------------
 
@@ -344,9 +349,9 @@ CREATE TABLE `shipping` (
 
 INSERT INTO `shipping` (`shipping_id`, `user_id`, `recipient_name`, `recipient_contact`, `remark`, `address_id`, `weight`, `price`, `status`, `datetime`, `tracking_code`, `payment_id`, `review`, `top_up_id`, `destination_station`) VALUES
 (6, 2, 'janice', '121242', '2nd floor', 51, '1.10', '75.00', 'Proceed', '2018-03-29 10:43:28', NULL, 168112, NULL, '5', ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA'),
-(7, 3, 'test', '753265', 'careful', 52, '0.90', '50.00', 'Top-up', '2018-03-29 09:04:41', NULL, 877923, NULL, NULL, ''),
-(8, 2, 'Janice', '7152375', '', 51, '0.30', '50.00', 'Top-up', '2018-03-29 09:13:11', NULL, 512612, NULL, NULL, ''),
-(9, 2, 'Janice', '146134', 'try', 51, '23.00', '1150.00', 'Proceed', '2018-03-29 09:28:49', NULL, 496642, NULL, NULL, ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA');
+(7, 3, 'test', '753265', 'careful', 52, '0.90', '50.00', 'Request', '2018-04-01 04:57:02', NULL, 877923, NULL, '6', ''),
+(9, 2, 'Janice', '146134', 'try', 51, '23.00', '1150.00', 'Proceed', '2018-03-29 09:28:49', NULL, 496642, NULL, NULL, ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA'),
+(10, 3, 'Test1', '172853764', 'try', 52, '1.50', '75.00', 'Proceed', '2018-04-01 05:55:33', NULL, 163783, NULL, '12', ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA');
 
 -- --------------------------------------------------------
 
@@ -487,7 +492,9 @@ INSERT INTO `top_up` (`top_up_id`, `payment_id`, `paid_amount`, `top_up_amount`,
 (7, 512612, '25.00', '25.00', 'top-up'),
 (8, 864932, '25.00', '0.52', 'topup'),
 (9, 626932, '11.00', '1.40', 'not enough'),
-(10, 631612, '2.00', '0.48', '123');
+(10, 631612, '2.00', '0.48', '123'),
+(11, 433243, '5.00', '1.20', 'topup'),
+(12, 163783, '68.00', '7.00', 'not enough');
 
 -- --------------------------------------------------------
 
@@ -574,6 +581,12 @@ ALTER TABLE `address`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`category_id`);
+
+--
+-- Indexes for table `contact`
+--
+ALTER TABLE `contact`
+  ADD PRIMARY KEY (`m_id`);
 
 --
 -- Indexes for table `country`
@@ -700,6 +713,12 @@ ALTER TABLE `category`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `contact`
+--
+ALTER TABLE `contact`
+  MODIFY `m_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `country`
 --
 ALTER TABLE `country`
@@ -709,13 +728,13 @@ ALTER TABLE `country`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `package`
@@ -739,19 +758,19 @@ ALTER TABLE `rate`
 -- AUTO_INCREMENT for table `refund`
 --
 ALTER TABLE `refund`
-  MODIFY `refund_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `refund_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
-  MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `shipping_update_details`
@@ -781,7 +800,7 @@ ALTER TABLE `state`
 -- AUTO_INCREMENT for table `top_up`
 --
 ALTER TABLE `top_up`
-  MODIFY `top_up_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `top_up_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`

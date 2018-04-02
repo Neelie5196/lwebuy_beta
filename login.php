@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                             <input type="password" class="formfield" id="password" name="password" required/>
                         </p>
 
-                        <p><a href="#">Forgot password?</a></p>
+                        <p><a href="forgot.php">Forgot password?</a></p>
 
                         <p>
                             <button type="submit" class="btn btn-default btnlogin" name="login">Login</button>

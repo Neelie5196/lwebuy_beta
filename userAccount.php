@@ -110,17 +110,7 @@ if(isset($_POST['forgotSubmit'])){
     $redirectURL = ($sessData['status']['type'] == 'success')?'index.php':'resetPassword.php?fp_code='.$fp_code;
 	//redirect to the login/reset pasword page
     header("Location:".$redirectURL);
-}elseif(!empty($_REQUEST['logoutSubmit'])){
-	//remove session data
-    unset($_SESSION['sessData']);
-    session_destroy();
-	//store logout status into the ession
-    $sessData['status']['type'] = 'success';
-    $sessData['status']['msg'] = 'You have logout successfully from your account.';
-    $_SESSION['sessData'] = $sessData;
-	//redirect to the home page
-    header("Location:index.php");
 }else{
 	//redirect to the home page
-    header("Location:index.php");
+    header("Location:login.php");
 }

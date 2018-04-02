@@ -498,42 +498,56 @@ body {
     width: 74%;
 }
 
-.bigbar li {
+.adbigbar > div {
+    width: 8%;
+    margin-left: 1%;
+}
+
+.adbigbar .useritem {
+    width: 8%;
+}
+
+.adbigbar .menuitem {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.bigbar li, .adbigbar li {
     float: none;
     display:inline-block;
     vertical-align: middle;
     margin: 0 2%; 
 }
 
-.bigbar > ul > li > a {
+.bigbar > ul > li > a, .adbigbar > ul > li > a {
     color: #8bb836!important;
     font-weight: bold;
 }
 
-.bigbar > ul > li > a:hover {
+.bigbar > ul > li > a:hover, .adbigbar > ul > li > a:hover {
     color: #2f9142!important;
 }
 
-.bigbar {
+.bigbar, .adbigbar {
     background: none!important;
     border-bottom: solid 2px #2f9142;
     margin-bottom: 0.5%;
 }
 
-.bigbar .navbar-right {
+.bigbar .navbar-right, .adbigbar .navbar-right {
     margin-right: 2%;
 }
 
-.bigbar .glyphicon {
+.bigbar .glyphicon, .adbigbar .glyphicon {
     color: #8bb836!important;
     font-size: 110%;
 }
 
-.bigbar .glyphicon:hover {
+.bigbar .glyphicon:hover, .adbigbar .glyphicon:hover {
     color: #2f9142!important;
 }
 
-.bigbar .glyphicon-user {
+.bigbar .glyphicon-user, .adbigbar .glyphicon-user {
     margin-right: 0!important;
     border-right: none!important;
     padding-right: 0!important;

@@ -62,7 +62,7 @@ $count2 = mysqli_num_rows($result2);
             <li><a href="#ship" id="btnship" onclick="resettimeoutimer()">Ship<?php if ($count1 > 0) { ?><span class="notify"><?php echo $count1 ?></span><?php } ?></a></li>
             <li><a href="#track" id="btntrack" onclick="resettimeoutimer()">Track</a></li>
         
-            <li><a id="btncredit" href="#credit" onclick="resettimeoutimer()">Credits</span></a></li>
+            <li><a id="btncredit" href="#credit" onclick="resettimeoutimer()">Credits</a></li>
             <li><a id="btnuser" href="#user" onclick="resettimeoutimer()">My Account</a></li>
             <li><a href="../logout.php">Log Out</a></li>
         </ul>

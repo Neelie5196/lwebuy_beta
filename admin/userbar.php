@@ -33,9 +33,9 @@ $result5 = mysqli_query($con, $query5);
 $count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_rows($result3) + mysqli_num_rows($result4) + mysqli_num_rows($result5);
 ?>
 
-<nav class="navbar navbar-default hidden-xs hidden-sm bigbar">
+<nav class="navbar navbar-default hidden-xs hidden-sm adbigbar">
     <div class="navbar-header">
-        <a class="navbar-brand" href="#home" id="btnlogo" onclick="resettimeoutimer()"><img src="../resources/img/logo.png" alt="logo" width="50%"/></a>
+        <a class="navbar-brand" href="#home" id="btnlogo" onclick="resettimeoutimer()"><img src="../resources/img/logo.png" alt="logo" width="80%"/></a>
     </div>
     
     <ul class="nav navbar-nav center menuitem">

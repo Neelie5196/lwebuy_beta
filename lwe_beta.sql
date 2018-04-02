@@ -20,6 +20,9 @@ SET time_zone = "+00:00";
 -- Database: `lwe_beta`
 --
 
+CREATE DATABASE IF NOT EXISTS `lwe_beta`;
+USE `lwe_beta`;
+
 -- --------------------------------------------------------
 
 --

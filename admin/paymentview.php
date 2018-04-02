@@ -374,7 +374,7 @@ if(isset($_POST['declinepayment']))
                                         ?>
                                         <a class="btn btnDecline btnmargin" href="#topupPPayment" data-toggle="modal">Top-up</a>
                                         <?php
-                                    /*}*/
+                                    }
                                 ?>
                                 <a class="btn btnmargin btn-danger" href="#declinePPayment" data-toggle="modal">Decline</a>
                             </p>

@@ -741,7 +741,7 @@ body {
 .tblTab {
     margin-left: 5%;
     margin-bottom: 1%;
-    width: 40%;
+    width: 50%;
 }
 
 .tblATab {
@@ -753,7 +753,7 @@ body {
 .tblPTab {
     margin-left: 5%;
     margin-bottom: 1%;
-    width: 40%;
+    width: 60%;
 }
 
 .tblITab {
@@ -1135,4 +1135,9 @@ body {
 
 .serviceinfo {
     padding-left: 4%;
+}
+
+.payviewsdetails {
+    margin: 0 5%;
+    color: #2f9142;
 }

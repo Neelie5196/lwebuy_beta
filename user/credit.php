@@ -20,7 +20,7 @@ $result2 = mysqli_query($con, $query2);
 $results2 = mysqli_fetch_assoc($result2);
 ?>
 <?php
-if(isset($_POST["amount"]))
+if(isset($_POST["add"]))
 {    
 	$unique_id = rand(10000,100000). $user_id;
     $payment_id = $unique_id;
@@ -30,7 +30,6 @@ if(isset($_POST["amount"]))
     $file_loc = $_FILES['file']['tmp_name'];
 	$file_type = $_FILES['file']['type'];
 	$folder="../receipts/";
-    $amount = $_POST['amount'];
 	$type = $file_type;
     $title = 'Reload Point';
 	
@@ -43,7 +42,7 @@ if(isset($_POST["amount"]))
 	if(move_uploaded_file($file_loc,$folder.$final_file))
 	{
 	
-	$result = mysqli_query($con, "INSERT INTO payment SET  payment_id='$payment_id', user_id='$user_id', title='$title', amount='$amount', file = '$file', type = '$type',status='$status'") or die(mysqli_error($con));
+	$result = mysqli_query($con, "INSERT INTO payment SET  payment_id='$payment_id', user_id='$user_id', title='$title',file = '$file', type = '$type',status='$status'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Request Sent!');
@@ -89,7 +88,6 @@ if (isset($_GET['payment_id']))
                 <table class="purchasetable">
                     <tr class="center">
                         <th class="purchasecol3">Event</th>
-                        <th class="purchasecol2">Amount</th>
                         <th class="purchasecol2">Transaction Receipt</th>
                         <th class="purchasecol3">Submission Date</th>
                         <th class="purchasecol1"></th>
@@ -104,7 +102,6 @@ if (isset($_GET['payment_id']))
                     
                     <tr class="bodyrow">
                         <td><?php echo $row['title']; ?></td>
-                        <td>RM <?php echo $row['amount']; ?></td>
                         <td><button type="button" class="btn btntab" data-toggle="modal" data-target="#myModal" onclick="passimg('<?php echo $row['file']; ?>')">View Receipt</button></td>
                         <td><?php echo $row['datetime']; ?></td>
                         <td>
@@ -144,7 +141,7 @@ if (isset($_GET['payment_id']))
 
                         <form method="post" action="credit.php" enctype="multipart/form-data">
                             <div class="modal-body left">
-                                <p><input class="formfield" id ="amount "name="amount" type="text" placeholder="Enter top up amount" required /></p>
+                                
 
                                 <p>
                                     <label>Upload Transaction Receipt</label><br/>

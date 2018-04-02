@@ -82,6 +82,44 @@ if(isset($_POST['refundsave']))
     <?php
 }
 
+if(isset($_POST['approvec']))
+{
+	
+    $user_id = $_POST['user_id'];
+    $payment_id = $_POST['payment_id'];
+    $amount = $_POST['amount'];
+	
+	
+	$query0 = "SELECT * FROM rate WHERE rate_name='LWE point'";
+	$result0 = mysqli_query($con, $query0);
+	$results0 = mysqli_fetch_assoc($result0);
+	$point = $_POST['amount']*$results0['rate'];
+
+	
+    $update = mysqli_query($con, "UPDATE payment SET amount = '$amount', status='Completed' WHERE payment_id = '$payment_id' ") or die(mysqli_error($con));
+
+	
+	$query = "SELECT * 
+              FROM point
+              WHERE user_id = '$user_id'";
+    $results = mysqli_query($con, $query);
+    $resultss = mysqli_num_rows($results);
+    if($resultss > 0){
+        $result1 = mysqli_query($con, "UPDATE point SET point = point + '$point' WHERE user_id = $user_id ") or die(mysqli_error($con));
+    }else{
+        $result1 = mysqli_query($con, "INSERT INTO point SET user_id='$user_id', point='$point'") or die(mysqli_error($con));
+    }
+	
+   
+    ?>
+    <script>
+    alert('Reload Successufuly');
+    window.location.href='main.php#adpayment';
+    </script>
+    <?php
+}
+
+
 ?>
 
 <div class="col-xs-12 col-md-12 col-lg-12">
@@ -197,7 +235,7 @@ if(isset($_POST['refundsave']))
                     <tr class="center">
                         <th>Customer</th>
                         <th>Reload Amount</th>
-                        <th>Amount Paid (MYR)</th>
+                        <th>Submission Date</th>
                         <th>Receipt</th>
                     </tr>
                     <?php 
@@ -209,10 +247,9 @@ if(isset($_POST['refundsave']))
                                 <tr>
                                     <td><?php echo $row['fname']." ".$row['lname']; ?></td>
                                     <td><?php echo $row['title']; ?></td>
-                                    <td><?php echo $row['amount']; ?></td>
-                                    <td>
-                                        <a data-toggle="modal" class="btn btn-default btn-xs btnDelete" href="#creditpay"><span class="glyphicon glyphicon-eye-open"></span></a>
-                                    </td>
+                                    <td><?php echo $row['datetime']; ?></td>
+                                  
+									 <td><button type="button" class="btn btntab myModal" data-id="<?php echo $row['payment_id']; ?>" data-userid="<?php echo $row['user_id']; ?>" data-toggle="modal" data-target="#myModal" onclick="passimg('<?php echo $row['file']; ?>')">View Receipt</button></td>
                                 </tr>
                                 <?php
                             }
@@ -227,49 +264,31 @@ if(isset($_POST['refundsave']))
                 </table>
             </div>
             
-            <div class="modal fade" id="creditpay" tabindex="-1" role="dialog" aria-labelledby="creditpayTitle" aria-hidden="true">
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
+				<form action="payment.php" method="POST">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="creditpayTitle">Payment Receipt</h5>
+                            <h5 class="modal-title" id="myModalTitle">Receipt</h5>
                         </div>
 
-                        <form method="post" action="payment.php">
-                            <div class="modal-body">
-                                <p class="center"><img src="" /></p>
-                            </div>
+                        <div class="modal-body left">
+                            <p class="center">
+                                <img id="imgcontain" width="80%" />
+								<input type="hidden" name="user_id" id="userId" value="" />
+								<input type="hidden" name="payment_id" id="paymentId" value="" />
+								<input class="formfield" name="amount" type="number" placeholder="Reload Amount" required />
+                            </p>
+                        </div>
 
-                            <div class="modal-footer">
+                        <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
                                 <!-- auto generate shipping code when proceed -->
                                 <input type="submit" class="btn btn-success btnSend" name="approvec" value="Approve" />
                                 
-                                <a class="btn btnDecline" href="#declineCPayment" data-dismiss="modal" data-toggle="modal">Decline</a>
                             </div>
-                        </form>
                     </div>
-                </div>
-            </div>
-            
-            <div class="modal fade" id="declineCPayment" tabindex="-1" role="dialog" aria-labelledby="declineCPaymentTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="declineCPaymentTitle">Decline Payment</h5>
-                        </div>
-
-                        <form method="post" action="payment.php">
-                            <div class="modal-body left">
-                                <p><input class="formfield" name="reason" type="text" placeholder="Reason" required /></p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-
-                                <input type="submit" class="btn btn-success btnSend" name="sendc" value="Send" />
-                            </div>
-                        </form>
-                    </div>
+					</form>
                 </div>
             </div>
         </div>
@@ -518,5 +537,19 @@ $(document).on("click", ".transactionCode", function () {
     var refundId = $(this).data('id');
     $(".modal-body #refundId").val( refundId );
     $('#transactionCode').modal('show');
+});
+</script>
+<script>
+    function passimg(filename)
+    {
+        document.getElementById("imgcontain").setAttribute("src", "../receipts/" + filename);
+    }
+	
+	$(document).on("click", ".myModal", function () {
+    var paymentId = $(this).data('id');
+    var userId = $(this).data('userid');
+    $(".modal-body #paymentId").val( paymentId );
+    $(".modal-body #userId").val( userId );
+    $('#myModal').modal('show');
 });
 </script>

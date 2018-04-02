@@ -22,44 +22,35 @@ $results2 = mysqli_fetch_assoc($result2);
 <?php
 if(isset($_POST["amount"]))
 {    
-		$file = $_FILES['file'];
-		$fileName = $file['name'];
-		$fileTmpName = $file['tmp_name'];
-		$fileError = $file['error'];
-		$fileType = $file['type'];
-
-		$fileExt = explode('.', $fileName);
-		$fileActualExt = strtolower(end($fileExt));
-
-		$allowed = array('jpg', 'jpeg', 'png', 'pdf');
-
-		if (in_array($fileActualExt, $allowed)) {
-			if ($fileError === 0) {
-					$fileNameNew = uniqid('', true).".".$fileActualExt;
-					$fileDestination = '../receipts/'.$fileNameNew;
-					move_uploaded_file($fileTmpName, $fileDestination);
-			} else {
-				echo "There was an error uploading your file!";
-			}
-		} else {
-			echo "You cannot upload files of this type!";
-		}
 	$unique_id = rand(10000,100000). $user_id;
     $payment_id = $unique_id;
-	$user_id = $_SESSION['user_id'];
-	$title = 'Reload Point';
-	$amount = $_POST['amount'];
-	$file = $fileName;
-	$type = $fileType;
-	$status = 'Waiting for approval';
+    $status = 'Waiting for Approval';
+    
+    $file = rand(1000,100000)."-".$_FILES['file']['name'];
+    $file_loc = $_FILES['file']['tmp_name'];
+	$file_type = $_FILES['file']['type'];
+	$folder="../receipts/";
+    $amount = $_POST['amount'];
+	$type = $file_type;
+    $title = 'Reload Point';
+	
+	// make file name in lower case
+	$new_file_name = strtolower($file);
+	// make file name in lower case
+	
+	$final_file=str_replace(' ','-',$new_file_name);
+    
+	if(move_uploaded_file($file_loc,$folder.$final_file))
+	{
 	
 	$result = mysqli_query($con, "INSERT INTO payment SET  payment_id='$payment_id', user_id='$user_id', title='$title', amount='$amount', file = '$file', type = '$type',status='$status'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Request Sent!');
-    window.location.href='main.php#credit';
+     window.location.href='main.php#credit';
     </script>
     <?php
+}
 }
 ?>
 <?php

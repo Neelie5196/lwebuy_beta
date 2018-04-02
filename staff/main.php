@@ -1,5 +1,5 @@
 <?php
-
+require_once '../connection/config.php';
 session_start();
 
 ?>
@@ -20,6 +20,8 @@ session_start();
 
         <!--stylesheet-->
         <link href="../frameworks/css/style.css" rel="stylesheet"/>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -28,11 +30,12 @@ session_start();
         <![endif]-->
         
         <script src="../frameworks/js/lwe.js"></script>
+        <script src="../frameworks/js/refresh.js"></script>
     </head>
 
-    <body class="userbg">
+    <body class="userbg" onload="timeouttimer()">
         <div class="row">
-            <?php include_once "../userbar.php" ?>
+            <?php include_once "userbar.php" ?>
         </div>
         
         <div class="row userrow2 center" id="mainview">

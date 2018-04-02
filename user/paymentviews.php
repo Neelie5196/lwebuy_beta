@@ -75,15 +75,19 @@ $results6 = mysqli_fetch_assoc($result6);
             </div>
         </div>
         <div class="row">
+            <div class="col-xs-12 col-md-12 col-lg-12 payviewsdetails">
+                <p>Receipient Name : <?php echo $results1['recipient_name']; ?></p>
+                <p>Receipient Contact : <?php echo $results1['recipient_contact']; ?></p>
+                <p>Remark : <?php echo $results1['remark']; ?></p>
+                <p>Address : <?php echo $results1['address'].", ".$results1['postcode'].", ".$results1['city'].", ".$results1['state']; ?></p>
+                <p>Country : <?php echo $results1['country']; ?></p>
+            </div>
+        </div>
+        <div class="row">
             <form action="paymentsss.php" method="post">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
                         <table class="purchasetable">
-                            <p>Receipient Name : <?php echo $results1['recipient_name']; ?></p>
-                            <p>Receipient Contact : <?php echo $results1['recipient_contact']; ?></p>
-                            <p>Remark : <?php echo $results1['remark']; ?></p>
-                            <p>Address : <?php echo $results1['address'].", ".$results1['postcode'].", ".$results1['city'].", ".$results1['state']; ?></p>
-                            <p>Country : <?php echo $results1['country']; ?></p>
                             <tr>
                                 <th>Item Name</th>
                                 <th>Order Code</th>

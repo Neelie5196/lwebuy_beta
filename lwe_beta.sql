@@ -1,22 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
+-- version 4.3.11
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2018 at 08:50 AM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.1.11
+-- Generation Time: Apr 02, 2018 at 06:43 AM
+-- Server version: 5.6.24
+-- PHP Version: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `lwe_beta`
@@ -28,7 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `address`
 --
 
-CREATE TABLE `address` (
+CREATE TABLE IF NOT EXISTS `address` (
   `address_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `address` varchar(100) NOT NULL,
@@ -38,34 +36,32 @@ CREATE TABLE `address` (
   `postcode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `address`
---
-
-INSERT INTO `address` (`address_id`, `user_id`, `address`, `state`, `city`, `country`, `postcode`) VALUES
-(50, 1, 'cityone', 'Sarawak', 'kuching', 'Malaysia', 93350),
-(51, 2, 'cityone megamall', 'Sarawak', 'kuching', 'Malaysia', 93330),
-(52, 3, 'spring', 'Sarawak', 'kuching', 'Malaysia', 93350);
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `category`
 --
 
-CREATE TABLE `category` (
+CREATE TABLE IF NOT EXISTS `category` (
   `category_id` int(11) NOT NULL,
-  `category_name` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `category_name` varchar(50) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`category_id`, `category_name`) VALUES
-(1, 'Bag'),
-(2, 'Clothes'),
-(3, 'Others');
+(1, 'Electronic Devices'),
+(2, 'Accessories'),
+(3, 'TV& Home Appliances'),
+(4, 'Health & Beauty'),
+(5, 'Babies & Toys'),
+(6, 'Women''s Fashion'),
+(7, 'Men''s Fashion'),
+(8, 'Sports & Travel'),
+(9, 'Automotive '),
+(10, 'Others');
 
 -- --------------------------------------------------------
 
@@ -73,7 +69,7 @@ INSERT INTO `category` (`category_id`, `category_name`) VALUES
 -- Table structure for table `contact`
 --
 
-CREATE TABLE `contact` (
+CREATE TABLE IF NOT EXISTS `contact` (
   `m_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `contact` varchar(11) NOT NULL,
@@ -90,21 +86,21 @@ CREATE TABLE `contact` (
 -- Table structure for table `country`
 --
 
-CREATE TABLE `country` (
+CREATE TABLE IF NOT EXISTS `country` (
   `country_id` int(11) NOT NULL,
   `country_name` varchar(50) NOT NULL,
   `country_currency` decimal(10,2) NOT NULL,
   `bank` varchar(50) NOT NULL,
   `account_no` int(15) NOT NULL,
   `account_name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `country`
 --
 
 INSERT INTO `country` (`country_id`, `country_name`, `country_currency`, `bank`, `account_no`, `account_name`) VALUES
-(1, 'Malaysia', '0.62', 'Maybank', 123456789, 'Logistics Worldwide Express(M) Sdn Bhd');
+(1, 'Malaysias', '0.62', 'Maybanks', 1234567891, 'Logistics Worldwide Express(M) Sdn Bhd');
 
 -- --------------------------------------------------------
 
@@ -112,7 +108,7 @@ INSERT INTO `country` (`country_id`, `country_name`, `country_currency`, `bank`,
 -- Table structure for table `item`
 --
 
-CREATE TABLE `item` (
+CREATE TABLE IF NOT EXISTS `item` (
   `item_id` int(11) NOT NULL,
   `slot_id` int(11) NOT NULL,
   `from_order` varchar(20) NOT NULL,
@@ -122,23 +118,7 @@ CREATE TABLE `item` (
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `payment_id` int(11) DEFAULT NULL,
   `action` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `item`
---
-
-INSERT INTO `item` (`item_id`, `slot_id`, `from_order`, `item_description`, `order_code`, `weight`, `datetime`, `payment_id`, `action`) VALUES
-(3, 2, 'Order Item', 'è‹¹æžœxæ‰‹æœºå£³8xéšå½¢æŒ‡çŽ¯ä¸€ä½“10æ”¯æž¶è½¯iph', '123', '0.20', '2018-03-29 09:03:58', 877923, 'In'),
-(4, 10, 'Order Item', 'é”èˆžiPhoneXæ‰‹æœºå£³è‹¹æžœXæ–°æ¬¾é€æ˜Žå¥—ç¡…èƒ¶', '546', '0.30', '2018-03-29 07:57:02', 168112, 'In'),
-(5, 2, 'Order Item', 'è‹¹æžœ6æ‰‹æœºå£³æŒ‚ç»³å¥³æ¬¾éŸ©å›½å¡é€šé•¶é’»å¸¦ç', '71523875', '0.50', '2018-03-29 09:03:58', 877923, 'In'),
-(6, 10, 'Order Item', 'vivox20æ‰‹æœºå£³x20plusè¶…è–„ç£¨ç ‚å£³vivo x9så…¨å', '762345871', '0.80', '2018-03-29 07:57:02', 168112, 'In'),
-(7, 10, 'Order Item', 'ç«‹ä½“å¯çˆ±å¡é€šè¶´è¶´è“å…‰é•œé¢iphoneX/6sæ‰‹æ', '238468753', '0.30', '2018-03-30 08:42:59', NULL, 'In'),
-(8, 2, 'Receive Request', 'iphone casing', '1237634', '0.20', '2018-03-29 09:03:58', 877923, 'In'),
-(9, 10, 'Order Item', 'test1', '13647', '23.00', '2018-03-29 09:27:21', 496642, 'In'),
-(10, 10, 'Purchase Request', 'test1', '6152374', '1.20', '2018-03-30 06:32:51', NULL, 'In'),
-(11, 2, 'Purchase Request', 'bagpack', '12345', '1.30', '2018-04-01 05:28:26', 163783, 'In'),
-(12, 2, 'Purchase Request', 't-shirt', '12365', '0.20', '2018-04-01 05:28:26', 163783, 'In');
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -146,7 +126,7 @@ INSERT INTO `item` (`item_id`, `slot_id`, `from_order`, `item_description`, `ord
 -- Table structure for table `order_item`
 --
 
-CREATE TABLE `order_item` (
+CREATE TABLE IF NOT EXISTS `order_item` (
   `order_item_id` int(11) NOT NULL,
   `payment_id` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
@@ -161,36 +141,7 @@ CREATE TABLE `order_item` (
   `comment` varchar(255) DEFAULT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `top_up_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `order_item`
---
-
-INSERT INTO `order_item` (`order_item_id`, `payment_id`, `user_id`, `order_item`, `link`, `category`, `quantity`, `remark`, `price`, `status`, `order_code`, `comment`, `datetime`, `top_up_id`) VALUES
-(55, 684783, 3, 'è‹¹æžœ6æ‰‹æœºå£³æŒ‚ç»³å¥³æ¬¾éŸ©å›½å¡é€šé•¶é’»å¸¦ç±³å¥‡æ½®å¥³iphone6splusæ‰‹æœºå£³', 'https://detail.tmall.com/item.htm?spm=a230r.1.14.23.655d24997niGCK&id=543254012847&ns=1&abbucket=1&skuId=3432786071448', 'Others', 1, 'pink', '23.56', 'Received', '71523875', NULL, '2018-03-29 07:13:52', NULL),
-(56, 291973, 3, 'è‹¹æžœxæ‰‹æœºå£³8xéšå½¢æŒ‡çŽ¯ä¸€ä½“10æ”¯æž¶è½¯iphonexé˜²æ‘”ç¡…èƒ¶è½¯å£³ç”·å¥³x', 'https://detail.tmall.com/item.htm?id=566735439335&ali_refid=a3_430583_1006:1110869209:N:%E6%89%8B%E6%9C%BA%E5%A3%B3:3ec633ca32bd3bff47143aed7523ec2c&ali_trackid=1_3ec633ca32bd3bff47143aed7523ec2c&spm=a230r.1.14.1&skuId=3766516107594', 'Others', 1, 'red', '17.36', 'Received', '123', NULL, '2018-03-29 07:13:11', 1),
-(57, NULL, 3, 'iphone8plusä¿„ç½—æ–¯æ–¹å—æ‰‹æœºå£³è‹¹æžœ7æ¸¸æˆæœº6sæ–°æ¬¾åˆ›æ„6på¤å¤å…¨åŒ…X', 'https://detail.tmall.com/item.htm?spm=a230r.1.14.57.655d24997niGCK&id=565360139675&ns=1&abbucket=1', 'Others', 1, '6 black', NULL, 'Declined', NULL, 'cancel', '2018-03-29 04:55:30', NULL),
-(58, 431582, 2, 'vivox20æ‰‹æœºå£³x20plusè¶…è–„ç£¨ç ‚å£³vivo x9så…¨åŒ…é˜²æ‘”x9æ½®ç”·å¥³æ¬¾è½¯å¥—', 'https://item.taobao.com/item.htm?spm=a230r.1.14.141.655d24997niGCK&id=562155765683&ns=1&abbucket=1#detail', 'Others', 1, 'x20 black', '17.36', 'Received', '762345871', NULL, '2018-03-29 07:14:10', NULL),
-(59, 431582, 2, 'ç«‹ä½“å¯çˆ±å¡é€šè¶´è¶´è“å…‰é•œé¢iphoneX/6sæ‰‹æœºå£³è‹¹æžœ7/8plusæƒ…ä¾£è½¯å£³', 'https://item.taobao.com/item.htm?spm=a230r.1.14.176.655d24997niGCK&id=563036514616&ns=1&abbucket=1#detail', 'Others', 2, '6 bear', '17.98', 'Received', '238468753', NULL, '2018-03-29 07:20:13', NULL),
-(60, 710602, 2, 'é”èˆžiPhoneXæ‰‹æœºå£³è‹¹æžœXæ–°æ¬¾é€æ˜Žå¥—ç¡…èƒ¶é˜²æ‘”iPhone Xå¥³8Xæ½®ç‰Œè¶…è–„', 'https://detail.tmall.com/item.htm?spm=a230r.1.14.117.655d24997niGCK&id=558190398563&ns=1&abbucket=1', 'Others', 1, 'x transparent', '21.70', 'Received', '546', NULL, '2018-03-29 07:13:37', 2),
-(61, 864932, 2, 'test1', 'http://localhost/lwebuy_beta/user/main.php#purchase', 'Others', 2, 'try', '14.26', 'Received', '13647', NULL, '2018-03-29 09:26:46', 8),
-(62, 626932, 2, 'test1', '1234', 'Clothes', 2, '63', '6.20', 'Received', '6152374', NULL, '2018-03-30 06:33:11', 9),
-(63, 631612, 2, 'test2', '752378', 'Others', 1, '53', '2.48', 'Ready to Pay', NULL, NULL, '2018-03-30 07:34:04', 10),
-(64, 412293, 3, 'bagpack', 'http://localhost/lwebuy_beta/user/main.php#purchase', 'Bag', 1, 'blue', '21.08', 'Received', '12345', NULL, '2018-04-01 05:27:27', NULL),
-(65, 433243, 3, 't-shirt', 'http://localhost/lwebuy_beta/user/main.php#purchase', 'Clothes', 1, 'red', '6.20', 'Received', '12365', NULL, '2018-04-01 05:27:39', 11);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `package`
---
-
-CREATE TABLE `package` (
-  `package_id` int(11) NOT NULL,
-  `package_name` varchar(255) NOT NULL,
-  `package_price` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -198,12 +149,12 @@ CREATE TABLE `package` (
 -- Table structure for table `payment`
 --
 
-CREATE TABLE `payment` (
+CREATE TABLE IF NOT EXISTS `payment` (
   `payment_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `title` varchar(45) NOT NULL,
-  `amount` varchar(10) NOT NULL,
+  `amount` varchar(50) DEFAULT NULL,
   `file` varchar(150) DEFAULT NULL,
   `type` varchar(30) DEFAULT NULL,
   `status` varchar(20) NOT NULL,
@@ -215,30 +166,22 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`payment_id`, `user_id`, `datetime`, `title`, `amount`, `file`, `type`, `status`, `top_up_id`) VALUES
-(111193, 3, '2018-04-01 05:26:01', 'Top-Up payment 433243', '1.20', '78808-receipt1.jpg', 'image/jpeg', 'Completed', 11),
-(161732, 2, '2018-03-29 10:43:25', 'Top-Up payment 168112', '5.00', '98577-receipt.jpg', 'image/jpeg', 'Completed', 5),
-(163783, 3, '2018-04-01 05:55:26', 'Pay Shipping', '75.00', '78525-receipt.jpg', 'image/jpeg', 'Completed', NULL),
-(164332, 2, '2018-03-29 06:46:48', 'Top-Up payment ', '3.70', '60456-receipt.jpg', 'image/jpeg', 'Completed', 2),
-(168112, 2, '2018-03-29 10:43:21', 'Pay Shipping', '75.00', '86743-receipt1.jpg', 'image/jpeg', 'Completed', NULL),
-(291973, 3, '2018-03-29 06:43:03', 'Pay Order', '17.36', '22046-receipt.jpg', 'image/jpeg', 'Completed', NULL),
-(316542, 2, '2018-03-30 05:09:08', 'Top-Up payment 626932', '1.40', '42782-receipt.jpg', 'image/jpeg', 'Completed', 9),
-(320183, 3, '2018-04-01 05:55:30', 'Top-Up payment 163783', '7.00', '94497-receipt1.jpg', 'image/jpeg', 'Completed', 12),
-(382662, 2, '2018-03-29 09:26:05', 'Top-Up payment 864932', '0.52', '76267-receipt.jpg', 'image/jpeg', 'Completed', 8),
-(412293, 3, '2018-04-01 05:22:27', 'Pay Order', '21.08', '78539-receipt1.jpg', 'image/jpeg', 'Completed', NULL),
-(427063, 3, '2018-03-29 06:43:11', 'Top-Up payment 291973', '2.36', '41498-receipt.jpg', 'image/jpeg', 'Completed', 1),
-(431582, 2, '2018-03-29 04:57:16', 'Pay Order', '53.32', '79069-receipt.jpg', 'image/jpeg', 'Completed', NULL),
-(433243, 3, '2018-04-01 05:25:58', 'Pay Order', '6.2', '44216-receipt.jpg', 'image/jpeg', 'Completed', NULL),
-(457173, 3, '2018-04-01 04:57:02', 'Top-Up payment 877923', '12.00', '64682-receipt1.jpg', 'image/jpeg', 'Waiting for Accept', 6),
-(474272, 2, '2018-03-30 06:00:52', 'Top-Up payment 631612', '0.48', '99039-receipt.jpg', 'image/jpeg', 'Declined', 10),
-(488042, 2, '2018-03-30 08:03:40', 'Top-Up payment 512612', '25.00', '97315-receipt.jpg', 'image/jpeg', 'Declined', 7),
-(496642, 2, '2018-03-29 09:28:47', 'Pay Shipping', '1150.00', '28131-receipt.jpg', 'image/jpeg', 'Completed', NULL),
-(512612, 2, '2018-03-30 08:41:43', 'Pay Shipping', '50.00', '5246-receipt1.jpg', 'image/jpeg', 'Declined', NULL),
 (626932, 2, '2018-03-30 05:09:03', 'Pay Order', '12.40', '45590-receipt1.jpg', 'image/jpeg', 'Completed', NULL),
 (631612, 2, '2018-03-30 07:33:45', 'Pay Order', '2.48', '81055-receipt1.jpg', 'image/jpeg', 'Declined', NULL),
+(634592, 2, '2018-04-02 02:50:42', 'Top-Up payment 857472', '25.00', '77491-receipt1.jpg', 'image/jpeg', 'Completed', 14),
+(682432, 2, '2018-04-02 03:56:14', 'Pay Shipping', '75.00', '84059-receipt.jpg', 'image/jpeg', 'Completed', NULL),
 (684783, 3, '2018-03-29 04:57:20', 'Pay Order', '23.56', '37041-receipt.jpg', 'image/jpeg', 'Completed', NULL),
 (710602, 2, '2018-03-29 06:46:54', 'Pay Order', '21.70', '62355-receipt.jpg', 'image/jpeg', 'Completed', NULL),
+(770692, 2, '2018-04-02 03:55:46', 'Pay Shipping', '50.00', '60648-receipt1.jpg', 'image/jpeg', 'Waiting for Accept', NULL),
+(775852, 2, '2018-04-01 06:58:26', 'Pay order by Points', '309.69 Poi', NULL, NULL, 'Completed', NULL),
+(784612, 2, '2018-04-02 03:58:43', 'Pay Shipping', '50.00', '36649-receipt1.jpg', 'image/jpeg', 'Declined', NULL),
+(795792, 2, '2018-04-02 02:51:53', 'Reload Point', '50', '27592-receipt1.jpg', 'image/jpeg', 'Waiting for Approval', NULL),
+(857472, 2, '2018-04-02 02:50:39', 'Pay Shipping', '50.00', '99262-receipt1.jpg', 'image/jpeg', 'Completed', NULL),
 (864932, 2, '2018-03-29 09:26:02', 'Pay Order', '28.52', '65750-receipt1.jpg', 'image/jpeg', 'Completed', NULL),
-(877923, 3, '2018-03-29 09:03:58', 'Pay Shipping', '50.00', '94883-receipt.jpg', 'image/jpeg', 'Waiting for Accept', NULL);
+(877923, 3, '2018-03-29 09:03:58', 'Pay Shipping', '50.00', '94883-receipt.jpg', 'image/jpeg', 'Waiting for Accept', NULL),
+(890712, 2, '2018-04-02 02:42:01', 'Top-Up payment 496112', '1.26', '8008-receipt1.jpg', 'image/jpeg', 'Completed', 13),
+(995622, 2, '2018-04-02 03:59:43', 'Top-Up payment 770692', '2.00', '82506-receipt1.jpg', 'image/jpeg', 'Waiting for Accept', 16),
+(999742, 2, '2018-04-02 03:53:15', 'Pay Order', '2.48', '11032-online-payment-_-prudential.pdf', 'application/pdf', 'Declined', NULL);
 
 -- --------------------------------------------------------
 
@@ -246,11 +189,11 @@ INSERT INTO `payment` (`payment_id`, `user_id`, `datetime`, `title`, `amount`, `
 -- Table structure for table `point`
 --
 
-CREATE TABLE `point` (
+CREATE TABLE IF NOT EXISTS `point` (
   `point_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `point` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -258,11 +201,11 @@ CREATE TABLE `point` (
 -- Table structure for table `rate`
 --
 
-CREATE TABLE `rate` (
+CREATE TABLE IF NOT EXISTS `rate` (
   `rate_id` int(11) NOT NULL,
   `rate_name` varchar(15) NOT NULL,
   `rate` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rate`
@@ -270,7 +213,7 @@ CREATE TABLE `rate` (
 
 INSERT INTO `rate` (`rate_id`, `rate_name`, `rate`) VALUES
 (1, 'LWE point', '0.50'),
-(2, '1kg', '50.00');
+(2, '1kg', '3.00');
 
 -- --------------------------------------------------------
 
@@ -278,7 +221,7 @@ INSERT INTO `rate` (`rate_id`, `rate_name`, `rate`) VALUES
 -- Table structure for table `refund`
 --
 
-CREATE TABLE `refund` (
+CREATE TABLE IF NOT EXISTS `refund` (
   `refund_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `total_amount` decimal(10,2) NOT NULL,
@@ -286,15 +229,7 @@ CREATE TABLE `refund` (
   `admin_charge` decimal(10,2) NOT NULL,
   `refund_reason` varchar(255) NOT NULL,
   `transaction_code` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `refund`
---
-
-INSERT INTO `refund` (`refund_id`, `user_id`, `total_amount`, `refund_amount`, `admin_charge`, `refund_reason`, `transaction_code`) VALUES
-(1, 2, '2.00', '1.80', '0.20', 'test', '12635'),
-(2, 2, '30.00', '22.00', '8.00', 'try', NULL);
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -302,7 +237,7 @@ INSERT INTO `refund` (`refund_id`, `user_id`, `total_amount`, `refund_amount`, `
 -- Table structure for table `request`
 --
 
-CREATE TABLE `request` (
+CREATE TABLE IF NOT EXISTS `request` (
   `request_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `order_item` varchar(50) NOT NULL,
@@ -310,14 +245,7 @@ CREATE TABLE `request` (
   `status` varchar(20) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `remark` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `request`
---
-
-INSERT INTO `request` (`request_id`, `user_id`, `order_item`, `order_code`, `status`, `datetime`, `remark`) VALUES
-(3, 3, 'iphone casing', '1237634', 'Received', '2018-03-29 07:24:15', '');
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -325,7 +253,7 @@ INSERT INTO `request` (`request_id`, `user_id`, `order_item`, `order_code`, `sta
 -- Table structure for table `shipping`
 --
 
-CREATE TABLE `shipping` (
+CREATE TABLE IF NOT EXISTS `shipping` (
   `shipping_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `recipient_name` varchar(50) NOT NULL,
@@ -341,17 +269,7 @@ CREATE TABLE `shipping` (
   `review` text,
   `top_up_id` varchar(11) DEFAULT NULL,
   `destination_station` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `shipping`
---
-
-INSERT INTO `shipping` (`shipping_id`, `user_id`, `recipient_name`, `recipient_contact`, `remark`, `address_id`, `weight`, `price`, `status`, `datetime`, `tracking_code`, `payment_id`, `review`, `top_up_id`, `destination_station`) VALUES
-(6, 2, 'janice', '121242', '2nd floor', 51, '1.10', '75.00', 'Proceed', '2018-03-29 10:43:28', NULL, 168112, NULL, '5', ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA'),
-(7, 3, 'test', '753265', 'careful', 52, '0.90', '50.00', 'Request', '2018-04-01 04:57:02', NULL, 877923, NULL, '6', ''),
-(9, 2, 'Janice', '146134', 'try', 51, '23.00', '1150.00', 'Proceed', '2018-03-29 09:28:49', NULL, 496642, NULL, NULL, ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA'),
-(10, 3, 'Test1', '172853764', 'try', 52, '1.50', '75.00', 'Proceed', '2018-04-01 05:55:33', NULL, 163783, NULL, '12', ' KUALA LUMPUR (LOGISTICS HUB), MALAYSIA');
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -359,7 +277,7 @@ INSERT INTO `shipping` (`shipping_id`, `user_id`, `recipient_name`, `recipient_c
 -- Table structure for table `shipping_update_details`
 --
 
-CREATE TABLE `shipping_update_details` (
+CREATE TABLE IF NOT EXISTS `shipping_update_details` (
   `sud_id` int(11) NOT NULL,
   `HawbNo` varchar(20) NOT NULL,
   `TransactionDate` datetime NOT NULL,
@@ -380,7 +298,7 @@ CREATE TABLE `shipping_update_details` (
 -- Table structure for table `shipping_update_summary`
 --
 
-CREATE TABLE `shipping_update_summary` (
+CREATE TABLE IF NOT EXISTS `shipping_update_summary` (
   `sum_id` int(11) NOT NULL,
   `HawbNo` varchar(20) NOT NULL,
   `XR1` varchar(20) NOT NULL,
@@ -410,13 +328,13 @@ CREATE TABLE `shipping_update_summary` (
 -- Table structure for table `slot`
 --
 
-CREATE TABLE `slot` (
+CREATE TABLE IF NOT EXISTS `slot` (
   `slot_id` int(11) NOT NULL,
   `slot_aisle` int(100) NOT NULL,
   `slot_num` int(100) NOT NULL,
   `status` varchar(10) NOT NULL,
   `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `slot`
@@ -424,7 +342,7 @@ CREATE TABLE `slot` (
 
 INSERT INTO `slot` (`slot_id`, `slot_aisle`, `slot_num`, `status`, `user_id`) VALUES
 (1, 1, 1, 'Not In Use', NULL),
-(2, 1, 2, 'In Use', 3),
+(2, 1, 2, 'Not In Use', NULL),
 (3, 1, 3, 'Not In Use', NULL),
 (4, 1, 4, 'Not In Use', NULL),
 (5, 1, 5, 'Not In Use', NULL),
@@ -432,7 +350,8 @@ INSERT INTO `slot` (`slot_id`, `slot_aisle`, `slot_num`, `status`, `user_id`) VA
 (7, 1, 7, 'Not In Use', NULL),
 (8, 1, 8, 'Not In Use', NULL),
 (9, 1, 9, 'Not In Use', NULL),
-(10, 1, 10, 'In Use', 2);
+(10, 1, 10, 'Not In Use', NULL),
+(11, 1, 11, 'Not In Use', NULL);
 
 -- --------------------------------------------------------
 
@@ -440,10 +359,10 @@ INSERT INTO `slot` (`slot_id`, `slot_aisle`, `slot_num`, `status`, `user_id`) VA
 -- Table structure for table `state`
 --
 
-CREATE TABLE `state` (
+CREATE TABLE IF NOT EXISTS `state` (
   `state_id` int(11) NOT NULL,
   `state_name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `state`
@@ -472,29 +391,13 @@ INSERT INTO `state` (`state_id`, `state_name`) VALUES
 -- Table structure for table `top_up`
 --
 
-CREATE TABLE `top_up` (
+CREATE TABLE IF NOT EXISTS `top_up` (
   `top_up_id` int(11) NOT NULL,
   `payment_id` int(11) NOT NULL,
   `paid_amount` decimal(10,2) NOT NULL,
   `top_up_amount` decimal(10,2) NOT NULL,
   `top_up_reason` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `top_up`
---
-
-INSERT INTO `top_up` (`top_up_id`, `payment_id`, `paid_amount`, `top_up_amount`, `top_up_reason`) VALUES
-(1, 291973, '15.00', '2.36', 'not enough'),
-(2, 710602, '18.00', '3.70', 'please top-up'),
-(5, 168112, '70.00', '5.00', 'please top-up'),
-(6, 877923, '38.00', '12.00', 'not enough'),
-(7, 512612, '25.00', '25.00', 'top-up'),
-(8, 864932, '25.00', '0.52', 'topup'),
-(9, 626932, '11.00', '1.40', 'not enough'),
-(10, 631612, '2.00', '0.48', '123'),
-(11, 433243, '5.00', '1.20', 'topup'),
-(12, 163783, '68.00', '7.00', 'not enough');
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -502,7 +405,7 @@ INSERT INTO `top_up` (`top_up_id`, `payment_id`, `paid_amount`, `top_up_amount`,
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL,
   `fname` varchar(100) NOT NULL,
   `lname` varchar(100) NOT NULL,
@@ -513,16 +416,14 @@ CREATE TABLE `users` (
   `image` text NOT NULL,
   `country_id` int(11) NOT NULL,
   `login_status` varchar(55) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`, `type`, `image`, `country_id`, `login_status`) VALUES
-(1, 'clement', 'chuo', '0123456789', 'clement@email.com', '$2y$10$RSPgYoYQrM.1zCX1ft74uejCBPhvkF185q5nqJMd7i6CJ7zwHS.Eq', 'admin', '', 0, 'Online'),
-(2, 'janice', 'low', '1234567', 'janice@email.com', '$2y$10$85paok2VnAH3rM8k1trOLeodixrMtDj1cOrRtV.mok.PrS5JxmeHW', 'customer', '', 0, 'Online'),
-(3, 'test', '1', '123412', 'test@email.com', '$2y$10$JvxI/iUlAE6iXeDj0t7rWO/8LsQJC2xFiuYlh6RJ6jY1s0yYA/Vvm', 'customer', '', 0, 'Online');
+(1, 'Admin', 'admin', '0123456789', 'admin@email.com', '$2y$10$RSPgYoYQrM.1zCX1ft74uejCBPhvkF185q5nqJMd7i6CJ7zwHS.Eq', 'admin', '', 0, 'Online');
 
 -- --------------------------------------------------------
 
@@ -530,14 +431,14 @@ INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`
 -- Table structure for table `warehouse`
 --
 
-CREATE TABLE `warehouse` (
+CREATE TABLE IF NOT EXISTS `warehouse` (
   `ware_id` int(11) NOT NULL,
   `station_code` varchar(10) NOT NULL,
   `station_name` text NOT NULL,
   `country_code` varchar(10) NOT NULL,
   `country_name` varchar(50) NOT NULL,
   `address` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `warehouse`
@@ -553,11 +454,11 @@ INSERT INTO `warehouse` (`ware_id`, `station_code`, `station_name`, `country_cod
 -- Table structure for table `work_station`
 --
 
-CREATE TABLE `work_station` (
+CREATE TABLE IF NOT EXISTS `work_station` (
   `work_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `ware_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `work_station`
@@ -605,12 +506,6 @@ ALTER TABLE `item`
 --
 ALTER TABLE `order_item`
   ADD PRIMARY KEY (`order_item_id`);
-
---
--- Indexes for table `package`
---
-ALTER TABLE `package`
-  ADD PRIMARY KEY (`package_id`);
 
 --
 -- Indexes for table `payment`
@@ -704,123 +599,97 @@ ALTER TABLE `work_station`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
-
+  MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
   MODIFY `m_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `country`
 --
 ALTER TABLE `country`
-  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
-
---
--- AUTO_INCREMENT for table `package`
---
-ALTER TABLE `package`
-  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=72;
 --
 -- AUTO_INCREMENT for table `point`
 --
 ALTER TABLE `point`
-  MODIFY `point_id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `point_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
-  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `refund`
 --
 ALTER TABLE `refund`
-  MODIFY `refund_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `refund_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
-  MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
+  MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `shipping_update_details`
 --
 ALTER TABLE `shipping_update_details`
   MODIFY `sud_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `shipping_update_summary`
 --
 ALTER TABLE `shipping_update_summary`
   MODIFY `sum_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `slot`
 --
 ALTER TABLE `slot`
-  MODIFY `slot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
+  MODIFY `slot_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `state`
 --
 ALTER TABLE `state`
-  MODIFY `state_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
+  MODIFY `state_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `top_up`
 --
 ALTER TABLE `top_up`
-  MODIFY `top_up_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
+  MODIFY `top_up_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
-  MODIFY `ware_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `ware_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `work_station`
 --
 ALTER TABLE `work_station`
-  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-COMMIT;
-
+  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

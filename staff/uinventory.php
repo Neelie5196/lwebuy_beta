@@ -103,7 +103,7 @@ if(isset($_POST['update']))
         
         if(!empty($results6))
         {
-            $userid = $results6['user_id'];
+            $user_id = $results6['user_id'];
             $order_item = $results6['order_item'];
             
             $query8 = "SELECT * 

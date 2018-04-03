@@ -81,7 +81,6 @@ if(isset($_POST['uploadreceipt']))
 		?>
 		<script>
 		alert('Successfully Submit');
-        alert('Successfully Submit');
         window.location.href='main.php#purchase';
         </script>
 		<?php

@@ -77,7 +77,7 @@ if(isset($_POST['refundsave']))
     ?>
     <script>
     alert('Payment refunded');
-    window.location.href='main.php#payment';
+    window.location.href='main.php#adpayment';
     </script>
     <?php
 }
@@ -121,7 +121,7 @@ if(isset($_POST['approvec']))
 
 
 ?>
-
+<link rel="stylesheet" href="../frameworks/css/lightbox.min.css">
 <div class="col-xs-12 col-md-12 col-lg-12">
     <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Payments</h2>
     
@@ -412,7 +412,7 @@ if(isset($_POST['approvec']))
                             <h5 class="modal-title" id="transactionCodeTitle">Transaction Code</h5>
                         </div>
 
-                        <form method="post" action="request.php">
+                        <form method="post" action="payment.php">
                             <div class="modal-body left">
                                 <input type="hidden" name="refund_id" id="refundId" value="">
                                 <p>
@@ -453,7 +453,7 @@ if(isset($_POST['approvec']))
                                     <td><?php echo $row['amount']; ?></td>
                                     <td><?php echo $row['status']; ?></td>
                                     <td>
-                                        <a data-toggle="modal" class="btn btn-default btn-xs btnDelete creditpay" href="#creditPay"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                        <a href="../receipts/<?php echo $row['file']; ?>" data-lightbox="receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
                                     </td>
                                 </tr>
                                 <?php
@@ -469,18 +469,21 @@ if(isset($_POST['approvec']))
                 </table>
             </div>
         
-            <div class="modal fade" id="creditPay" tabindex="-1" role="dialog" aria-labelledby="creditpayTitle" aria-hidden="true">
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="creditpayTitle">Receipt</h5>
+                            <h5 class="modal-title" id="myModalTitle">Receipt</h5>
                         </div>
+
                         <div class="modal-body left">
-                            <img src="#" width="80%">
+                            <p class="center">
+                                <img id="imgcontain" width="80%" />
+                            </p>
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -553,3 +556,4 @@ $(document).on("click", ".transactionCode", function () {
     $('#myModal').modal('show');
 });
 </script>
+<script src="../frameworks/js/lightbox-plus-jquery.min.js"></script>

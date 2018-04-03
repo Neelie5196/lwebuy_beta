@@ -1,4 +1,6 @@
 <?php
+require_once '../connection/config.php';
+session_start();
 ?>
 
 <div class="col-xs-12 col-md-12 col-lg-12">
@@ -77,7 +79,7 @@
     <div class="row">
         <div class="bigadstats hidden-xs hidden-sm">
             <div class="col-md-3 col-lg-3">
-                <h6>0
+                <h6>
                     <?php
                         $query7 = "SELECT * FROM users";
                         $result7 = mysqli_query($con, $query7);
@@ -105,9 +107,9 @@
             </div>
 
             <div class="col-md-3 col-lg-3">
-                <h6>0
+                <h6>
                     <?php
-                        $query8 = "SELECT * FROM order_list";
+                        $query8 = "SELECT * FROM order_item";
                         $result8 = mysqli_query($con, $query8);
                         $count8 = 0;
                         if(mysqli_num_rows($result8) > 0)
@@ -133,7 +135,7 @@
             </div>
 
             <div class="col-md-3 col-lg-3">
-                <h6>0
+                <h6>
                     <?php
                         $query9 = "SELECT * FROM shipping";
                         $result9 = mysqli_query($con, $query9);
@@ -161,7 +163,7 @@
             </div>
         
             <div class="col-md-3 col-lg-3">
-                <h6>0
+                <h6>
                     <?php
                         $query0 = "SELECT * FROM payment";
                         $result0 = mysqli_query($con, $query0);
@@ -179,7 +181,37 @@
                                     $count0 = $count0;
                                 }
                             }
-                            echo $count0;
+                            
+                            $rounded = round($count0);
+                            
+                            if (strlen((string)$rounded) == 3)
+                            {
+                                echo substr($rounded,0,1)."00+";
+                            }
+                            else if (strlen((string)$rounded) == 4)
+                            {
+                                echo substr($rounded,0,1)."K+";
+                            }
+                            else if (strlen((string)$rounded) == 5)
+                            {
+                                echo substr($rounded,0,2)."K+";
+                            }
+                            else if (strlen((string)$rounded) == 6)
+                            {
+                                echo "0.".substr($rounded,0,1)."M+";
+                            }
+                            else if(strlen((string)$rounded) == 7)
+                            {
+                                echo substr($rounded,0,1)."M+";
+                            }
+                            else if(strlen((string)$rounded) > 7)
+                            {
+                                echo ">9M";
+                            }
+                            else
+                            {
+                                echo $count0;
+                            }
                         }else{
                             echo '0';
                         }
@@ -192,7 +224,7 @@
         
         <div class="smadstats center hidden-md hidden-lg">
             <div class="col-sm-6 col-xs-6">
-                <h6>0
+                <h6>
                     <?php
                         $query7 = "SELECT * FROM users";
                         $result7 = mysqli_query($con, $query7);
@@ -220,9 +252,9 @@
             </div>
 
             <div class="col-sm-6 col-xs-6">
-                <h6>0
+                <h6>
                     <?php
-                        $query8 = "SELECT * FROM order_list";
+                        $query8 = "SELECT * FROM order_item";
                         $result8 = mysqli_query($con, $query8);
                         $count8 = 0;
                         if(mysqli_num_rows($result8) > 0)
@@ -248,7 +280,7 @@
             </div>
 
             <div class="col-sm-6 col-xs-6">
-                <h6>0
+                <h6>
                     <?php
                         $query9 = "SELECT * FROM shipping";
                         $result9 = mysqli_query($con, $query9);
@@ -276,7 +308,7 @@
             </div>
 
             <div class="col-sm-6 col-xs-6">
-                <h6>0
+                <h6>
                     <?php
                         $query0 = "SELECT * FROM payment";
                         $result0 = mysqli_query($con, $query0);
@@ -294,7 +326,37 @@
                                     $count0 = $count0;
                                 }
                             }
-                            echo $count0;
+                            
+                            $rounded = round($count0);
+                            
+                            if (strlen((string)$rounded) == 3)
+                            {
+                                echo substr($rounded,0,1)."00+";
+                            }
+                            else if (strlen((string)$rounded) == 4)
+                            {
+                                echo substr($rounded,0,1)."K+";
+                            }
+                            else if (strlen((string)$rounded) == 5)
+                            {
+                                echo substr($rounded,0,2)."K+";
+                            }
+                            else if (strlen((string)$rounded) == 6)
+                            {
+                                echo "0.".substr($rounded,0,1)."M+";
+                            }
+                            else if(strlen((string)$rounded) == 7)
+                            {
+                                echo substr($rounded,0,1)."M+";
+                            }
+                            else if(strlen((string)$rounded) > 7)
+                            {
+                                echo ">9M";
+                            }
+                            else
+                            {
+                                echo $count0;
+                            }
                         }else{
                             echo '0';
                         }

@@ -51,8 +51,9 @@ if(isset($_POST['proceed']))
     if($results1['status'] != 'Waiting for Accept'){
         $status = 'Proceed';
         $statuss = 'Completed';
+        $tracking_code = rand(10000,99999);
 
-        $result5 = mysqli_query($con, "UPDATE shipping SET status='$status' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
+        $result5 = mysqli_query($con, "UPDATE shipping SET status='$status', tracking_code='$tracking_code' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
         ?>
         <script>
         alert('Success to Update');

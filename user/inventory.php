@@ -63,7 +63,7 @@ $query4 = "SELECT *
           FROM item it
           JOIN slot sl
           ON it.slot_id = sl.slot_id
-          WHERE user_id='$user_id'";
+          WHERE user_id='$user_id' AND action = 'In' AND payment_id is NULL";
 $result4 = mysqli_query($con, $query4);
 
 ?>

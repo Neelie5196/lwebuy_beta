@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 					$result = mysqli_query($con, "UPDATE users
 								SET login_status = 'Online'
 								WHERE user_id = '$_SESSION[user_id]';");
-                    header("location: admin/main.php");
+                    header("location: staff/main.php");
                 }
                 else if($user['type'] == 'customer')
                 {

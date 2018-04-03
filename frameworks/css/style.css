@@ -512,11 +512,18 @@ body {
     width: 80%;
 }
 
-.bigbar li, .adbigbar li {
+.bigbar li {
     float: none;
     display:inline-block;
     vertical-align: middle;
     margin: 0 2%; 
+}
+
+.adbigbar li {
+    float: none;
+    display:inline-block;
+    vertical-align: middle;
+    margin: 0 1%; 
 }
 
 .bigbar > ul > li > a, .adbigbar > ul > li > a {
@@ -760,6 +767,12 @@ body {
     margin-left: 5%;
     margin-bottom: 1%;
     width: 20%;    
+}
+
+.tblVTab {
+    margin-left: 5%;
+    margin-bottom: 1%;
+    width: 30%;    
 }
 
 .tblRTab {

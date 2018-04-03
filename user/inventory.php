@@ -60,8 +60,10 @@ if(isset($_POST['edit']))
 }
 
 $query4 = "SELECT *
-          FROM request
-          WHERE user_id='$user_id' AND status = 'received'";
+          FROM item it
+          JOIN slot sl
+          ON it.slot_id = sl.slot_id
+          WHERE user_id='$user_id'";
 $result4 = mysqli_query($con, $query4);
 
 ?>
@@ -72,7 +74,7 @@ $result4 = mysqli_query($con, $query4);
     
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-12">
-            <table class="tblITab">
+            <table class="tblVTab">
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" id="btnipending" onclick="funcIPending()">Pending</button></td>
                     <td class="wborder"><button class="btn-link btntab" id="btnireceive" onclick="funcIReceive()">Received</button></td>
@@ -193,7 +195,7 @@ $result4 = mysqli_query($con, $query4);
                     <tr class="center">
                         <th>Name</th>
                         <th>Tracking No.</th>
-                        <th>Remarks</th>
+                        <th>Weight (kg)</th>
                         <th>Received On</th>
                     </tr>
 
@@ -205,9 +207,9 @@ $result4 = mysqli_query($con, $query4);
                     ?>
 
                     <tr class="bodyrow">
-                        <td><?php echo $row['order_item']; ?></td>
+                        <td><?php echo $row['item_description']; ?></td>
                         <td><?php echo $row['order_code']; ?></td>
-                        <td><?php echo $row['remark']; ?></td>
+                        <td><?php echo $row['weight']; ?></td>
                         <td><?php echo $row['datetime']; ?></td>
                     </tr>
 

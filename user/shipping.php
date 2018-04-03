@@ -277,9 +277,26 @@ $result8 = mysqli_query($con, $query8);
                         <td><?php echo mysqli_num_rows($result4); ?></td>
                         <td><?php echo $row['weight']; ?></td>
                         <td><?php echo $row['price']; ?></td>
-                        <td>
-                            <a class="btn btn-default btn-xs" href="javascript: void(0)" onclick="window.open('viewtracking.php?tracking_code=<?php echo $row['tracking_code']; ?>','windowname1','fullscreen=yes'); return false;"><?php echo $row['tracking_code']; ?></a>
-                        </td>
+                        <?php
+                            $hawb = $row['tracking_code'];
+                            $query10 = "SELECT * 
+                                      FROM shipping_update_summary
+                                      WHERE HawbNo = '$hawb'";
+                            $result10 = mysqli_query($con, $query10);
+                            $results10 = mysqli_fetch_assoc($result10);
+                            if($results10>0){
+                                ?>
+                                    <td>
+                                        <a class="btn btn-default btn-xs" href="javascript: void(0)" onclick="window.open('viewtrackings.php?tracking_code=<?php echo $row['tracking_code']; ?>','windowname1','fullscreen=yes'); return false;"><?php echo $row['tracking_code']; ?></a>
+                                    </td>
+                                <?php
+                            }else{
+                                ?>
+                                    <td>-</td>
+                                <?php
+                            }
+                        ?>
+                        
                     </tr>
 
                     <?php

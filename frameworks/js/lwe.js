@@ -168,6 +168,113 @@ $(document).ready(function(){
     });
 });
 
+$(document).ready(function(){
+    $("#btnhomes").click(function(){
+        $("#mainview").load('dashboard.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnlogos").click(function(){
+        $("#mainview").load('dashboard.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnpurchases").click(function(){
+        $("#mainview").load('purchase.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnships").click(function(){
+        $("#mainview").load('shipping.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btninventorys").click(function(){
+        $("#mainview").load('inventory.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnusers").click(function(){
+        $("#mainview").load('user.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btncredits").click(function(){
+        $("#mainview").load('credit.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnadrequests").click(function(){
+        $("#mainview").load('request.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnnotrequests").click(function(){
+        $("#mainview").load('request.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnadpayments").click(function(){
+        $("#mainview").load('payment.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnnotpayments").click(function(){
+        $("#mainview").load('payment.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnadupdates").click(function(){
+        $("#mainview").load('update.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnadaccounts").click(function(){
+        $("#mainview").load('account.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnadreviews").click(function(){
+        $("#mainview").load('review.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnnotreviews").click(function(){
+        $("#mainview").load('review.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnadwarehouses").click(function(){
+        $("#mainview").load('warehouse.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btntracks").click(function(){
+        $("#mainview").load('tracking.php');
+    });
+});
+$(document).ready(function(){
+    $("#btnadothers").click(function(){
+        $("#mainview").load('other.php');
+    });
+});
+
 function funcPRequest() {
     document.getElementById("prequest").style.display = "block";
     document.getElementById("ppayment").style.display = "none";

@@ -979,6 +979,14 @@ body {
     border-radius: 30%;
 }
 
+.notifys {
+    color: #fff;
+    background: #f26522;
+    padding: 0.6%;
+    margin-left: 1%;
+    border-radius: 30%;
+}
+
 .admainrow1 {
     margin-top: 5%;
 }

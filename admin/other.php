@@ -129,7 +129,7 @@ if(isset($_POST['update-bankdetails']))
                         <h3 class="bigh3 hidden-xs hidden-sm">Credit Ratio</h3>
                         <h3 class="smh3 hidden-md hidden-lg">Credit Ratio</h3>
 
-                        <p class="rateline">LWE points = RM <input type="number" class="ratefield" name="pointratio" step="0.01" value="<?php echo $results['rate']; ?>" /></p>
+                        <p class="rateline">1 LWE points = RM <input type="number" class="ratefield" name="pointratio" step="0.01" value="<?php echo $results['rate']; ?>" /></p>
 
                         <input type="hidden" name="rate_id" value="<?php echo $results['rate_id']; ?>"/>
                         <p><input type="submit" class="btn btnGo" name="update-point" value="Save"></p>
@@ -144,7 +144,8 @@ if(isset($_POST['update-bankdetails']))
                         <table class="banktable">
                             <tr>
                                 <td class="left"><p>Country Name:</p></td>
-                                <td><p><input type="text" name="cname" class="bankfield" step="0.01" value="<?php echo $results2['country_name']; ?>" /></p></td>
+                                <td><p><input type="text" class="bankfield" value="<?php echo $results2['country_name']; ?>" disabled /></p></td>
+                                <input type="hidden" name="cname" class="bankfield" value="<?php echo $results2['country_name']; ?>" />
                             </tr>
 
                             <tr>

@@ -64,6 +64,18 @@ if (isset($_GET['payment_id']))
     <?php
 
 }
+
+$query19 = "SELECT * 
+          FROM point
+          WHERE user_id = '$user_id'";
+$result19 = mysqli_query($con, $query19);
+$results19 = mysqli_fetch_assoc($result19);
+
+$query20 = "SELECT * 
+          FROM rate
+          WHERE rate_name = 'LWE point'";
+$result20 = mysqli_query($con, $query20);
+$results20 = mysqli_fetch_assoc($result20);
 ?>
 <link rel="stylesheet" href="../frameworks/css/lightbox.min.css">
 <div class="col-xs-12 col-md-12 col-lg-12">
@@ -85,6 +97,14 @@ if (isset($_GET['payment_id']))
     <div class="row">
         <div id="crequest">
             <div class="col-xs-12 col-md-12 col-lg-12">
+                <?php
+                    if($results19['user_id']>0){
+                        ?>
+                        <p class="requestp">Current point : <?php echo $results19['point']." points"; ?></p>
+                        <?php
+                    }
+                ?>
+                <p class="requestp">Today's point rate (1 LWE point : MYR) = 1 : <?php echo $results20['rate']; ?></p>
                 <table class="purchasetable">
                     <tr class="center">
                         <th class="purchasecol3">Event</th>

@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2018 at 05:16 AM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.1.11
+-- Generation Time: Apr 03, 2018 at 07:02 PM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 7.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -21,6 +19,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `lwe_beta`
 --
+
+CREATE DATABASE IF NOT EXISTS `lwe_beta`;
+USE `lwe_beta`;
 
 -- --------------------------------------------------------
 
@@ -46,7 +47,7 @@ CREATE TABLE `address` (
 
 CREATE TABLE `category` (
   `category_id` int(11) NOT NULL,
-  `category_name` varchar(50) NOT NULL
+  `category_name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -59,8 +60,8 @@ INSERT INTO `category` (`category_id`, `category_name`) VALUES
 (3, 'TV& Home Appliances'),
 (4, 'Health & Beauty'),
 (5, 'Babies & Toys'),
-(6, 'Women\'s Fashion'),
-(7, 'Men\'s Fashion'),
+(6, 'Women''s Fashion'),
+(7, 'Men''s Fashion'),
 (8, 'Sports & Travel'),
 (9, 'Automotive '),
 (10, 'Others');
@@ -102,7 +103,7 @@ CREATE TABLE `country` (
 --
 
 INSERT INTO `country` (`country_id`, `country_name`, `country_currency`, `bank`, `account_no`, `account_name`) VALUES
-(1, 'Malaysia', '0.62', 'Maybank', 1234567891, 'Logistics Worldwide Express(M) Sdn Bhd');
+(1, 'Malaysia', '0.62', 'Maybank', 123456789, 'Logistics Worldwide Express(M) Sdn Bhd');
 
 -- --------------------------------------------------------
 
@@ -134,7 +135,7 @@ CREATE TABLE `order_item` (
   `user_id` int(11) NOT NULL,
   `order_item` varchar(255) NOT NULL,
   `link` varchar(255) NOT NULL,
-  `category` varchar(100) NOT NULL,
+  `category` varchar(50) NOT NULL,
   `quantity` int(15) NOT NULL,
   `remark` varchar(255) NOT NULL,
   `price` decimal(10,2) DEFAULT NULL,
@@ -156,7 +157,7 @@ CREATE TABLE `payment` (
   `user_id` int(11) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `title` varchar(45) NOT NULL,
-  `amount` varchar(50) DEFAULT NULL,
+  `amount` varchar(10) NOT NULL,
   `file` varchar(150) DEFAULT NULL,
   `type` varchar(30) DEFAULT NULL,
   `status` varchar(20) NOT NULL,
@@ -193,7 +194,7 @@ CREATE TABLE `rate` (
 
 INSERT INTO `rate` (`rate_id`, `rate_name`, `rate`) VALUES
 (1, 'LWE point', '0.50'),
-(2, '1kg', '3.00');
+(2, '1kg', '50.00');
 
 -- --------------------------------------------------------
 
@@ -260,7 +261,7 @@ CREATE TABLE `shipping` (
 CREATE TABLE `shipping_update_details` (
   `sud_id` int(11) NOT NULL,
   `HawbNo` varchar(20) NOT NULL,
-  `TransactionDate` datetime NOT NULL,
+  `TransactionDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `StationCode` varchar(10) NOT NULL,
   `StationDescription` varchar(50) NOT NULL,
   `CountryCode` varchar(10) NOT NULL,
@@ -283,8 +284,8 @@ CREATE TABLE `shipping_update_summary` (
   `HawbNo` varchar(20) NOT NULL,
   `XR1` varchar(20) NOT NULL,
   `XR2` varchar(20) NOT NULL,
-  `ShipmentDate` datetime NOT NULL,
-  `DeliveryDate` datetime NOT NULL,
+  `ShipmentDate` datetime DEFAULT NULL,
+  `DeliveryDate` datetime DEFAULT NULL,
   `RecipientName` varchar(50) NOT NULL,
   `SignedName` varchar(50) NOT NULL,
   `OriginStationCode` varchar(10) NOT NULL,
@@ -315,23 +316,6 @@ CREATE TABLE `slot` (
   `status` varchar(10) NOT NULL,
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `slot`
---
-
-INSERT INTO `slot` (`slot_id`, `slot_aisle`, `slot_num`, `status`, `user_id`) VALUES
-(1, 1, 1, 'Not In Use', NULL),
-(2, 1, 2, 'Not In Use', NULL),
-(3, 1, 3, 'Not In Use', NULL),
-(4, 1, 4, 'Not In Use', NULL),
-(5, 1, 5, 'Not In Use', NULL),
-(6, 1, 6, 'Not In Use', NULL),
-(7, 1, 7, 'Not In Use', NULL),
-(8, 1, 8, 'Not In Use', NULL),
-(9, 1, 9, 'Not In Use', NULL),
-(10, 1, 10, 'Not In Use', NULL),
-(11, 1, 11, 'Not In Use', NULL);
 
 -- --------------------------------------------------------
 
@@ -392,7 +376,6 @@ CREATE TABLE `users` (
   `contact` varchar(15) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `forgot_pass_identity` varchar(200) NOT NULL,
   `type` varchar(10) NOT NULL,
   `image` text NOT NULL,
   `country_id` int(11) NOT NULL,
@@ -403,8 +386,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`, `forgot_pass_identity`, `type`, `image`, `country_id`, `login_status`) VALUES
-(1, 'Admin', 'admin', '0123456789', 'admin@email.com', '$2y$10$RSPgYoYQrM.1zCX1ft74uejCBPhvkF185q5nqJMd7i6CJ7zwHS.Eq', '', 'admin', '', 0, 'Online');
+INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`, `type`, `image`, `country_id`, `login_status`) VALUES
+(0, 'Admin', 'admin', '123456789', 'admin@email.com', '$2y$10$8F.4cJe7IlO0ooO0SvDjz.4BeA6FiRmbeaDBtV.7rvfW1SSHLyInK', 'admin', '', 0, 'Online');
 
 -- --------------------------------------------------------
 
@@ -446,7 +429,7 @@ CREATE TABLE `work_station` (
 --
 
 INSERT INTO `work_station` (`work_id`, `user_id`, `ware_id`) VALUES
-(1, 1, 1);
+(1, 0, 1);
 
 --
 -- Indexes for dumped tables
@@ -581,116 +564,96 @@ ALTER TABLE `work_station`
 --
 ALTER TABLE `address`
   MODIFY `address_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
 --
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
   MODIFY `m_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `country`
 --
 ALTER TABLE `country`
   MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
   MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `point`
 --
 ALTER TABLE `point`
-  MODIFY `point_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `point_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
-  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `refund`
 --
 ALTER TABLE `refund`
   MODIFY `refund_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
   MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
   MODIFY `shipping_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `shipping_update_details`
 --
 ALTER TABLE `shipping_update_details`
   MODIFY `sud_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `shipping_update_summary`
 --
 ALTER TABLE `shipping_update_summary`
   MODIFY `sum_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `slot`
 --
 ALTER TABLE `slot`
-  MODIFY `slot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
+  MODIFY `slot_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `state`
 --
 ALTER TABLE `state`
   MODIFY `state_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
 --
 -- AUTO_INCREMENT for table `top_up`
 --
 ALTER TABLE `top_up`
   MODIFY `top_up_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
   MODIFY `ware_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `work_station`
 --
 ALTER TABLE `work_station`
   MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-COMMIT;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

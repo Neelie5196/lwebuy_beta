@@ -39,7 +39,7 @@
         <div class="row homerow3 center">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <a class="btn btn-default btnreg" href="register.php">Register now</a>
-                <a class="btn btn-default btnlearn" href="services.php">Learn more</a>
+                <a class="btn btn-default btnlearn" href="about.php">Learn more</a>
             </div>
         </div>
         

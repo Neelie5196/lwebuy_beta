@@ -91,8 +91,8 @@ if(isset($_POST['update-bankdetails']))
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="tblITab">
                     <tr>
-                        <td class="wborder"><button class="btn-link btntab" id="btnorate" onclick="funcORate()">Payment Details</button></td>
-                        <td><button class="btn-link btntab" id="btnomessage" onclick="funcOMessage()">Messages</button></td>
+                        <td class="wborder"><button class="btn-link btntab" type="button" id="btnorate" onclick="funcORate()">Payment Details</button></td>
+                        <td><button class="btn-link btntab" type="button" id="btnomessage" onclick="funcOMessage()">Messages</button></td>
                     </tr>
                 </table>
             </div>

@@ -10,7 +10,9 @@ $result = mysqli_query($con, $query);
 $count = mysqli_num_rows($result);
 
 $query1 = "SELECT *
-          FROM request
+          FROM item it
+          JOIN slot sl
+          ON it.slot_id = sl.slot_id
           WHERE user_id='$user_id' AND status = 'Received'";
 $result1 = mysqli_query($con, $query1);
 $count1 = mysqli_num_rows($result1);

@@ -274,7 +274,7 @@ if(isset($_POST['update']))
                                         ?>
                                 <tr>
                                     <td>
-                                        <input type="checkbox" class="trackcheck" name="ocode[]" value="<?php echo $row1['order_code']?>" onclick="alert('clicked')" disabled />
+                                        <input type="checkbox" class="trackcheck" name="ocode[]" value="<?php echo $row1['order_code']?>" disabled />
                                     </td>
                                     <td><?php echo $row1['fname'] . " " . $row1['lname']; ?></td>
                                     <td><?php echo $row1['order_item']; ?></td>

@@ -47,7 +47,7 @@ if(isset($_POST['update']))
             
             $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$t_code[$i]', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='DLV', EventDescription='$eventDesc', ReasonCode='DL', ReasonDescription='Delivered', Remark=''") or die(mysqli_error($con));
             
-            $update2 = mysqli_query($con, "UPDATE shipping_update_summary SET SignedName = '$signed[$i]', EventCode = 'DL', EventDescription = 'Delivered', ReasonCode = 'DL', ReasonDescription = 'Delivered' WHERE HawbNo = $t_code[$i]") or die(mysqli_error($con));
+            $update2 = mysqli_query($con, "UPDATE shipping_update_summary SET DeliveryDate=NOW(), SignedName = '$signed[$i]', EventCode = 'DL', EventDescription = 'Delivered', ReasonCode = 'DL', ReasonDescription = 'Delivered' WHERE HawbNo = $t_code[$i]") or die(mysqli_error($con));
         }
 ?>
      
@@ -88,9 +88,26 @@ window.location.href='delivered.php';
         <![endif]-->
         
         <script src="../frameworks/js/lwe.js"></script>
-        <script src="../frameworks/js/prototype-barcode.js"></script>
-        <script src="../frameworks/js/prototype.js"></script>
-
+        <script>
+            $(document).ready(function(){
+                $(".trackcheck").click(function(){
+                    var inputtext1 = document.getElementsByClassName("textinput");
+                    var checkboxes1 = document.getElementsByClassName("trackcheck");
+                    
+                    for (var a = 0; a < checkboxes1.length; a++)
+                    {
+                        
+                        if (checkboxes1[a].checked == false)
+                            {
+                                checkboxes1[a].disabled = true;
+                                inputtext1[a].disabled = true;
+                                inputtext1[a].required = false;
+                                inputtext1[a].style.background = "none";
+                            }
+                    }
+                });
+            });
+        </script>
     </head>
 
     <body class="userbg">

@@ -63,7 +63,7 @@ if(isset($_POST['createwarehouse']))
     $country = $_POST['stationcountry'];
     $address = $_POST['stationaddress'];
 	
-	$result7 = mysqli_query($con, "INSERT INTO warehouse SET station_code='$station_code', station_name='$station_name', country='$country', address='$address'") or die(mysqli_error($con));
+	$result7 = mysqli_query($con, "INSERT INTO warehouse SET station_code='$station_code', station_name='$station_name', country_name='$country', address='$address'") or die(mysqli_error($con));
     
     ?>
     <script>
@@ -81,7 +81,7 @@ if(isset($_POST['editWarehouse']))
     $country = $_POST['stationcountry'];
     $address = $_POST['stationaddress'];
     
-    $result8 = mysqli_query($con, "UPDATE warehouse SET station_code='$station_code', station_name='$station_name', country='$country', address='$address' WHERE ware_id='$ware_id'") or die(mysqli_error($con));
+    $result8 = mysqli_query($con, "UPDATE warehouse SET station_code='$station_code', station_name='$station_name', country_name='$country', address='$address' WHERE ware_id='$ware_id'") or die(mysqli_error($con));
     
     ?>
     <script>
@@ -286,7 +286,7 @@ if (isset($_GET['ware_id']))
                                     <td><?php echo $row['country_name']; ?></td>
                                     <td><?php echo $row['address']; ?></td>
                                     <td>
-                                        <a data-toggle="modal" data-id="<?php echo $row['ware_id']; ?>" data-code="<?php echo $row['station_code']; ?>" data-name="<?php echo $row['station_name']; ?>" data-country="<?php echo $row['country']; ?>" data-address="<?php echo $row['address']; ?>" class="btn btn-default btn-xs btnDelete editWarehouse" href="#editWarehouse"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a data-toggle="modal" data-id="<?php echo $row['ware_id']; ?>" data-code="<?php echo $row['station_code']; ?>" data-name="<?php echo $row['station_name']; ?>" data-country="<?php echo $row['country_name']; ?>" data-address="<?php echo $row['address']; ?>" class="btn btn-default btn-xs btnDelete editWarehouse" href="#editWarehouse"><span class="glyphicon glyphicon-pencil"></span></a>
 
                                         <a href="warehouse.php?ware_id=<?php echo $row['ware_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
                                     </td>

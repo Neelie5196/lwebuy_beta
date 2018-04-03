@@ -9,7 +9,7 @@ $query = "SELECT *
           WHERE user_id='$user_id' AND status = 'request'";
 $result = mysqli_query($con, $query);
 
-if(isset($_POST['add']))
+if(isset($_POST['addpurchaserequest']))
 {    
 
     $name = $_POST['name'];
@@ -18,8 +18,8 @@ if(isset($_POST['add']))
     $quantity = $_POST['quantity'];
     $remark = $_POST['remark'];
     $status = 'Request';
-	
-	$result1 = mysqli_query($con, "INSERT INTO order_item SET user_id='$user_id', order_item='$name', link='$link', category='$category', quantity='$quantity', remark='$remark', status='$status'") or die(mysqli_error($con));
+    
+    $result1 = mysqli_query($con, "INSERT INTO order_item SET user_id = '$user_id', order_item = '$name', link = '$link', category = '$category', quantity = '$quantity', remark = '$remark', status = '$status'") or die(mysqli_error($con));
     
     ?>
     <script>
@@ -233,7 +233,7 @@ $results20 = mysqli_fetch_assoc($result20);
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-success btnSend" name="add" value="Request" />
+                                <input type="submit" class="btn btn-success btnSend" name="addpurchaserequest" value="Request" />
                             </div>
                         </form>
                     </div>

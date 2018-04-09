@@ -32,7 +32,7 @@
         
         <div class="row homerow2">
             <div class="col-xs-12 col-md-12 col-lg-12">
-                <img src="resources/img/logo.PNG" width="100%" />
+                <img src="resources/img/logo.png" width="100%" />
             </div>
         </div>
         

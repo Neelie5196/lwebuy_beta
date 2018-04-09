@@ -85,8 +85,26 @@ window.location.href='departure.php';
         <![endif]-->
         
         <script src="../frameworks/js/lwe.js"></script>
-        <script src="../frameworks/js/prototype-barcode.js"></script>
-        <script src="../frameworks/js/prototype.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".trackcheck").click(function(){
+                    var inputtext1 = document.getElementsByClassName("textinput");
+                    var checkboxes1 = document.getElementsByClassName("trackcheck");
+                    
+                    for (var a = 0; a < checkboxes1.length; a++)
+                    {
+                        
+                        if (checkboxes1[a].checked == false)
+                            {
+                                checkboxes1[a].disabled = true;
+                                inputtext1[a].disabled = true;
+                                inputtext1[a].required = false;
+                                inputtext1[a].style.background = "none";
+                            }
+                    }
+                });
+            });
+        </script>
 
     </head>
 

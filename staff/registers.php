@@ -25,6 +25,8 @@ if(isset($_POST['register']))
         $t_code = $_POST['tcode'];
         
         $ostationid = $_POST['originstation'];
+    
+        $count = sizeof($t_code);
         
         $query2 = "SELECT * FROM warehouse WHERE ware_id = '$ostationid'";
         $result2 = mysqli_query($con, $query2);
@@ -37,17 +39,17 @@ if(isset($_POST['register']))
                 
         $eventDesc = 'Shipment info registered at ' . $ostationname . '.';
         
-        foreach ($t_code as $t)
+        for ($i = 0; $i < $count ; $i++)
         {
-            $update0 = mysqli_query($con, "UPDATE shipping SET status = 'SHIPMENT REGISTERED' WHERE tracking_code = $t") or die(mysqli_error($con));
+            $update0 = mysqli_query($con, "UPDATE shipping SET status = 'SHIPMENT REGISTERED' WHERE tracking_code = '$t_code[$i]'") or die(mysqli_error($con));
             
-            $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$t', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='RDL', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
+            $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$t_code[$i]', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='RDL', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
             
             $query3 = "SELECT *
             FROM warehouse wh
             JOIN shipping sh
             ON wh.station_name = sh.destination_station
-            WHERE tracking_code = '$t'";
+            WHERE tracking_code = '$t_code[$i]'";
             $result3 = mysqli_query($con, $query3);
             $results3 = mysqli_fetch_assoc($result3);
 
@@ -57,7 +59,33 @@ if(isset($_POST['register']))
             $dcountryname = $results3['country_name'];
             $dcountrycode = $results3['country_code'];
             
-            $update2 = mysqli_query($con, "INSERT INTO shipping_update_summary SET HawbNo='$t', DeliveryDate='', RecipientName='$recipientname', SignedName='', OriginStationCode='$ostationcode', OriginStationDescription='$ostationname', OriginCountryCode='$ocountrycode', OriginCountryDescription='$ocountryname', DestinationStationCode='$dstationcode', DestinationStationDescription='$dstationname', DestinationCountryCode='$dcountrycode', DestinationCountryDescription='$dcountryname', EventCode='IP', EventDescription='In Proceed', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
+            $update2 = mysqli_query($con, "INSERT INTO shipping_update_summary SET HawbNo='$t_code[$i]', ShipmentDate=NOW(), DeliveryDate='', RecipientName='$recipientname', SignedName='', OriginStationCode='$ostationcode', OriginStationDescription='$ostationname', OriginCountryCode='$ocountrycode', OriginCountryDescription='$ocountryname', DestinationStationCode='$dstationcode', DestinationStationDescription='$dstationname', DestinationCountryCode='$dcountrycode', DestinationCountryDescription='$dcountryname', EventCode='IP', EventDescription='In Proceed', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
+            
+            $query4 = "SELECT *
+                    FROM item im
+                    JOIN shipping sg
+                    ON im.payment_id = sg.payment_id
+                    WHERE tracking_code = '$t_code[$i]'";
+            $result4 = mysqli_query($con, $query4);
+
+            if (mysqli_num_rows($result4) > 0)
+            {
+                while ($row4 = mysqli_fetch_array($result4))
+                {
+                    $item_id = $row4['item_id'];
+                    $slot_id = $row4['slot_id'];
+                    
+                    $update3 = mysqli_query($con, "UPDATE item SET action = 'Out' WHERE item_id = '$item_id'") or die(mysqli_error($con));
+
+                    $query5 = "SELECT * FROM item WHERE slot_id = '$slot_id' AND action = 'in'";
+                    $result5 = mysqli_query($con, $query5);
+
+                    if (mysqli_num_rows($result5) == 0)
+                    {
+                        $update4 = mysqli_query($con, "UPDATE slot SET user_id = NULL WHERE slot_id = '$slot_id'") or die(mysqli_error($con));
+                    }
+                }
+            }
         }
         ?>
         
@@ -127,7 +155,7 @@ window.location.href='registers.php';
                                 {
                                     ?>
                                     
-                            <input type="hidden" name="originstation" value="<?php echo $row1['station_name']; ?>">
+                            <input type="hidden" name="originstation" value="<?php echo $row1['ware_id']; ?>">
                             
                             <?php
                                 }

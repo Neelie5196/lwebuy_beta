@@ -44,6 +44,7 @@ $count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_row
         <li><a href="#adpayment" id="btnadpayment" onclick="resettimeoutimer()">Payments<?php if ($count1 > 0) { ?><span class="notify"><?php echo $count1 ?></span><?php } ?></a></li>
         <li><a href="#adwarehouse" id="btnadwarehouse" onclick="resettimeoutimer()">Warehouse</a></li>
         <li><a href="#adupdate" id="btnadupdate" onclick="resettimeoutimer()">Updates</a></li>
+        <li><a href="#adother" id="btnadother" onclick="resettimeoutimer()">Others</a></li>
         <li><a href="#adreview" id="btnadreview" onclick="resettimeoutimer()">Reviews</a></li>
     </ul>
 
@@ -61,17 +62,18 @@ $count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_row
             <span class="icon-bar"></span>                        
         </button>
         
-        <a class="navbar-brand" href="#home" id="btnlogo" onclick="resettimeoutimer()"><img src="../resources/img/logo.png" alt="logo" width="10%"/></a>
+        <a class="navbar-brand" href="#home" id="btnlogos" onclick="resettimeoutimer()"><img src="../resources/img/logo.png" alt="logo" width="10%"/></a>
     </div>
     
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-            <li><a href="#home" id="btnhome" onclick="resettimeoutimer()">Home</a></li>
-            <li><a href="#adrequest" id="btnadrequest" onclick="resettimeoutimer()">Requests</a></li>
-            <li><a href="#adpayment" id="btnadpayment" onclick="resettimeoutimer()">Payments</a></li>
-            <li><a href="#adwarehouse" id="btnadwarehouse" onclick="resettimeoutimer()">Warehouse</a></li>
-            <li><a href="#adupdate" id="btnadupdate" onclick="resettimeoutimer()">Updates</a></li>
-            <li><a href="#adreview" id="btnadreview" onclick="resettimeoutimer()">Reviews</a></li>
+            <li><a href="#home" id="btnhomes" onclick="resettimeoutimer()">Home</a></li>
+            <li><a href="#adrequest" id="btnadrequests" onclick="resettimeoutimer()">Requests</a></li>
+            <li><a href="#adpayment" id="btnadpayments" onclick="resettimeoutimer()">Payments</a></li>
+            <li><a href="#adwarehouse" id="btnadwarehouses" onclick="resettimeoutimer()">Warehouse</a></li>
+            <li><a href="#adupdate" id="btnadupdates" onclick="resettimeoutimer()">Updates</a></li>
+            <li><a href="#adother" id="btnadothers" onclick="resettimeoutimer()">Others</a></li>
+            <li><a href="#adreview" id="btnadreviews" onclick="resettimeoutimer()">Reviews</a></li>
         
             <li><a id="btnuser" href="#user" onclick="resettimeoutimer()">My Account</a></li>
         <li><a href="../logout.php">Log Out</a></li>

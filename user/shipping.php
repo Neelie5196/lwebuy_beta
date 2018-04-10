@@ -82,7 +82,7 @@ $result8 = mysqli_query($con, $query8);
         <div id="sitem">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <form action="shippingdetail.php" method="post">
-                    <p class="requestp">Below 1kg = RM <?php echo $results1['rate']; ?>, above 1kg each 0.5kg = RM <?php echo number_format((float)$results1['rate']/2, 2, '.', ''); ?></p>
+                    <p class="requestp">RM <?php echo $results1['rate']; ?> per KG</p>
                     <table class="purchasetable">
                         <tr class="center">
                             <th></th>

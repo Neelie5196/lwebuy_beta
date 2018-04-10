@@ -182,30 +182,13 @@ $result5 = mysqli_query($con, $query5);
                             <td class="">
                                 <p>
                                     <?php
-                                        $over = '0';
-                                        $over1 = '0.5';
-                                        if($totalweight <= 1)
-                                        {    
+                                        $totalprice = $results4['rate'] * $totalweight;
                                     ?>
 
-                                    <input type="hidden" name="pricetotal" class="form-control" value="<?php echo $results4['rate']; ?>">
+                                    <input type="hidden" name="pricetotal" class="form-control" value="<?php echo $totalprice; ?>">
 
                                     <?php
-                                            echo $results4['rate'];
-                                        }
-                                        else
-                                        {
-                                            while ($over < $totalweight)
-                                            {
-                                                $over += $over1;
-                                            }
-                                    ?>
-
-                                    <input type="hidden" name="pricetotal" class="form-control" value="<?php echo number_format((float)$over*$results4['rate'], 2, '.', ''); ?>">
-
-                                    <?php
-                                            echo number_format((float)$over*$results4['rate'], 2, '.', '');
-                                        }
+                                            echo $totalprice;
                                     ?>
                                 </p>
                             </td>

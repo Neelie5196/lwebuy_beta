@@ -47,6 +47,7 @@ if(!empty($sessData['status']['msg'])){
                 </p>
             </div>
         </div>
+        
         <div class="row loginrow2">
             <div class="col-xs-2 col-md-2 col-lg-2 col-xs-push-5 col-md-push-5 col-lg-push-5 center">
                 <img src="resources/img/logo-box.PNG" width="50%" />
@@ -58,27 +59,16 @@ if(!empty($sessData['status']['msg'])){
             </div>
         </div>-->
         <div class="row loginrow3">
-            <div class="col-md-12 col-lg-12 hidden-xs hidden-sm">
-				 <?php echo !empty($statusMsg)?'<p class="'.$statusMsgType.'">'.$statusMsg.'</p>':''; ?>
-			   <div class="logincontainer">
-				<h2>Enter the Email of Your Account to Reset New Password</h2>
+            <div class="col-md-12 col-lg-12 col-xs-12">
+                <div class="logincontainer">
+				 <?php echo !empty($statusMsg)?'<p class="'.$statusMsgType.'">'.$statusMsg.'</p>':''; ?>  
+				    <p>Enter the Email of Your Account to Reset Password</p>
+                    
 					<form class="form-inline" action="userAccount.php" method="post">
-						<input type="email" class="formfield" id="email" name="email"  placeholder="EMAIL" required autofocus/>
-						<p><button type="submit" class="btn btn-default btnlogin" name="register">Submit</button></p>
+                        <p><input type="email" class="formfield" id="email" name="email"  placeholder="Email" required autofocus/></p>
+						<p><button type="submit" class="btn btn-default btnlogin" name="forgotSubmit">Submit</button></p>
 					</form>
 
-                </div>
-            </div>
-            
-            <div class="col-xs-12 col-sm-12 hidden-md hidden-lg">
-				 <?php echo !empty($statusMsg)?'<p class="'.$statusMsgType.'">'.$statusMsg.'</p>':''; ?>
-			   <div class="logincontainers">
-				<h2>Enter the Email of Your Account to Reset New Password</h2>
-                    	<h2>Enter the Email of Your Account to Reset New Password</h2>
-					<form class="form-inline" action="userAccount.php" method="post">
-						<input type="email" class="formfield" id="email" name="email"  placeholder="EMAIL" required autofocus/>
-						<p><button type="submit" class="btn btn-default btnlogin" name="register">Submit</button></p>
-					</form>
                 </div>
             </div>
         </div>

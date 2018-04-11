@@ -25,7 +25,7 @@ if(isset($_POST['forgotSubmit'])){
 			$update = $user->update($data, $conditions);
 			
 			if($update){
-				$resetPassLink = 'http://localhost/loginsystem/resetPassword.php?fp_code='.$uniqidStr;
+				$resetPassLink = 'http://localhost/lwebuy_beta/resetPassword.php?fp_code='.$uniqidStr;
 				
 				//get user details
 				$con['where'] = array('email'=>$_POST['email']);
@@ -35,7 +35,7 @@ if(isset($_POST['forgotSubmit'])){
 				//send reset password email
 				$to = $userDetails['email'];
 				$subject = "Password Update Request";
-				$mailContent = 'Dear '.$userDetails['first_name'].', 
+				$mailContent = 'Dear '.$userDetails['fname'].', 
 				<br/>Recently a request was submitted to reset a password for your account. If this was a mistake, just ignore this email and nothing will happen.
 				<br/>To reset your password, visit the following link: <a href="'.$resetPassLink.'">'.$resetPassLink.'</a>
 				<br/><br/>Regards,
@@ -44,7 +44,7 @@ if(isset($_POST['forgotSubmit'])){
 				$headers = "MIME-Version: 1.0" . "\r\n";
 				$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 				//additional headers
-				$headers .= 'From: LWEBUY<lwebuy.tk>' . "\r\n";
+				$headers .= 'From: LWE<lwe@example.com>' . "\r\n";
 				//send email
 				mail($to,$subject,$mailContent,$headers);
 				
@@ -86,7 +86,7 @@ if(isset($_POST['forgotSubmit'])){
 					'forgot_pass_identity' => $fp_code
 				);
 				$data = array(
-					'password' => md5($_POST['password'])
+					'password' => password_hash($_POST['password'],PASSWORD_DEFAULT)
 				);
 				$update = $user->update($data, $conditions);
 				if($update){
@@ -107,7 +107,7 @@ if(isset($_POST['forgotSubmit'])){
     }
 	//store reset password status into the session
     $_SESSION['sessData'] = $sessData;
-    $redirectURL = ($sessData['status']['type'] == 'success')?'index.php':'resetPassword.php?fp_code='.$fp_code;
+    $redirectURL = ($sessData['status']['type'] == 'success')?'login.php':'resetPassword.php?fp_code='.$fp_code;
 	//redirect to the login/reset pasword page
     header("Location:".$redirectURL);
 }else{

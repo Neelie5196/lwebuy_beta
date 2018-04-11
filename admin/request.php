@@ -104,9 +104,9 @@ $result4 = mysqli_query($con, $query4);
                                     <td><?php echo $row['quantity']; ?></td>
                                     <td><?php echo $row['remark']; ?></td>
                                     <td>
-                                        <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-link="<?php echo $row['link']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btnGo approveRequest" href="#approveRequest">Approve</a>
+                                        <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btnGo approveRequest" href="#approveRequest" onclick="apasslink('<?php echo $row['link']; ?>')">Approve</a>
                                         
-                                        <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-link="<?php echo $row['link']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btnDecline declineRequest" href="#declineRequest">Decline</a>
+                                        <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btnDecline declineRequest" href="#declineRequest" onclick="dpasslink('<?php echo $row['link']; ?>')">Decline</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -134,7 +134,8 @@ $result4 = mysqli_query($con, $query4);
                                 <input type="hidden" name="order_item_id" id="orderItemId" value="">
                                 <p class="requestp">Item name: <output name="name" id="name"></output></p>
 
-                                <p class="requestp">URL: <output name="link" id="link"></output></p>
+                                <p class="requestp">URL:</p>
+                                <div class="overflowurl"><a id="aitemurlbutton"></a></div>
 
                                 <p class="requestp">Category: <output name="category" id="category"></output></p>
 
@@ -143,7 +144,8 @@ $result4 = mysqli_query($con, $query4);
                                 <p class="requestp">Remarks: <output name="remark" id="remark"></output></p>
 
                                 <p>
-                                    <input class="formfield" name="uprice" type="number" step="0.01" min="0.01" placeholder="Unit Price (RMB)" required />
+                                    <span class="requestp">Unit Price (RMB): </span><br/>
+                                    <input class="formfield" name="uprice" type="number" step="0.01" min="0.01" placeholder="Enter price per item here" required />
                                 </p>
                             </div>
 
@@ -168,7 +170,8 @@ $result4 = mysqli_query($con, $query4);
                                 <input type="hidden" name="order_item_id" id="orderItemId" value="">
                                 <p class="requestp">Item name:<output name="name" id="name"></output></p>
 
-                                <p class="requestp">URL: <output name="link" id="link"></output></p>
+                                <p class="requestp">URL:</p>
+                                <div class="overflowurl"><a id="ditemurlbutton"></a></div>
 
                                 <p class="requestp">Category: <output name="category" id="category"></output></p>
 
@@ -238,36 +241,47 @@ $result4 = mysqli_query($con, $query4);
     </div>
 </div>
 <script>
-$(document).on("click", ".approveRequest", function () {
-    var orderItemId = $(this).data('id');
-    var orderItemName = $(this).data('name');
-    var orderItemLink = $(this).data('link');
-    var orderItemCategory = $(this).data('category');
-    var orderItemQuantity = $(this).data('quantity');
-    var orderItemRemark = $(this).data('remark');
-    $(".modal-body #orderItemId").val( orderItemId );
-    $(".modal-body #name").val( orderItemName );
-    $(".modal-body #link").val( orderItemLink );
-    $(".modal-body #category").val( orderItemCategory );
-    $(".modal-body #quantity").val( orderItemQuantity );
-    $(".modal-body #remark").val( orderItemRemark );
-    $('#approveRequest').modal('show');
-});
-</script>
-<script>
-$(document).on("click", ".declineRequest", function () {
-    var orderItemId = $(this).data('id');
-    var orderItemName = $(this).data('name');
-    var orderItemLink = $(this).data('link');
-    var orderItemCategory = $(this).data('category');
-    var orderItemQuantity = $(this).data('quantity');
-    var orderItemRemark = $(this).data('remark');
-    $(".modal-body #orderItemId").val( orderItemId );
-    $(".modal-body #name").val( orderItemName );
-    $(".modal-body #link").val( orderItemLink );
-    $(".modal-body #category").val( orderItemCategory );
-    $(".modal-body #quantity").val( orderItemQuantity );
-    $(".modal-body #remark").val( orderItemRemark );
-    $('#declineRequest').modal('show');
-});
+    $(document).on("click", ".approveRequest", function () {
+        var orderItemId = $(this).data('id');
+        var orderItemName = $(this).data('name');
+        var orderItemLink = $(this).data('link');
+        var orderItemCategory = $(this).data('category');
+        var orderItemQuantity = $(this).data('quantity');
+        var orderItemRemark = $(this).data('remark');
+        $(".modal-body #orderItemId").val( orderItemId );
+        $(".modal-body #name").val( orderItemName );
+        $(".modal-body #link").val( orderItemLink );
+        $(".modal-body #category").val( orderItemCategory );
+        $(".modal-body #quantity").val( orderItemQuantity );
+        $(".modal-body #remark").val( orderItemRemark );
+        $('#approveRequest').modal('show');
+    });
+
+    $(document).on("click", ".declineRequest", function () {
+        var orderItemId = $(this).data('id');
+        var orderItemName = $(this).data('name');
+        var orderItemLink = $(this).data('link');
+        var orderItemCategory = $(this).data('category');
+        var orderItemQuantity = $(this).data('quantity');
+        var orderItemRemark = $(this).data('remark');
+        $(".modal-body #orderItemId").val( orderItemId );
+        $(".modal-body #name").val( orderItemName );
+        $(".modal-body #link").val( orderItemLink );
+        $(".modal-body #category").val( orderItemCategory );
+        $(".modal-body #quantity").val( orderItemQuantity );
+        $(".modal-body #remark").val( orderItemRemark );
+        $('#declineRequest').modal('show');
+    });
+    
+    function apasslink(itemurl)
+    {
+        document.getElementById("aitemurlbutton").setAttribute("href", itemurl);
+        document.getElementById("aitemurlbutton").innerHTML = itemurl;
+    }
+    
+    function dpasslink(itemurl)
+    {
+        document.getElementById("ditemurlbutton").setAttribute("href", itemurl);
+        document.getElementById("ditemurlbutton").innerHTML = itemurl;
+    }
 </script>

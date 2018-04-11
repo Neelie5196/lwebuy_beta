@@ -38,9 +38,9 @@ $count2 = mysqli_num_rows($result2);
     </ul>
 
     <ul class="nav navbar-nav navbar-right useritem right">
-        <li><a id="btncredit" href="#credit" onclick="resettimeoutimer()"><span class="glyphicon glyphicon-piggy-bank"></span></a></li>
-        <li><a id="btnuser" href="#user" onclick="resettimeoutimer()"><span class="glyphicon glyphicon-user"></span></a></li>
-        <li><a href="../logout.php"><span class="glyphicon glyphicon-log-out"></span></a></li>
+        <li><a id="btncredit" href="#credit" onclick="resettimeoutimer()" title="LWE Points"><span class="glyphicon glyphicon-piggy-bank"></span></a></li>
+        <li><a id="btnuser" href="#user" onclick="resettimeoutimer()" title="My Profile"><span class="glyphicon glyphicon-user"></span></a></li>
+        <li><a href="../logout.php"><span class="glyphicon glyphicon-log-out" title="Log out"></span></a></li>
     </ul>
 </nav>
 

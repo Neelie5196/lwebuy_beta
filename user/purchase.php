@@ -165,9 +165,9 @@ $results20 = mysqli_fetch_assoc($result20);
                         <td><?php echo $row['quantity']; ?></td>
                         <td><?php echo $row['remark']; ?></td>
                         <td>
-                            <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
                             
-                            <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-link="<?php echo $row['link']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btn-default btn-xs btnDelete editRPurchase" href="#editRPurchase"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-link="<?php echo $row['link']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btn-default btn-xs btnDelete editRPurchase" href="#editRPurchase" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
                         </td>
                     </tr>
 
@@ -325,9 +325,9 @@ $results20 = mysqli_fetch_assoc($result20);
                             <td><?php echo number_format((float)$total_price, 2, '.', ''); ?></td>
                             <td><?php echo $row['remark']; ?></td>
                             <td>
-                                <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                <a href="purchase.php?order_item_id=<?php echo $row['order_item_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
 
-                                <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-quantity="<?php echo $row['quantity']; ?>" class="btn btn-default btn-xs btnDelete editPPurchase" href="#editPPurchase"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-quantity="<?php echo $row['quantity']; ?>" class="btn btn-default btn-xs btnDelete editPPurchase" href="#editPPurchase"><span class="glyphicon glyphicon-pencil" title="Edit"></span></a>
                             </td>
                         </tr>
 

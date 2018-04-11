@@ -164,9 +164,9 @@ $result15 = mysqli_query($con, $query15);
                                     <td><?php echo $row['station_name'] ?></td>
 
                                     <td>                                        
-                                        <a data-toggle="modal" data-id="<?php echo $row['user_id']; ?>" data-fname="<?php echo $row['fname']; ?>" data-lname="<?php echo $row['lname']; ?>" data-email="<?php echo $row['email']; ?>" data-contact="<?php echo $row['contact']; ?>" class="btn btn-default btn-xs btnDelete editAdmin" href="#editAdmin"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a data-toggle="modal" data-id="<?php echo $row['user_id']; ?>" data-fname="<?php echo $row['fname']; ?>" data-lname="<?php echo $row['lname']; ?>" data-email="<?php echo $row['email']; ?>" data-contact="<?php echo $row['contact']; ?>" class="btn btn-default btn-xs btnDelete editAdmin" href="#editAdmin" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
 
-                                        <a href="account.php?user_id=<?php echo $row['user_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                        <a href="account.php?user_id=<?php echo $row['user_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
                                     </td>
                                 </tr>
                                 <?php
@@ -327,9 +327,9 @@ $result15 = mysqli_query($con, $query15);
                                     <td><?php echo $row['station_name'] ?></td>
 
                                     <td>                                        
-                                        <a data-toggle="modal" data-id="<?php echo $row['user_id']; ?>" data-fname="<?php echo $row['fname']; ?>" data-lname="<?php echo $row['lname']; ?>" data-email="<?php echo $row['email']; ?>" data-contact="<?php echo $row['contact']; ?>" class="btn btn-default btn-xs btnDelete editStaff" href="#editStaff"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a data-toggle="modal" data-id="<?php echo $row['user_id']; ?>" data-fname="<?php echo $row['fname']; ?>" data-lname="<?php echo $row['lname']; ?>" data-email="<?php echo $row['email']; ?>" data-contact="<?php echo $row['contact']; ?>" class="btn btn-default btn-xs btnDelete editStaff" href="#editStaff" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>
 
-                                        <a href="account.php?user_id=<?php echo $row['user_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                        <a href="account.php?user_id=<?php echo $row['user_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash" title="Delete"></span></a>
                                     </td>
                                 </tr>
                                 <?php

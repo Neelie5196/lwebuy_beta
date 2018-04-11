@@ -164,7 +164,7 @@ if(isset($_POST['approvec']))
                                     <td><?php echo $row['payment_id']; ?></td>
                                     <td><?php echo $row['amount']; ?></td>
                                     <td>
-                                        <a href="paymentview.php?payment_id=<?php echo $row['payment_id']; ?>" class="btntab"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                        <a href="paymentview.php?payment_id=<?php echo $row['payment_id']; ?>" class="btntab"><span class="glyphicon glyphicon-eye-open" title="View more"></span></a>
                                     </td>
                                 </tr>
                                 <?php

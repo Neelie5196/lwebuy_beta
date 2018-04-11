@@ -1162,3 +1162,10 @@ body {
     margin: 0 5%;
     color: #2f9142;
 }
+
+.overflowurl {
+    width: 90%!important;
+    white-space: nowrap!important;
+    overflow-x: hidden!important;
+    text-overflow: ellipsis!important;
+}

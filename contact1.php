@@ -56,8 +56,8 @@ if(isset($_POST['submit']))
     <body class="linearbg">
         <div class="row contact">
             <div class="col-xs-12 col-md-8 col-lg-8 col-md-push-2 col-lg-push-2">
-                <h1 class="bigh1 center hidden-xs hidden-sm">Leave us a message</h3>
-                <h1 class="smh1 center hidden-md hidden-lg">Leave us a message</h3>
+                <h1 class="bigh1 center hidden-xs hidden-sm">Leave us a message</h1>
+                <h1 class="smh1 center hidden-md hidden-lg">Leave us a message</h1>
                 
                 <form action="contact1.php" method="post">
                     <p><input type="text" name="name" class="formfield" placeholder="Your Name (Required)" required autofocus /></p>

@@ -11,7 +11,7 @@ session_start();
                 <textarea name="hawb" cols="25" rows="5" class="trackfield" placeholder="Enter tracking code here" autocomplete="off" required></textarea>
             </div>
         </div>
-        <button type="submit" name="tracking_code" class="btn btnGo">Track</span></button>
+        <button type="submit" name="tracking_code" class="btn btnGo">Track</button>
     </form>                            
 </div>
 

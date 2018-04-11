@@ -49,8 +49,8 @@ $count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_row
     </ul>
 
     <ul class="nav navbar-nav navbar-right useritem right">
-        <li><a id="btnuser" href="#user" onclick="resettimeoutimer()"><span class="glyphicon glyphicon-user"></span></a></li>
-        <li><a href="../logout.php" onclick="resettimeoutimer()"><span class="glyphicon glyphicon-log-out"></span></a></li>
+        <li><a id="btnuser" href="#user" onclick="resettimeoutimer()" title="My profile"><span class="glyphicon glyphicon-user"></span></a></li>
+        <li><a href="../logout.php" onclick="resettimeoutimer()" title="Log out"><span class="glyphicon glyphicon-log-out"></span></a></li>
     </ul>
 </nav>
 

@@ -122,10 +122,10 @@ $results20 = mysqli_fetch_assoc($result20);
                     
                     <tr class="bodyrow">
                         <td><?php echo $row['title']; ?></td>
-                        <td><button type="button" class="btn btntab" data-toggle="modal" data-target="#myModal" onclick="passimg('<?php echo $row['file']; ?>')">View Receipt</button></td>
+                        <td><button type="button" class="btn btntab" data-toggle="modal" data-target="#myModal" onclick="passimg('<?php echo $row['file']; ?>')" title="View receipt"><span class="glyphicon glyphicon-eye-open"></span></button></td>
                         <td><?php echo $row['datetime']; ?></td>
                         <td>
-                           <a href="credit.php?payment_id=<?php echo $row['payment_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
+                           <a href="credit.php?payment_id=<?php echo $row['payment_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
                     
@@ -220,7 +220,7 @@ $results20 = mysqli_fetch_assoc($result20);
                         <td><?php echo $row1['title']; ?></td>
                         <td><?php echo $row1['amount']; ?></td>
 						<td>
-                            <a href="../receipts/<?php echo $row1['file']; ?>" data-lightbox="receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a href="../receipts/<?php echo $row1['file']; ?>" data-lightbox="receipt" title="View receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
                         </td>
                         <td><?php echo $row1['status']; ?></td>
                         <td></td>

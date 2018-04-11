@@ -364,7 +364,7 @@ $result8 = mysqli_query($con, $query8);
                           if($row['review']==NULL){
                             ?>
                                 <td>
-                                    <a data-toggle="modal" data-id="<?php echo $row['shipping_id']; ?>" class="btn btn-default btn-xs btnDelete sreview" href="#sreview"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a data-toggle="modal" data-id="<?php echo $row['shipping_id']; ?>" class="btn btn-default btn-xs btnDelete sreview" href="#sreview" title="Write a review"><span class="glyphicon glyphicon-edit"></span></a>
                                 </td>
                             <?php
                           }else{

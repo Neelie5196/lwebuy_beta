@@ -107,9 +107,9 @@ $result4 = mysqli_query($con, $query4);
                         <td><?php echo $row['order_code']; ?></td>
                         <td><?php echo $row['remark']; ?></td>
                         <td>
-                            <a href="inventory.php?request_id=<?php echo $row['request_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a href="inventory.php?request_id=<?php echo $row['request_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
                             
-                            <a data-toggle="modal" data-id="<?php echo $row['request_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-trackcode="<?php echo $row['order_code']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btn-default btn-xs btnDelete editItem" href="#editItem"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a data-toggle="modal" data-id="<?php echo $row['request_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-trackcode="<?php echo $row['order_code']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btn-default btn-xs btnDelete editItem" href="#editItem"><span class="glyphicon glyphicon-pencil" title="Edit"></span></a>
                         </td>
                     </tr>
 

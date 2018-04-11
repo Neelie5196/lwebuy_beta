@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.3.11
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2018 at 07:02 PM
--- Server version: 10.1.16-MariaDB
--- PHP Version: 7.0.9
+-- Generation Time: Apr 11, 2018 at 04:48 PM
+-- Server version: 5.6.24
+-- PHP Version: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,14 +14,11 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `lwe_beta`
 --
-
-CREATE DATABASE IF NOT EXISTS `lwe_beta`;
-USE `lwe_beta`;
 
 -- --------------------------------------------------------
 
@@ -29,7 +26,7 @@ USE `lwe_beta`;
 -- Table structure for table `address`
 --
 
-CREATE TABLE `address` (
+CREATE TABLE IF NOT EXISTS `address` (
   `address_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `address` varchar(100) NOT NULL,
@@ -45,10 +42,10 @@ CREATE TABLE `address` (
 -- Table structure for table `category`
 --
 
-CREATE TABLE `category` (
+CREATE TABLE IF NOT EXISTS `category` (
   `category_id` int(11) NOT NULL,
   `category_name` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `category`
@@ -72,7 +69,7 @@ INSERT INTO `category` (`category_id`, `category_name`) VALUES
 -- Table structure for table `contact`
 --
 
-CREATE TABLE `contact` (
+CREATE TABLE IF NOT EXISTS `contact` (
   `m_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `contact` varchar(11) NOT NULL,
@@ -89,14 +86,14 @@ CREATE TABLE `contact` (
 -- Table structure for table `country`
 --
 
-CREATE TABLE `country` (
+CREATE TABLE IF NOT EXISTS `country` (
   `country_id` int(11) NOT NULL,
   `country_name` varchar(50) NOT NULL,
   `country_currency` decimal(10,2) NOT NULL,
   `bank` varchar(50) NOT NULL,
   `account_no` int(15) NOT NULL,
   `account_name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `country`
@@ -111,7 +108,7 @@ INSERT INTO `country` (`country_id`, `country_name`, `country_currency`, `bank`,
 -- Table structure for table `item`
 --
 
-CREATE TABLE `item` (
+CREATE TABLE IF NOT EXISTS `item` (
   `item_id` int(11) NOT NULL,
   `slot_id` int(11) NOT NULL,
   `from_order` varchar(20) NOT NULL,
@@ -129,7 +126,7 @@ CREATE TABLE `item` (
 -- Table structure for table `order_item`
 --
 
-CREATE TABLE `order_item` (
+CREATE TABLE IF NOT EXISTS `order_item` (
   `order_item_id` int(11) NOT NULL,
   `payment_id` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
@@ -152,7 +149,7 @@ CREATE TABLE `order_item` (
 -- Table structure for table `payment`
 --
 
-CREATE TABLE `payment` (
+CREATE TABLE IF NOT EXISTS `payment` (
   `payment_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -170,7 +167,7 @@ CREATE TABLE `payment` (
 -- Table structure for table `point`
 --
 
-CREATE TABLE `point` (
+CREATE TABLE IF NOT EXISTS `point` (
   `point_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `point` decimal(10,2) NOT NULL
@@ -182,11 +179,11 @@ CREATE TABLE `point` (
 -- Table structure for table `rate`
 --
 
-CREATE TABLE `rate` (
+CREATE TABLE IF NOT EXISTS `rate` (
   `rate_id` int(11) NOT NULL,
   `rate_name` varchar(15) NOT NULL,
   `rate` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rate`
@@ -202,7 +199,7 @@ INSERT INTO `rate` (`rate_id`, `rate_name`, `rate`) VALUES
 -- Table structure for table `refund`
 --
 
-CREATE TABLE `refund` (
+CREATE TABLE IF NOT EXISTS `refund` (
   `refund_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `total_amount` decimal(10,2) NOT NULL,
@@ -218,7 +215,7 @@ CREATE TABLE `refund` (
 -- Table structure for table `request`
 --
 
-CREATE TABLE `request` (
+CREATE TABLE IF NOT EXISTS `request` (
   `request_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `order_item` varchar(50) NOT NULL,
@@ -234,7 +231,7 @@ CREATE TABLE `request` (
 -- Table structure for table `shipping`
 --
 
-CREATE TABLE `shipping` (
+CREATE TABLE IF NOT EXISTS `shipping` (
   `shipping_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `recipient_name` varchar(50) NOT NULL,
@@ -258,7 +255,7 @@ CREATE TABLE `shipping` (
 -- Table structure for table `shipping_update_details`
 --
 
-CREATE TABLE `shipping_update_details` (
+CREATE TABLE IF NOT EXISTS `shipping_update_details` (
   `sud_id` int(11) NOT NULL,
   `HawbNo` varchar(20) NOT NULL,
   `TransactionDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -279,7 +276,7 @@ CREATE TABLE `shipping_update_details` (
 -- Table structure for table `shipping_update_summary`
 --
 
-CREATE TABLE `shipping_update_summary` (
+CREATE TABLE IF NOT EXISTS `shipping_update_summary` (
   `sum_id` int(11) NOT NULL,
   `HawbNo` varchar(20) NOT NULL,
   `XR1` varchar(20) NOT NULL,
@@ -309,7 +306,7 @@ CREATE TABLE `shipping_update_summary` (
 -- Table structure for table `slot`
 --
 
-CREATE TABLE `slot` (
+CREATE TABLE IF NOT EXISTS `slot` (
   `slot_id` int(11) NOT NULL,
   `slot_aisle` int(100) NOT NULL,
   `slot_num` int(100) NOT NULL,
@@ -323,10 +320,10 @@ CREATE TABLE `slot` (
 -- Table structure for table `state`
 --
 
-CREATE TABLE `state` (
+CREATE TABLE IF NOT EXISTS `state` (
   `state_id` int(11) NOT NULL,
   `state_name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `state`
@@ -355,7 +352,7 @@ INSERT INTO `state` (`state_id`, `state_name`) VALUES
 -- Table structure for table `top_up`
 --
 
-CREATE TABLE `top_up` (
+CREATE TABLE IF NOT EXISTS `top_up` (
   `top_up_id` int(11) NOT NULL,
   `payment_id` int(11) NOT NULL,
   `paid_amount` decimal(10,2) NOT NULL,
@@ -369,7 +366,7 @@ CREATE TABLE `top_up` (
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL,
   `fname` varchar(100) NOT NULL,
   `lname` varchar(100) NOT NULL,
@@ -379,15 +376,17 @@ CREATE TABLE `users` (
   `type` varchar(10) NOT NULL,
   `image` text NOT NULL,
   `country_id` int(11) NOT NULL,
-  `login_status` varchar(55) NOT NULL
+  `status` enum('0','1') NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`, `type`, `image`, `country_id`, `login_status`) VALUES
-(0, 'Admin', 'admin', '123456789', 'admin@email.com', '$2y$10$8F.4cJe7IlO0ooO0SvDjz.4BeA6FiRmbeaDBtV.7rvfW1SSHLyInK', 'admin', '', 0, 'Online');
+INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`, `type`, `image`, `country_id`, `status`, `created`, `modified`) VALUES
+(0, 'Admin', 'admin', '123456789', 'admin@email.com', '$2y$10$8F.4cJe7IlO0ooO0SvDjz.4BeA6FiRmbeaDBtV.7rvfW1SSHLyInK', 'admin', '', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -395,14 +394,14 @@ INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`
 -- Table structure for table `warehouse`
 --
 
-CREATE TABLE `warehouse` (
+CREATE TABLE IF NOT EXISTS `warehouse` (
   `ware_id` int(11) NOT NULL,
   `station_code` varchar(10) NOT NULL,
   `station_name` text NOT NULL,
   `country_code` varchar(10) NOT NULL,
   `country_name` varchar(50) NOT NULL,
   `address` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `warehouse`
@@ -418,11 +417,11 @@ INSERT INTO `warehouse` (`ware_id`, `station_code`, `station_name`, `country_cod
 -- Table structure for table `work_station`
 --
 
-CREATE TABLE `work_station` (
+CREATE TABLE IF NOT EXISTS `work_station` (
   `work_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `ware_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `work_station`
@@ -568,7 +567,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `contact`
 --
@@ -578,7 +577,7 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `country`
 --
 ALTER TABLE `country`
-  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `item`
 --
@@ -598,7 +597,7 @@ ALTER TABLE `point`
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
-  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `refund`
 --
@@ -633,7 +632,7 @@ ALTER TABLE `slot`
 -- AUTO_INCREMENT for table `state`
 --
 ALTER TABLE `state`
-  MODIFY `state_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `state_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `top_up`
 --
@@ -643,17 +642,17 @@ ALTER TABLE `top_up`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
-  MODIFY `ware_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ware_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `work_station`
 --
 ALTER TABLE `work_station`
-  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `work_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

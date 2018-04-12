@@ -23,12 +23,12 @@ $result2 = mysqli_query($con, $query2);
 
 $query5 = "SELECT *
            FROM shipping
-           WHERE user_id='$user_id' AND status = 'proceed'";
+           WHERE user_id='$user_id' AND status != 'request' AND status != 'topup' AND status != 'delivered'";
 $result5 = mysqli_query($con, $query5);
 
 $query6 = "SELECT *
            FROM shipping
-           WHERE user_id='$user_id' AND status = 'received'";
+           WHERE user_id='$user_id' AND status = 'delivered'";
 $result6 = mysqli_query($con, $query6);
 
 $query7 = "SELECT *
@@ -359,7 +359,7 @@ $result8 = mysqli_query($con, $query8);
                         <td><?php echo mysqli_num_rows($result4); ?></td>
                         <td><?php echo $row['weight']; ?></td>
                         <td><?php echo $row['price']; ?></td>
-                        <td><?php echo $row['tracking_code']; ?></td>
+                        <td><a class="btn btn-default btn-xs" href="javascript: void(0)" onclick="window.open('viewtrackings.php?tracking_code=<?php echo $row['tracking_code']; ?>','windowname1','fullscreen=yes'); return false;"><?php echo $row['tracking_code']; ?></a></td>
                         <?php
                           if($row['review']==NULL){
                             ?>

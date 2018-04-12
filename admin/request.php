@@ -51,7 +51,7 @@ if(isset($_POST['decline']))
     <?php
 }
 
-$query4 = "SELECT *
+$query4 = "SELECT *, oi.status
            FROM order_item oi
            JOIN users us
            ON us.user_id = oi.user_id

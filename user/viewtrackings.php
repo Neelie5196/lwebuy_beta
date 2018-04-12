@@ -47,9 +47,7 @@ $result5 = mysqli_query($con, $query5);
     <body class="userbg">
         <div class="row updaterow1">
             <div class="col-xs-12 col-md-12 col-lg-12">
-                <p>
-                    <a href="main.php#track" class="aback">&lt;&emsp;Track other items</a>
-                </p>
+                
             </div>
         </div>
         

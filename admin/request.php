@@ -38,7 +38,7 @@ if(isset($_POST['decline']))
 {    
     
     $order_item_id = $_POST['order_item_id'];
-    $comment = $_POST['reason'];
+    $comment = $_POST['uprice'];
     $status = 'Declined';
     
     $result3 = mysqli_query($con, "UPDATE order_item SET comment='$comment', status = '$status' WHERE order_item_id = $order_item_id") or die(mysqli_error($con));
@@ -104,9 +104,7 @@ $result4 = mysqli_query($con, $query4);
                                     <td><?php echo $row['quantity']; ?></td>
                                     <td><?php echo $row['remark']; ?></td>
                                     <td>
-                                        <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btnGo approveRequest" href="#approveRequest" onclick="apasslink('<?php echo $row['link']; ?>')">Approve</a>
-                                        
-                                        <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btnDecline declineRequest" href="#declineRequest" onclick="dpasslink('<?php echo $row['link']; ?>')">Decline</a>
+                                        <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btnGo approveRequest" href="#approveRequest" onclick="apasslink('<?php echo $row['link']; ?>')">Review</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -126,7 +124,7 @@ $result4 = mysqli_query($con, $query4);
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="approveRequestTitle">Approve Request</h5>
+                            <h5 class="modal-title" id="approveRequestTitle">Review Request</h5>
                         </div>
 
                         <form method="post" action="request.php">
@@ -144,48 +142,14 @@ $result4 = mysqli_query($con, $query4);
                                 <p class="requestp">Remarks: <output name="remark" id="remark"></output></p>
 
                                 <p>
-                                    <span class="requestp">Unit Price (RMB): </span><br/>
-                                    <input class="formfield" name="uprice" type="number" step="0.01" min="0.01" placeholder="Enter price per item here" required />
+                                    <span class="requestp">Unit Price (RMB) / Reason: </span><br/>
+                                    <input class="formfield" name="uprice" type="text" step="0.01" min="0.01" placeholder="Enter price per item or Decline Reason" required />
                                 </p>
                             </div>
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
                                 <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="declineRequest" tabindex="-1" role="dialog" aria-labelledby="declineRequestTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="declineRequestTitle">Decline Request</h5>
-                        </div>
-
-                        <form method="post" action="request.php">
-                            <div class="modal-body left">
-                                <input type="hidden" name="order_item_id" id="orderItemId" value="">
-                                <p class="requestp">Item name:<output name="name" id="name"></output></p>
-
-                                <p class="requestp">URL:</p>
-                                <div class="overflowurl"><a id="ditemurlbutton" target="_blank"></a></div>
-
-                                <p class="requestp">Category: <output name="category" id="category"></output></p>
-
-                                <p class="requestp">Quantity: <output name="quantity" id="quantity"></output></p>
-
-                                <p class="requestp">Remarks: <output name="remark" id="remark"></output></p>
-
-                                <p>
-                                    <input class="formfield" name="reason" type="text" placeholder="Reason" required />
-                                </p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
                                 <input type="submit" class="btn btnDecline" name="decline" value="Decline" />
                             </div>
                         </form>
@@ -277,11 +241,5 @@ $result4 = mysqli_query($con, $query4);
     {
         document.getElementById("aitemurlbutton").setAttribute("href", itemurl);
         document.getElementById("aitemurlbutton").innerHTML = itemurl;
-    }
-    
-    function dpasslink(itemurl)
-    {
-        document.getElementById("ditemurlbutton").setAttribute("href", itemurl);
-        document.getElementById("ditemurlbutton").innerHTML = itemurl;
     }
 </script>

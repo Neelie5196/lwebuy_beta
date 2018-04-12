@@ -135,7 +135,7 @@ $result4 = mysqli_query($con, $query4);
                                 <p class="requestp">Item name: <output name="name" id="name"></output></p>
 
                                 <p class="requestp">URL:</p>
-                                <div class="overflowurl"><a id="aitemurlbutton"></a></div>
+                                <div class="overflowurl"><a id="aitemurlbutton" target="_blank"></a></div>
 
                                 <p class="requestp">Category: <output name="category" id="category"></output></p>
 
@@ -171,7 +171,7 @@ $result4 = mysqli_query($con, $query4);
                                 <p class="requestp">Item name:<output name="name" id="name"></output></p>
 
                                 <p class="requestp">URL:</p>
-                                <div class="overflowurl"><a id="ditemurlbutton"></a></div>
+                                <div class="overflowurl"><a id="ditemurlbutton" target="_blank"></a></div>
 
                                 <p class="requestp">Category: <output name="category" id="category"></output></p>
 

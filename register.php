@@ -145,6 +145,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                         </p>
 
                         <p>
+                            <label for="contact">Contact Number </label><br/>
+                            <input type="text" class="formfield" id="contact" name="contact" required/>
+                        </p>
+                        
+                        <p>
                             <label for="email">Email </label><br/>
                             <input type="email" class="formfield" id="email" name="email" required/>
                         </p>

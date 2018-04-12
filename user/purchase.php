@@ -20,9 +20,11 @@ if(isset($_POST['addpurchaserequest']))
     $status = 'Request';
     
     $nametoupload = addslashes($name);
+    $linktoupload = str_replace("'", "%27", $link);
+    $categorytoupload = addslashes($category);
     $remarktoupload = addslashes($remark);
     
-    $result1 = mysqli_query($con, "INSERT INTO order_item SET user_id = '$user_id', order_item = '$nametoupload', link = '$link', category = '$category', quantity = '$quantity', remark = '$remarktoupload', status = '$status'") or die(mysqli_error($con));
+    $result1 = mysqli_query($con, "INSERT INTO order_item SET user_id = '$user_id', order_item = '$nametoupload', link = '$linktoupload', category = '$categorytoupload', quantity = '$quantity', remark = '$remarktoupload', status = '$status'") or die(mysqli_error($con));
     
     ?>
     <script>

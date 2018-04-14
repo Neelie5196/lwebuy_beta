@@ -92,6 +92,10 @@ $query11 = "SELECT *
            WHERE order_item_id IN (".implode(',',$order_item).")";
 $result11 = mysqli_query($con, $query11);
 
+$query12 = "SELECT * FROM users WHERE user_id='$user_id'";
+$result12 = mysqli_query($con, $query12);
+$results12 = mysqli_fetch_assoc($result12);
+
 ?>
 
 <!DOCTYPE html>
@@ -188,7 +192,27 @@ $result11 = mysqli_query($con, $query11);
                         </div>
                         
                         <div id="pcard">
-                            <!-- wait for client to give MolPay details first-->
+                            <h3>MOLPay</h3>
+                            <form action="https://sandbox.molpay.com/MOLPay/pay/SB_parcelgateway/index.php" method= "POST">
+                                <?php
+                                    $unique_id = rand(10000,100000). $user_id;
+                                    $payment_id = $unique_id;
+                                    $amount = number_format((float)$total_pay, 2, '.', '');
+                                    $merchantID = 'SB_parcelgateway';
+                                    $orderid = $payment_id;
+                                    $verifykey = '93c210aa2652f010892f41c659c677a4';
+                                    $vcode = md5( $amount.$merchantID.$orderid.$verifykey );
+                                ?>
+                                <input type="hidden" name= "amount" value="<?php echo $amount; ?>" >
+                                <input type="hidden" name= "orderid" value="<?php echo $payment_id; ?>">
+                                <input type="hidden" name= "bill_name" value="<?php echo $results12['fname']." ".$results12['lname']; ?>">
+                                <input type="hidden" name= "bill_email" value="<?php echo $results12['email']; ?>">
+                                <input type="hidden" name= "bill_mobile" value="<?php echo $results12['contact']; ?>">
+                                <input type="hidden" name= "bill_desc" value="Purchase Payment">
+                                <input type="hidden" name= "country" value="MYR">
+                                <input type="hidden" name= "vcode" value="<?php echo $vcode; ?>">
+                                <p class="center"><input type="submit" class="btn btn-success" value="PAY NOW"></p>
+                            </form>
                         </div>
                         
                         <div id="ptrans">

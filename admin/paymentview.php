@@ -522,7 +522,7 @@ $result16 = mysqli_query($con, $query16);
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title center" id="declinePReasonTitle">Decline</h5>
+                        <h5 class="modal-title center" id="declinePReasonTitle">Decline Request</h5>
                     </div>
 
                     <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">

@@ -55,8 +55,29 @@ $query4 = "SELECT *
            FROM order_item oi
            JOIN users us
            ON us.user_id = oi.user_id
-           WHERE oi.status!='request'";
+           WHERE status!='request' AND status!='ready to pay'";
 $result4 = mysqli_query($con, $query4);
+
+$query5 = "SELECT *
+           FROM order_item oi
+           JOIN users us
+           ON us.user_id = oi.user_id
+           WHERE status = 'ready to pay'";
+$result5 = mysqli_query($con, $query5);
+
+if(isset($_POST['editPrice']))
+{   
+    $order_item_id = $_POST['orderItemId'];
+    $price = $_POST['price'];
+    
+    $result7 = mysqli_query($con, "UPDATE order_item SET price='$price' WHERE order_item_id='$order_item_id'") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    window.location.href='main.php#adrequest';
+    </script>
+    <?php
+}
 
 ?>
 <div class="col-xs-12 col-md-12 col-lg-12">
@@ -158,6 +179,86 @@ $result4 = mysqli_query($con, $query4);
             </div>
         </div>
         
+        <div id="rapprove">
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <table class="purchasetable">
+                    <tr class="center">
+                        <th class="purchasecol2">Customer</th>
+                        <th class="purchasecol3">Item Name</th>
+                        <th class="purchasecol1">Link</th>
+                        <th class="purchasecol1">Category</th>
+                        <th class="purchasecol05">Quantity</th>
+                        <th class="purchasecol1">Unit Price</th>
+                        <th class="purchasecol1">Total Price</th>
+                        <th class="purchasecol2">Remark</th>
+                        <th class="purchasecol1"></th>
+                    </tr>
+
+                    <?php
+                        if(mysqli_num_rows($result5) > 0)
+                        {
+                            while($row = mysqli_fetch_array($result5))
+                            {
+                                $total_price = $row['quantity']*$row['price'];
+                    ?>
+
+                    <tr class="bodyrow">
+                        <td><?php echo $row['fname']." ".$row['lname']; ?></td>
+                        <td><?php echo $row['order_item']; ?></td>
+                        <td>
+                            <a href="#" class="btntab" onclick="window.open('<?php echo $row['link']; ?> ','','Toolbar=1,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,fullscreen=yes');">View item</a>
+                        </td>
+                        <td><?php echo $row['category']; ?></td>
+                        <td><?php echo $row['quantity']; ?></td>
+                        <td><?php echo $row['price']; ?></td>
+                        <td><?php echo number_format((float)$total_price, 2, '.', ''); ?></td>
+                        <td><?php echo $row['remark']; ?></td>
+                        <td>
+                            <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-price="<?php echo $row['price']; ?>" class="btn btn-default btn-xs btnDelete editRPrice" href="#editRPrice"><span class="glyphicon glyphicon-pencil" title="Edit"></span></a>
+                        </td>
+                    </tr>
+
+                    <?php
+                        }
+                    }
+                    else
+                    {
+                    ?>
+
+                    <tr>
+                        <td colspan="8">No pending payments.</td>
+                    </tr>
+
+                    <?php
+                        }
+                    ?>
+                </table>
+            </div>
+        
+            <div class="modal fade" id="editRPrice" tabindex="-1" role="dialog" aria-labelledby="editRPriceTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editRPriceTitle">Edit Price</h5>
+                        </div>
+
+                        <form method="post" action="request.php">
+                            <div class="modal-body left">
+                                <input type="hidden" name="orderItemId" id="orderItemId" value=""/>
+                                
+                                <p><input class="formfield" name="price" id="price" type="number" placeholder="Unit Price" min='0.01' step="0.01" /></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                                <input type="submit" class="btn btn-success btnSend" name="editPrice" value="Save" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div id="rhistory">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
@@ -242,4 +343,12 @@ $result4 = mysqli_query($con, $query4);
         document.getElementById("aitemurlbutton").setAttribute("href", itemurl);
         document.getElementById("aitemurlbutton").innerHTML = itemurl;
     }
+    
+    $(document).on("click", ".editRPrice", function () {
+    var orderItemId = $(this).data('id');
+    var orderItemPrice = $(this).data('price');
+    $(".modal-body #orderItemId").val( orderItemId );
+    $(".modal-body #price").val( orderItemPrice );
+    $('#editRPrice').modal('show');
+});
 </script>

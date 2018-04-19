@@ -217,6 +217,11 @@ if(isset($_POST['declinepayment']))
     
 }
 
+$query16 = "SELECT *
+           FROM order_item
+           WHERE payment_id='$payment_id'";
+$result16 = mysqli_query($con, $query16);
+
 ?>
 
 <!DOCTYPE html>
@@ -376,7 +381,8 @@ if(isset($_POST['declinepayment']))
                                         <?php
                                     }
                                 ?>
-                                <a class="btn btnmargin btn-danger" href="#declinePPayment" data-toggle="modal">Decline</a>
+                                <a class="btn btnmargin btn-info" href="#declinePPayment" data-toggle="modal">Refund</a>
+                                <a class="btn btnmargin btn-danger" href="#declinePReason" data-toggle="modal">Decline</a>
                             </p>
                         </div>
                     </div>
@@ -498,14 +504,53 @@ if(isset($_POST['declinepayment']))
                             <p><input class="formfield" name="payment_id" type="hidden" value="<?php echo $payment_id ?>" /></p>
                             <p><input class="formfield" name="total_amount" type="number" step="0.01" min="0" placeholder="Total Amount" required /></p>
                             <p><input class="formfield" name="refund_amount" type="number" step="0.01" min="0" placeholder="Refund Amount" required /></p>
-                            <p><input class="formfield" name="admin_charge" type="number" step="0.01" min="0.01" placeholder="Admin Charge" required /></p>
+                            <p><input class="formfield" name="admin_charge" type="number" step="0.01" min="0" placeholder="Admin Charge" required /></p>
                             <p><input class="formfield" name="refund_reason" type="text" placeholder="Reason" required /></p>
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
 
-                            <input type="submit" class="btn btn-danger" name="declinepayment" value="Decline payment" />
+                            <input type="submit" class="btn btn-info" name="declinepayment" value="Refund payment" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="declinePReason" tabindex="-1" role="dialog" aria-labelledby="declinePReasonTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title center" id="declinePReasonTitle">Decline</h5>
+                    </div>
+
+                    <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
+                        <div class="modal-body left">
+                            <?php 
+                                if(mysqli_num_rows($result16) > 0)
+                                {
+                                    $counter = 0;
+                                    while($row = mysqli_fetch_array($result16))
+                                    {
+                                        $counter++;
+                                        ?>
+                                            <input type="hidden" name="user_id" value="<?php echo $results6['user_id']; ?>">
+                                            <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">
+                                            <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
+                                        <?php
+                                    }
+
+                                }
+                            ?>
+                            <p><input class="formfield" name="payment_id" type="hidden" value="<?php echo $payment_id ?>" /></p>
+                            <p><input class="formfield" name="decline_reason" type="text" placeholder="Reason" required /></p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+
+                            <input type="submit" class="btn btn-danger" name="declinereason" value="Decline" />
                         </div>
                     </form>
                 </div>

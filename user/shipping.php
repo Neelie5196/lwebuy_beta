@@ -23,7 +23,7 @@ $result2 = mysqli_query($con, $query2);
 
 $query5 = "SELECT *
            FROM shipping
-           WHERE user_id='$user_id' AND status != 'request' AND status != 'topup' AND status != 'delivered'";
+           WHERE user_id='$user_id' AND status != 'request' AND status != 'top-up' AND status != 'delivered'";
 $result5 = mysqli_query($con, $query5);
 
 $query6 = "SELECT *
@@ -31,18 +31,13 @@ $query6 = "SELECT *
            WHERE user_id='$user_id' AND status = 'delivered'";
 $result6 = mysqli_query($con, $query6);
 
-$query7 = "SELECT *
-           FROM shipping
-           WHERE user_id='$user_id' AND status = 'topup'";
-$result7 = mysqli_query($con, $query7);
-
 if(isset($_POST['review']))
 {    
 
     $shipping_id = $_POST['shipping_id'];
     $review = $_POST['reviews'];
 	
-	$result7 = mysqli_query($con, "UPDATE shipping SET review='$review', status='reviewed' WHERE shipping_id = '$shipping_id'") or die(mysqli_error($con));
+	$result7 = mysqli_query($con, "UPDATE shipping SET review='$review' WHERE shipping_id = '$shipping_id'") or die(mysqli_error($con));
     
     ?>
     <script>

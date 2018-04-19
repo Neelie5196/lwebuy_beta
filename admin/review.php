@@ -6,7 +6,7 @@ $query = "SELECT *
            FROM shipping s
            JOIN users us
            ON us.user_id = s.user_id
-           WHERE status = 'reviewed'";
+           WHERE status = 'DELIVERED' AND review is NOT NULL";
 $result = mysqli_query($con, $query);
 
 
@@ -26,7 +26,7 @@ $result = mysqli_query($con, $query);
                 ?>
     <div class="adreview left">
                    
-        <h5><?php echo $row['fname']." ".$row['lname']; ?></h5>
+        <h5><?php echo $row['fname']." ".$row['lname']." "."(Tracking Code:".$row['tracking_code'].")"; ?></h5>
         <p><?php echo $row['review']; ?></p>
     </div>
         <?php

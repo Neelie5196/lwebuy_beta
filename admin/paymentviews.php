@@ -184,7 +184,48 @@ if(isset($_POST['declinepayment']))
         }
         ?>
         <script>
-        alert('Success to Declined');
+        alert('Success to Refund');
+        window.location.href='main.php#adpayment';
+        </script>
+        <?php
+    }else{
+        ?>
+        <script>
+        alert('Please decline the payment, before submit refund request');
+        window.location.href='paymentviews.php?payment_id=<?php echo $payment_id; ?>';
+        </script>
+        <?php
+    }
+    
+}
+
+$query20 = "SELECT *
+           FROM item
+           WHERE payment_id='$payment_id'";
+$result20 = mysqli_query($con, $query20);
+
+if(isset($_POST['declinereason']))
+{   
+    $query21 = "SELECT *
+            FROM payment
+            WHERE payment_id='$payment_id'";
+    $result21 = mysqli_query($con, $query21);
+    $results21 = mysqli_fetch_assoc($result21);
+    
+    if($results21['status'] == 'Declined'){
+        $item_id = $_POST['item_id'];
+        $shipping_id = $_POST['shipping_id'];
+        $status = 'Ready to Pay';
+        
+        $result18 = mysqli_query($con, "DELETE FROM shipping WHERE shipping_id=$shipping_id") or die(mysqli_error($con));
+        
+        for($i=0; $i<$_POST['numbers']; $i++){
+            $result19 = mysqli_query($con, "UPDATE item SET payment_id = NULL WHERE item_id = $item_id[$i]") or die(mysqli_error($con));
+            
+        }
+        ?>
+        <script>
+        alert('Success to Decline');
         window.location.href='main.php#adpayment';
         </script>
         <?php
@@ -198,11 +239,6 @@ if(isset($_POST['declinepayment']))
     }
     
 }
-
-$query20 = "SELECT *
-           FROM item
-           WHERE payment_id='$payment_id'";
-$result20 = mysqli_query($con, $query20);
 
 ?>
 
@@ -543,7 +579,7 @@ $result20 = mysqli_query($con, $query20);
                                 }
                             ?>
                             <p><input class="formfield" name="payment_id" type="hidden" value="<?php echo $payment_id ?>" /></p>
-                            <p><input class="formfield" name="decline_reason" type="text" placeholder="Reason" required /></p>
+                            <p>*Comfirm decline the request?</p>
                         </div>
 
                         <div class="modal-footer">

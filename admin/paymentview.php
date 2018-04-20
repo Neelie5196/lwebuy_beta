@@ -197,7 +197,45 @@ if(isset($_POST['declinepayment']))
         $result7 = mysqli_query($con, "INSERT INTO refund SET user_id='$user_id', total_amount='$total_amount', refund_amount='$refund_amount', admin_charge='$admin_charge', refund_reason='$refund_reason'") or die(mysqli_error($con));
         
         for($i=0; $i<$_POST['numbers']; $i++){
-            $result16 = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
+            $result16 = mysqli_query($con, "UPDATE order_item SET status='$status', payment_id = NULL WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
+            
+        }
+        ?>
+        <script>
+        alert('Success to Refund');
+        window.location.href='main.php#adpayment';
+        </script>
+        <?php
+    }else{
+        ?>
+        <script>
+        alert('Please decline the payment, before submit refund request');
+        window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
+        </script>
+        <?php
+    }
+    
+}
+
+$query18 = "SELECT *
+           FROM order_item
+           WHERE payment_id='$payment_id'";
+$result18 = mysqli_query($con, $query18);
+
+if(isset($_POST['declinereason']))
+{   
+    $query16 = "SELECT *
+            FROM payment
+            WHERE payment_id='$payment_id'";
+    $result16 = mysqli_query($con, $query16);
+    $results16 = mysqli_fetch_assoc($result16);
+    
+    if($results16['status'] == 'Declined'){
+        $order_item_id = $_POST['order_item_id'];
+        $status = 'Ready to Pay';
+        
+        for($i=0; $i<$_POST['numbers']; $i++){
+            $result17 = mysqli_query($con, "UPDATE order_item SET status='$status', payment_id = NULL WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
             
         }
         ?>
@@ -216,11 +254,6 @@ if(isset($_POST['declinepayment']))
     }
     
 }
-
-$query16 = "SELECT *
-           FROM order_item
-           WHERE payment_id='$payment_id'";
-$result16 = mysqli_query($con, $query16);
 
 ?>
 
@@ -528,10 +561,10 @@ $result16 = mysqli_query($con, $query16);
                     <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
                         <div class="modal-body left">
                             <?php 
-                                if(mysqli_num_rows($result16) > 0)
+                                if(mysqli_num_rows($result18) > 0)
                                 {
                                     $counter = 0;
-                                    while($row = mysqli_fetch_array($result16))
+                                    while($row = mysqli_fetch_array($result18))
                                     {
                                         $counter++;
                                         ?>
@@ -544,7 +577,7 @@ $result16 = mysqli_query($con, $query16);
                                 }
                             ?>
                             <p><input class="formfield" name="payment_id" type="hidden" value="<?php echo $payment_id ?>" /></p>
-                            <p><input class="formfield" name="decline_reason" type="text" placeholder="Reason" required /></p>
+                            <p>*Comfirm decline the request?</p>
                         </div>
 
                         <div class="modal-footer">

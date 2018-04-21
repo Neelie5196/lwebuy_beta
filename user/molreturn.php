@@ -25,20 +25,17 @@
     // Merchant might issue a requery to MOLPay to double check payment status with MOLPay.
     if ( $status == "00" ) 
     {
-        if ( check_cart_amt($orderid, $amount) ) 
-        {
-        /*** NOTE : this is a user-defined function which should be prepared by merchant ***/
-        // action to change cart status or to accept order
-        // you can also do further checking on the paydate as well
-        // write your script here .....
-        }
+        $status = 'Paid';
+        $user_id = 
+        $title = 'Pay Order';
+        $statuss = 'Waiting for Accept';
+        
+        $result = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE payment_id='$orderid'") or die(mysqli_error($con));
+        
+        $result1 = mysqli_query($con, "INSERT INTO payment SET payment_id='$orderid', user_id='$user_id', title='$title', amount='$amount', status='$statuss'") or die(mysqli_error($con));
     } 
     else 
     {
-    // failure action. Write your script here .....
-    // Merchant might send query to MOLPay using Merchant requery
-    // to double check payment status for that particular order.
+        
     }
-    // Merchant is recommended to implement IPN once received the payment status
-    // regardless the status to acknowledge MOLPay system
 ?>

@@ -96,6 +96,19 @@ $query12 = "SELECT * FROM users WHERE user_id='$user_id'";
 $result12 = mysqli_query($con, $query12);
 $results12 = mysqli_fetch_assoc($result12);
 
+$query13 = "SELECT *
+           FROM order_item
+           WHERE order_item_id IN (".implode(',',$order_item).")";
+$result13 = mysqli_query($con, $query13);
+
+if(isset($_POST['molPay']))
+{    
+    $payment_id = $_POST['payment_id'];
+    
+    $result14 = mysqli_query($con, "UPDATE order_item SET payment_id='$payment_id' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
+    
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -193,16 +206,16 @@ $results12 = mysqli_fetch_assoc($result12);
                         
                         <div id="pcard">
                             <h3>MOLPay</h3>
-                            <form action="https://sandbox.molpay.com/MOLPay/pay/SB_parcelgateway/index.php" method= "POST">
-                                <?php
-                                    $unique_id = rand(10000,100000). $user_id;
-                                    $payment_id = $unique_id;
-                                    $amount = number_format((float)$total_pay, 2, '.', '');
-                                    $merchantID = 'SB_parcelgateway';
-                                    $orderid = $payment_id;
-                                    $verifykey = '93c210aa2652f010892f41c659c677a4';
-                                    $vcode = md5( $amount.$merchantID.$orderid.$verifykey );
-                                ?>
+                            <?php
+                                $unique_id = rand(10000,100000). $user_id;
+                                $payment_id = $unique_id;
+                                $amount = number_format((float)$total_pay, 2, '.', '');
+                                $merchantID = 'SB_parcelgateway';
+                                $orderid = $payment_id;
+                                $verifykey = '93c210aa2652f010892f41c659c677a4';
+                                $vcode = md5( $amount.$merchantID.$orderid.$verifykey );
+                            ?>
+                            <form action="https://sandbox.molpay.com/MOLPay/pay/SB_parcelgateway/index.php" method= "POST" class="myMolpay2">
                                 <input type="hidden" name= "amount" value="<?php echo $amount; ?>" >
                                 <input type="hidden" name= "orderid" value="<?php echo $payment_id; ?>">
                                 <input type="hidden" name= "bill_name" value="<?php echo $results12['fname']." ".$results12['lname']; ?>">
@@ -211,8 +224,24 @@ $results12 = mysqli_fetch_assoc($result12);
                                 <input type="hidden" name= "bill_desc" value="Purchase Payment">
                                 <input type="hidden" name= "country" value="MYR">
                                 <input type="hidden" name= "vcode" value="<?php echo $vcode; ?>">
-                                <p class="center"><input type="submit" class="btn btn-success" value="PAY NOW"></p>
+                                
                             </form>
+                            <form action="payment.php" method= "POST" class="myMolpay1">
+                                <?php
+                                    if(mysqli_num_rows($result13) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result13))
+                                        {
+                                    ?>
+                                        <input type="hidden" value="<?php echo $row['order_item_id']; ?>" name="order_item[]">
+                                    <?php
+                                        }
+                                    }
+                                ?>
+                                <input type="hidden" name= "payment_id" value="<?php echo $payment_id; ?>">
+                            </form>
+                            <a href="#submit" onClick="submitForms();" id="submit">Submit</a>
+                            <p class="center"><input type="submit" class="btn btn-success" name="molPay" id="molPay" value="PAY NOW"></p>
                         </div>
                         
                         <div id="ptrans">
@@ -290,3 +319,9 @@ $results12 = mysqli_fetch_assoc($result12);
         </div>
     </body>
 </html>
+<script language="javascript">
+function submitForms(){
+document.myMolpay1.submit();
+document.myMolpay2.submit();
+}
+</script>

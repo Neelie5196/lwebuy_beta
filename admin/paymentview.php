@@ -298,18 +298,27 @@ if(isset($_POST['declinereason']))
         <div class="row">
             <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">                        
                 <table class="purchasetable">
-                    <caption> 
+                    <caption>
                     <?php
-                        if($results6['title'] != 'Pay order by Points'){
-                            ?>
-                                <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
-                            <?php
-                        }else{
+                        if($results6['title'] == 'Pay order by Points'){
                             ?>
                                 <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
                                     <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
                                     <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
                                 </form>
+                                
+                            <?php
+                        }else if($results6['title'] == 'Pay Order by MOLPay'){
+                            ?>
+                                <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
+                                    <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
+                                    <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
+                                </form>
+                                
+                            <?php
+                        }else{
+                            ?>
+                                <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
                             <?php
                         }
                     

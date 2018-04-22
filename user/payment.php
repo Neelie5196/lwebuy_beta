@@ -104,9 +104,23 @@ $result13 = mysqli_query($con, $query13);
 if(isset($_POST['molPay']))
 {    
     $payment_id = $_POST['payment_id'];
+    $amount = $_POST['amount'];
+    $orderid = $_POST['orderid'];
+    $bill_name = $_POST['bill_name'];
+    $bill_email = $_POST['bill_email'];
+    $bill_mobile = $_POST['bill_mobile'];
+    $bill_desc = $_POST['bill_desc'];
+    $country = $_POST['country'];
+    $vcode = $_POST['vcode'];
+    
     
     $result14 = mysqli_query($con, "UPDATE order_item SET payment_id='$payment_id' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
-    
+    ?>
+    <script>
+    alert('Successfully Submit');
+    window.location.href='https://sandbox.molpay.com/MOLPay/pay/SB_parcelgateway/index.php?amount=<?php echo $amount; ?>&orderid=<?php echo $orderid; ?>&bill_name=<?php echo $bill_name; ?>&bill_email=<?php echo $bill_email; ?>&bill_mobile=<?php echo $bill_mobile; ?>&bill_desc=<?php echo $bill_desc; ?>&country=<?php echo $country; ?>&vcode=<?php echo $vcode; ?>';
+    </script>
+    <?php
 }
 
 ?>
@@ -206,16 +220,16 @@ if(isset($_POST['molPay']))
                         
                         <div id="pcard">
                             <h3>MOLPay</h3>
-                            <?php
-                                $unique_id = rand(10000,100000). $user_id;
-                                $payment_id = $unique_id;
-                                $amount = number_format((float)$total_pay, 2, '.', '');
-                                $merchantID = 'SB_parcelgateway';
-                                $orderid = $payment_id;
-                                $verifykey = '93c210aa2652f010892f41c659c677a4';
-                                $vcode = md5( $amount.$merchantID.$orderid.$verifykey );
-                            ?>
-                            <form action="https://sandbox.molpay.com/MOLPay/pay/SB_parcelgateway/index.php" method= "POST" class="myMolpay2">
+                            <form action="payment.php" method= "POST">
+                                <?php
+                                    $unique_id = rand(10000,100000). $user_id;
+                                    $payment_id = $unique_id;
+                                    $amount = number_format((float)$total_pay, 2, '.', '');
+                                    $merchantID = 'SB_parcelgateway';
+                                    $orderid = $payment_id;
+                                    $verifykey = '93c210aa2652f010892f41c659c677a4';
+                                    $vcode = md5( $amount.$merchantID.$orderid.$verifykey );
+                                ?>
                                 <input type="hidden" name= "amount" value="<?php echo $amount; ?>" >
                                 <input type="hidden" name= "orderid" value="<?php echo $payment_id; ?>">
                                 <input type="hidden" name= "bill_name" value="<?php echo $results12['fname']." ".$results12['lname']; ?>">
@@ -224,9 +238,6 @@ if(isset($_POST['molPay']))
                                 <input type="hidden" name= "bill_desc" value="Purchase Payment">
                                 <input type="hidden" name= "country" value="MYR">
                                 <input type="hidden" name= "vcode" value="<?php echo $vcode; ?>">
-                                
-                            </form>
-                            <form action="payment.php" method= "POST" class="myMolpay1">
                                 <?php
                                     if(mysqli_num_rows($result13) > 0)
                                     {
@@ -239,9 +250,8 @@ if(isset($_POST['molPay']))
                                     }
                                 ?>
                                 <input type="hidden" name= "payment_id" value="<?php echo $payment_id; ?>">
+                                <p class="center"><input type="submit" class="btn btn-success" name="molPay" value="PAY NOW"></p>
                             </form>
-                            <a href="#submit" onClick="submitForms();" id="submit">Submit</a>
-                            <p class="center"><input type="submit" class="btn btn-success" name="molPay" id="molPay" value="PAY NOW"></p>
                         </div>
                         
                         <div id="ptrans">
@@ -319,9 +329,3 @@ if(isset($_POST['molPay']))
         </div>
     </body>
 </html>
-<script language="javascript">
-function submitForms(){
-document.myMolpay1.submit();
-document.myMolpay2.submit();
-}
-</script>

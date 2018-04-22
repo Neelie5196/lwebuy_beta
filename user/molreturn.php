@@ -1,4 +1,8 @@
 <?php
+require_once '../connection/config.php';
+session_start();
+$user_id = $_SESSION['user_id'];
+
     $vkey ="70f63dd3248105cd2e0b6d57c6d0bc3c" ; //Replace xxxxxxxxxxxx with your MOLPay Secret_Key
 
     /********************************
@@ -26,16 +30,28 @@
     if ( $status == "00" ) 
     {
         $status = 'Paid';
-        $user_id = 
-        $title = 'Pay Order';
+        $title = 'Pay Order by';
+        $molpay = 'MOLPay';
         $statuss = 'Waiting for Accept';
         
         $result = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE payment_id='$orderid'") or die(mysqli_error($con));
         
-        $result1 = mysqli_query($con, "INSERT INTO payment SET payment_id='$orderid', user_id='$user_id', title='$title', amount='$amount', status='$statuss'") or die(mysqli_error($con));
-    } 
-    else 
+        $result1 = mysqli_query($con, "INSERT INTO payment SET payment_id='$orderid', user_id='$user_id', title='$title $molpay', amount='$amount', status='$statuss'") or die(mysqli_error($con));
+        ?>
+        <script>
+        alert('Successful to Pay');
+        window.location.href='main.php#purchase';
+        </script>
+        <?php
+    }
+    else
     {
-        
+        $result = mysqli_query($con, "UPDATE order_item SET payment_id=NULL WHERE payment_id='$orderid'") or die(mysqli_error($con));
+        ?>
+        <script>
+        alert('Error While Payment, Please try again');
+        window.location.href='main.php#purchase';
+        </script>
+        <?php
     }
 ?>

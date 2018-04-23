@@ -112,6 +112,46 @@ if(isset($_POST['uploadreceipt']))
 		<?php
 	}
 }
+
+$query12 = "SELECT *
+           FROM item
+           WHERE item_id IN (".implode(',',$item).")";
+$result12 = mysqli_query($con, $query12);
+
+if(isset($_POST['molPay']))
+{    
+    $payment_id = $_POST['payment_id'];
+    $amount = $_POST['amount'];
+    $orderid = $_POST['orderid'];
+    $bill_name = $_POST['bill_name'];
+    $bill_email = $_POST['bill_email'];
+    $bill_mobile = $_POST['bill_mobile'];
+    $bill_desc = $_POST['bill_desc'];
+    $country = $_POST['country'];
+    $vcode = $_POST['vcode'];
+    
+    $status = 'Request';
+    $rname = $_POST['name'];
+    $rcontact = $_POST['contact'];
+    $rremark = $_POST['remark'];
+    $address = $_POST['address'];
+    $totalweight = $_POST['totalweight'];    
+    
+    $result13 = mysqli_query($con, "UPDATE item SET payment_id='$payment_id' WHERE item_id IN (".implode(',',$item).")") or die(mysqli_error($con));
+    
+    $result14 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', recipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$amount', status='$status', payment_id='$payment_id'") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    window.location.href='https://sandbox.molpay.com/MOLPay/pay/SB_parcelgateway/index.php?amount=<?php echo $amount; ?>&orderid=<?php echo $orderid; ?>&bill_name=<?php echo $bill_name; ?>&bill_email=<?php echo $bill_email; ?>&bill_mobile=<?php echo $bill_mobile; ?>&bill_desc=<?php echo $bill_desc; ?>&country=<?php echo $country; ?>&vcode=<?php echo $vcode; ?>';
+    </script>
+    <?php
+}
+
+$query14 = "SELECT * FROM users WHERE user_id='$user_id'";
+$result14 = mysqli_query($con, $query14);
+$results14 = mysqli_fetch_assoc($result14);
+
 ?>
 
 <!DOCTYPE html>
@@ -207,7 +247,45 @@ if(isset($_POST['uploadreceipt']))
                         </div>
                         
                         <div id="pcard">
-                            <!-- wait for client to give MolPay details first-->
+                            <h3>MOLPay</h3>
+                            <form action="payments.php" method= "POST">
+                                <?php
+                                    $unique_id = rand(10000,100000). $user_id;
+                                    $payment_id = $unique_id;
+                                    $total_pay = $_POST['pricetotal'];
+                                    $amount = number_format((float)$total_pay, 2, '.', '');
+                                    $merchantID = 'SB_parcelgateway';
+                                    $orderid = $payment_id;
+                                    $verifykey = '93c210aa2652f010892f41c659c677a4';
+                                    $vcode = md5( $amount.$merchantID.$orderid.$verifykey );
+                                ?>
+                                <input type="hidden" name= "amount" value="<?php echo $amount; ?>" >
+                                <input type="hidden" name= "orderid" value="<?php echo $payment_id; ?>">
+                                <input type="hidden" name= "bill_name" value="<?php echo $results14['fname']." ".$results14['lname']; ?>">
+                                <input type="hidden" name= "bill_email" value="<?php echo $results14['email']; ?>">
+                                <input type="hidden" name= "bill_mobile" value="<?php echo $results14['contact']; ?>">
+                                <input type="hidden" name= "bill_desc" value="Purchase Payment">
+                                <input type="hidden" name= "country" value="MYR">
+                                <input type="hidden" name= "vcode" value="<?php echo $vcode; ?>">
+                                <?php
+                                    if(mysqli_num_rows($result12) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result12))
+                                        {
+                                    ?>
+                                        <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
+                                    <?php
+                                        }
+                                    }
+                                ?>
+                                <input type="hidden" name= "payment_id" value="<?php echo $payment_id; ?>">
+                                <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
+                                <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
+                                <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
+                                <input type="hidden" value="<?php echo $_POST['address']; ?>" name="address">
+                                <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
+                                <p class="center"><input type="submit" class="btn btn-success" name="molPay" value="PAY NOW"></p>
+                            </form>
                         </div>
                         
                         <div id="ptrans">

@@ -3,7 +3,7 @@
 require_once '../connection/config.php';
 session_start();
 
-if ($_SESSION['user_id'] == "")
+if (!$_SESSION['user_id'])
 {
     header('location: ../login.php');
     exit();

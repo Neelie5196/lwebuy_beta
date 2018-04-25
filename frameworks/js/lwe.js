@@ -539,17 +539,31 @@ function funcTrans() {
 
 function funcRPurchase() {
     document.getElementById("rpurchase").style.display = "block";
+    document.getElementById("rapprove").style.display = "none";
     document.getElementById("rhistory").style.display = "none";
     
     document.getElementById("btnrpurchase").style.fontWeight = "bold";
+    document.getElementById("btnrapprove").style.fontWeight = "normal";
+    document.getElementById("btnrhistory").style.fontWeight = "normal";
+}
+
+function funcRApprove() {
+    document.getElementById("rpurchase").style.display = "none";
+    document.getElementById("rapprove").style.display = "block";
+    document.getElementById("rhistory").style.display = "none";
+    
+    document.getElementById("btnrpurchase").style.fontWeight = "normal";
+    document.getElementById("btnrapprove").style.fontWeight = "bold";
     document.getElementById("btnrhistory").style.fontWeight = "normal";
 }
 
 function funcRHistory() {
     document.getElementById("rpurchase").style.display ="none";
+    document.getElementById("rapprove").style.display = "none";
     document.getElementById("rhistory").style.display ="block";
     
     document.getElementById("btnrpurchase").style.fontWeight = "normal";
+    document.getElementById("btnrapprove").style.fontWeight = "normal";
     document.getElementById("btnrhistory").style.fontWeight = "bold";
 }
 

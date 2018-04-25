@@ -2,12 +2,6 @@
 require_once '../connection/config.php';
 session_start();
 
-if (!$_SESSION['user_id'])
-{
-    header('location: ../login.php');
-    exit();
-}
-
 $payment_id = $_GET['payment_id'];
 
 $query = "SELECT *

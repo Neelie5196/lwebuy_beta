@@ -90,6 +90,7 @@ if(isset($_POST['editPrice']))
             <table class="tblRTab">
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" id="btnrpurchase" onclick="funcRPurchase()">Purchases <?php if(mysqli_num_rows($result) > 0) {echo "(" . mysqli_num_rows($result) . ")";} ?></button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnrapprove" onclick="funcRApprove()">Approved Requests</button></td>
                     <td><button class="btn-link btntab" id="btnrhistory" onclick="funcRHistory()">History</button></td>
                 </tr>
             </table>

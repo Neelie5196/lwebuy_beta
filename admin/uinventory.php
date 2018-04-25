@@ -2,7 +2,7 @@
 require_once '../connection/config.php';
 session_start();
 
-if (!$_SESSION['user_id'])
+if ($_SESSION['user_id'] == "")
 {
     header('location: ../login.php');
     exit();
@@ -58,7 +58,7 @@ if(isset($_POST['update']))
         if(!empty($results5))
         {
             $user_id = $results5['user_id'];
-            $order_item = $results5['order_item'];
+            $order_item = addslashes($results5['order_item']);
             
             $query7 = "SELECT * 
                       FROM slot
@@ -73,6 +73,12 @@ if(isset($_POST['update']))
                 $update0 = mysqli_query($con, "UPDATE order_item SET status = 'Received' WHERE order_code = '$o_codes[$i]'") or die(mysqli_error($con));
                 
                 $update1 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Purchase Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
+                ?>
+            <script>
+                alert('Inventories updated!');
+                window.location.href='uinventory.php';
+            </script>
+<?php
             }
             else
             {
@@ -93,13 +99,20 @@ if(isset($_POST['update']))
                     $update1 = mysqli_query($con, "UPDATE slot SET status = 'In Use', user_id = '$user_id' WHERE slot_id = $slot_id ") or die(mysqli_error($con));
                     
                     $update2 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Purchase Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
+                ?>
+            <script>
+                alert('Inventories updated!');
+                window.location.href='uinventory.php';
+            </script>
+<?php
                 }
                 else
                 {
                 ?>
 
                 <script>
-                alert('No available slots. Add more slots to update order <?php echo $o_codes[$i] ?>');
+                    alert('No available slots. Add more slots to update order <?php echo $o_codes[$i] ?>');
+                    window.location.href='uinventory.php';
                 </script>
 
 <?php
@@ -125,6 +138,13 @@ if(isset($_POST['update']))
                 $update0 = mysqli_query($con, "UPDATE request SET status = 'Received' WHERE order_code = '$o_codes[$i]'") or die(mysqli_error($con));
                 
                 $update1 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Inventory Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
+                
+                ?>
+            <script>
+                alert('Inventories updated!');
+                window.location.href='uinventory.php';
+            </script>
+<?php
             }
             else
             {
@@ -145,13 +165,21 @@ if(isset($_POST['update']))
                     $update1 = mysqli_query($con, "UPDATE slot SET status = 'In Use', user_id = '$user_id' WHERE slot_id = $slot_id ") or die(mysqli_error($con));
 
                     $update2 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Inventory Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
+                    
+                    ?>
+            <script>
+                alert('Inventories updated!');
+                window.location.href='uinventory.php';
+            </script>
+<?php
                 }
                 else
                 {
                 ?>
 
                 <script>
-                alert('No available slots. Add more slots to update order <?php echo $o_codes[$i] ?>');
+                    alert('No available slots. Add more slots to update order <?php echo $o_codes[$i] ?>');
+                    window.location.href='uinventory.php';
                 </script>
 <?php
                 }
@@ -159,14 +187,6 @@ if(isset($_POST['update']))
         }
         
     }
-    ?>
-
-    <script>
-    alert('Inventories updated!');
-    window.location.href='uinventory.php';
-    </script>
-
-<?php
 }
 ?>
 

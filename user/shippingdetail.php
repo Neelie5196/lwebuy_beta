@@ -16,26 +16,6 @@ $totalweight = $_POST['totalweight'];
 $query = "SELECT * FROM address WHERE user_id = '$user_id'";
 $result = mysqli_query($con, $query);
 
-$query1 = "SELECT * FROM state";
-$result1 = mysqli_query($con, $query1);
-
-if(isset($_POST['addAddress']))
-{    
-    $address = $_POST['address'];
-    $state = $_POST['state'];
-    $city = $_POST['city'];
-    $country = $_POST['country'];
-    $postcode = $_POST['postcode'];
-    
-    $result2 = mysqli_query($con, "INSERT INTO address SET user_id = '$user_id', address='$address', state='$state', city='$city', country='$country', postcode='$postcode'") or die(mysqli_error($con));
-    
-    ?>
-    <script>
-    window.location.href='main.php#ship';
-    </script>
-    <?php
-}
-
 $query3 = "SELECT *
            FROM item
            WHERE item_id IN (".implode(',',$item).")";
@@ -46,13 +26,6 @@ $query4 = "SELECT *
           WHERE rate_name = '1kg'";
 $result4 = mysqli_query($con, $query4);
 $results4 = mysqli_fetch_assoc($result4);
-
-$query5 = "SELECT *
-           FROM item
-           WHERE item_id IN (".implode(',',$item).")";
-$result5 = mysqli_query($con, $query5);
-
-
 
 ?>
 
@@ -128,7 +101,7 @@ $result5 = mysqli_query($con, $query5);
                                 }
                             ?>
                         </select>
-                        <button class="btn btnGo" type="button" data-toggle="modal" data-target="#addAddress">Add address</button>
+                        <a class="btn btnGo" href="javascript: void(0)" onclick="window.open('addAddress.php','windowname1','fullscreen=yes'); return false;">Add address</a>
                     </p>
 
                     <p>
@@ -207,67 +180,6 @@ $result5 = mysqli_query($con, $query5);
                     ?>
                 </div>
             </form>
-            
-            <div class="modal fade" id="addAddress" tabindex="-1" role="dialog" aria-labelledby="addAddressTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <form action="shippingdetail.php" method="post">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addAddressTitle">New Address</h5>
-                            </div>
-
-
-                            <div class="modal-body left">
-                                <?php
-                                    if(mysqli_num_rows($result5) > 0)
-                                    {
-                                        while($row = mysqli_fetch_array($result5))
-                                        {
-                                            ?>
-                                                <input class="formfield" name="item[]" type="hidden" value="<?php echo $row['item_id']; ?>" />
-                                            <?php
-                                        }
-                                    }
-                                ?>
-                                <input type="hidden" name="totalweight" class="form-control" value="<?php echo $totalweight; ?>">
-
-                                <p><input class="formfield" name="address" type="text" placeholder="Address" required /></p>
-
-                                <p><input class="formfield" name="postcode" type="text" placeholder="Postcode" required /></p>
-
-                                <p><input class="formfield" name="city" type="text" placeholder="City" required /></p>
-
-                                <p>
-                                    <select name="state" class="formselect" required>
-                                        <option class="formoption" selected>Selangor</option>
-                                        <?php 
-                                            if(mysqli_num_rows($result1) > 0)
-                                            {
-                                                while($row = mysqli_fetch_array($result1))
-                                                {
-                                                    ?>
-                                                        <option class="formoption" value="<?php echo $row['state_name']; ?>">
-                                                            <?php echo $row['state_name']; ?>
-                                                        </option>
-                                                    <?php
-                                                }
-                                            }
-                                        ?>
-                                    </select>
-                                </p>
-
-                                <p><input class="formfield" name="country" type="text" value="Malaysia" readonly /></p>
-
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-success btnSend" name="addAddress" value="Save" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
     </body>
 </html>

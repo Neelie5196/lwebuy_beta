@@ -2,7 +2,7 @@
 require_once '../connection/config.php';
 session_start();
 
-if (!$_SESSION['user_id'])
+if ($_SESSION['user_id'] == "")
 {
     header('location: ../login.php');
     exit();
@@ -88,7 +88,7 @@ if(isset($_POST['register']))
 
                     if (mysqli_num_rows($result5) == 0)
                     {
-                        $update4 = mysqli_query($con, "UPDATE slot SET user_id = NULL WHERE slot_id = '$slot_id'") or die(mysqli_error($con));
+                        $update4 = mysqli_query($con, "UPDATE slot SET user_id = NULL, status = 'Not In Use' WHERE slot_id = '$slot_id'") or die(mysqli_error($con));
                     }
                 }
             }

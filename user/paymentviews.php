@@ -3,6 +3,12 @@ require_once '../connection/config.php';
 session_start();
 $payment_id = $_GET['payment_id'];
 
+if (!$_SESSION['user_id'])
+{
+    header('location: ../login.php');
+    exit();
+}
+
 $query = "SELECT *
            FROM item
            WHERE payment_id='$payment_id'";

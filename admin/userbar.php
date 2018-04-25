@@ -31,6 +31,12 @@ $query5 = "SELECT *
 $result5 = mysqli_query($con, $query5);
 
 $count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_rows($result3) + mysqli_num_rows($result4) + mysqli_num_rows($result5);
+
+$query6 = "SELECT *
+        FROM contact";
+$result6 = mysqli_query($con, $query6);
+
+$count2 = mysqli_num_rows($result6);
 ?>
 
 <nav class="navbar navbar-default hidden-xs hidden-sm adbigbar">
@@ -44,7 +50,7 @@ $count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_row
         <li><a href="#adpayment" id="btnadpayment" onclick="resettimeoutimer()">Payments<?php if ($count1 > 0) { ?><span class="notify"><?php echo $count1 ?></span><?php } ?></a></li>
         <li><a href="#adwarehouse" id="btnadwarehouse" onclick="resettimeoutimer()">Warehouse</a></li>
         <li><a href="#adupdate" id="btnadupdate" onclick="resettimeoutimer()">Updates</a></li>
-        <li><a href="#adother" id="btnadother" onclick="resettimeoutimer()">Others</a></li>
+        <li><a href="#adother" id="btnadother" onclick="resettimeoutimer()">Others<?php if ($count2 > 0) { ?><span class="notify"><?php echo $count2 ?></span><?php } ?></a></li>
         <li><a href="#adaccount" id="btnadaccount" onclick="resettimeoutimer()">Accounts</a></li>
         <li><a href="#adreview" id="btnadreview" onclick="resettimeoutimer()">Reviews</a></li>
     </ul>
@@ -69,11 +75,11 @@ $count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_row
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
             <li><a href="#home" id="btnhomes" onclick="resettimeoutimer()">Home</a></li>
-            <li><a href="#adrequest" id="btnadrequests" onclick="resettimeoutimer()">Requests</a></li>
-            <li><a href="#adpayment" id="btnadpayments" onclick="resettimeoutimer()">Payments</a></li>
+            <li><a href="#adrequest" id="btnadrequests" onclick="resettimeoutimer()">Requests<?php if ($count > 0) { ?><span class="notifys"><?php echo $count ?></span><?php } ?></a></li>
+            <li><a href="#adpayment" id="btnadpayments" onclick="resettimeoutimer()">Payments<?php if ($count1 > 0) { ?><span class="notifys"><?php echo $count1 ?></span><?php } ?></a></li>
             <li><a href="#adwarehouse" id="btnadwarehouses" onclick="resettimeoutimer()">Warehouse</a></li>
             <li><a href="#adupdate" id="btnadupdates" onclick="resettimeoutimer()">Updates</a></li>
-            <li><a href="#adother" id="btnadothers" onclick="resettimeoutimer()">Others</a></li>
+            <li><a href="#adother" id="btnadothers" onclick="resettimeoutimer()">Others<?php if ($count2 > 0) { ?><span class="notifys"><?php echo $count2 ?></span><?php } ?></a></li>
             <li><a href="#adaccount" id="btnadaccounts" onclick="resettimeoutimer()">Accounts</a></li>
             <li><a href="#adreview" id="btnadreviews" onclick="resettimeoutimer()">Reviews</a></li>
         

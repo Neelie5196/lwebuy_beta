@@ -89,7 +89,7 @@ if(isset($_POST['editPrice']))
         <div class="col-xs-12 col-md-12 col-lg-12">
             <table class="tblRTab">
                 <tr>
-                    <td class="wborder"><button class="btn-link btntab" id="btnrpurchase" onclick="funcRPurchase()">Purchases</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnrpurchase" onclick="funcRPurchase()">Purchases <?php if(mysqli_num_rows($result) > 0) {echo "(" . mysqli_num_rows($result) . ")";} ?></button></td>
                     <td><button class="btn-link btntab" id="btnrhistory" onclick="funcRHistory()">History</button></td>
                 </tr>
             </table>

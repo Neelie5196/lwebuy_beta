@@ -92,7 +92,7 @@ if(isset($_POST['update-bankdetails']))
                 <table class="tblITab">
                     <tr>
                         <td class="wborder"><button class="btn-link btntab" type="button" id="btnorate" onclick="funcORate()">Payment Details</button></td>
-                        <td><button class="btn-link btntab" type="button" id="btnomessage" onclick="funcOMessage()">Messages</button></td>
+                        <td><button class="btn-link btntab" type="button" id="btnomessage" onclick="funcOMessage()">Messages <?php if(mysqli_num_rows($result3) > 0) {echo "(" . mysqli_num_rows($result3) . ")";} ?></button></td>
                     </tr>
                 </table>
             </div>

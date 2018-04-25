@@ -77,7 +77,7 @@ $result4 = mysqli_query($con, $query4);
             <table class="tblVTab">
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" id="btnipending" onclick="funcIPending()">Pending</button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnireceive" onclick="funcIReceive()">Received</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnireceive" onclick="funcIReceive()">Received <?php if(mysqli_num_rows($result4) > 0) {echo "(" . mysqli_num_rows($result4) . ")";} ?></button></td>
                     <td><button class="btn-link btntab" id="btniwarehouse" onclick="funcIWarehouse()">Warehouse Details</button></td>
                 </tr>
             </table>

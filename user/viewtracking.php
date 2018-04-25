@@ -3,6 +3,12 @@
 require_once '../connection/config.php';
 session_start();
 
+if (!$_SESSION['user_id'])
+{
+    header('location: ../login.php');
+    exit();
+}
+
 $hawb = $_POST['hawb'];
 
 $query4 = "SELECT * 

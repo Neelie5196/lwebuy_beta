@@ -54,6 +54,8 @@ $query8 = "SELECT *
         GROUP BY s.payment_id";
 $result8 = mysqli_query($con, $query8);
 
+$outcount = mysqli_num_rows($result6) + mysqli_num_rows($result8);
+
 $query10 = "SELECT *
         FROM refund rf
         JOIN users us
@@ -122,6 +124,7 @@ if(isset($_POST['approvec']))
 
 ?>
 <link rel="stylesheet" href="../frameworks/css/lightbox.min.css">
+
 <div class="col-xs-12 col-md-12 col-lg-12">
     <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Payments</h2>
     
@@ -131,10 +134,10 @@ if(isset($_POST['approvec']))
         <div class="col-xs-12 col-md-12 col-lg-12">
             <table class="tblPTab">
                 <tr>
-                    <td class="wborder"><button class="btn-link btntab" id="btnppurchase" onclick="funcPPurchase()">Purchases</button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnpship" onclick="funcPShip()">Shipping</button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnpcredit" onclick="funcPCredit()">Credit Reload</button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnpoutstand" onclick="funcPOutstand()">Outstanding Payments</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnppurchase" onclick="funcPPurchase()">Purchases <?php if(mysqli_num_rows($result) > 0) {echo "(" . mysqli_num_rows($result) . ")";} ?></button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpship" onclick="funcPShip()">Shipping <?php if(mysqli_num_rows($result1) > 0) {echo "(" . mysqli_num_rows($result1) . ")";} ?></button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpcredit" onclick="funcPCredit()">Credit Reload <?php if(mysqli_num_rows($result3) > 0) {echo "(" . mysqli_num_rows($result3) . ")";} ?></button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpoutstand" onclick="funcPOutstand()">Outstanding Payments <?php if($outcount > 0) {echo "(" . $outcount . ")";} ?></button></td>
                     <td class="wborder"><button class="btn-link btntab" id="btnprefund" onclick="funcPRefund()">Refund</button></td>
                     <td class="wborder"><button class="btn-link btntab" id="btnphistory" onclick="funcPHistory()">Payment History</button></td>
                     <td><button class="btn-link btntab" id="btnprhistory" onclick="funcPRHistory()">Refund History</button></td>

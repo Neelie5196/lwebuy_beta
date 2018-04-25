@@ -64,9 +64,9 @@ $result8 = mysqli_query($con, $query8);
             <table class="tblSTab">
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" id="btnsitem" onclick="funcSItem()">Items In-Store</button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnsrequest" onclick="funcSRequest()">Requests</button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnsinsuff" onclick="funcSInsuff()">Insufficient Payments</button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnsproceed" onclick="funcSProceed()">Proceeded</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnsrequest" onclick="funcSRequest()">Requests <?php if(mysqli_num_rows($result2) > 0) {echo "(" . mysqli_num_rows($result2) . ")";} ?></button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnsinsuff" onclick="funcSInsuff()">Insufficient Payments <?php if(mysqli_num_rows($result8) > 0) {echo "(" . mysqli_num_rows($result8) . ")";} ?></button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnsproceed" onclick="funcSProceed()">Proceeded <?php if(mysqli_num_rows($result5) > 0) {echo "(" . mysqli_num_rows($result5) . ")";} ?></button></td>
                     <td><button class="btn-link btntab" id="btnsreceive" onclick="funcSReceive()">Received</button></td>
                 </tr>
             </table>

@@ -1,6 +1,13 @@
 <?php
 require_once '../connection/config.php';
 session_start();
+
+if (!$_SESSION['user_id'])
+{
+    header('location: ../login.php');
+    exit();
+}
+
 $s_id = $_GET['s_id'];
 
 $query = "SELECT *

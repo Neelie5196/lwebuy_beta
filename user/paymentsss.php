@@ -2,6 +2,13 @@
 
 require_once '../connection/config.php';
 session_start();
+
+if (!$_SESSION['user_id'])
+{
+    header('location: ../login.php');
+    exit();
+}
+
 $user_id = $_SESSION['user_id'];
 $item = $_POST['item_id'];
 $top_up_id = $_POST['top_up_id'];

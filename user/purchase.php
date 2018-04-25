@@ -129,10 +129,10 @@ $results20 = mysqli_fetch_assoc($result20);
         <div class="col-xs-12 col-md-12 col-lg-12">
             <table class="tblTab">
                 <tr>
-                    <td class="wborder"><button class="btn-link btntab" id="btnprequest" onclick="funcPRequest()">Requests</button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnppayment" onclick="funcPPayment()">Pending Payments</button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnpinsuff" onclick="funcPInsuff()">Insufficient Payments</button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnpproceed" onclick="funcPProceed()">Proceeded</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnprequest" onclick="funcPRequest()">Requests <?php if(mysqli_num_rows($result) > 0) {echo "(" . mysqli_num_rows($result) . ")";} ?></button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnppayment" onclick="funcPPayment()">Pending Payments <?php if(mysqli_num_rows($result6) > 0) {echo "(" . mysqli_num_rows($result6) . ")";} ?></button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpinsuff" onclick="funcPInsuff()">Insufficient Payments <?php if(mysqli_num_rows($result11) > 0) {echo "(" . mysqli_num_rows($result11) . ")";} ?></button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpproceed" onclick="funcPProceed()">Proceeded <?php if(mysqli_num_rows($result8) > 0) {echo "(" . mysqli_num_rows($result8) . ")";} ?></button></td>
                     <td class="wborder"><button class="btn-link btntab" id="btnpreceive" onclick="funcPReceive()">Received</button></td>
                     <td><button class="btn-link btntab" id="btnpdecline" onclick="funcPDecline()">Declined</button></td>
                 </tr>

@@ -30,10 +30,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $contact = $_POST['contact'];
             $password = $_POST['password'];
 			$password = password_hash($password, PASSWORD_DEFAULT); 
+			$code=substr(md5(mt_rand()),0,15);
+			
+            $sql = "INSERT INTO users (user_id, email, password, lname, fname, type, contact, code, verify) VALUES ('','$email', '$password', '$lname', '$fname', 'customer', '$contact', '$code','no')";
+            
 			
 			
-            $sql = "INSERT INTO users (email, password, lname, fname, type, contact) VALUES ('$email', '$password', '$lname', '$fname', 'customer', '$contact')";
-            mysqli_query($con, $sql);
+			mysqli_query($con, $sql);
+			$verifyLink = 'http://localhost/lwebuy_beta/verification.php?email='.$email.'&code='.$code.'';
+			$message = "Your Activation Code is ".$code."";
+			$to=$email;
+			$subject="Sign up Confirmation";
+			$from = 'lwebuy.com';
+			$body='Please Click On This link <a href="'.$verifyLink.'">'.$verifyLink.'</a>to activate your account.';
+			$headers = "From:".$from;
+			mail($to,$subject,$body,$headers);
             ?>
             <script>
             alert('Register Successful');
@@ -43,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         }
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html data-ng-app="">

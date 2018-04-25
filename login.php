@@ -31,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         else
         {
             $user = $result->fetch_assoc();
-            
 			if(password_verify($password, $user["password"]))  
             {    
                 $_SESSION['user_id'] = $user['user_id'];
@@ -40,35 +39,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['type'] = $user['type'];
                 $_SESSION['contact'] = $user['contact'];
+				$_SESSION['verify'] = $user['verify'];
             
                 
-                if($user['type'] == 'admin')
+                if($user['type'] == 'admin' && $user['verify'] == 'yes')
                 {
-					$result = mysqli_query($con, "UPDATE users
-													SET login_status = 'Online'
-													WHERE user_id = '$_SESSION[user_id]';");
                     header("location: admin/main.php");
                 }
-                else if($user['type'] == 'staff')
+                else if($user['type'] == 'staff' && $user['verify'] == 'yes')
                 {	
-					$result = mysqli_query($con, "UPDATE users
-								SET login_status = 'Online'
-								WHERE user_id = '$_SESSION[user_id]';");
                     header("location: staff/main.php");
                 }
-                else if($user['type'] == 'customer')
+                else if($user['type'] == 'customer' && $user['verify'] == 'yes')
                 {
-						$result = mysqli_query($con, "UPDATE users
-						SET login_status = 'Online'
-						WHERE user_id = '$_SESSION[user_id]';");
                     header("location: user/main.php");
                 }
-                            
-                
+				else{   
+				?>
+				<script>
+				alert('You have to verify your email');
+				window.location.href='login.php?fail';
+				</script>
+				<?php					
+				}
             }
             else
             {
-			     ?>
+			?>
             <script>
             alert('Wrong Password');
             window.location.href='login.php?fail';

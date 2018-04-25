@@ -72,17 +72,11 @@ if(isset($_POST['proceed']))
     
 }
 
-$query6 = "SELECT * FROM warehouse";
-$result6 = mysqli_query($con, $query6);
-
 $query7 = "SELECT *
             FROM payment
             WHERE payment_id='$payment_id'";
 $result7 = mysqli_query($con, $query7);
 $results7 = mysqli_fetch_assoc($result7);
-
-$query8 = "SELECT * FROM warehouse";
-$result8 = mysqli_query($con, $query8);
 
 if(isset($_POST['topup']))
 {
@@ -287,33 +281,25 @@ if(isset($_POST['declinereason']))
                 <table class="purchasetable">
                     <caption> 
                         <?php
-                            if($results7['title'] != 'Pay shipping by Points'){
-                                ?>
-                                    <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
-                                <?php
-                            }else{
+                            if($results7['title'] == 'Pay shipping by Points'){
                                 ?>
                                     <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
                                         <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                                        <input type="submit" class="btn btn-success btnSend" name="approve" value="Pay by LWE point" />
-                                        <select class="formselect" name="station" >
-                                            <option class="formoption" selected required>Station</option>
-                                            <?php 
-                                                if(mysqli_num_rows($result8) > 0)
-                                                {
-                                                    while($row = mysqli_fetch_array($result8))
-                                                    {
-                                                        ?>
-                                                            <option class="formoption" value="<?php echo $row['station_name']; ?>">
-                                                                <?php echo $row['station_name']; ?>
-                                                            </option>
-                                                        <?php
-                                                    }
-                                                }
-                                            ?>
-                                        </select>
-
+                                        <input type="hidden" name="station" value="KUALA LUMPUR (LOGISTICS HUB), MALAYSIA">
+                                        <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
                                     </form>
+                                <?php
+                            }else if($results7['title'] == 'Pay Shipping by MOLPay'){
+                                ?>
+                                    <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
+                                        <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
+                                        <input type="hidden" name="station" value="KUALA LUMPUR (LOGISTICS HUB), MALAYSIA">
+                                        <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
+                                    </form>
+                                <?php
+                            }else{
+                                ?>
+                                    <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
                                 <?php
                             }
                         
@@ -435,22 +421,7 @@ if(isset($_POST['declinereason']))
                         <div class="modal-body left">
                             <img src="../receipts/<?php echo $results6['file']; ?>" style="width: 500px; height: 450px;">
                             <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                            <select class="formselect" name="station" >
-                                <option class="formoption" selected required></option>
-                                <?php 
-                                    if(mysqli_num_rows($result6) > 0)
-                                    {
-                                        while($row = mysqli_fetch_array($result6))
-                                        {
-                                            ?>
-                                                <option class="formoption" value="<?php echo $row['station_name']; ?>">
-                                                    <?php echo $row['station_name']; ?>
-                                                </option>
-                                            <?php
-                                        }
-                                    }
-                                ?>
-                            </select>
+                            <input type="hidden" name="station" value="KUALA LUMPUR (LOGISTICS HUB), MALAYSIA">
                         </div>
 
                         <div class="modal-footer">

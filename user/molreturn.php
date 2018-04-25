@@ -27,31 +27,114 @@ $user_id = $_SESSION['user_id'];
     if( $skey != $key1 ) $status= -1; // Invalid transaction.
 
     // Merchant might issue a requery to MOLPay to double check payment status with MOLPay.
-    if ( $status == "00" ) 
-    {
-        $status = 'Paid';
-        $title = 'Pay Order by';
-        $molpay = 'MOLPay';
-        $statuss = 'Waiting for Accept';
-        
-        $result = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE payment_id='$orderid'") or die(mysqli_error($con));
-        
-        $result1 = mysqli_query($con, "INSERT INTO payment SET payment_id='$orderid', user_id='$user_id', title='$title $molpay', amount='$amount', status='$statuss'") or die(mysqli_error($con));
-        ?>
-        <script>
-        alert('Successful to Pay');
-        window.location.href='main.php#purchase';
-        </script>
-        <?php
+
+    $query = "SELECT *
+               FROM order_item
+               WHERE payment_id='$orderid'";
+    $result = mysqli_query($con, $query);
+
+    $query1 = "SELECT *
+               FROM item
+               WHERE payment_id='$orderid'";
+    $result1 = mysqli_query($con, $query1);
+
+    if(mysqli_num_rows($result) > 0){
+        if ( $status == "00" ) 
+        {
+            $status = 'Paid';
+            $title = 'Pay Order by';
+            $molpay = 'MOLPay';
+            $statuss = 'Waiting for Accept';
+
+            $result = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE payment_id='$orderid'") or die(mysqli_error($con));
+
+            $result1 = mysqli_query($con, "INSERT INTO payment SET payment_id='$orderid', user_id='$user_id', title='$title $molpay', amount='$amount', status='$statuss'") or die(mysqli_error($con));
+            ?>
+            <script>
+            alert('Successful to Pay');
+            window.location.href='main.php#purchase';
+            </script>
+            <?php
+        }
+        else
+        {
+            $result = mysqli_query($con, "UPDATE order_item SET payment_id=NULL WHERE payment_id='$orderid'") or die(mysqli_error($con));
+            ?>
+            <script>
+            alert('Error While Payment, Please try again');
+            window.location.href='main.php#purchase';
+            </script>
+            <?php
+        }
+    }else if(mysqli_num_rows($result1) > 0){
+        if ( $status == "00" ) 
+        {
+            $status = 'Paid';
+            $title = 'Pay Shipping by';
+            $molpay = 'MOLPay';
+            $statuss = 'Waiting for Accept';
+
+            $result = mysqli_query($con, "INSERT INTO payment SET payment_id='$orderid', user_id='$user_id', title='$title $molpay', amount='$amount', status='$statuss'") or die(mysqli_error($con));
+            ?>
+            <script>
+            alert('Successful to Pay');
+            window.location.href='main.php#ship';
+            </script>
+            <?php
+        }
+        else
+        {
+            
+            $result = mysqli_query($con, "UPDATE item SET payment_id=NULL WHERE payment_id='$orderid'") or die(mysqli_error($con));
+            $result2 = mysqli_query($con, "DELETE FROM shipping WHERE payment_id=$orderid") or die(mysqli_error($con));
+            ?>
+            <script>
+            alert('Error While Payment, Please try again');
+            window.location.href='main.php#ship';
+            </script>
+            <?php
+        }
+    }else{
+        if ( $status == "00" ) 
+        {
+            $title = 'Reload Point by';
+            $molpay = 'MOLPay';
+            $status = 'Completed';
+
+            $result = mysqli_query($con, "INSERT INTO payment SET  payment_id='$orderid', user_id='$user_id', title='$title $molpay', amount='$amount', status='$status'") or die(mysqli_error($con));
+            
+            $query = "SELECT * 
+                      FROM point
+                      WHERE user_id = '$user_id'";
+            $results = mysqli_query($con, $query);
+            $resultss = mysqli_num_rows($results);
+            
+            $query0 = "SELECT * FROM rate WHERE rate_name='LWE point'";
+            $result0 = mysqli_query($con, $query0);
+            $results0 = mysqli_fetch_assoc($result0);
+            $point = $amount*$results0['rate'];
+
+            if($resultss > 0){
+                $result1 = mysqli_query($con, "UPDATE point SET point = point + '$point' WHERE user_id = $user_id ") or die(mysqli_error($con));
+            }else{
+                $result1 = mysqli_query($con, "INSERT INTO point SET user_id='$user_id', point='$point'") or die(mysqli_error($con));
+            }
+            ?>
+            <script>
+            alert('Successful to Pay');
+            window.location.href='main.php#credit';
+            </script>
+            <?php
+        }
+        else
+        {
+            ?>
+            <script>
+            alert('Error While Payment, Please try again');
+            window.location.href='main.php#credit';
+            </script>
+            <?php
+        }
     }
-    else
-    {
-        $result = mysqli_query($con, "UPDATE order_item SET payment_id=NULL WHERE payment_id='$orderid'") or die(mysqli_error($con));
-        ?>
-        <script>
-        alert('Error While Payment, Please try again');
-        window.location.href='main.php#purchase';
-        </script>
-        <?php
-    }
+    
 ?>

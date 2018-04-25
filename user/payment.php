@@ -124,7 +124,6 @@ if(isset($_POST['molPay']))
     $result14 = mysqli_query($con, "UPDATE order_item SET payment_id='$payment_id' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
     ?>
     <script>
-    alert('Successfully Submit');
     window.location.href='https://sandbox.molpay.com/MOLPay/pay/SB_parcelgateway/index.php?amount=<?php echo $amount; ?>&orderid=<?php echo $orderid; ?>&bill_name=<?php echo $bill_name; ?>&bill_email=<?php echo $bill_email; ?>&bill_mobile=<?php echo $bill_mobile; ?>&bill_desc=<?php echo $bill_desc; ?>&country=<?php echo $country; ?>&vcode=<?php echo $vcode; ?>';
     </script>
     <?php

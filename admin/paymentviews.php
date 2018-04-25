@@ -78,17 +78,11 @@ if(isset($_POST['proceed']))
     
 }
 
-$query6 = "SELECT * FROM warehouse";
-$result6 = mysqli_query($con, $query6);
-
 $query7 = "SELECT *
             FROM payment
             WHERE payment_id='$payment_id'";
 $result7 = mysqli_query($con, $query7);
 $results7 = mysqli_fetch_assoc($result7);
-
-$query8 = "SELECT * FROM warehouse";
-$result8 = mysqli_query($con, $query8);
 
 if(isset($_POST['topup']))
 {
@@ -293,33 +287,25 @@ if(isset($_POST['declinereason']))
                 <table class="purchasetable">
                     <caption> 
                         <?php
-                            if($results7['title'] != 'Pay shipping by Points'){
-                                ?>
-                                    <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
-                                <?php
-                            }else{
+                            if($results7['title'] == 'Pay shipping by Points'){
                                 ?>
                                     <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
                                         <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                                        <input type="submit" class="btn btn-success btnSend" name="approve" value="Pay by LWE point" />
-                                        <select class="formselect" name="station" >
-                                            <option class="formoption" selected required>Station</option>
-                                            <?php 
-                                                if(mysqli_num_rows($result8) > 0)
-                                                {
-                                                    while($row = mysqli_fetch_array($result8))
-                                                    {
-                                                        ?>
-                                                            <option class="formoption" value="<?php echo $row['station_name']; ?>">
-                                                                <?php echo $row['station_name']; ?>
-                                                            </option>
-                                                        <?php
-                                                    }
-                                                }
-                                            ?>
-                                        </select>
-
+                                        <input type="hidden" name="station" value="KUALA LUMPUR (LOGISTICS HUB), MALAYSIA">
+                                        <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
                                     </form>
+                                <?php
+                            }else if($results7['title'] == 'Pay Shipping by MOLPay'){
+                                ?>
+                                    <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
+                                        <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
+                                        <input type="hidden" name="station" value="KUALA LUMPUR (LOGISTICS HUB), MALAYSIA">
+                                        <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
+                                    </form>
+                                <?php
+                            }else{
+                                ?>
+                                    <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
                                 <?php
                             }
                         
@@ -412,22 +398,39 @@ if(isset($_POST['declinereason']))
                             <p class="right">
                                 <a href="main.php#adpayment" class="btn btn-secondary btnCancel btnmargin">Cancel</a>
                                 <input type="submit" class="btn btn-success btnSend btnmargin" name="proceed" value="Proceed" />
-                                <?php
-                                    if(mysqli_num_rows($result11) > 0){
-                                        
-                                    }else{
-                                        ?>
-                                        <a class="btn btnDecline btnmargin" href="#topupPPayment" data-toggle="modal">Top-up</a>
-                                        <?php
-                                    }
-                                ?>
-                                <a class="btn btnmargin btn-info" href="#declinePPayment" data-toggle="modal">Refund</a>
-                                <a class="btn btnmargin btn-danger" href="#declinePReason" data-toggle="modal">Decline</a>
+                                <a class="btn btnmargin btn-primary" href="#actionPayment" data-toggle="modal">Action</a>
                             </p>
                         </div>
                     </div>
                 </div>
             </form>
+        </div>
+        
+        <div class="modal fade" id="actionPayment" tabindex="-1" role="dialog" aria-labelledby="actionPaymentTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title center" id="actionPaymentTitle">Action Payment</h5>
+                    </div>
+                    <div class="modal-body left">
+                        <?php
+                            if(mysqli_num_rows($result11) > 0){
+
+                            }else{
+                                ?>
+                                <a class="btn btnDecline btnmargin" href="#topupPPayment" data-toggle="modal" data-dismiss="modal">Top-up</a>
+                                <?php
+                            }
+                        ?>
+                        <a class="btn btnmargin btn-info" href="#declinePPayment" data-toggle="modal" data-dismiss="modal">Refund</a>
+                        <a class="btn btnmargin btn-danger" href="#declinePReason" data-toggle="modal" data-dismiss="modal">Decline</a>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div class="modal fade" id="verifyPayment" tabindex="-1" role="dialog" aria-labelledby="verifyPaymentTitle" aria-hidden="true">
@@ -441,22 +444,7 @@ if(isset($_POST['declinereason']))
                         <div class="modal-body left">
                             <img src="../receipts/<?php echo $results6['file']; ?>" style="width: 500px; height: 450px;">
                             <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                            <select class="formselect" name="station" >
-                                <option class="formoption" selected required></option>
-                                <?php 
-                                    if(mysqli_num_rows($result6) > 0)
-                                    {
-                                        while($row = mysqli_fetch_array($result6))
-                                        {
-                                            ?>
-                                                <option class="formoption" value="<?php echo $row['station_name']; ?>">
-                                                    <?php echo $row['station_name']; ?>
-                                                </option>
-                                            <?php
-                                        }
-                                    }
-                                ?>
-                            </select>
+                            <input type="hidden" name="station" value="KUALA LUMPUR (LOGISTICS HUB), MALAYSIA">
                         </div>
 
                         <div class="modal-footer">

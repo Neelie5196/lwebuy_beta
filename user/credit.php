@@ -66,6 +66,10 @@ if (isset($_GET['payment_id']))
 
 }
 
+$query12 = "SELECT * FROM users WHERE user_id='$user_id'";
+$result12 = mysqli_query($con, $query12);
+$results12 = mysqli_fetch_assoc($result12);
+
 $query19 = "SELECT * 
           FROM point
           WHERE user_id = '$user_id'";
@@ -77,6 +81,29 @@ $query20 = "SELECT *
           WHERE rate_name = 'LWE point'";
 $result20 = mysqli_query($con, $query20);
 $results20 = mysqli_fetch_assoc($result20);
+
+if(isset($_POST['molPay']))
+{    
+    $unique_id = rand(10000,100000). $user_id;
+    $payment_id = $unique_id;
+    $amount = number_format((float)$_POST['amount'], 2, '.', '');
+    $merchantID = 'SB_parcelgateway';
+    $orderid = $payment_id;
+    $verifykey = '93c210aa2652f010892f41c659c677a4';
+    $vcode = md5( $amount.$merchantID.$orderid.$verifykey );
+    
+    $bill_name = $_POST['bill_name'];
+    $bill_email = $_POST['bill_email'];
+    $bill_mobile = $_POST['bill_mobile'];
+    $bill_desc = $_POST['bill_desc'];
+    $country = $_POST['country'];
+    
+    ?>
+    <script>
+    window.location.href='https://sandbox.molpay.com/MOLPay/pay/SB_parcelgateway/index.php?amount=<?php echo $amount; ?>&orderid=<?php echo $orderid; ?>&bill_name=<?php echo $bill_name; ?>&bill_email=<?php echo $bill_email; ?>&bill_mobile=<?php echo $bill_mobile; ?>&bill_desc=<?php echo $bill_desc; ?>&country=<?php echo $country; ?>&vcode=<?php echo $vcode; ?>';
+    </script>
+    <?php
+}
 ?>
 <link rel="stylesheet" href="../frameworks/css/lightbox.min.css">
 <div class="col-xs-12 col-md-12 col-lg-12">
@@ -147,7 +174,7 @@ $results20 = mysqli_fetch_assoc($result20);
 
                     <tr>
                         <td colspan="5">
-                            <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#addCredit">Add</button>
+                            <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#addCredits">Add</button>
                         </td>
                     </tr>
                 </table>
@@ -173,6 +200,54 @@ $results20 = mysqli_fetch_assoc($result20);
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
                                 <input type="submit" class="btn btn-success btnSend" name="add" value="Request" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="addCredits" tabindex="-1" role="dialog" aria-labelledby="addCreditsTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addCreditsTitle">Top Up Credit</h5>
+                        </div>
+                        <div class="modal-body left">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#addCreditss" data-dismiss="modal">MOLPay</button>
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#addCredit" data-dismiss="modal">Upload Receipt</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade" id="addCreditss" tabindex="-1" role="dialog" aria-labelledby="addCreditssTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form action="credit.php" method= "POST">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addCreditssTitle">Top Up Credit</h5>
+                            </div>
+                            <div class="modal-body left">
+                                <input type="number" name= "amount" value="" min="0.01" step="0.01" placeholder="Reload Amount (RM)" required>
+                                <input type="hidden" name= "orderid" value="<?php echo $payment_id; ?>">
+                                <input type="hidden" name= "bill_name" value="<?php echo $results12['fname']." ".$results12['lname']; ?>">
+                                <input type="hidden" name= "bill_email" value="<?php echo $results12['email']; ?>">
+                                <input type="hidden" name= "bill_mobile" value="<?php echo $results12['contact']; ?>">
+                                <input type="hidden" name= "bill_desc" value="Credit Payment">
+                                <input type="hidden" name= "country" value="MYR">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                                <input type="submit" class="btn btn-success" name="molPay" value="PAY NOW">
                             </div>
                         </form>
                     </div>
@@ -221,7 +296,17 @@ $results20 = mysqli_fetch_assoc($result20);
                         <td><?php echo $row1['title']; ?></td>
                         <td><?php echo $row1['amount']; ?></td>
 						<td>
-                            <a href="../receipts/<?php echo $row1['file']; ?>" data-lightbox="receipt" title="View receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <?php
+                                if($row1['file'] != NULL){
+                                    ?>
+                                        <a href="../receipts/<?php echo $row1['file']; ?>" data-lightbox="receipt" title="View receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                    <?php
+                                }else{
+                                    ?>
+                                        <p>By Credit or MOLpay</p>
+                                    <?php
+                                }
+                            ?>
                         </td>
                         <td><?php echo $row1['status']; ?></td>
                         <td></td>

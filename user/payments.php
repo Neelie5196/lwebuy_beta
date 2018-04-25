@@ -271,7 +271,7 @@ $results14 = mysqli_fetch_assoc($result14);
                                 <input type="hidden" name= "bill_name" value="<?php echo $results14['fname']." ".$results14['lname']; ?>">
                                 <input type="hidden" name= "bill_email" value="<?php echo $results14['email']; ?>">
                                 <input type="hidden" name= "bill_mobile" value="<?php echo $results14['contact']; ?>">
-                                <input type="hidden" name= "bill_desc" value="Purchase Payment">
+                                <input type="hidden" name= "bill_desc" value="Shipping Payment">
                                 <input type="hidden" name= "country" value="MYR">
                                 <input type="hidden" name= "vcode" value="<?php echo $vcode; ?>">
                                 <?php

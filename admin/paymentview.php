@@ -415,22 +415,39 @@ if(isset($_POST['declinereason']))
                             <p class="right">
                                 <a href="main.php#adpayment" class="btn btn-secondary btnCancel btnmargin">Cancel</a>
                                 <input type="submit" class="btn btn-success btnSend btnmargin" name="proceed" value="Proceed" />
-                                <?php
-                                    if(mysqli_num_rows($result11) > 0){
-                                        
-                                    }else{
-                                        ?>
-                                        <a class="btn btnDecline btnmargin" href="#topupPPayment" data-toggle="modal">Top-up</a>
-                                        <?php
-                                    }
-                                ?>
-                                <a class="btn btnmargin btn-info" href="#declinePPayment" data-toggle="modal">Refund</a>
-                                <a class="btn btnmargin btn-danger" href="#declinePReason" data-toggle="modal">Decline</a>
+                                <a class="btn btnmargin btn-primary" href="#actionPayment" data-toggle="modal">Action</a>
                             </p>
                         </div>
                     </div>
                 </div>
             </form>
+        </div>
+        
+        <div class="modal fade" id="actionPayment" tabindex="-1" role="dialog" aria-labelledby="actionPaymentTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title center" id="actionPaymentTitle">Action Payment</h5>
+                    </div>
+                    <div class="modal-body left">
+                        <?php
+                            if(mysqli_num_rows($result11) > 0){
+
+                            }else{
+                                ?>
+                                <a class="btn btnDecline btnmargin" href="#topupPPayment" data-toggle="modal" data-dismiss="modal">Top-up</a>
+                                <?php
+                            }
+                        ?>
+                        <a class="btn btnmargin btn-info" href="#declinePPayment" data-toggle="modal" data-dismiss="modal">Refund</a>
+                        <a class="btn btnmargin btn-danger" href="#declinePReason" data-toggle="modal" data-dismiss="modal">Decline</a>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div class="modal fade" id="verifyPayment" tabindex="-1" role="dialog" aria-labelledby="verifyPaymentTitle" aria-hidden="true">

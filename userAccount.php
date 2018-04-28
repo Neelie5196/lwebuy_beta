@@ -25,7 +25,7 @@ if(isset($_POST['forgotSubmit'])){
 			$update = $user->update($data, $conditions);
 			
 			if($update){
-				$resetPassLink = 'http://localhost/lwebuy_beta/resetPassword.php?fp_code='.$uniqidStr;
+				$resetPassLink = 'https://test-buy.lwe.com.my/resetPassword.php?fp_code='.$uniqidStr;
 				
 				//get user details
 				$con['where'] = array('email'=>$_POST['email']);

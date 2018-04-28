@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			
 			
 			mysqli_query($con, $sql);
-			$verifyLink = 'http://localhost/lwebuy_beta/verification.php?email='.$email.'&code='.$code.'';
+			$verifyLink = 'https://test-buy.lwe.com.my/verification.php?email='.$email.'&code='.$code.'';
 			$message = "Your Activation Code is ".$code."";
 			$to=$email;
 			$subject="Sign up Confirmation";

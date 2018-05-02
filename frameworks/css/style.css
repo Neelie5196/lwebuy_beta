@@ -1169,3 +1169,11 @@ body {
     overflow-x: hidden!important;
     text-overflow: ellipsis!important;
 }
+
+.enableformfield {
+    width: 80%;
+    border: none;
+    outline: none!important;
+    background: rgba(139, 184, 54, 0.3);
+    padding: 2%;
+}

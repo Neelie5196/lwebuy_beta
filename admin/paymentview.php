@@ -362,7 +362,7 @@ if(isset($_POST['declinereason']))
                                 <th>Remark</th>
                                 <th>Unit Price (MYR)</th>
                                 <th>Total Price (MYR)</th>
-                                <th>Order Code</th>
+                                <th>Tracking No.</th>
                             </tr>
 
                             <?php 
@@ -384,7 +384,7 @@ if(isset($_POST['declinereason']))
                                 <td><?php echo $row['remark']; ?></td>
                                 <td><?php echo $row['price']; ?></td>
                                 <td><?php echo number_format((float)$row['price']*$row['quantity'], 2, '.', ''); ?></td>
-                                <td><input type="text" class="tblformfield" name="order_code[]" value="<?php echo $row['order_code']; ?>" required></td>
+                                <td><input type="text" class="enableformfield" name="order_code[]" value="<?php echo $row['order_code']; ?>" required></td>
                             </tr>
 
                             <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">

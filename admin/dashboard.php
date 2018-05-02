@@ -144,7 +144,7 @@ session_start();
                         {
                             while($row = mysqli_fetch_array($result9))
                             {
-                                if ($row['status']=="Received")
+                                if ($row['status']=="DELIVERED")
                                 {
                                     $count9 += 1;
                                 }
@@ -217,7 +217,7 @@ session_start();
                         }
                     ?>
                 </h6>
-                <p>earned</p>
+                <p>MYR Transacted</p>
             </div>        
         </div>
     
@@ -289,7 +289,7 @@ session_start();
                         {
                             while($row = mysqli_fetch_array($result9))
                             {
-                                if ($row['status']=="Received")
+                                if ($row['status']=="DELIVERED")
                                 {
                                     $count9 += 1;
                                 }
@@ -362,7 +362,7 @@ session_start();
                         }
                     ?>
                 </h6>
-                <p>earned</p>
+                <p>MYR Transacted</p>
             </div>
         </div>
     </div>

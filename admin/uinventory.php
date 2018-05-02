@@ -73,12 +73,8 @@ if(isset($_POST['update']))
                 $update0 = mysqli_query($con, "UPDATE order_item SET status = 'Received' WHERE order_code = '$o_codes[$i]'") or die(mysqli_error($con));
                 
                 $update1 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Purchase Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
-                ?>
-            <script>
-                alert('Inventories updated!');
-                window.location.href='uinventory.php';
-            </script>
-<?php
+                
+                $display = "updated";
             }
             else
             {
@@ -99,23 +95,12 @@ if(isset($_POST['update']))
                     $update1 = mysqli_query($con, "UPDATE slot SET status = 'In Use', user_id = '$user_id' WHERE slot_id = $slot_id ") or die(mysqli_error($con));
                     
                     $update2 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Purchase Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
-                ?>
-            <script>
-                alert('Inventories updated!');
-                window.location.href='uinventory.php';
-            </script>
-<?php
+                    
+                    $display = "updated";
                 }
                 else
                 {
-                ?>
-
-                <script>
-                    alert('No available slots. Add more slots to update order <?php echo $o_codes[$i] ?>');
-                    window.location.href='uinventory.php';
-                </script>
-
-<?php
+                    $display = "noupdate";
                 }
             }
         }
@@ -123,7 +108,7 @@ if(isset($_POST['update']))
         if(!empty($results6))
         {
             $user_id = $results6['user_id'];
-            $order_item = $results6['order_item'];
+            $order_item = addslashes($results6['order_item']);
             
             $query8 = "SELECT * 
                       FROM slot
@@ -139,12 +124,7 @@ if(isset($_POST['update']))
                 
                 $update1 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Inventory Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
                 
-                ?>
-            <script>
-                alert('Inventories updated!');
-                window.location.href='uinventory.php';
-            </script>
-<?php
+                $display = "updated";
             }
             else
             {
@@ -166,27 +146,38 @@ if(isset($_POST['update']))
 
                     $update2 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Inventory Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
                     
-                    ?>
-            <script>
-                alert('Inventories updated!');
-                window.location.href='uinventory.php';
-            </script>
-<?php
+                    $display = "updated";
                 }
                 else
                 {
-                ?>
 
-                <script>
-                    alert('No available slots. Add more slots to update order <?php echo $o_codes[$i] ?>');
-                    window.location.href='uinventory.php';
-                </script>
-<?php
+                    $display = "noupdate";
+                    
                 }
             }
         }
         
     }
+}
+
+if($display == "updated")
+{
+    ?>
+    <script>
+        alert('Inventories updated!');
+        window.location.href='uinventory.php';
+    </script>
+<?php
+}
+
+if($display == "noupdate")
+{
+    ?>
+    <script>
+        alert('No available slots. Add more slots to update order <?php echo $o_codes[$i] ?>');
+        window.location.href='uinventory.php';
+    </script>
+<?php
 }
 ?>
 

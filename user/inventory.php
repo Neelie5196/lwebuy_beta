@@ -5,8 +5,13 @@ $user_id = $_SESSION['user_id'];
 
 $query = "SELECT *
           FROM request
-          WHERE user_id='$user_id' AND status = 'request'";
+          WHERE user_id='$user_id' AND status='request'";
 $result = mysqli_query($con, $query);
+
+$query01 = "SELECT *
+            FROM order_item
+            WHERE user_id='$user_id' and status='Proceed'";
+$result01 = mysqli_query($con, $query);
 
 $query5 = "SELECT *
           FROM warehouse";
@@ -20,7 +25,10 @@ if(isset($_POST['request']))
     $remark = $_POST['remark'];
     $status = 'Request';
 	
-	$result1 = mysqli_query($con, "INSERT INTO request SET user_id='$user_id', order_item='$name', order_code='$trackcode', remark='$remark', status='$status'") or die(mysqli_error($con));
+    $nametoupload = addslashes($name);
+    $remarktoupload = addslashes($remark);
+    
+	$result1 = mysqli_query($con, "INSERT INTO request SET user_id='$user_id', order_item='$nametoupload', order_code='$trackcode', remark='$remarktoupload', status='$status'") or die(mysqli_error($con));
     
     ?>
     <script>
@@ -116,7 +124,25 @@ $result4 = mysqli_query($con, $query4);
                     <?php
                         }
                     }
-                    else
+                    
+                    if(mysqli_num_rows($result01) > 0)
+                    {
+                        while($row01 = mysqli_fetch_array($result01))
+                        {
+                            ?>
+                    
+                    <tr class="bodyrow">
+                        <td><?php echo $row01['order_item']; ?></td>
+                        <td><?php echo $row01['order_code']; ?></td>
+                        <td><?php echo $row01['remark']; ?></td>
+                        <td>Proceeded purchase</td>
+                    </tr>
+                    
+                    <?php
+                        }
+                    }
+                    
+                    if((mysqli_num_rows($result) == 0) && (mysqli_num_rows($result01) == 0))
                     {
                     ?>
 

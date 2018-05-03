@@ -48,7 +48,7 @@ $count2 = mysqli_num_rows($result2);
     <div class="navbar-header">
         
         <a class="navbar-brand" href="#home" id="btnlogos" onclick="resettimeoutimer()"><img src="../resources/img/logo.png" alt="logo" width="10%"/></a>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" onclick="resettimeoutimer()">
+        <button type="button" class="navbar-toggle" id="navbartoggle" data-toggle="collapse" data-target="#myNavbar" onclick="resettimeoutimer()">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>                        
@@ -58,15 +58,22 @@ $count2 = mysqli_num_rows($result2);
     
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-            <li><a href="#home" id="btnhomes" onclick="resettimeoutimer()">Home</a></li>
-            <li><a href="#purchase" id="btnpurchases" onclick="resettimeoutimer()">Purchase<?php if ($count > 0) { ?><span class="notifys"><?php echo $count ?></span><?php } ?></a></li>
-            <li><a href="#inventory" id="btninventorys" onclick="resettimeoutimer()">Inventory</a></li>
-            <li><a href="#ship" id="btnships" onclick="resettimeoutimer()">Ship<?php if ($count1 > 0) { ?><span class="notifys"><?php echo $count1 ?></span><?php } ?></a></li>
-            <li><a href="#track" id="btntracks" onclick="resettimeoutimer()">Track</a></li>
+            <li><a href="#home" id="btnhomes" onclick="resettimeoutimer();hidemenu()">Home</a></li>
+            <li><a href="#purchase" id="btnpurchases" onclick="resettimeoutimer();hidemenu()">Purchase<?php if ($count > 0) { ?><span class="notifys"><?php echo $count ?></span><?php } ?></a></li>
+            <li><a href="#inventory" id="btninventorys" onclick="resettimeoutimer();hidemenu()">Inventory</a></li>
+            <li><a href="#ship" id="btnships" onclick="resettimeoutimer();hidemenu()">Ship<?php if ($count1 > 0) { ?><span class="notifys"><?php echo $count1 ?></span><?php } ?></a></li>
+            <li><a href="#track" id="btntracks" onclick="resettimeoutimer();hidemenu()">Track</a></li>
         
-            <li><a id="btncredits" href="#credit" onclick="resettimeoutimer()">Credits</a></li>
-            <li><a id="btnusers" href="#user" onclick="resettimeoutimer()">My Account</a></li>
+            <li><a id="btncredits" href="#credit" onclick="resettimeoutimer();hidemenu()">Credits</a></li>
+            <li><a id="btnusers" href="#user" onclick="resettimeoutimer();hidemenu()">My Account</a></li>
             <li><a href="../logout.php">Log Out</a></li>
         </ul>
     </div>
 </nav>
+
+<script>
+    function hidemenu()
+    {
+        document.getElementById("navbartoggle").click();
+    }
+</script>

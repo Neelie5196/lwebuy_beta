@@ -63,7 +63,7 @@ $count2 = mysqli_num_rows($result6);
 
 <nav class="navbar navbar-default hidden-lg hidden-md smbar">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" onclick="resettimeoutimer()">
+        <button type="button" class="navbar-toggle" id="navbartoggle" data-toggle="collapse" data-target="#myNavbar" onclick="resettimeoutimer()">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>                        
@@ -74,17 +74,25 @@ $count2 = mysqli_num_rows($result6);
     
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-            <li><a href="#home" id="btnhomes" onclick="resettimeoutimer()">Home</a></li>
-            <li><a href="#adrequest" id="btnadrequests" onclick="resettimeoutimer()">Requests<?php if ($count > 0) { ?><span class="notifys"><?php echo $count ?></span><?php } ?></a></li>
-            <li><a href="#adpayment" id="btnadpayments" onclick="resettimeoutimer()">Payments<?php if ($count1 > 0) { ?><span class="notifys"><?php echo $count1 ?></span><?php } ?></a></li>
-            <li><a href="#adwarehouse" id="btnadwarehouses" onclick="resettimeoutimer()">Warehouse</a></li>
-            <li><a href="#adupdate" id="btnadupdates" onclick="resettimeoutimer()">Updates</a></li>
-            <li><a href="#adother" id="btnadothers" onclick="resettimeoutimer()">Others<?php if ($count2 > 0) { ?><span class="notifys"><?php echo $count2 ?></span><?php } ?></a></li>
-            <li><a href="#adaccount" id="btnadaccounts" onclick="resettimeoutimer()">Accounts</a></li>
-            <li><a href="#adreview" id="btnadreviews" onclick="resettimeoutimer()">Reviews</a></li>
+            <li><a href="#home" id="btnhomes" onclick="resettimeoutimer();hidemenu()">Home</a></li>
+            <li><a href="#adrequest" id="btnadrequests" onclick="resettimeoutimer();hidemenu()">Requests<?php if ($count > 0) { ?><span class="notifys"><?php echo $count ?></span><?php } ?></a></li>
+            <li><a href="#adpayment" id="btnadpayments" onclick="resettimeoutimer();hidemenu()">Payments<?php if ($count1 > 0) { ?><span class="notifys"><?php echo $count1 ?></span><?php } ?></a></li>
+            <li><a href="#adwarehouse" id="btnadwarehouses" onclick="resettimeoutimer();hidemenu()">Warehouse</a></li>
+            <li><a href="#adupdate" id="btnadupdates" onclick="resettimeoutimer();hidemenu()">Updates</a></li>
+            <li><a href="#adother" id="btnadothers" onclick="resettimeoutimer();hidemenu()">Others<?php if ($count2 > 0) { ?><span class="notifys"><?php echo $count2 ?></span><?php } ?></a></li>
+            <li><a href="#adaccount" id="btnadaccounts" onclick="resettimeoutimer();hidemenu()">Accounts</a></li>
+            <li><a href="#adreview" id="btnadreviews" onclick="resettimeoutimer();hidemenu()">Reviews</a></li>
         
-            <li><a id="btnuser" href="#user" onclick="resettimeoutimer()">My Account</a></li>
+            <li><a id="btnuser" href="#user" onclick="resettimeoutimer();hidemenu()">My Account</a></li>
         <li><a href="../logout.php">Log Out</a></li>
         </ul>
     </div>
 </nav>
+
+
+<script>
+    function hidemenu()
+    {
+        document.getElementById("navbartoggle").click();
+    }
+</script>

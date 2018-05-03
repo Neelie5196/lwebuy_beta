@@ -11,7 +11,7 @@ $result = mysqli_query($con, $query);
 $query01 = "SELECT *
             FROM order_item
             WHERE user_id='$user_id' and status='Proceed'";
-$result01 = mysqli_query($con, $query);
+$result01 = mysqli_query($con, $query01);
 
 $query5 = "SELECT *
           FROM warehouse";

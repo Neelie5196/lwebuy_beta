@@ -456,7 +456,18 @@ if(isset($_POST['approvec']))
                                     <td><?php echo $row['amount']; ?></td>
                                     <td><?php echo $row['status']; ?></td>
                                     <td>
-                                        <a href="../receipts/<?php echo $row['file']; ?>" data-lightbox="receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                        <?php
+                                            if($row['file'] != NULL){
+                                                ?>
+                                                    <a href="../receipts/<?php echo $row['file']; ?>" data-lightbox="receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
+                                                <?php
+                                            }else{
+                                                ?>
+                                                    <p>By Credit or MOLpay</p>
+                                                <?php
+                                            }
+                                        ?>
+                                        
                                     </td>
                                 </tr>
                                 <?php

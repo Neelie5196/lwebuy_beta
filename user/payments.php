@@ -339,7 +339,7 @@ $results14 = mysqli_fetch_assoc($result14);
                 
                 <p>Recipient contact: <?php echo $_POST['contact']; ?></p>
                 
-                <p>Recipient contact: <?php echo $_POST['remark']; ?></p>
+                <p>Recipient remark: <?php echo $_POST['remark']; ?></p>
                 
                 <p>Address: <?php echo $results11['address'].', '.$results11['postcode'].', '.$results11['city'].', '.$results11['state']; ?></p>
                 

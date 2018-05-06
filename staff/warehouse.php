@@ -178,7 +178,7 @@ if (isset($_GET['ware_id']))
                                 $slot_id = $row['slot_id'];
                                 $query5 = "SELECT *
                                            FROM item
-                                           WHERE slot_id ='$slot_id'";
+                                           WHERE slot_id ='$slot_id' AND action = 'In'";
                                 $result5 = mysqli_query($con, $query5);
                                 ?>
                                 <tr>
@@ -218,7 +218,7 @@ if (isset($_GET['ware_id']))
                                     <td><?php echo $row['slot_aisle']; ?></td>
                                     <td><?php echo $row['slot_num']; ?></td>
                                     <td>
-                                        <a href="warehouse.php?slot_id=<?php echo $row['slot_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                        <a href="warehouse.php?slot_id=<?php echo $row['slot_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
                                     </td>
                                 </tr>
                                 <?php
@@ -286,9 +286,9 @@ if (isset($_GET['ware_id']))
                                     <td><?php echo $row['country_name']; ?></td>
                                     <td><?php echo $row['address']; ?></td>
                                     <td>
-                                        <a data-toggle="modal" data-id="<?php echo $row['ware_id']; ?>" data-code="<?php echo $row['station_code']; ?>" data-name="<?php echo $row['station_name']; ?>" data-country="<?php echo $row['country_name']; ?>" data-address="<?php echo $row['address']; ?>" class="btn btn-default btn-xs btnDelete editWarehouse" href="#editWarehouse"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a data-toggle="modal" data-id="<?php echo $row['ware_id']; ?>" data-code="<?php echo $row['station_code']; ?>" data-name="<?php echo $row['station_name']; ?>" data-country="<?php echo $row['country_name']; ?>" data-address="<?php echo $row['address']; ?>" class="btn btn-default btn-xs btnDelete editWarehouse" href="#editWarehouse"><span class="glyphicon glyphicon-pencil" title="Edit"></span></a>
 
-                                        <a href="warehouse.php?ware_id=<?php echo $row['ware_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete"><span class="glyphicon glyphicon-trash"></span></a>
+                                        <a href="warehouse.php?ware_id=<?php echo $row['ware_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
                                     </td>
                                 </tr>
                                 <?php

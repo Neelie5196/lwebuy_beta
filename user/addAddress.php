@@ -59,17 +59,17 @@ if(isset($_POST['addAddress']))
                     <p><input class="formfield" name="postcode" type="text" placeholder="Postcode" required /></p>
 
                     <p><input class="formfield" name="city" type="text" placeholder="City" required /></p>
-
+                
                     <p>
-                        <select name="state" class="formfield" required>
-                            <option class="formfield">Select a state</option>
+                        <select required name="state" class="formfield">
+                            <option class="formoption">Select a state</option>
                             <?php 
                                 if(mysqli_num_rows($result1) > 0)
                                 {
                                     while($row = mysqli_fetch_array($result1))
                                     {
                                         ?>
-                                            <option class="formfield" value="<?php echo $row['state_name']; ?>">
+                                            <option class="formselect" value="<?php echo $row['state_name']; ?>">
                                                 <?php echo $row['state_name']; ?>
                                             </option>
                                         <?php

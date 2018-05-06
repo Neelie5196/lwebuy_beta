@@ -2,6 +2,12 @@
 require_once '../connection/config.php';
 session_start();
 
+if ($_SESSION['user_id'] == "")
+{
+    header('location: ../login.php');
+    exit();
+}
+
 $payment_id = $_GET['payment_id'];
 
 $query = "SELECT *
@@ -285,7 +291,7 @@ if(isset($_POST['declinereason']))
                                 ?>
                                     <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
                                         <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                                        <input type="hidden" name="station" value="KUALA LUMPUR (LOGISTICS HUB), MALAYSIA">
+                                        <input type="hidden" name="station" value="SHENZHEN (LOGISTICS HUB), CHINA">
                                         <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
                                     </form>
                                 <?php
@@ -293,7 +299,7 @@ if(isset($_POST['declinereason']))
                                 ?>
                                     <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
                                         <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                                        <input type="hidden" name="station" value="KUALA LUMPUR (LOGISTICS HUB), MALAYSIA">
+                                        <input type="hidden" name="station" value="SHENZHEN (LOGISTICS HUB), CHINA">
                                         <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
                                     </form>
                                 <?php
@@ -438,7 +444,7 @@ if(isset($_POST['declinereason']))
                         <div class="modal-body left">
                             <img src="../receipts/<?php echo $results6['file']; ?>" style="width: 500px; height: 450px;">
                             <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                            <input type="hidden" name="station" value="KUALA LUMPUR (LOGISTICS HUB), MALAYSIA">
+                            <input type="hidden" name="station" value="SHENZHEN (LOGISTICS HUB), CHINA">
                         </div>
 
                         <div class="modal-footer">

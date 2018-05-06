@@ -178,7 +178,7 @@ if (isset($_GET['ware_id']))
                                 $slot_id = $row['slot_id'];
                                 $query5 = "SELECT *
                                            FROM item
-                                           WHERE slot_id ='$slot_id'";
+                                           WHERE slot_id ='$slot_id' AND action = 'In'";
                                 $result5 = mysqli_query($con, $query5);
                                 ?>
                                 <tr>

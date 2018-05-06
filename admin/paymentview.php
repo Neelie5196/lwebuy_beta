@@ -309,18 +309,10 @@ if(isset($_POST['declinereason']))
                     <?php
                         if($results6['title'] == 'Pay order by Points'){
                             ?>
-                                <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
-                                    <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                                    <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
-                                </form>
-                                
+                                                                
                             <?php
                         }else if($results6['title'] == 'Pay Order by MOLPay'){
                             ?>
-                                <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
-                                    <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                                    <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
-                                </form>
                                 
                             <?php
                         }else{

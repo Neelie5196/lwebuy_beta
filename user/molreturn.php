@@ -44,7 +44,7 @@ $user_id = $_SESSION['user_id'];
             $status = 'Paid';
             $title = 'Pay Order by';
             $molpay = 'MOLPay';
-            $statuss = 'Waiting for Accept';
+            $statuss = 'Completed';
 
             $result = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE payment_id='$orderid'") or die(mysqli_error($con));
 
@@ -72,7 +72,7 @@ $user_id = $_SESSION['user_id'];
             $status = 'Paid';
             $title = 'Pay Shipping by';
             $molpay = 'MOLPay';
-            $statuss = 'Waiting for Accept';
+            $statuss = 'Completed';
 
             $result = mysqli_query($con, "INSERT INTO payment SET payment_id='$orderid', user_id='$user_id', title='$title $molpay', amount='$amount', status='$statuss'") or die(mysqli_error($con));
             ?>

@@ -40,7 +40,7 @@ if(isset($_POST['paybycredit']))
     $point = $_POST['point'];
     $title = 'Pay order by';
     $points = 'Points';
-    $statuss = 'Waiting for Accept';
+    $statuss = 'Completed';
     
     $result5 = mysqli_query($con, "UPDATE order_item SET payment_id='$payment_id', status='$status' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
     $result6 = mysqli_query($con, "UPDATE point SET point= point - '$point' WHERE user_id = '$user_id' ") or die(mysqli_error($con));

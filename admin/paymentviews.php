@@ -289,19 +289,11 @@ if(isset($_POST['declinereason']))
                         <?php
                             if($results7['title'] == 'Pay shipping by Points'){
                                 ?>
-                                    <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
-                                        <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                                        <input type="hidden" name="station" value="SHENZHEN (LOGISTICS HUB), CHINA">
-                                        <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
-                                    </form>
+                                    
                                 <?php
                             }else if($results7['title'] == 'Pay Shipping by MOLPay'){
                                 ?>
-                                    <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
-                                        <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                                        <input type="hidden" name="station" value="SHENZHEN (LOGISTICS HUB), CHINA">
-                                        <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
-                                    </form>
+                                    
                                 <?php
                             }else{
                                 ?>

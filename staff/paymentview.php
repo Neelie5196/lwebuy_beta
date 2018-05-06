@@ -2,6 +2,12 @@
 require_once '../connection/config.php';
 session_start();
 
+if ($_SESSION['user_id'] == "")
+{
+    header('location: ../login.php');
+    exit();
+}
+
 $payment_id = $_GET['payment_id'];
 
 $query = "SELECT *
@@ -303,18 +309,10 @@ if(isset($_POST['declinereason']))
                     <?php
                         if($results6['title'] == 'Pay order by Points'){
                             ?>
-                                <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
-                                    <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                                    <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
-                                </form>
-                                
+                                                                
                             <?php
                         }else if($results6['title'] == 'Pay Order by MOLPay'){
                             ?>
-                                <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
-                                    <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                                    <input type="submit" class="btn btn-success btnSend" name="approve" value="Approve payment" />
-                                </form>
                                 
                             <?php
                         }else{
@@ -356,7 +354,7 @@ if(isset($_POST['declinereason']))
                                 <th>Remark</th>
                                 <th>Unit Price (MYR)</th>
                                 <th>Total Price (MYR)</th>
-                                <th>Order Code</th>
+                                <th>Tracking No.</th>
                             </tr>
 
                             <?php 
@@ -378,7 +376,7 @@ if(isset($_POST['declinereason']))
                                 <td><?php echo $row['remark']; ?></td>
                                 <td><?php echo $row['price']; ?></td>
                                 <td><?php echo number_format((float)$row['price']*$row['quantity'], 2, '.', ''); ?></td>
-                                <td><input type="text" class="tblformfield" name="order_code[]" value="<?php echo $row['order_code']; ?>" required></td>
+                                <td><input type="text" class="enableformfield" name="order_code[]" value="<?php echo $row['order_code']; ?>" required></td>
                             </tr>
 
                             <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">

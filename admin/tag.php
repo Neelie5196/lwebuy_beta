@@ -14,7 +14,7 @@ $query = "SELECT *
          FROM shipping sh
          JOIN address ad
          ON sh.address_id = ad.address_id
-         WHERE sh.status='Proceed'";
+         WHERE sh.status='Proceed' AND shipping_id = '$s_id'";
 $result = mysqli_query($con, $query);
 ?>
 
@@ -33,8 +33,14 @@ $result = mysqli_query($con, $query);
             <?php
             if(mysqli_num_rows($result) > 0)
             {
+                
                 while($row = mysqli_fetch_array($result))
                 {
+                    $payment_id = $row['payment_id'];
+                    
+                    $query1 = "SELECT * FROM item WHERE payment_id='$payment_id'";
+                    $result1 = mysqli_query($con, $query1);
+
                     ?>
             <div class="parceltag">
                 <h1>
@@ -43,7 +49,6 @@ $result = mysqli_query($con, $query);
                 </h1>
                 <hr/>
                     
-                <p>Weight(KG): <?php echo $row['weight'] ?></p>
                 <script type="text/javascript">
                     function printDiv(parceltag)
                     {
@@ -83,12 +88,27 @@ $result = mysqli_query($con, $query);
                         }
                      );
                 </script>
-                
-                <div id="barcode" class="barcode">
-
-                </div>
-                
+                                
                 <table class="tbltag">
+                    <tr>
+                        <td>
+                            <p>Weight(KG): <?php echo $row['weight'] ?></p>
+                            <div id="barcode" class="barcode"></div>
+                        </td>
+                        
+                        <td>
+                            <h3>Items:</h3>
+                            <p>
+                                <?php
+                                    while($row1 = mysqli_fetch_array($result1))
+                                    {
+                                        echo $row1['item_description'] . "<br/>";
+                                    }
+                                ?>
+                            </p>
+                        </td>
+                    </tr>
+
                     <tr>
                         <td><h3>Ship to:</h3></td>
                         <td><h3>Recipient contact:</h3></td>

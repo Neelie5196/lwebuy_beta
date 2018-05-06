@@ -195,7 +195,7 @@ window.location.href='registers.php';
                                             <td><?php echo $row['address'].", ".$row['postcode']." ".$row['city'].", ".$row['state'].", ".$row['country'];;?></td>
                                             <td><?php echo $row['weight']?></td>
                                             <td>
-                                                <a href="tag.php?s_id=<?php echo $row['tracking_code']; ?>" class="btn btn-default btn-xs btnDelete" target="_blank" title="Print"><span class="glyphicon glyphicon-print"></span></a>
+                                                <a href="tag.php?s_id=<?php echo $row['shipping_id']; ?>" class="btn btn-default btn-xs btnDelete" target="_blank" title="Print"><span class="glyphicon glyphicon-print"></span></a>
                                             </td>
                                         </tr>
                                     <?php

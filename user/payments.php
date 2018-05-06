@@ -54,10 +54,10 @@ if(isset($_POST['paybycredit']))
     $unique_id = rand(10000,100000). $user_id;
     $payment_id = $unique_id;
     $status = 'Request';
-    $rname = $_POST['name'];
+    $rname = addslashes($_POST['name']);
     $rcontact = $_POST['contact'];
-    $rremark = $_POST['remark'];
-    $address = $_POST['address'];
+    $rremark = addslashes($_POST['remark']);
+    $address = addslashes($_POST['address']);
     $totalweight = $_POST['totalweight'];
     $point = $_POST['point'];
     $title = 'Pay shipping by';
@@ -84,10 +84,10 @@ if(isset($_POST['uploadreceipt']))
     $unique_id = rand(10000,100000). $user_id;
     $payment_id = $unique_id;
     $status = 'Request';
-    $rname = $_POST['name'];
+    $rname = addslashes($_POST['name']);
     $rcontact = $_POST['contact'];
-    $rremark = $_POST['remark'];
-    $address = $_POST['address'];
+    $rremark = addslashes($_POST['remark']);
+    $address = addslashes($_POST['address']);
     $totalweight = $_POST['totalweight'];
     $totalpay = $_POST['pricetotal'];
     
@@ -139,10 +139,10 @@ if(isset($_POST['molPay']))
     $vcode = $_POST['vcode'];
     
     $status = 'Request';
-    $rname = $_POST['name'];
+    $rname = addslashes($_POST['name']);
     $rcontact = $_POST['contact'];
-    $rremark = $_POST['remark'];
-    $address = $_POST['address'];
+    $rremark = addslashes($_POST['remark']);
+    $address = addslashes($_POST['address']);
     $totalweight = $_POST['totalweight'];  
     $station = 'SHENZHEN (LOGISTICS HUB), CHINA';
     

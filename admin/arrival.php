@@ -30,7 +30,7 @@ $result1 = mysqli_query($con, $query1);
 if(isset($_POST['update']))
     {
         $t_code = $_POST['tcode'];
-        $arrive = $_POST['arriveat'];
+        $arrive = addslashes($_POST['arriveat']);
         $ostationid = $_POST['originstation'];
         
         $count = sizeof($t_code);
@@ -158,6 +158,7 @@ window.location.href='arrival.php';
                             
                             <table class="purchasetable">
                                 <tr>
+                                    <th></th>
                                     <th>Tracking Code</th>
                                     <th>Recipient Name</th>
                                     <th>Recipient Contact</th>

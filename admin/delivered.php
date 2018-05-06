@@ -30,7 +30,7 @@ $result1 = mysqli_query($con, $query1);
 if(isset($_POST['update']))
     {
         $t_code = $_POST['tcode'];
-        $signed = $_POST['signedname'];
+        $signed = addslashes($_POST['signedname']);
         $ostationid = $_POST['originstation'];
         
         $count = sizeof($t_code);

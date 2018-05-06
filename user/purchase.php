@@ -62,7 +62,12 @@ if(isset($_POST['edit']))
     $quantity = $_POST['quantity'];
     $remark = $_POST['remark'];
     
-    $result5 = mysqli_query($con, "UPDATE order_item SET order_item='$name', link='$link', category='$category', quantity='$quantity', remark='$remark' WHERE order_item_id='$order_item_id'") or die(mysqli_error($con));
+    $nametoupload = addslashes($name);
+    $linktoupload = str_replace("'", "%27", $link);
+    $categorytoupload = addslashes($category);
+    $remarktoupload = addslashes($remark);
+    
+    $result5 = mysqli_query($con, "UPDATE order_item SET order_item='$nametoupload', link='$linktoupload', category='$categorytoupload', quantity='$quantity', remark='$remarktoupload' WHERE order_item_id='$order_item_id'") or die(mysqli_error($con));
     
     ?>
     <script>

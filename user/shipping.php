@@ -35,7 +35,7 @@ if(isset($_POST['review']))
 {    
 
     $shipping_id = $_POST['shipping_id'];
-    $review = $_POST['reviews'];
+    $review = addslashes($_POST['reviews']);
 	
 	$result7 = mysqli_query($con, "UPDATE shipping SET review='$review' WHERE shipping_id = '$shipping_id'") or die(mysqli_error($con));
     

@@ -20,9 +20,9 @@ $result5 = mysqli_query($con, $query5);
 if(isset($_POST['request']))
 {    
 
-    $name = $_POST['name'];
+    $name = addslashes($_POST['name']);
     $trackcode = $_POST['trackcode'];
-    $remark = $_POST['remark'];
+    $remark = addslashes($_POST['remark']);
     $status = 'Request';
 	
     $nametoupload = addslashes($name);
@@ -54,9 +54,9 @@ if (isset($_GET['request_id']))
 if(isset($_POST['edit']))
 {   
     $request_id = $_POST['request_id'];
-    $name = $_POST['name'];
+    $name = addslashes($_POST['name']);
     $trackcode = $_POST['trackcode'];
-    $remark = $_POST['remark'];
+    $remark = addslashes($_POST['remark']);
     
     $result3 = mysqli_query($con, "UPDATE request SET order_item='$name', order_code='$trackcode', remark='$remark' WHERE request_id='$request_id'") or die(mysqli_error($con));
     

@@ -39,7 +39,7 @@ if(isset($_POST['checkin']))
         
         $ostationname = $results2['station_name'];
         $ostationcode = $results2['station_code'];
-        $ocountryname =  $results2['country_name'];
+        $ocountryname = $results2['country_name'];
         $ocountrycode = $results2['country_code'];
                 
         $eventDesc = 'Pickup shipment checked in at ' . $ostationname . '.';
@@ -126,7 +126,7 @@ window.location.href='checkin.php';
                                 {
                                     ?>
                                     
-                            <input type="hidden" name="originstation" value="<?php echo $row1['station_name']; ?>">
+                            <input type="hidden" name="originstation" value="<?php echo $row1['ware_id']; ?>">
                             
                             <?php
                                 }

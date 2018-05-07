@@ -150,7 +150,7 @@ window.location.href='departure.php';
                                     {
                                         ?>
 
-                                <input type="hidden" name="originstation" value="<?php echo $row1['station_name']; ?>">
+                                <input type="hidden" name="originstation" value="<?php echo $row1['ware_id']; ?>">
 
                                 <?php
                                     }

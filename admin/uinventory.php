@@ -17,7 +17,6 @@ $query = "SELECT *
            JOIN warehouse wh
            ON wh.ware_id = ws.ware_id
            WHERE us.user_id = '$user_id'";
-
 $result = mysqli_query($con, $query);
 
 $query1 = "SELECT *
@@ -37,6 +36,7 @@ $result2 = mysqli_query($con, $query2);
 if(isset($_POST['update']))
 {
     $o_codes = $_POST['ocode'];
+    $orderid = $_POST['orderid'];
     $weights = $_POST['weight'];
     
     $count = sizeof($o_codes);
@@ -45,13 +45,13 @@ if(isset($_POST['update']))
     {
         $query5 = "SELECT *
                   FROM order_item 
-                  WHERE order_code = '$o_codes[$i]'";
+                  WHERE order_code = '$o_codes[$i]' AND order_item_id = '$orderid[$i]'";
         $result5 = mysqli_query($con, $query5);
         $results5 = mysqli_fetch_assoc($result5);
         
         $query6 = "SELECT *
                   FROM request 
-                  WHERE order_code = '$o_codes[$i]'";
+                  WHERE order_code = '$o_codes[$i]' AND order_item_id = '$orderid[$i]'";
         $result6 = mysqli_query($con, $query6);
         $results6 = mysqli_fetch_assoc($result6);
         
@@ -265,7 +265,7 @@ if($display == "noupdate")
                                     {
                                         ?>
 
-                                <input type="hidden" name="originstation" value="<?php echo $row['station_name']; ?>">
+                                <input type="hidden" name="originstation" value="<?php echo $row['ware_id']; ?>">
 
                                 <?php
                                     }
@@ -326,6 +326,7 @@ if($display == "noupdate")
                                     
                                     <td>
                                         <input type="text" name="weight[]" class="tblformfield textinput" disabled />
+                                        <input type="hidden" name="orderid[]" class="tblformfield hiddeninput" value="<?php echo $row1['order_item_id'] ?>" disabled />
                                     </td>
                                 </tr>
                                 <?php
@@ -377,6 +378,7 @@ if($display == "noupdate")
                                     
                                     <td>
                                         <input type="text" name="weight[]" class="tblformfield textinput" disabled />
+                                        <input type="hidden" name="orderid[]" class="tblformfield hiddeninput" value="<?php echo $row2['request_id'] ?>" disabled />
                                     </td>
                                 </tr>
                                 
@@ -408,6 +410,7 @@ if($display == "noupdate")
             function selectItem()
             {
                 var inputtext = document.getElementsByClassName("textinput");
+                var hiddentext = document.getElementsByClassName("hiddeninput");
                 var checkboxes = document.getElementsByClassName("trackcheck");
                 var count = checkboxes.length;
 
@@ -416,6 +419,7 @@ if($display == "noupdate")
                         if (checkboxes[i].value == document.getElementById("codeinput").value)
                             {
                                 inputtext[i].disabled = false;
+                                hiddentext[i].disabled = false;
                                 inputtext[i].required = true;
                                 inputtext[i].style.backgroundColor = "rgba(139, 184, 54, 0.3)";
                                 checkboxes[i].disabled = false;

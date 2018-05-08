@@ -63,11 +63,10 @@ if(isset($_POST['paybycredit']))
     $title = 'Pay shipping by';
     $points = 'Points';
     $statuss = 'Completed';
-    $station = 'SHENZHEN (LOGISTICS HUB), CHINA';
     
     $result7 = mysqli_query($con, "UPDATE item SET payment_id='$payment_id' WHERE item_id IN (".implode(',',$item).")") or die(mysqli_error($con));
     
-    $result13 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', recipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$point $points', status='$status', payment_id='$payment_id', destination_station='$station'") or die(mysqli_error($con));
+    $result13 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', recipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$point $points', status='$status', payment_id='$payment_id'") or die(mysqli_error($con));
     
     $result8 = mysqli_query($con, "UPDATE point SET point= point - '$point' WHERE user_id = '$user_id' ") or die(mysqli_error($con));
     $result9 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id',user_id='$user_id', title='$title $points', amount='$point $points', status='$statuss'") or die(mysqli_error($con));
@@ -143,12 +142,11 @@ if(isset($_POST['molPay']))
     $rcontact = $_POST['contact'];
     $rremark = addslashes($_POST['remark']);
     $address = addslashes($_POST['address']);
-    $totalweight = $_POST['totalweight'];  
-    $station = 'SHENZHEN (LOGISTICS HUB), CHINA';
+    $totalweight = $_POST['totalweight'];
     
     $result13 = mysqli_query($con, "UPDATE item SET payment_id='$payment_id' WHERE item_id IN (".implode(',',$item).")") or die(mysqli_error($con));
     
-    $result14 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', recipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$amount', status='$status', payment_id='$payment_id', destination_station='$station'") or die(mysqli_error($con));
+    $result14 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', recipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$amount', status='$status', payment_id='$payment_id'") or die(mysqli_error($con));
     
     ?>
     <script>

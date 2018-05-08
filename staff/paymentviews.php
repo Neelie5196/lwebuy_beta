@@ -30,11 +30,9 @@ $results6 = mysqli_fetch_assoc($result6);
 if(isset($_POST['approve']))
 {
     $payment_id = $_POST['payment_id'];
-    $station = $_POST['station'];
     $status = 'Completed';
     
     $result3 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
-    $result7 = mysqli_query($con, "UPDATE shipping SET destination_station = '$station' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Update');
@@ -55,12 +53,16 @@ if(isset($_POST['proceed']))
     $result4 = mysqli_query($con, $query4);
     $results4 = mysqli_fetch_assoc($result4);
     
-    if($results1['status'] != 'Waiting for Accept'){
+    if($results6['status'] != 'Waiting for Accept'){
         $status = 'Proceed';
         $statuss = 'Completed';
         $tracking_code = rand(10000,99999);
+        $station = $_POST['station'];
 
         $result5 = mysqli_query($con, "UPDATE shipping SET status='$status', tracking_code='$tracking_code' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
+        
+        $result6 = mysqli_query($con, "UPDATE shipping SET destination_station = '$station' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
+        
         ?>
         <script>
         alert('Success to Update');
@@ -83,6 +85,9 @@ $query7 = "SELECT *
             WHERE payment_id='$payment_id'";
 $result7 = mysqli_query($con, $query7);
 $results7 = mysqli_fetch_assoc($result7);
+
+$query8 = "SELECT * FROM warehouse";
+$result8 = mysqli_query($con, $query8);
 
 if(isset($_POST['topup']))
 {
@@ -337,6 +342,26 @@ if(isset($_POST['declinereason']))
             <form action="paymentviews.php?payment_id=<?php echo $payment_id; ?>" method="post">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
+                        <select required class="formselect" name="station" >
+                            <option class="formoption">Station</option>
+                            <?php 
+                                if(mysqli_num_rows($result8) > 0)
+                                {
+                                    while($row = mysqli_fetch_array($result8))
+                                    {
+                                        ?>
+                                            <option class="formoption" value="<?php echo $row['station_name']; ?>">
+                                                <?php echo $row['station_name']; ?>
+                                            </option>
+                                        <?php
+                                    }
+                                }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
                         <table class="purchasetable">
                             <tr>
                                 <th>Item Name</th>
@@ -436,7 +461,6 @@ if(isset($_POST['declinereason']))
                         <div class="modal-body left">
                             <img src="../receipts/<?php echo $results6['file']; ?>" style="width: 500px; height: 450px;">
                             <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                            <input type="hidden" name="station" value="SHENZHEN (LOGISTICS HUB), CHINA">
                         </div>
 
                         <div class="modal-footer">

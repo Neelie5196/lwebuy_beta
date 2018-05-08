@@ -26,10 +26,12 @@ $result3 = mysqli_query($con, $query3);
 
 if(isset($_POST['update-point']))
 {    
+	$user_id = $_SESSION['user_id'];
     $pointratio = $_POST['pointratio'];
     $rate_id = $_POST['rate_id'];
 	
 	$update = mysqli_query($con, "UPDATE rate SET rate='$pointratio' WHERE rate_id = $rate_id ") or die(mysqli_error($con));
+	$resultpoint = mysqli_query($con, "INSERT INTO log SET action='updated point rate to $pointratio', created_at=now(), user_id='$user_id', sort_by='others'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Credit rates updated');
@@ -40,10 +42,12 @@ if(isset($_POST['update-point']))
 
 if(isset($_POST['update-weight']))
 {    
+	$user_id = $_SESSION['user_id'];
     $weightratio = $_POST['weightratio'];
     $rate_ids = $_POST['rate_ids'];
 	
 	$update = mysqli_query($con, "UPDATE rate SET rate='$weightratio' WHERE rate_id = $rate_ids ") or die(mysqli_error($con));
+	$resultweight = mysqli_query($con, "INSERT INTO log SET action='updated weight price to $weightratio', created_at=now(), user_id='$user_id', sort_by='others'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Weight rates updated');
@@ -54,10 +58,12 @@ if(isset($_POST['update-weight']))
 
 if(isset($_POST['update-currency']))
 {    
+	$user_id = $_SESSION['user_id'];
     $currency = $_POST['currency'];
 	
 	$update = mysqli_query($con, "UPDATE country SET country_currency='$currency'") or die(mysqli_error($con));
-    ?>
+	$resultcurrency = mysqli_query($con, "INSERT INTO log SET action='updated currency to $currency', created_at=now(), user_id='$user_id', sort_by='others'") or die(mysqli_error($con));
+   ?>
     <script>
     alert('Currency rates updated');
     window.location.href='main.php#adother';
@@ -67,13 +73,15 @@ if(isset($_POST['update-currency']))
 
 if(isset($_POST['update-bankdetails']))
 {    
+	$user_id = $_SESSION['user_id'];
 	$cname = $_POST['cname'];
 	$bname = $_POST['bname'];
 	$accno = $_POST['accno'];
     $country_id = $_POST['country_id'];
 	
 	$update = mysqli_query($con, "UPDATE country SET country_name='$cname', bank='$bname', account_no='$accno' WHERE country_id = $country_id ") or die(mysqli_error($con));
-    ?>
+    $resultcurrency = mysqli_query($con, "INSERT INTO log SET action='updated bank details', created_at=now(), user_id='$user_id', sort_by='others'") or die(mysqli_error($con));
+	?>
     <script>
     alert('Bank details updated');
     window.location.href='main.php#adother';

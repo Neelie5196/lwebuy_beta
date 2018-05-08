@@ -17,7 +17,7 @@ if(isset($_POST['approve']))
             WHERE country_name = 'Malaysia'";
     $result1 = mysqli_query($con, $query1);
     $results1 = mysqli_fetch_assoc($result1);
-    
+    $user_id = $_SESSION['user_id'];
     $order_item_id = $_POST['order_item_id'];
     $price = $_POST['uprice'];
     $status = 'Ready to Pay';
@@ -25,7 +25,7 @@ if(isset($_POST['approve']))
     $itemprice = $price * $currency;
     
     $result2 = mysqli_query($con, "UPDATE order_item SET price='$itemprice', status = '$status' WHERE order_item_id = $order_item_id") or die(mysqli_error($con));
-    
+    $resultapprove = mysqli_query($con, "INSERT INTO log SET action='approved request #$order_item_id and update item price to $itemprice', created_at=now(), user_id='$user_id', sort_by='approve_price'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Requests approved');
@@ -36,13 +36,13 @@ if(isset($_POST['approve']))
 
 if(isset($_POST['decline']))
 {    
-    
+    $user_id = $_SESSION['user_id'];
     $order_item_id = $_POST['order_item_id'];
     $comment = $_POST['uprice'];
     $status = 'Declined';
     
     $result3 = mysqli_query($con, "UPDATE order_item SET comment='$comment', status = '$status' WHERE order_item_id = $order_item_id") or die(mysqli_error($con));
-    
+	$resultdecline = mysqli_query($con, "INSERT INTO log SET action='declined request #$order_item_id ', created_at=now(), user_id='$user_id', sort_by='approve_price'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Decline');
@@ -67,11 +67,12 @@ $result5 = mysqli_query($con, $query5);
 
 if(isset($_POST['editPrice']))
 {   
+	$user_id = $_SESSION['user_id'];
     $order_item_id = $_POST['orderItemId'];
     $price = $_POST['price'];
     
     $result7 = mysqli_query($con, "UPDATE order_item SET price='$price' WHERE order_item_id='$order_item_id'") or die(mysqli_error($con));
-    
+    $resultedit = mysqli_query($con, "INSERT INTO log SET action='edit item #$order_item_id price to $price ', created_at=now(), user_id='$user_id', sort_by='approve_price'") or die(mysqli_error($con));
     ?>
     <script>
     window.location.href='main.php#adrequest';

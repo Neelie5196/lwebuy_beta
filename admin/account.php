@@ -13,6 +13,7 @@ $result = mysqli_query($con, $query);
 
 if(isset($_POST['addadmin']))
 {    
+	$user_id = $_SESSION['user_id'];
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $email = $_POST['email'];
@@ -23,7 +24,7 @@ if(isset($_POST['addadmin']))
     $password = password_hash($password, PASSWORD_DEFAULT);
 	
 	$result3 = mysqli_query($con, "INSERT INTO users SET fname='$fname', lname='$lname', email='$email', contact='$contact', password='$password', type='$type'") or die(mysqli_error($con));
-    
+    $resultadmin = mysqli_query($con, "INSERT INTO log SET action='created $email', created_at=now(), user_id='$user_id', sort_by='c_account'") or die(mysqli_error($con));
     $user_id = mysqli_insert_id($con);
     
     $result4 = mysqli_query($con, "INSERT INTO work_station SET user_id='$user_id', ware_id='$station'") or die(mysqli_error($con));
@@ -44,7 +45,7 @@ if (isset($_GET['user_id']))
     $user_id = $_GET['user_id'];
 
     $result6 = mysqli_query($con, "DELETE FROM users WHERE user_id=$user_id") or die(mysqli_error($con));
-    
+    $resultdel = mysqli_query($con, "INSERT INTO log SET action='delete $email', created_at=now(), user_id='$user_id', sort_by='c_account'") or die(mysqli_error($con));
     ?>
     <script>
     window.location.href='main.php#adaccount';
@@ -58,6 +59,7 @@ $result7 = mysqli_query($con, $query7);
 
 if(isset($_POST['edituser']))
 {    
+	
     $user_id = $_POST['user_id'];
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
@@ -66,7 +68,7 @@ if(isset($_POST['edituser']))
     $station = $_POST['station'];
 	
     $result8 = mysqli_query($con, "UPDATE users SET fname='$fname', lname='$lname', email='$email', contact='$contact' WHERE user_id='$user_id'") or die(mysqli_error($con));
-    
+    $resultedit = mysqli_query($con, "INSERT INTO log SET action='edit $email', created_at=now(), user_id='$user_id', sort_by='c_account'") or die(mysqli_error($con));
     $result9 = mysqli_query($con, "UPDATE work_station SET ware_id='$station' WHERE user_id='$user_id'") or die(mysqli_error($con));
     
     ?>
@@ -94,6 +96,7 @@ $result12 = mysqli_query($con, $query12);
 
 if(isset($_POST['addstaff']))
 {    
+	$user_id = $_SESSION['user_id'];
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $email = $_POST['email'];
@@ -104,7 +107,7 @@ if(isset($_POST['addstaff']))
     $password = password_hash($password, PASSWORD_DEFAULT);
 	
 	$result13 = mysqli_query($con, "INSERT INTO users SET fname='$fname', lname='$lname', email='$email', contact='$contact', password='$password', type='$type'") or die(mysqli_error($con));
-    
+    $resultstaff = mysqli_query($con, "INSERT INTO log SET action='created $email', created_at=now(), user_id='$user_id', sort_by='c_account'") or die(mysqli_error($con));
     $user_id = mysqli_insert_id($con);
     
     $result14 = mysqli_query($con, "INSERT INTO work_station SET user_id='$user_id', ware_id='$station'") or die(mysqli_error($con));

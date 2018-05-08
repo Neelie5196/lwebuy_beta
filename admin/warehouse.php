@@ -16,13 +16,13 @@ $result1 = mysqli_query($con, $query1);
 
 if(isset($_POST['createslot']))
 {    
-
+	$user_id = $_SESSION['user_id'];
     $slotaisle = $_POST['slotaisle'];
     $slotno = $_POST['slotno'];
     $status = 'Not In Use';
 	
 	$result2 = mysqli_query($con, "INSERT INTO slot SET slot_aisle='$slotaisle', slot_num='$slotno', status='$status'") or die(mysqli_error($con));
-    
+    $resultcreate = mysqli_query($con, "INSERT INTO log SET action='created slot $slotno', created_at=now(), user_id='$user_id', sort_by='warehouse'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Create');
@@ -33,10 +33,11 @@ if(isset($_POST['createslot']))
 
 if (isset($_GET['slot_id']))
 {
+	$user_id = $_SESSION['user_id'];
     $slot_id = $_GET['slot_id'];
 
     $result3 = mysqli_query($con, "DELETE FROM slot WHERE slot_id=$slot_id") or die(mysqli_error($con));
-    
+    $resultdelete = mysqli_query($con, "INSERT INTO log SET action='deleted slot', created_at=now(), user_id='$user_id', sort_by='warehouse'") or die(mysqli_error($con));
     ?>
     <script>
     window.location.href='main.php#adwarehouse';
@@ -58,13 +59,15 @@ $result6 = mysqli_query($con, $query6);
 
 if(isset($_POST['createwarehouse']))
 {    
+	$user_id = $_SESSION['user_id'];
     $station_code = $_POST['stationcode'];
     $station_name = $_POST['stationname'];
     $country = $_POST['stationcountry'];
     $address = $_POST['stationaddress'];
 	
 	$result7 = mysqli_query($con, "INSERT INTO warehouse SET station_code='$station_code', station_name='$station_name', country_name='$country', address='$address'") or die(mysqli_error($con));
-    
+    $resultcwarehouse = mysqli_query($con, "INSERT INTO log SET action='created warehouse $station_code', created_at=now(), user_id='$user_id', sort_by='warehouse'") or die(mysqli_error($con));
+    ?>
     ?>
     <script>
     alert('Success to Create');
@@ -75,6 +78,7 @@ if(isset($_POST['createwarehouse']))
 
 if(isset($_POST['editWarehouse']))
 {   
+	$user_id = $_SESSION['user_id'];
     $ware_id = $_POST['warehouse_id'];
     $station_code = $_POST['stationcode'];
     $station_name = $_POST['stationname'];
@@ -82,7 +86,8 @@ if(isset($_POST['editWarehouse']))
     $address = $_POST['stationaddress'];
     
     $result8 = mysqli_query($con, "UPDATE warehouse SET station_code='$station_code', station_name='$station_name', country_name='$country', address='$address' WHERE ware_id='$ware_id'") or die(mysqli_error($con));
-    
+    $resultdelete = mysqli_query($con, "INSERT INTO log SET action='edited warehouse $station_code', created_at=now(), user_id='$user_id', sort_by='warehouse'") or die(mysqli_error($con));
+    ?>
     ?>
     <script>
     alert('Success to Save');
@@ -93,10 +98,11 @@ if(isset($_POST['editWarehouse']))
 
 if (isset($_GET['ware_id']))
 {
+	$user_id = $_SESSION['user_id'];
     $ware_id = $_GET['ware_id'];
 
     $result9 = mysqli_query($con, "DELETE FROM warehouse WHERE ware_id=$ware_id") or die(mysqli_error($con));
-    
+    $resultdeletew = mysqli_query($con, "INSERT INTO log SET action='deleted warehouse', created_at=now(), user_id='$user_id', sort_by='warehouse'") or die(mysqli_error($con));
     ?>
     <script>
     window.location.href='main.php#adwarehouse';

@@ -80,11 +80,11 @@ if(isset($_POST['uploadreceipt']))
 	
 	$final_file=str_replace(' ','-',$new_file_name);
     
-	$result9 = mysqli_query($con, "UPDATE order_item SET payment_id='$payment_id', status='$status' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
-    
 	if(move_uploaded_file($file_loc,$folder.$final_file))
 	{
-        $result10 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id', user_id='$user_id', title='$title', amount='$total', file='$final_file', type='$file_type', status='$statuss'") or die(mysqli_error($con));
+        $result9 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id', user_id='$user_id', title='$title', amount='$total', file='$final_file', type='$file_type', status='$statuss'") or die(mysqli_error($con));
+        
+        $result10 = mysqli_query($con, "UPDATE order_item SET payment_id='$payment_id', status='$status' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
 		?>
 		<script>
 		alert('Successfully Submit');

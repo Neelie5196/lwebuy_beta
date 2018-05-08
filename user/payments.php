@@ -104,13 +104,13 @@ if(isset($_POST['uploadreceipt']))
 	
 	$final_file=str_replace(' ','-',$new_file_name);
     
-	$result5 = mysqli_query($con, "UPDATE item SET payment_id='$payment_id' WHERE item_id IN (".implode(',',$item).")") or die(mysqli_error($con));
-    
-    $result12 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', recipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$totalpay', status='$status', payment_id='$payment_id'") or die(mysqli_error($con));
-    
 	if(move_uploaded_file($file_loc,$folder.$final_file))
 	{
         $result6 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id', user_id='$user_id', title='$title', amount='$totalpay', file='$final_file', type='$file_type', status='$statuss'") or die(mysqli_error($con));
+        
+        $result5 = mysqli_query($con, "UPDATE item SET payment_id='$payment_id' WHERE item_id IN (".implode(',',$item).")") or die(mysqli_error($con));
+    
+        $result12 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', recipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$totalpay', status='$status', payment_id='$payment_id'") or die(mysqli_error($con));
 		?>
 		<script>
 		alert('Successfully Submit');

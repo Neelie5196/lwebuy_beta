@@ -48,17 +48,15 @@ if(isset($_POST['refundpayment']))
     
     if($results7['status'] == 'Declined'){
         $order_item_id = $_POST['order_item_id'];
-        $user_id = $_POST['user_id'];
         $total_amount = $_POST['total_amount'];
         $refund_amount = $_POST['refund_amount'];
         $admin_charge = $_POST['admin_charge'];
-        $refund_reason = $_POST['refund_reason'];
-        $status = 'Ready to Pay';
-
-        $result7 = mysqli_query($con, "INSERT INTO refund SET user_id='$user_id', total_amount='$total_amount', refund_amount='$refund_amount', admin_charge='$admin_charge', refund_reason='$refund_reason'") or die(mysqli_error($con));
+        $transaction_code = $_POST['transaction_code'];
+        
+        $result7 = mysqli_query($con, "UPDATE refund SET total_amount='$total_amount', refund_amount='$refund_amount', admin_charge='$admin_charge', transaction_code='$transaction_code' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
         
         for($i=0; $i<$_POST['numbers']; $i++){
-            $result16 = mysqli_query($con, "UPDATE order_item SET status='$status', payment_id = NULL WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
+            $result16 = mysqli_query($con, "UPDATE order_item SET payment_id = NULL WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
             
         }
         ?>

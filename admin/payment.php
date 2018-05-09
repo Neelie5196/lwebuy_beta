@@ -376,7 +376,7 @@ if(isset($_POST['approvec']))
                         <th>Refund Amount (RM)</th>
                         <th>Admin Charge (RM)</th>
                         <th>Reason</th>
-                        <th>Transaction Code</th>
+                        <th>Action</th>
                     </tr>
                     <?php 
                         if(mysqli_num_rows($result10) > 0)
@@ -393,7 +393,17 @@ if(isset($_POST['approvec']))
                                     <td><?php echo $row['admin_charge']; ?></td>
                                     <td><?php echo $row['refund_reason']; ?></td>
                                     <td>
-                                        <a data-toggle="modal" data-id="<?php echo $row['refund_id']; ?>" class="btn btnGo transactionCode" href="#transactionCode">Approve</a>
+                                        <?php
+                                            if($row['total_amount'] != NULL){
+                                                ?>
+                                                    <a data-toggle="modal" data-id="<?php echo $row['refund_id']; ?>" class="btn btnGo transactionCode" href="#transactionCode">Approve</a>
+                                                <?php
+                                            }else{
+                                                ?>
+                                                    <a href="paymentviewss.php?payment_id=<?php echo $row['payment_id']; ?>" class="btn btnGo">View Details</a>
+                                                <?php
+                                            }
+                                        ?>
                                     </td>
                                 </tr>
                                 <?php

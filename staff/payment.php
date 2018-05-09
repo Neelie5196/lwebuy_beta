@@ -99,7 +99,7 @@ if(isset($_POST['approvec']))
 
 	
     $update = mysqli_query($con, "UPDATE payment SET amount = '$amount', status='Completed' WHERE payment_id = '$payment_id' ") or die(mysqli_error($con));
-
+	$resultapayment = mysqli_query($con, "INSERT INTO log SET action='received payment, total RM$amount', created_at=now(), user_id='$user_id', sort_by='approve_payment'") or die(mysqli_error($con));
 	
 	$query = "SELECT * 
               FROM point
@@ -376,7 +376,7 @@ if(isset($_POST['approvec']))
                         <th>Refund Amount (RM)</th>
                         <th>Admin Charge (RM)</th>
                         <th>Reason</th>
-                        <th>Transaction Code</th>
+                        <th>Action</th>
                     </tr>
                     <?php 
                         if(mysqli_num_rows($result10) > 0)
@@ -393,7 +393,17 @@ if(isset($_POST['approvec']))
                                     <td><?php echo $row['admin_charge']; ?></td>
                                     <td><?php echo $row['refund_reason']; ?></td>
                                     <td>
-                                        <a data-toggle="modal" data-id="<?php echo $row['refund_id']; ?>" class="btn btnGo transactionCode" href="#transactionCode">Approve</a>
+                                        <?php
+                                            if($row['total_amount'] != NULL){
+                                                ?>
+                                                    <a data-toggle="modal" data-id="<?php echo $row['refund_id']; ?>" class="btn btnGo transactionCode" href="#transactionCode">Approve</a>
+                                                <?php
+                                            }else{
+                                                ?>
+                                                    <a href="paymentviewss.php?payment_id=<?php echo $row['payment_id']; ?>" class="btn btnGo">View Details</a>
+                                                <?php
+                                            }
+                                        ?>
                                     </td>
                                 </tr>
                                 <?php

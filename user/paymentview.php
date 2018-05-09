@@ -2,6 +2,7 @@
 require_once '../connection/config.php';
 session_start();
 $payment_id = $_GET['payment_id'];
+$user_id = $_SESSION['user_id'];
 
 if ($_SESSION['user_id'] == "")
 {
@@ -14,6 +15,11 @@ $query = "SELECT *
            WHERE payment_id='$payment_id'";
 $result = mysqli_query($con, $query);
 
+$query15 = "SELECT *
+           FROM order_item
+           WHERE payment_id='$payment_id'";
+$result15 = mysqli_query($con, $query15);
+
 $query6 = "SELECT * FROM top_up WHERE payment_id='$payment_id'";
 $result6 = mysqli_query($con, $query6);
 $results6 = mysqli_fetch_assoc($result6);
@@ -21,6 +27,25 @@ $results6 = mysqli_fetch_assoc($result6);
 $query7 = "SELECT * FROM payment WHERE payment_id='$payment_id'";
 $result7 = mysqli_query($con, $query7);
 $results7 = mysqli_fetch_assoc($result7);
+
+if(isset($_POST['refundpayment']))
+{   
+    $order_item_id = $_POST['order_item_id'];
+    $refund_reason = $_POST['refund_reason'];
+    $status = 'Declined';
+    $comment = 'Refund';
+    
+    for($i=0; $i<$_POST['numbers']; $i++){
+        $result8 = mysqli_query($con, "UPDATE order_item SET status='$status', comment = '$comment' WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
+    }
+    $result9 = mysqli_query($con, "INSERT INTO refund SET user_id='$user_id', refund_reason='$refund_reason', payment_id = $payment_id") or die(mysqli_error($con));
+    ?>
+    <script>
+    alert('Request Send');
+    window.location.href='main.php#purchase';
+    </script>
+    <?php    
+}
 
 ?>
 
@@ -146,6 +171,7 @@ $results7 = mysqli_fetch_assoc($result7);
                             <p class="right">
                                 <a href="main.php#purchase" class="btn btn-secondary btnCancel btnmargin">Cancel</a>
                                 <input type="submit" class="btn btn-success btnSend btnmargin" name="payment" value="Payment" />
+                                <a class="btn btnmargin btn-info" href="#refundPRequest" data-toggle="modal" data-dismiss="modal">Refund</a>
                             </p>
                         </div>
                     </div>
@@ -170,5 +196,44 @@ $results7 = mysqli_fetch_assoc($result7);
                 </div>
             </div>
         </div>
+        
+        <div class="modal fade" id="refundPRequest" tabindex="-1" role="dialog" aria-labelledby="refundPRequestTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title center" id="refundPRequestTitle">Refund Payment Request</h5>
+                    </div>
+
+                    <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
+                        <div class="modal-body left">
+                            <?php 
+                                if(mysqli_num_rows($result15) > 0)
+                                {
+                                    $counter = 0;
+                                    while($row = mysqli_fetch_array($result15))
+                                    {
+                                        $counter++;
+                                        ?>
+                                            <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">
+                                            <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
+                                        <?php
+                                    }
+
+                                }
+                            ?>
+                            <p><input class="formfield" name="payment_id" type="hidden" value="<?php echo $payment_id ?>" /></p>
+                            <p><input class="formfield" name="refund_reason" type="text" placeholder="Reason" required /></p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+
+                            <input type="submit" class="btn btn-info" name="refundpayment" value="Refund payment" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
     </body>
 </html>

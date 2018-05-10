@@ -293,13 +293,9 @@ if(isset($_POST['declinereason']))
                     <caption> 
                         <?php
                             if($results7['title'] == 'Pay shipping by Points'){
-                                ?>
-                                    
-                                <?php
+                                echo $results7['title']." ".$results7['amount'];
                             }else if($results7['title'] == 'Pay Shipping by MOLPay'){
-                                ?>
-                                    
-                                <?php
+                                echo $results7['title']." ".$results7['amount'];
                             }else{
                                 ?>
                                     <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>

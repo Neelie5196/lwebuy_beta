@@ -17,41 +17,20 @@ $result = mysqli_query($con, $query);
 
 if(isset($_POST['updateordercode']))
 {   
-    $query1 = "SELECT *
-                FROM payment
-                WHERE payment_id='$payment_id'";
-    $result1 = mysqli_query($con, $query1);
-    $results1 = mysqli_fetch_assoc($result1);
-    
-    if($results1['status'] != 'Waiting for Accept'){
-        $order_item_id = $_POST['order_item_id'];
-        $order_code = $_POST['order_code'];
+    $order_item_id = $_POST['order_item_id'];
+    $order_code = $_POST['order_code'];
+    $price = $_POST['price'];
 
-        for($i=0; $i<$_POST['numbers']; $i++){
-            $result2 = mysqli_query($con, "UPDATE order_item SET order_code='$order_code[$i]' WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
-        }
-
-        ?>
-        <script>
-        alert('Success to Update');
-        window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
-        </script>
-        <?php 
-    }else if($results1['status'] == 'Declined'){
-        ?>
-        <script>
-        alert('Payment has been declined!!');
-        window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
-        </script>
-        <?php 
-    }else{
-        ?>
-        <script>
-        alert('Please approve the payment before proceed');
-        window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
-        </script>
-        <?php
+    for($i=0; $i<$_POST['numbers']; $i++){
+        $result2 = mysqli_query($con, "UPDATE order_item SET price='$price[$i]', order_code='$order_code[$i]' WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
     }
+
+    ?>
+    <script>
+    alert('Success to Update');
+    window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
+    </script>
+    <?php
 }
 
 if(isset($_POST['approve']))
@@ -308,13 +287,9 @@ if(isset($_POST['declinereason']))
                     <caption>
                     <?php
                         if($results6['title'] == 'Pay order by Points'){
-                            ?>
-                                                                
-                            <?php
+                            echo $results6['title']." - ".$results6['amount'];
                         }else if($results6['title'] == 'Pay Order by MOLPay'){
-                            ?>
-                                
-                            <?php
+                            echo $results6['title']." - ".$results6['amount'];
                         }else{
                             ?>
                                 <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
@@ -374,9 +349,9 @@ if(isset($_POST['declinereason']))
                                 <td><?php echo $row['category']; ?></td>
                                 <td><?php echo $row['quantity']; ?></td>
                                 <td><?php echo $row['remark']; ?></td>
-                                <td><?php echo $row['price']; ?></td>
+                                <td><input type="text" class="enableformfield" name="price[]" value="<?php echo $row['price']; ?>"></td>
                                 <td><?php echo number_format((float)$row['price']*$row['quantity'], 2, '.', ''); ?></td>
-                                <td><input type="text" class="enableformfield" name="order_code[]" value="<?php echo $row['order_code']; ?>" required></td>
+                                <td><input type="text" class="enableformfield" name="order_code[]" value="<?php echo $row['order_code']; ?>"></td>
                             </tr>
 
                             <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">

@@ -122,13 +122,9 @@ if(isset($_POST['refundpayment']))
                     <caption>
                     <?php
                         if($results6['title'] == 'Pay order by Points'){
-                            ?>
-                                                                
-                            <?php
+                            echo $results6['title']." ".$results6['amount'];
                         }else if($results6['title'] == 'Pay Order by MOLPay'){
-                            ?>
-                                
-                            <?php
+                            echo $results6['title']." ".$results6['amount'];
                         }else{
                             ?>
                                 <a data-toggle="modal" class="btn btn-default btnReceipt declinePayment" href="#declinePayment">View Receipt</a>

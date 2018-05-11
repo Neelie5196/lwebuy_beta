@@ -23,7 +23,7 @@ $results2 = mysqli_fetch_assoc($result2);
 <?php
 if(isset($_POST["add"]))
 {    
-	$unique_id = substr(time(),5). $user_id;
+	$unique_id = rand(10000,100000). $user_id;
     $payment_id = $unique_id;
     $status = 'Waiting for Approval';
     
@@ -48,6 +48,33 @@ if(isset($_POST["add"]))
     <script>
     alert('Request Sent!');
      window.location.href='main.php#credit';
+    </script>
+    <?php
+}
+}
+if(isset($_POST["reupload"]))
+{    
+	$payment_id = $_POST['payment_id'];
+    $file = rand(1000,100000)."-".$_FILES['file']['name'];
+    $file_loc = $_FILES['file']['tmp_name'];
+	$file_type = $_FILES['file']['type'];
+	$folder="../receipts/";
+	$type = $file_type;
+	
+	// make file name in lower case
+	$new_file_name = strtolower($file);
+	// make file name in lower case
+	
+	$final_file=str_replace(' ','-',$new_file_name);
+    
+	if(move_uploaded_file($file_loc,$folder.$final_file))
+	{
+	
+	$resultload = mysqli_query($con, "UPDATE payment SET file = '$file' WHERE payment_id='$payment_id'") or die(mysqli_error($con));
+    ?>
+    <script>
+    alert('Re-uploaded!');
+	window.location.href='main.php#credit';
     </script>
     <?php
 }
@@ -84,7 +111,7 @@ $results20 = mysqli_fetch_assoc($result20);
 
 if(isset($_POST['molPay']))
 {    
-    $unique_id = substr(time(),5). $user_id;
+    $unique_id = rand(10000,100000). $user_id;
     $payment_id = $unique_id;
     $amount = number_format((float)$_POST['amount'], 2, '.', '');
     $merchantID = 'SB_parcelgateway';
@@ -152,9 +179,10 @@ if(isset($_POST['molPay']))
                         <td><?php echo $row['title']; ?></td>
                         <td><button type="button" class="btn btntab" data-toggle="modal" data-target="#myModal" onclick="passimg('<?php echo $row['file']; ?>')" title="View receipt"><span class="glyphicon glyphicon-eye-open"></span></button></td>
                         <td><?php echo $row['datetime']; ?></td>
-                        <td>
+                        <td>	
                            <a href="credit.php?payment_id=<?php echo $row['payment_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="Delete"><span class="glyphicon glyphicon-trash"></span></a>
-                        </td>
+						    <a data-toggle="modal" data-id="<?php echo $row['payment_id']; ?>" data-file="<?php echo $row['file']; ?>" class="btn btn-default btn-xs btnDelete editCredit" href="#editCredit" title="Re-upload"><span class="glyphicon glyphicon-pencil"></span></a>
+						</td>
                     </tr>
                     
                     <?php
@@ -205,7 +233,34 @@ if(isset($_POST['molPay']))
                     </div>
                 </div>
             </div>
+			
+			<div class="modal fade" id="editCredit" tabindex="-1" role="dialog" aria-labelledby="addCreditTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addCreditTitle">Re-upload Receipt</h5>
+                        </div>
+
+                        <form method="post" action="credit.php" enctype="multipart/form-data">
+                            <div class="modal-body left">
+									<input type="hidden" name="payment_id" id="paymentId" value=""/>
+                                <p>
+                                    <label>Upload Transaction Receipt</label><br/>
+                                    <input type="file" name="file" class="center" accept="image/*" required />
+                                </p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                                <input type="submit" class="btn btn-success btnSend" name="reupload" value="Request" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             
+            
+			
             <div class="modal fade" id="addCredits" tabindex="-1" role="dialog" aria-labelledby="addCreditsTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -338,4 +393,12 @@ if(isset($_POST['molPay']))
     {
         document.getElementById("imgcontain").setAttribute("src", "../receipts/" + filename);
     }
+</script>
+<script>
+$(document).on("click", ".editCredit", function () {
+    var paymentId = $(this).data('id');
+    $(".modal-body #paymentId").val( paymentId );
+    $('#editCredit').modal('show');
+});
+
 </script>

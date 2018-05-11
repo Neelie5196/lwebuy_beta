@@ -56,12 +56,11 @@ if(isset($_POST['proceed']))
     if($results6['status'] != 'Waiting for Accept'){
         $status = 'Proceed';
         $statuss = 'Completed';
-        $tracking_code = rand(10000,99999);
+        $generated = substr(time(),0);
+        $tracking_code = 'LWE'.$generated.'MY';
         $station = $_POST['station'];
 
-        $result5 = mysqli_query($con, "UPDATE shipping SET status='$status', tracking_code='$tracking_code' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
-        
-        $result6 = mysqli_query($con, "UPDATE shipping SET destination_station = '$station' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
+        $result5 = mysqli_query($con, "UPDATE shipping SET destination_station = '$station', status='$status', tracking_code='$tracking_code' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
         
         ?>
         <script>

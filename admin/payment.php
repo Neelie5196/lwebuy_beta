@@ -120,6 +120,21 @@ if(isset($_POST['approvec']))
     </script>
     <?php
 }
+if(isset($_POST['decline']))
+{    
+    $user_id = $_POST['user_id'];
+    $payment_id = $_POST['payment_id'];
+
+    $update = mysqli_query($con, "UPDATE payment SET amount = '-', status='Declined' WHERE payment_id = '$payment_id' ") or die(mysqli_error($con));
+	$resultapayment = mysqli_query($con, "INSERT INTO log SET action='declined payment', created_at=now(), user_id='$user_id', sort_by='approve_payment'") or die(mysqli_error($con));
+	
+    ?>
+    <script>
+    alert('Success to Decline');
+    window.location.href='main.php#adrequest';
+    </script>
+    <?php
+}
 
 
 ?>
@@ -287,7 +302,8 @@ if(isset($_POST['approvec']))
                         <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
                                 <!-- auto generate shipping code when proceed -->
-                                <input type="submit" class="btn btn-success btnSend" name="approvec" value="Approve" />
+								<input type="submit" class="btn btn-success btnSend" name="approvec" value="Approve" />
+                                <input type="submit" class="btn btnDecline" name="decline" value="Decline" />
                                 
                             </div>
                     </div>

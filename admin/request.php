@@ -26,7 +26,15 @@ if(isset($_POST['approve']))
     
     $result2 = mysqli_query($con, "UPDATE order_item SET price='$itemprice', status = '$status' WHERE order_item_id = $order_item_id") or die(mysqli_error($con));
     $resultapprove = mysqli_query($con, "INSERT INTO log SET action='approved request #$order_item_id and update item price to $itemprice', created_at=now(), user_id='$user_id', sort_by='approve_price'") or die(mysqli_error($con));
-    ?>
+			
+			$email = $_POST['email'];
+			$to=$email;
+			$subject="Your item approved" ;
+			$from = 'lwebuy.com';
+			$body='Proceed to payment';
+			$headers = "From:".$from;
+			mail($to,$subject,$body,$headers);
+  ?>
     <script>
     alert('Requests approved');
     window.location.href='main.php#adrequest';
@@ -127,7 +135,7 @@ if(isset($_POST['editPrice']))
                                     <td><?php echo $row['quantity']; ?></td>
                                     <td><?php echo $row['remark']; ?></td>
                                     <td>
-                                        <a data-toggle="modal" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btnGo approveRequest" href="#approveRequest" onclick="apasslink('<?php echo $row['link']; ?>')">Review</a>
+                                        <a data-toggle="modal" data-email="<?php echo $row['email']; ?>" data-id="<?php echo $row['order_item_id']; ?>" data-name="<?php echo $row['order_item']; ?>" data-category="<?php echo $row['category']; ?>" data-quantity="<?php echo $row['quantity']; ?>" data-remark="<?php echo $row['remark']; ?>" class="btn btnGo approveRequest" href="#approveRequest" onclick="apasslink('<?php echo $row['link']; ?>')">Review</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -153,6 +161,8 @@ if(isset($_POST['editPrice']))
                         <form method="post" action="request.php">
                             <div class="modal-body left">
                                 <input type="hidden" name="order_item_id" id="orderItemId" value="">
+                             
+								<input type="hidden" name="email" id="email"  value=""/>
                                 <p class="requestp">Item name: <output name="name" id="name"></output></p>
 
                                 <p class="requestp">URL:</p>
@@ -309,12 +319,14 @@ if(isset($_POST['editPrice']))
 </div>
 <script>
     $(document).on("click", ".approveRequest", function () {
+        var orderEmail = $(this).data('email');
         var orderItemId = $(this).data('id');
         var orderItemName = $(this).data('name');
         var orderItemLink = $(this).data('link');
         var orderItemCategory = $(this).data('category');
         var orderItemQuantity = $(this).data('quantity');
         var orderItemRemark = $(this).data('remark');
+        $(".modal-body #email").val( orderEmail );
         $(".modal-body #orderItemId").val( orderItemId );
         $(".modal-body #name").val( orderItemName );
         $(".modal-body #link").val( orderItemLink );

@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$password = password_hash($password, PASSWORD_DEFAULT); 
 			$code=substr(md5(mt_rand()),0,15);
 			
-            $sql = "INSERT INTO users (user_id, email, password, lname, fname, type, contact, code, verify) VALUES ('','$email', '$password', '$lname', '$fname', 'customer', '$contact', '$code','no')";
+            $sql = "INSERT INTO users (user_id, email, password, lname, fname, type, contact,created, code, verify) VALUES ('','$email', '$password', '$lname', '$fname', 'customer', '$contact',now(), '$code','no')";
             
 			
 			
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$to=$email;
 			$subject="Sign up Confirmation";
 			$from = 'lwebuy.com';
-			$body='Please Click On This link <a href="'.$verifyLink.'">'.$verifyLink.'</a>to activate your account.';
+			$body='Please Click On This link '.$verifyLink.'to activate your account.';
 			$headers = "From:".$from;
 			mail($to,$subject,$body,$headers);
             ?>

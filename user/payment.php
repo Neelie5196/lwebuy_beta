@@ -34,7 +34,7 @@ $results4 = mysqli_fetch_assoc($result4);
 
 if(isset($_POST['paybycredit']))
 {    
-    $unique_id = rand(10000,100000). $user_id;
+    $unique_id = substr(time(),5). $user_id;
     $payment_id = $unique_id;
     $status = 'Paid';
     $point = $_POST['point'];
@@ -61,7 +61,7 @@ $results8 = mysqli_fetch_assoc($result8);
 
 if(isset($_POST['uploadreceipt']))
 {   
-    $unique_id = rand(10000,100000). $user_id;
+    $unique_id = substr(time(),5). $user_id;
     $payment_id = $unique_id;
     $status = 'Paid';
     
@@ -228,7 +228,7 @@ if(isset($_POST['molPay']))
                             <h3>MOLPay</h3>
                             <form action="payment.php" method= "POST">
                                 <?php
-                                    $unique_id = rand(10000,100000). $user_id;
+                                    $unique_id = substr(time(),5). $user_id;
                                     $payment_id = $unique_id;
                                     $amount = number_format((float)$total_pay, 2, '.', '');
                                     $merchantID = 'SB_parcelgateway';

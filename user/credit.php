@@ -23,7 +23,7 @@ $results2 = mysqli_fetch_assoc($result2);
 <?php
 if(isset($_POST["add"]))
 {    
-	$unique_id = rand(10000,100000). $user_id;
+	$unique_id = substr(time(),5). $user_id;
     $payment_id = $unique_id;
     $status = 'Waiting for Approval';
     
@@ -84,7 +84,7 @@ $results20 = mysqli_fetch_assoc($result20);
 
 if(isset($_POST['molPay']))
 {    
-    $unique_id = rand(10000,100000). $user_id;
+    $unique_id = substr(time(),5). $user_id;
     $payment_id = $unique_id;
     $amount = number_format((float)$_POST['amount'], 2, '.', '');
     $merchantID = 'SB_parcelgateway';

@@ -51,7 +51,7 @@ $results11 = mysqli_fetch_assoc($result11);
 
 if(isset($_POST['paybycredit']))
 {    
-    $unique_id = rand(10000,100000). $user_id;
+    $unique_id = substr(time(),5). $user_id;
     $payment_id = $unique_id;
     $status = 'Request';
     $rname = addslashes($_POST['name']);
@@ -80,7 +80,7 @@ if(isset($_POST['paybycredit']))
 
 if(isset($_POST['uploadreceipt']))
 {   
-    $unique_id = rand(10000,100000). $user_id;
+    $unique_id = substr(time(),5). $user_id;
     $payment_id = $unique_id;
     $status = 'Request';
     $rname = addslashes($_POST['name']);
@@ -257,7 +257,7 @@ $results14 = mysqli_fetch_assoc($result14);
                             <h3>MOLPay</h3>
                             <form action="payments.php" method= "POST">
                                 <?php
-                                    $unique_id = rand(10000,100000). $user_id;
+                                    $unique_id = substr(time(),5). $user_id;
                                     $payment_id = $unique_id;
                                     $total_pay = $_POST['pricetotal'];
                                     $amount = number_format((float)$total_pay, 2, '.', '');

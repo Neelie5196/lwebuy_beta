@@ -38,7 +38,7 @@ $results4 = mysqli_fetch_assoc($result4);
 
 if(isset($_POST['topupsubmit']))
 {   
-    $unique_id = rand(10000,100000). $user_id;
+    $unique_id = substr(time(),5). $user_id;
     $payment_id = $unique_id;
     $status = 'Request';
     

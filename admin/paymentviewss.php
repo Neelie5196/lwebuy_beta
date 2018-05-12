@@ -15,20 +15,6 @@ $query = "SELECT *
            WHERE payment_id='$payment_id'";
 $result = mysqli_query($con, $query);
 
-if(isset($_POST['declinereceipt']))
-{
-    $payment_id = $_POST['payment_id'];
-    $status = 'Declined';
-    
-    $result13 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
-    ?>
-    <script>
-    alert('Payment has been declined');
-    window.location.href='paymentviewss.php?payment_id=<?php echo $payment_id; ?>';
-    </script>
-    <?php
-}
-
 $query6 = "SELECT * FROM payment WHERE payment_id='$payment_id'";
 $result6 = mysqli_query($con, $query6);
 $results6 = mysqli_fetch_assoc($result6);
@@ -38,42 +24,62 @@ $query15 = "SELECT *
            WHERE payment_id='$payment_id'";
 $result15 = mysqli_query($con, $query15);
 
+$query16 = "SELECT *
+           FROM order_item
+           WHERE payment_id='$payment_id'";
+$result16 = mysqli_query($con, $query16);
+
 if(isset($_POST['refundpayment']))
-{   
-    $query7 = "SELECT *
-            FROM payment
-            WHERE payment_id='$payment_id'";
-    $result7 = mysqli_query($con, $query7);
-    $results7 = mysqli_fetch_assoc($result7);
-    
-    if($results7['status'] == 'Declined'){
-        $order_item_id = $_POST['order_item_id'];
-        $total_amount = $_POST['total_amount'];
-        $refund_amount = $_POST['refund_amount'];
-        $admin_charge = $_POST['admin_charge'];
-        $transaction_code = $_POST['transaction_code'];
-        
-        $result7 = mysqli_query($con, "UPDATE refund SET total_amount='$total_amount', refund_amount='$refund_amount', admin_charge='$admin_charge', transaction_code='$transaction_code' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
-        
-        for($i=0; $i<$_POST['numbers']; $i++){
-            $result16 = mysqli_query($con, "UPDATE order_item SET payment_id = NULL WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
-            
-        }
-        ?>
-        <script>
-        alert('Success to Refund');
-        window.location.href='main.php#adpayment';
-        </script>
-        <?php
-    }else{
-        ?>
-        <script>
-        alert('Please decline the payment, before submit refund request');
-        window.location.href='paymentviewss.php?payment_id=<?php echo $payment_id; ?>';
-        </script>
-        <?php
+{       
+    $order_item_id = $_POST['order_item_id'];
+    $total_amount = $_POST['total_amount'];
+    $refund_amount = $_POST['refund_amount'];
+    $admin_charge = $_POST['admin_charge'];
+    $transaction_code = $_POST['transaction_code'];
+    $status = 'Declined';
+
+    $result7 = mysqli_query($con, "UPDATE refund SET total_amount='$total_amount', refund_amount='$refund_amount', admin_charge='$admin_charge', transaction_code='$transaction_code' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
+
+    $result13 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
+
+    for($i=0; $i<$_POST['numbers']; $i++){
+        $result16 = mysqli_query($con, "UPDATE order_item SET payment_id = NULL WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
+
     }
+    ?>
+    <script>
+    alert('Success to Refund');
+    window.location.href='main.php#adpayment';
+    </script>
+    <?php
+}
+
+if(isset($_POST['refundpayment1']))
+{       
+    $order_item_id = $_POST['order_item_id'];
+    $total_amount = $_POST['total_amount'];
+    $refund_amount = $_POST['refund_amount'];
+    $admin_charge = $_POST['admin_charge'];
+    $transaction_code = 'Refund Credit';
+    $user_id = $_POST['user_id'];
+    $status = 'Declined';
+
+    $result17 = mysqli_query($con, "UPDATE refund SET total_amount='$total_amount', refund_amount='$refund_amount', admin_charge='$admin_charge', transaction_code='$transaction_code' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
+
+    $result18 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
     
+    $result19 = mysqli_query($con, "UPDATE point SET point = point + '$refund_amount' WHERE user_id = $user_id ") or die(mysqli_error($con));
+
+    for($i=0; $i<$_POST['numbers']; $i++){
+        $result20 = mysqli_query($con, "UPDATE order_item SET payment_id = NULL WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
+
+    }
+    ?>
+    <script>
+    alert('Success to Refund');
+    window.location.href='main.php#adpayment';
+    </script>
+    <?php
 }
 
 ?>
@@ -198,7 +204,18 @@ if(isset($_POST['refundpayment']))
                     <div class="btnpayview">
                         <p class="right">
                             <a href="main.php#adpayment" class="btn btn-secondary btnCancel btnmargin">Cancel</a>
-                            <a class="btn btnmargin btn-info" href="#refundPPayment" data-toggle="modal" data-dismiss="modal">Refund</a>
+                            <?php
+                                if($results6['title'] != 'Pay order by Points'){
+                                    ?>
+                                        <a class="btn btnmargin btn-info" href="#refundPPayment" data-toggle="modal" data-dismiss="modal">Refund</a>
+                                    <?php
+                                }else{
+                                    ?>
+                                        <a class="btn btnmargin btn-info" href="#refundPPayment1" data-toggle="modal" data-dismiss="modal">Refund</a>
+                                    <?php
+                                }
+                            ?>
+                            
                         </p>
                     </div>
                 </div>
@@ -212,17 +229,13 @@ if(isset($_POST['refundpayment']))
                         <h5 class="modal-title center" id="declinePaymentTitle">Decline Payment</h5>
                     </div>
 
-                    <form method="post" action="paymentviewss.php?payment_id=<?php echo $payment_id; ?>">
-                        <div class="modal-body left">
-                            <img src="../receipts/<?php echo $results6['file']; ?>" style="width: 500px; height: 450px;">
-                            <input type="hidden" name="payment_id" value="<?php echo $_GET['payment_id']; ?>">
-                        </div>
+                    <div class="modal-body left">
+                        <img src="../receipts/<?php echo $results6['file']; ?>" style="width: 500px; height: 450px;">
+                    </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-danger" name="declinereceipt" value="Decline" />
-                        </div>
-                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>        
@@ -262,6 +275,46 @@ if(isset($_POST['refundpayment']))
                             <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
 
                             <input type="submit" class="btn btn-info" name="refundpayment" value="Refund payment" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="refundPPayment1" tabindex="-1" role="dialog" aria-labelledby="refundPPayment1Title" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title center" id="refundPPayment1Title">Decline Payment</h5>
+                    </div>
+
+                    <form method="post" action="paymentviewss.php?payment_id=<?php echo $payment_id; ?>">
+                        <div class="modal-body left">
+                            <?php 
+                                if(mysqli_num_rows($result16) > 0)
+                                {
+                                    $counter = 0;
+                                    while($row = mysqli_fetch_array($result16))
+                                    {
+                                        $counter++;
+                                        ?>
+                                            <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>">
+                                            <input type="hidden" name="order_item_id[]" value="<?php echo $row['order_item_id']; ?>">
+                                            <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
+                                        <?php
+                                    }
+
+                                }
+                            ?>
+                            <p><input class="formfield" name="payment_id" type="hidden" value="<?php echo $payment_id ?>" /></p>
+                            <p><input class="formfield" name="total_amount" type="number" step="0.01" min="0" placeholder="Total Amount" required /></p>
+                            <p><input class="formfield" name="refund_amount" type="number" step="0.01" min="0" placeholder="Refund Amount" required /></p>
+                            <p><input class="formfield" name="admin_charge" type="number" step="0.01" min="0" placeholder="Admin Charge" required /></p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+
+                            <input type="submit" class="btn btn-info" name="refundpayment1" value="Refund payment" />
                         </div>
                     </form>
                 </div>

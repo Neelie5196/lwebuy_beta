@@ -8,7 +8,7 @@ if ($_SESSION['user_id'] == "")
     header('location: ../login.php');
     exit();
 }
-
+$total = 0;
 $user_id = $_SESSION['user_id'];
 $order_item = $_POST['order_item_id'];
 $paid_amount = $_POST['paid_amount'];

@@ -406,13 +406,23 @@ $results20 = mysqli_fetch_assoc($result20);
                             while($row = mysqli_fetch_array($result11))
                             {
                                 $payment_id = $row['payment_id'];
-                                $query12 = "SELECT * FROM payment WHERE payment_id='$payment_id'";
+                                $query12 = "SELECT *
+                                           FROM order_item
+                                           WHERE payment_id='$payment_id'";
                                 $result12 = mysqli_query($con, $query12);
-                                $results12 = mysqli_fetch_assoc($result12);
+                                
+                                if(mysqli_num_rows($result12) > 0)
+                                {
+                                    $total = 0;
+                                    while($row1 = mysqli_fetch_array($result12))
+                                    {
+                                        $total += $row1['price']*$row1['quantity'];
+                                    }
+                                }
                                 ?>
                                 <tr>
                                     <td><?php echo $row['payment_id']; ?></td>
-                                    <td><?php echo $results12['amount']; ?></td>
+                                    <td><?php echo number_format((float)$total, 2, '.', ''); ?></td>
                                     <td><?php echo $row['paid_amount']; ?></td>
                                     <td><?php echo $row['top_up_amount']; ?></td>
                                     <td><?php echo $row['top_up_reason']; ?></td>

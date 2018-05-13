@@ -213,7 +213,7 @@ $results20 = mysqli_fetch_assoc($result20);
 
                         <form method="post" action="purchase.php">
                             <div class="modal-body left">
-                                <p><input class="formfield" name="name" type="text" placeholder="Name" required /></p>
+                                <p><input class="formfield" name="name" type="text" placeholder="Name" autofocus required /></p>
 
                                 <p><input class="formfield" name="link" type="text" placeholder="URL" required /></p>
 

@@ -304,12 +304,20 @@ if(isset($_POST['declinereason']))
                                 $query12 = "SELECT * FROM payment WHERE top_up_id='$top_up_id'";
                                 $result12 = mysqli_query($con, $query12);
                                 $results12 = mysqli_fetch_assoc($result12);
-                                ?>
-                                <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment1" href="#verifyPayment1">View New Payment Receipt</a>
-                                <?php
+                                
+                                if($results12['title'] == 'Top-Up payment by Points'){
+                                    echo "New payment: ".$results12['title']." - ".$results12['amount'];
+                                }else if($results12['title'] == 'Top-Up payment by MOLPay'){
+                                    echo "New payment: ".$results12['title']." - ".$results12['amount'];
+                                }else{
+                                    ?>
+                                        <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment1" href="#verifyPayment1">View New Payment Receipt</a>
+                                    <?php
+                                }
                             }
+
                         }else{
-                            
+
                         }
                     ?>
                     </caption>
@@ -413,7 +421,17 @@ if(isset($_POST['declinereason']))
                             }
                         ?>
                         <a class="btn btnmargin btn-info" href="#declinePPayment" data-toggle="modal" data-dismiss="modal">Refund</a>
-                        <a class="btn btnmargin btn-danger" href="#declinePReason" data-toggle="modal" data-dismiss="modal">Decline</a>
+                        <?php
+                            if($results6['title'] == 'Pay order by Points'){
+                                
+                            }else if($results6['title'] == 'Pay Order by MOLPay'){
+                                
+                            }else{
+                                ?>
+                                    <a class="btn btnmargin btn-danger" href="#declinePReason" data-toggle="modal" data-dismiss="modal">Decline</a>
+                                <?php
+                            }
+                        ?>
                     </div>
 
                     <div class="modal-footer">
@@ -513,7 +531,7 @@ if(isset($_POST['declinereason']))
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title center" id="declinePPaymentTitle">Decline Payment</h5>
+                        <h5 class="modal-title center" id="declinePPaymentTitle">Refund Payment</h5>
                     </div>
 
                     <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">

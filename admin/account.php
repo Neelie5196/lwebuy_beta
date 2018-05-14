@@ -54,6 +54,30 @@ if (isset($_GET['user_id']))
 
 }
 
+if (isset($_GET['active_id']))
+{
+    $active_id = $_GET['active_id'];	
+    $resultu = mysqli_query($con, "UPDATE users SET statuss='active' WHERE user_id='$active_id'") or die(mysqli_error($con));
+    ?>
+    <script>
+	window.location.href='main.php#adaccount';
+    </script>
+    <?php
+}
+if (isset($_GET['ban_id']))
+{
+	
+    $ban_id = $_GET['ban_id'];	
+    $resultu = mysqli_query($con, "UPDATE users SET statuss='deactive' WHERE user_id='$ban_id'") or die(mysqli_error($con));
+    ?>
+    <script>
+	window.location.href='main.php#adaccount';
+    </script>
+    <?php
+}
+
+
+
 $query7 = "SELECT * FROM warehouse";
 $result7 = mysqli_query($con, $query7);
 
@@ -475,6 +499,7 @@ $result15 = mysqli_query($con, $query15);
                         <th>Name</th>
                         <th>Email</th>
                         <th>Contact</th>
+						<th>Status</th>
                     </tr>
                     <?php
                         if(mysqli_num_rows($result15) > 0)
@@ -487,6 +512,21 @@ $result15 = mysqli_query($con, $query15);
                                     <td><?php echo $row['fname']. " " . $row['lname']; ?></td>
                                     <td><?php echo $row['email']; ?></td>
                                     <td><?php echo $row['contact']; ?></td>
+									 <td>
+										<?php
+											if($row['statuss'] != 'active'){
+												?>
+											<a href="account.php?active_id=<?php echo $row['user_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="active"><span class="glyphicon glyphicon-ok-circle"></span></a>
+											<?php
+											}else{
+												?>
+												<a href="account.php?ban_id=<?php echo $row['user_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="deactive"><span class="glyphicon glyphicon-remove-circle"></span></a>
+											<?php
+											}
+										?>
+
+										 
+									 </td>
                                 </tr>
                                 <?php
                             }

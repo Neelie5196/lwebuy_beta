@@ -41,27 +41,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 $_SESSION['contact'] = $user['contact'];
 				$_SESSION['verify'] = $user['verify'];
             
-                
-                if($user['type'] == 'admin' && $user['verify'] == 'yes')
+                if($user['verify']=='yes'){
+					if($user['statuss']=='active'){
+						if($user['type'] == 'admin')
                 {
                     header("location: admin/main.php");
-                }
-                else if($user['type'] == 'staff' && $user['verify'] == 'yes')
+				}
+                else if($user['type'] == 'staff')
                 {	
                     header("location: staff/main.php");
                 }
-                else if($user['type'] == 'customer' && $user['verify'] == 'yes')
+                else if($user['type'] == 'customer')
                 {
                     header("location: user/main.php");
                 }
-				else{   
+					}else{   
+				?>
+				<script>
+				alert('Your account has been disabled, please contact admin');
+				window.location.href='login.php?fail';
+				</script>
+				<?php					
+				}
+				}else{   
 				?>
 				<script>
 				alert('You have to verify your email');
 				window.location.href='login.php?fail';
 				</script>
 				<?php					
-				}
+				}	
             }
             else
             {

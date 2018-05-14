@@ -76,7 +76,6 @@ if(isset($_POST['topupsubmit']))
         $result6 = mysqli_query($con, "UPDATE order_item SET top_up_id='$top_up_id', status='$status' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
 		?>
 		<script>
-		alert('Successfully Submit');
         window.location.href='main.php#purchase';
         </script>
 		<?php
@@ -103,7 +102,6 @@ if(isset($_POST['paybycredit']))
     
     ?>
     <script>
-    alert('Successfully Submit');
     window.location.href='main.php#purchase';
     </script>
     <?php

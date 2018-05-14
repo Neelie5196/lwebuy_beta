@@ -58,7 +58,6 @@ $user_id = $_SESSION['user_id'];
                 $result1 = mysqli_query($con, "INSERT INTO payment SET payment_id='$orderid', user_id='$user_id', title='$title $molpay', amount='$amount', status='$statuss'") or die(mysqli_error($con));
                 ?>
                 <script>
-                alert('Successful to Pay');
                 window.location.href='main.php#purchase';
                 </script>
                 <?php
@@ -84,7 +83,6 @@ $user_id = $_SESSION['user_id'];
                 $result = mysqli_query($con, "INSERT INTO payment SET payment_id='$orderid', user_id='$user_id', title='$title $molpay', amount='$amount', status='$statuss'") or die(mysqli_error($con));
                 ?>
                 <script>
-                alert('Successful to Pay');
                 window.location.href='main.php#ship';
                 </script>
                 <?php
@@ -128,7 +126,6 @@ $user_id = $_SESSION['user_id'];
                 }
                 ?>
                 <script>
-                alert('Successful to Pay');
                 window.location.href='main.php#credit';
                 </script>
                 <?php
@@ -166,7 +163,6 @@ $user_id = $_SESSION['user_id'];
                 
                 ?>
                 <script>
-                alert('Successful to Pay');
                 window.location.href='main.php#purchase';
                 </script>
                 <?php

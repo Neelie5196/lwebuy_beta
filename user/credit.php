@@ -46,7 +46,6 @@ if(isset($_POST["add"]))
 	$result = mysqli_query($con, "INSERT INTO payment SET  payment_id='$payment_id', user_id='$user_id', title='$title',file = '$file', type = '$type',status='$status'") or die(mysqli_error($con));
     ?>
     <script>
-    alert('Request Sent!');
      window.location.href='main.php#credit';
     </script>
     <?php
@@ -73,7 +72,6 @@ if(isset($_POST["reupload"]))
 	$resultload = mysqli_query($con, "UPDATE payment SET file = '$file' WHERE payment_id='$payment_id'") or die(mysqli_error($con));
     ?>
     <script>
-    alert('Re-uploaded!');
 	window.location.href='main.php#credit';
     </script>
     <?php

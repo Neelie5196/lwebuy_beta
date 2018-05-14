@@ -66,7 +66,6 @@ if(isset($_POST['topupsubmit']))
         $result6 = mysqli_query($con, "UPDATE shipping SET top_up_id='$top_up_id', status='$status' WHERE payment_id='$payments_id' ") or die(mysqli_error($con));
 		?>
 		<script>
-		alert('Successfully Submit');
         window.location.href='main.php#ship';
         </script>
 		<?php

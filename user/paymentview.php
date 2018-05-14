@@ -41,7 +41,6 @@ if(isset($_POST['refundpayment']))
     $result9 = mysqli_query($con, "INSERT INTO refund SET user_id='$user_id', refund_reason='$refund_reason', payment_id = $payment_id") or die(mysqli_error($con));
     ?>
     <script>
-    alert('Request Send');
     window.location.href='main.php#purchase';
     </script>
     <?php    

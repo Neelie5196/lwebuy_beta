@@ -72,7 +72,6 @@ if(isset($_POST['paybycredit']))
     $result9 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id',user_id='$user_id', title='$title $points', amount='$point $points', status='$statuss'") or die(mysqli_error($con));
     ?>
     <script>
-    alert('Successfully Submit');
     window.location.href='main.php#ship';
     </script>
     <?php
@@ -113,7 +112,6 @@ if(isset($_POST['uploadreceipt']))
         $result12 = mysqli_query($con, "INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', recipient_contact='$rcontact', remark='$rremark', address_id='$address', weight='$totalweight', price='$totalpay', status='$status', payment_id='$payment_id'") or die(mysqli_error($con));
 		?>
 		<script>
-		alert('Successfully Submit');
         window.location.href='main.php#ship';
         </script>
 		<?php

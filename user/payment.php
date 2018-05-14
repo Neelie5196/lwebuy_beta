@@ -47,7 +47,6 @@ if(isset($_POST['paybycredit']))
     $result7 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id',user_id='$user_id', title='$title $points', amount='$point $points', status='$statuss'") or die(mysqli_error($con));
     ?>
     <script>
-    alert('Successfully Submit');
     window.location.href='main.php#purchase';
     </script>
     <?php
@@ -87,7 +86,6 @@ if(isset($_POST['uploadreceipt']))
         $result10 = mysqli_query($con, "UPDATE order_item SET payment_id='$payment_id', status='$status' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
 		?>
 		<script>
-		alert('Successfully Submit');
         window.location.href='main.php#purchase';
         </script>
 		<?php

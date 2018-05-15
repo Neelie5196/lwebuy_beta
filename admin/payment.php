@@ -426,6 +426,8 @@ if(isset($_POST['decline']))
                                         <?php
                                             if($row['total_amount'] != NULL){
                                                 ?>
+                                                    <a data-toggle="modal" class="btn btnGo transactionCode" href="#refundType">Approve</a>
+                                        
                                                     <a data-toggle="modal" data-id="<?php echo $row['refund_id']; ?>" class="btn btnGo transactionCode" href="#transactionCode">Approve</a>
                                                 <?php
                                             }else{
@@ -448,6 +450,7 @@ if(isset($_POST['decline']))
                     ?>
                 </table>
             </div>
+            
             <div class="modal fade" id="transactionCode" tabindex="-1" role="dialog" aria-labelledby="transactionCodeTitle" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -468,6 +471,29 @@ if(isset($_POST['decline']))
                                 <input type="submit" class="btn btn-success btnSend" name="refundsave" value="Save" />
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="refundType" tabindex="-1" role="dialog" aria-labelledby="refundTypeTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="refundTypeTitle">Refund Type</h5>
+                    </div>
+                    <div class="modal-body left">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#" data-dismiss="modal">Credit</button>
+                            </div>
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#" data-dismiss="modal">Transaction</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>

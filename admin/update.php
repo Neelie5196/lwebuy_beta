@@ -55,7 +55,7 @@
         </div>
         
         <div class="col-xs-3 col-md-2 col-lg-2 col-md-push-2 col-lg-push-3">
-            <a href="shipment.php">
+            <a href="shipping.php">
                 <button type="button" class="btn adupdatebtn">View All Shipments</button>
             </a>
         </div>

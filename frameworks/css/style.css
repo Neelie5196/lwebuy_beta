@@ -663,6 +663,21 @@ body {
     color: #8bb836!important;
 }
 
+.updatecontainer {
+    color: #2f9142;
+}
+
+.updatecontainer .formselect {
+    outline: none!important;
+    width: 60%!important;
+    background: none;
+    height: 100%;
+    border: solid 1px #2f9142!important;
+    padding: 1% 1% 1% 1%;
+    color: #8bb836;
+    vertical-align: bottom;
+}
+
 .tblformfield {
     width: 80%;
     border: none;

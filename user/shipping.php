@@ -33,7 +33,7 @@ $result6 = mysqli_query($con, $query6);
 
 $query7 = "SELECT *
            FROM shipping
-           WHERE user_id='$user_id' AND status = 'delivered' AND review = 'NULL'";
+           WHERE user_id='$user_id' AND status = 'delivered' AND review IS NULL";
 $result7 = mysqli_query($con, $query7);
 
 if(isset($_POST['review']))

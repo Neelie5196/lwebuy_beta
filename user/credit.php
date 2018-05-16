@@ -19,6 +19,13 @@ $query2 = "SELECT *
           WHERE user_id='$user_id'";
 $result2 = mysqli_query($con, $query2);
 $results2 = mysqli_fetch_assoc($result2);
+
+$query11 = "SELECT *
+        FROM refund rf
+        JOIN users us
+        ON us.user_id = rf.user_id
+        WHERE rf.user_id = '$user_id'";
+$result11 = mysqli_query($con, $query11);
 ?>
 <?php
 if(isset($_POST["add"]))
@@ -332,6 +339,7 @@ if(isset($_POST['molPay']))
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
                     <tr class="center">
+                        <th class="purchasecol2">Payment ID</th>
                         <th class="purchasecol3">Event</th>
                         <th class="purchasecol2">Amount</th>
                         <th class="purchasecol2">Transaction Receipt</th>
@@ -346,6 +354,7 @@ if(isset($_POST['molPay']))
                     ?>
                     
                     <tr class="bodyrow">
+                        <td><?php echo $row1['payment_id']; ?></td>
                         <td><?php echo $row1['title']; ?></td>
                         <td><?php echo $row1['amount']; ?></td>
 						<td>
@@ -381,7 +390,80 @@ if(isset($_POST['molPay']))
                     ?>
                 </table>
             </div>
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                <table class="purchasetable">
+                    <tr class="center">
+                        <th>Payment ID</th>
+                        <th>Total Amount (RM)</th>
+                        <th>Refund Amount (RM)</th>
+                        <th>Admin Charge (RM)</th>
+                        <th>Reason</th>
+                        <th>Transaction Code</th>
+                    </tr>
+                     <?php 
+                        if(mysqli_num_rows($result11) > 0)
+                        {
+                            while($row = mysqli_fetch_array($result11))
+                            {
+                                ?>
+                                <tr>
+                                    <td><?php echo $row['payment_id']; ?></td>
+                                    <td>
+                                        <?php 
+                                            if($row['total_amount'] == NULL){
+                                                echo '<p>Waiting admin approve</p>';
+                                            }else{
+                                                echo $row['total_amount'];
+                                            }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php 
+                                            if($row['refund_amount'] == NULL){
+                                                echo '<p>Waiting admin approve</p>';
+                                            }else{
+                                                echo $row['refund_amount'];
+                                            }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php 
+                                            if($row['admin_charge'] == NULL){
+                                                echo '<p>Waiting admin approve</p>';
+                                            }else{
+                                                echo $row['admin_charge'];
+                                            }
+                                        ?>
+                                    </td>
+                                    <td><?php echo $row['refund_reason']; ?></td>
+                                    <td>
+                                        <?php 
+                                            if($row['transaction_code'] == NULL){
+                                                echo '<p>Waiting admin approve</p>';
+                                            }else{
+                                                echo $row['transaction_code'];
+                                            }
+                                        ?>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        }else{
+                            ?>
+                                <tr>
+                                    <td colspan="8">No refunds processed.</td>
+                                </tr>
+                            <?php
+                        }
+                    ?>
+                </table>
+            </div>
         </div>
+        
+        <div id="rhistory">
+            
+        </div>
+        
     </div>
 </div>
 <script src="../frameworks/js/lightbox-plus-jquery.min.js"></script>

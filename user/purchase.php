@@ -78,7 +78,7 @@ if(isset($_POST['edit']))
 
 $query6 = "SELECT *
            FROM order_item
-           WHERE user_id='$user_id' AND status = 'ready to pay'";
+           WHERE user_id='$user_id' AND status = 'ready to pay' AND payment_id is NULL";
 $result6 = mysqli_query($con, $query6);
 
 if(isset($_POST['edit1']))

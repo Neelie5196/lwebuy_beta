@@ -165,41 +165,23 @@ $result15 = mysqli_query($con, $query15);
 
 if(isset($_POST['declinepayment']))
 {   
-    $query7 = "SELECT *
-            FROM payment
-            WHERE payment_id='$payment_id'";
-    $result7 = mysqli_query($con, $query7);
-    $results7 = mysqli_fetch_assoc($result7);
-    
-    if($results7['status'] == 'Declined'){
-        $order_item_id = $_POST['order_item_id'];
-        $user_id = $_POST['user_id'];
-        $total_amount = $_POST['total_amount'];
-        $refund_amount = $_POST['refund_amount'];
-        $admin_charge = $_POST['admin_charge'];
-        $refund_reason = $_POST['refund_reason'];
-        $status = 'Ready to Pay';
+    $order_item_id = $_POST['order_item_id'];
+    $user_id = $_POST['user_id'];
+    $refund_reason = $_POST['refund_reason'];
+    $status = 'Ready to Pay';
 
-        $result7 = mysqli_query($con, "INSERT INTO refund SET user_id='$user_id', total_amount='$total_amount', refund_amount='$refund_amount', admin_charge='$admin_charge', refund_reason='$refund_reason'") or die(mysqli_error($con));
-        
-        for($i=0; $i<$_POST['numbers']; $i++){
-            $result16 = mysqli_query($con, "UPDATE order_item SET status='$status', payment_id = NULL WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
-            
-        }
-        ?>
-        <script>
-        alert('Success to Refund');
-        window.location.href='main.php#adpayment';
-        </script>
-        <?php
-    }else{
-        ?>
-        <script>
-        alert('Please decline the payment, before submit refund request');
-        window.location.href='paymentview.php?payment_id=<?php echo $payment_id; ?>';
-        </script>
-        <?php
+    $result7 = mysqli_query($con, "INSERT INTO refund SET user_id='$user_id', refund_reason='$refund_reason', payment_id = $payment_id") or die(mysqli_error($con));
+
+    for($i=0; $i<$_POST['numbers']; $i++){
+        $result16 = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
+
     }
+    ?>
+    <script>
+    alert('Success to Refund');
+    window.location.href='main.php#adpayment';
+    </script>
+    <?php
     
 }
 
@@ -287,9 +269,9 @@ if(isset($_POST['declinereason']))
                     <caption>
                     <?php
                         if($results6['title'] == 'Pay order by Points'){
-                            echo $results6['title']." - ".$results6['amount'];
+                            echo $results6['title']." - ".$results6['amount']." Points";
                         }else if($results6['title'] == 'Pay Order by MOLPay'){
-                            echo $results6['title']." - ".$results6['amount'];
+                            echo $results6['title']." - RM ".$results6['amount'];
                         }else{
                             ?>
                                 <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
@@ -306,9 +288,9 @@ if(isset($_POST['declinereason']))
                                 $results12 = mysqli_fetch_assoc($result12);
                                 
                                 if($results12['title'] == 'Top-Up payment by Points'){
-                                    echo "New payment: ".$results12['title']." - ".$results12['amount'];
+                                    echo "New payment: ".$results12['title']." - ".$results12['amount']." Points";
                                 }else if($results12['title'] == 'Top-Up payment by MOLPay'){
-                                    echo "New payment: ".$results12['title']." - ".$results12['amount'];
+                                    echo "New payment: ".$results12['title']." - RM".$results12['amount'];
                                 }else{
                                     ?>
                                         <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment1" href="#verifyPayment1">View New Payment Receipt</a>
@@ -553,10 +535,7 @@ if(isset($_POST['declinereason']))
                                 }
                             ?>
                             <p><input class="formfield" name="payment_id" type="hidden" value="<?php echo $payment_id ?>" /></p>
-                            <p><input class="formfield" name="total_amount" type="number" step="0.01" min="0" placeholder="Total Amount" required /></p>
-                            <p><input class="formfield" name="refund_amount" type="number" step="0.01" min="0" placeholder="Refund Amount" required /></p>
-                            <p><input class="formfield" name="admin_charge" type="number" step="0.01" min="0" placeholder="Admin Charge" required /></p>
-                            <p><input class="formfield" name="refund_reason" type="text" placeholder="Reason" required /></p>
+                            <p><input class="formfield" name="refund_reason" type="text" placeholder="Refund Reason" required /></p>
                         </div>
 
                         <div class="modal-footer">

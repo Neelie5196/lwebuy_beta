@@ -410,7 +410,17 @@ if(isset($_POST['declinereason']))
                             <p class="right">
                                 <a href="main.php#adpayment" class="btn btn-secondary btnCancel btnmargin">Cancel</a>
                                 <input type="submit" class="btn btn-success btnSend btnmargin" name="proceed" value="Proceed" />
-                                <a class="btn btnmargin btn-primary" href="#actionPayment" data-toggle="modal">Action</a>
+                                <?php
+                                    if($results7['title'] == 'Pay shipping by Points'){
+                                        
+                                    }else if($results7['title'] == 'Pay Shipping by MOLPay'){
+                                        
+                                    }else{
+                                        ?>
+                                            <a class="btn btnmargin btn-primary" href="#actionPayment" data-toggle="modal">Action</a>
+                                        <?php
+                                    }
+                                ?>
                             </p>
                         </div>
                     </div>

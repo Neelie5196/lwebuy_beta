@@ -402,9 +402,6 @@ if(isset($_POST['decline']))
                         <th>Customer</th>
                         <th>Contact</th>
                         <th>Email</th>
-                        <th>Total Amount (RM)</th>
-                        <th>Refund Amount (RM)</th>
-                        <th>Admin Charge (RM)</th>
                         <th>Reason</th>
                         <th>Action</th>
                     </tr>
@@ -418,24 +415,9 @@ if(isset($_POST['decline']))
                                     <td><?php echo $row['fname']." ".$row['lname']; ?></td>
                                     <td><?php echo $row['contact']; ?></td>
                                     <td><?php echo $row['email']; ?></td>
-                                    <td><?php echo $row['total_amount']; ?></td>
-                                    <td><?php echo $row['refund_amount']; ?></td>
-                                    <td><?php echo $row['admin_charge']; ?></td>
                                     <td><?php echo $row['refund_reason']; ?></td>
                                     <td>
-                                        <?php
-                                            if($row['total_amount'] != NULL){
-                                                ?>
-                                                    <a data-toggle="modal" class="btn btnGo transactionCode" href="#refundType">Approve</a>
-                                        
-                                                    <a data-toggle="modal" data-id="<?php echo $row['refund_id']; ?>" class="btn btnGo transactionCode" href="#transactionCode">Approve</a>
-                                                <?php
-                                            }else{
-                                                ?>
-                                                    <a href="paymentviewss.php?payment_id=<?php echo $row['payment_id']; ?>" class="btn btnGo">View Details</a>
-                                                <?php
-                                            }
-                                        ?>
+                                        <a href="paymentviewss.php?payment_id=<?php echo $row['payment_id']; ?>" class="btn btnGo">View Details</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -443,7 +425,7 @@ if(isset($_POST['decline']))
                         }else{
                             ?>
                                 <tr>
-                                    <td colspan="8">No outstanding payments to refund.</td>
+                                    <td colspan="5">No outstanding payments to refund.</td>
                                 </tr>
                             <?php
                         }
@@ -451,52 +433,6 @@ if(isset($_POST['decline']))
                 </table>
             </div>
             
-            <div class="modal fade" id="transactionCode" tabindex="-1" role="dialog" aria-labelledby="transactionCodeTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="transactionCodeTitle">Transaction Code</h5>
-                        </div>
-
-                        <form method="post" action="payment.php">
-                            <div class="modal-body left">
-                                <input type="hidden" name="refund_id" id="refundId" value="">
-                                <p>
-                                    <input class="formfield" name="transaction_code" type="text" placeholder="Transaction Code" required />
-                                </p>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                                <input type="submit" class="btn btn-success btnSend" name="refundsave" value="Save" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="modal fade" id="refundType" tabindex="-1" role="dialog" aria-labelledby="refundTypeTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="refundTypeTitle">Refund Type</h5>
-                    </div>
-                    <div class="modal-body left">
-                        <div class="row">
-                            <div class="col-xs-12 col-md-6 col-lg-6">
-                                <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#" data-dismiss="modal">Credit</button>
-                            </div>
-                            <div class="col-xs-12 col-md-6 col-lg-6">
-                                <button type="button" class="btn btn-default btnAdd" data-toggle="modal" data-target="#" data-dismiss="modal">Transaction</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
         </div>
         
         <div id="phistory">

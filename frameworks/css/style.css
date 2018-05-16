@@ -673,9 +673,9 @@ body {
     background: none;
     height: 100%;
     border: solid 1px #2f9142!important;
-    padding: 1% 1% 1% 1%;
+    padding: 1%;
     color: #8bb836;
-    vertical-align: bottom;
+    margin-top: 3.5%;
 }
 
 .tblformfield {

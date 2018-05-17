@@ -175,7 +175,7 @@ if(isset($_POST['topupsubmit']))
                     </tr>
                     <tr>
                         <td colspan="2" class="right">Total Amount (MYR)</td>
-                        <td><?php echo $_POST['price']; ?></td>
+                        <td><?php echo number_format((float)$_POST['price'], 2, '.', ''); ?></td>
                     </tr>
                     <tr>
                         <td colspan="2" class="right">Total Paid (MYR)</td>

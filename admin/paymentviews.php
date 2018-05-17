@@ -161,49 +161,6 @@ $query15 = "SELECT *
            WHERE payment_id='$payment_id'";
 $result15 = mysqli_query($con, $query15);
 
-if(isset($_POST['declinepayment']))
-{   
-    $query16 = "SELECT *
-            FROM payment
-            WHERE payment_id='$payment_id'";
-    $result16 = mysqli_query($con, $query16);
-    $results16 = mysqli_fetch_assoc($result16);
-    
-    if($results16['status'] == 'Declined'){
-        $item_id = $_POST['item_id'];
-        $user_id = $results16['user_id'];
-        $shipping_id = $_POST['shipping_id'];
-        $total_amount = $_POST['total_amount'];
-        $refund_amount = $_POST['refund_amount'];
-        $admin_charge = $_POST['admin_charge'];
-        $refund_reason = $_POST['refund_reason'];
-        $status = 'Ready to Pay';
-
-        $result17 = mysqli_query($con, "INSERT INTO refund SET user_id='$user_id', total_amount='$total_amount', refund_amount='$refund_amount', admin_charge='$admin_charge', refund_reason='$refund_reason'") or die(mysqli_error($con));
-        
-        $result18 = mysqli_query($con, "DELETE FROM shipping WHERE shipping_id=$shipping_id") or die(mysqli_error($con));
-        
-        for($i=0; $i<$_POST['numbers']; $i++){
-            $result19 = mysqli_query($con, "UPDATE item SET payment_id = NULL WHERE item_id = $item_id[$i]") or die(mysqli_error($con));
-            
-        }
-        ?>
-        <script>
-        alert('Success to Refund');
-        window.location.href='main.php#adpayment';
-        </script>
-        <?php
-    }else{
-        ?>
-        <script>
-        alert('Please decline the payment, before submit refund request');
-        window.location.href='paymentviews.php?payment_id=<?php echo $payment_id; ?>';
-        </script>
-        <?php
-    }
-    
-}
-
 $query20 = "SELECT *
            FROM item
            WHERE payment_id='$payment_id'";
@@ -444,7 +401,6 @@ if(isset($_POST['declinereason']))
                                 <?php
                             }
                         ?>
-                        <a class="btn btnmargin btn-info" href="#declinePPayment" data-toggle="modal" data-dismiss="modal">Refund</a>
                         <a class="btn btnmargin btn-danger" href="#declinePReason" data-toggle="modal" data-dismiss="modal">Decline</a>
                     </div>
 
@@ -521,48 +477,6 @@ if(isset($_POST['declinereason']))
                             <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
 
                             <input type="submit" class="btn btn-success btnSend" name="topup" value="Submit request" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
-        <div class="modal fade" id="declinePPayment" tabindex="-1" role="dialog" aria-labelledby="declinePPaymentTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title center" id="declinePPaymentTitle">Decline Payment</h5>
-                    </div>
-
-                    <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
-                        <div class="modal-body left">
-                            <?php 
-                                if(mysqli_num_rows($result15) > 0)
-                                {
-                                    $counter = 0;
-                                    while($row = mysqli_fetch_array($result15))
-                                    {
-                                        $counter++;
-                                        ?>
-                                            <input type="hidden" name="item_id[]" value="<?php echo $row['item_id']; ?>">
-                                            <input type="hidden" name="shipping_id" value="<?php echo $results2['shipping_id']; ?>">
-                                            <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
-                                        <?php
-                                    }
-
-                                }
-                            ?>
-                            <p><input class="formfield" name="payment_id" type="hidden" value="<?php echo $payment_id ?>" /></p>
-                            <p><input class="formfield" name="total_amount" type="number" step="0.01" min="0" placeholder="Total Amount" required /></p>
-                            <p><input class="formfield" name="refund_amount" type="number" step="0.01" min="0" placeholder="Refund Amount" required /></p>
-                            <p><input class="formfield" name="admin_charge" type="number" step="0.01" min="0" placeholder="Admin Charge" required /></p>
-                            <p><input class="formfield" name="refund_reason" type="text" placeholder="Reason" required /></p>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-
-                            <input type="submit" class="btn btn-info" name="declinepayment" value="Refund payment" />
                         </div>
                     </form>
                 </div>

@@ -52,7 +52,8 @@ if(isset($_POST['update']))
             $update0 = mysqli_query($con, "UPDATE shipping SET status = 'In Transit' WHERE tracking_code = $t_code[$i]") or die(mysqli_error($con));
             
             $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$t_code[$i]', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='DST', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
-			$update2 = mysqli_query($con, "INSERT INTO log SET action='designated $t_code', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
+			
+            $update2 = mysqli_query($con, "INSERT INTO log SET action='designated $t_code[$i]', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
 		}
 ?>
      

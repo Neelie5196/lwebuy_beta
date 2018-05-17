@@ -74,7 +74,7 @@ if(isset($_POST['update']))
                 
                 $update1 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Purchase Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
                 
-				$update2 = mysqli_query($con, "INSERT INTO log SET action='received $o_codes', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
+				$update2 = mysqli_query($con, "INSERT INTO log SET action='received $o_code[$i]', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
                 $display = "updated";
             }
             else
@@ -97,7 +97,7 @@ if(isset($_POST['update']))
                     
                     $update2 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Purchase Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
                     
-					$update3 = mysqli_query($con, "INSERT INTO log SET action='received $o_codes', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
+					$update3 = mysqli_query($con, "INSERT INTO log SET action='received $o_code[$i]', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
                     $display = "updated";
                 }
                 else

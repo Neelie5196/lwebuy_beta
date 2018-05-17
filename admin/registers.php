@@ -51,7 +51,7 @@ if(isset($_POST['register']))
             
             $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$t_code[$i]', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='RDL', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
             
-			$updatereg = mysqli_query($con, "INSERT INTO log SET action='registered $t_code', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
+			$updatereg = mysqli_query($con, "INSERT INTO log SET action='registered $t_code[$i]', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
             
             $query3 = "SELECT *
             FROM warehouse wh
@@ -93,6 +93,7 @@ if(isset($_POST['register']))
                     if (mysqli_num_rows($result5) == 0)
                     {
                         $update4 = mysqli_query($con, "UPDATE slot SET user_id = NULL, status = 'Not In Use' WHERE slot_id = '$slot_id'") or die(mysqli_error($con));
+                        
 						$updateclear = mysqli_query($con, "INSERT INTO log SET action='cleared $slot_id', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
 					}
                 }

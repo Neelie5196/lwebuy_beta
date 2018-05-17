@@ -110,8 +110,8 @@ if(isset($_POST['topup']))
 }
 
 $query11 = "SELECT *
-           FROM shipping
-           WHERE payment_id='$payment_id' AND top_up_id IS NOT NULL";
+           FROM top_up
+           WHERE payment_id='$payment_id'";
 $result11 = mysqli_query($con, $query11);
 
 if(isset($_POST['approves']))

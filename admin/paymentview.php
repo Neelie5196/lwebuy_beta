@@ -126,8 +126,8 @@ $query10 = "SELECT *
 $result10 = mysqli_query($con, $query10);
 
 $query11 = "SELECT *
-           FROM order_item
-           WHERE payment_id='$payment_id' AND top_up_id IS NOT NULL";
+           FROM top_up
+           WHERE payment_id='$payment_id'";
 $result11 = mysqli_query($con, $query11);
 
 if(isset($_POST['approves']))
@@ -279,7 +279,7 @@ if(isset($_POST['declinereason']))
                         }
                     
                         if(mysqli_num_rows($result11) > 0)
-                        {
+                        {                            
                             while($row = mysqli_fetch_array($result11))
                             {
                                 $top_up_id = $row['top_up_id'];

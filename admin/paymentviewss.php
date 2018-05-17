@@ -20,8 +20,8 @@ $result6 = mysqli_query($con, $query6);
 $results6 = mysqli_fetch_assoc($result6);
 
 $query11 = "SELECT *
-           FROM order_item
-           WHERE payment_id='$payment_id' AND top_up_id IS NOT NULL";
+           FROM top_up
+           WHERE payment_id='$payment_id'";
 $result11 = mysqli_query($con, $query11);
 
 $query15 = "SELECT *
@@ -52,6 +52,17 @@ if(isset($_POST['refundpayment']))
         $result16 = mysqli_query($con, "UPDATE order_item SET payment_id = NULL, top_up_id = NULL WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
 
     }
+    
+    if(mysqli_num_rows($result11) > 0)
+    {
+        while($row = mysqli_fetch_array($result11))
+        {
+            $top_up_id = $row['top_up_id'];
+            $result15 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE top_up_id = $top_up_id ") or die(mysqli_error($con));
+        }
+    }else{
+        
+    }
     ?>
     <script>
     alert('Success to Refund');
@@ -80,6 +91,17 @@ if(isset($_POST['refundpayment1']))
     for($i=0; $i<$_POST['numbers']; $i++){
         $result20 = mysqli_query($con, "UPDATE order_item SET payment_id = NULL, top_up_id = NULL WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
 
+    }
+
+    if(mysqli_num_rows($result11) > 0)
+    {
+        while($row = mysqli_fetch_array($result11))
+        {
+            $top_up_id = $row['top_up_id'];
+            $result121 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE top_up_id = $top_up_id ") or die(mysqli_error($con));
+        }
+    }else{
+        
     }
     ?>
     <script>
@@ -268,7 +290,7 @@ if(isset($_POST['refundpayment1']))
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title center" id="declinePaymentTitle">Decline Payment</h5>
+                        <h5 class="modal-title center" id="declinePaymentTitle">Payment Receipt</h5>
                     </div>
 
                     <div class="modal-body left">
@@ -366,21 +388,17 @@ if(isset($_POST['refundpayment1']))
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title center" id="verifyPaymentTitle1">Verify Payment1</h5>
+                        <h5 class="modal-title center" id="verifyPaymentTitle1">Top-up Payment Receipt</h5>
                     </div>
 
-                    <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">
-                        <div class="modal-body left">
-                            <img src="../receipts/<?php echo $results12['file']; ?>" style="width: 500px; height: 450px;">
-                            <input type="hidden" name="payments_id" value="<?php echo $results12['payment_id']; ?>">
-                        </div>
+                    <div class="modal-body left">
+                        <img src="../receipts/<?php echo $results12['file']; ?>" style="width: 500px; height: 450px;">
+                        <input type="hidden" name="payments_id" value="<?php echo $results12['payment_id']; ?>">
+                    </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
-                            <input type="submit" class="btn btn-danger" name="declinereceipts" value="Decline" />
-                            <input type="submit" class="btn btn-success btnSend" name="approves" value="Approve" />
-                        </div>
-                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btnCancel" data-dismiss="modal">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>

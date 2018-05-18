@@ -1,5 +1,4 @@
 <?php
-
 require_once '../connection/config.php';
 session_start();
 
@@ -29,6 +28,10 @@ $query2 = "SELECT *
           WHERE country_name = 'Malaysia'";
 $result2 = mysqli_query($con, $query2);
 $results2 = mysqli_fetch_assoc($result2);
+
+$query3 = "SELECT * FROM point WHERE user_id='$user_id'";
+$result3 = mysqli_query($con, $query3);
+$results3 = mysqli_fetch_assoc($result3);
 
 $query4 = "SELECT *
           FROM rate
@@ -72,6 +75,35 @@ if(isset($_POST['topupsubmit']))
 	}
 }
 
+$query7 = "SELECT *
+           FROM item
+           WHERE item_id IN (".implode(',',$item).")";
+$result7 = mysqli_query($con, $query7);
+
+if(isset($_POST['paybycredit']))
+{    
+    $unique_id = substr(time(),5). $user_id;
+    $payment_id = $unique_id;
+    $status = 'Request';
+    $point = $_POST['point'];
+    $title = 'Top-Up payment by';
+    $points = 'Points';
+    $statuss = 'Completed';
+    $top_up_id = $_POST['top_up_id'];
+    
+    $result7 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id', user_id='$user_id', title='$title $payments_id', amount='$point $points', status='$statuss', top_up_id='$top_up_id'") or die(mysqli_error($con));
+        
+    $result8 = mysqli_query($con, "UPDATE shipping SET top_up_id='$top_up_id', status='$status' WHERE payment_id='$payments_id' ") or die(mysqli_error($con));
+    
+    $result9 = mysqli_query($con, "UPDATE point SET point= point - '$point' WHERE user_id = '$user_id' ") or die(mysqli_error($con));
+    ?>
+    <script>
+    window.location.href='main.php#ship';
+    </script>
+    <?php
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -96,9 +128,12 @@ if(isset($_POST['topupsubmit']))
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]-->
+
+        <script src="../frameworks/js/lwe.js"></script>
     </head>
 
-    <body class="userbg">
+
+    <body class="userbg" ng-app="">
         <div class="row">
             <div class="col-xs-12 col-md-12 col-lg-12 center">
                 <h2 class="bigh2 pagetitle hidden-xs hidden-sm">Payment</h2>
@@ -106,39 +141,132 @@ if(isset($_POST['topupsubmit']))
                 <h2 class="smh2 pagetitle hidden-md hidden-lg">Payment</h2>
             </div>
         </div>
-                
         
         <div class="row">
             <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-2 col-lg-push-2 paymentcontainer">
+                                
+                <div class="row center btnpaymentcontainer">
+                    <div class="col-xs-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btnpayment" onclick="funcCredit()" title="Pay by credits"><span class="glyphicon glyphicon-piggy-bank"></span></button>
+                    </div>
+                    
+                    <div class="col-xs-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btnpayment" onclick="funcCard()" title="Pay by card"><span class="glyphicon glyphicon-credit-card"></span></button>
+                    </div>
+                    
+                    <div class="col-xs-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btnpayment" onclick="funcTrans()" title="Pay by transaction"><span class="glyphicon glyphicon-open-file"></span></button>
+                    </div>                    
+                </div>
+                
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 payformcontainer">
-                        <form method="post" action="paymentsss.php" enctype="multipart/form-data">
-                            <h3>Banking Details</h3>
-                            <p>Bank: <?php echo $results2['bank']; ?></p>
-                            <p>Account No: <?php echo $results2['account_no']; ?></p>
-                            <p>Account Name: <?php echo $results2['account_name']; ?></p>
-                                
-                            <?php
-                                while($row = mysqli_fetch_array($result))
-                                {
-                            ?>
-                                <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item_id[]">
-                            <?php
-                                }
+                        <div id="pcredit">
+                            <form method="post" action="paymentsss.php">
+                                <?php
+                                    if(mysqli_num_rows($result7) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result7))
+                                        {
+                                    ?>
+                                    <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item_id[]">
+                                    <?php
+                                            $point = $_POST['top_up_amount']*$results4['rate'];
+                                        }
+                                    }
+                                    if($results3['point'] < $point){
+                                        ?>
+                                        <!-- show if not enough credit -->
+                                        <p class="center warning">Insufficient credit.</p>
+                                        <p class="center"><a class="btn btn-default btnGo" href="main.php#credit">Top up now</a></p>
+                                        <?php
+                                    }else{
+                                        ?>
+                                        <!-- show if enough credit -->
+                                        <h4>Your credit: <?php echo $results3['point']; ?></h4>
+                                        <h4>Amount to pay (credits): <?php echo number_format((float)$point, 2, '.', ''); ?></h4>
+                                        <input type="hidden" value="<?php echo $point; ?>" name="point">
+                                        <input type="hidden" name="top_up_id" value="<?php echo $top_up_id; ?>">
+                                        <input type="hidden" name="payments_id" value="<?php echo $payments_id; ?>">
+                                        <p class="center"><input type="submit" class="btn btn-success" name="paybycredit" value="Pay"></p>
+                                        <?php
+                                    }
+                                ?> 
+                            </form>
+                        </div>
+                        
+                        <div id="pcard">
+                            <h3>MOLPay</h3>
+                            <form action="paymentsss.php" method= "POST">
+                                <?php
+                                    $unique_id = substr(time(),5). $user_id;
+                                    $payment_id = $unique_id;
+                                    $total_pay = $_POST['pricetotal'];
+                                    $amount = number_format((float)$total_pay, 2, '.', '');
+                                    $merchantID = 'SB_parcelgateway';
+                                    $orderid = $payment_id;
+                                    $verifykey = '93c210aa2652f010892f41c659c677a4';
+                                    $vcode = md5( $amount.$merchantID.$orderid.$verifykey );
+                                ?>
+                                <input type="hidden" name= "amount" value="<?php echo $amount; ?>" >
+                                <input type="hidden" name= "orderid" value="<?php echo $payment_id; ?>">
+                                <input type="hidden" name= "bill_name" value="<?php echo $results14['fname']." ".$results14['lname']; ?>">
+                                <input type="hidden" name= "bill_email" value="<?php echo $results14['email']; ?>">
+                                <input type="hidden" name= "bill_mobile" value="<?php echo $results14['contact']; ?>">
+                                <input type="hidden" name= "bill_desc" value="Shipping Payment">
+                                <input type="hidden" name= "country" value="MYR">
+                                <input type="hidden" name= "vcode" value="<?php echo $vcode; ?>">
+                                <?php
+                                    if(mysqli_num_rows($result12) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result12))
+                                        {
+                                    ?>
+                                        <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item_id[]">
+                                    <?php
+                                        }
+                                    }
+                                ?>
+                                <input type="hidden" name= "payment_id" value="<?php echo $payment_id; ?>">
+                                <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
+                                <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
+                                <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
+                                <input type="hidden" value="<?php echo $_POST['address']; ?>" name="address">
+                                <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
+                                <p class="center"><input type="submit" class="btn btn-success" name="molPay" value="PAY NOW"></p>
+                            </form>
+                        </div>
+                        
+                        <div id="ptrans">
+                            <form method="post" action="paymentsss.php" enctype="multipart/form-data">
+                                <h3>Banking Details</h3>
+                                <p>Bank: <?php echo $results2['bank']; ?></p>
+                                <p>Account No: <?php echo $results2['account_no']; ?></p>
+                                <p>Account Name: <?php echo $results2['account_name']; ?></p>
 
-                            ?>                            
-                            
-                            <p class="center paytrans">
-                                <label>Upload Transaction Receipt</label><br/>
-                                <input type="file" name="file" id="file" accept="image/*" required/>
-                                <input name="top_up_amount" type="hidden" value="<?php echo number_format((float)$top_up_amount, 2, '.', ''); ?>">
-                                <input type="hidden" name="top_up_id" value="<?php echo $top_up_id; ?>">
-                                <input type="hidden" name="top_up_amount" value="<?php echo $_POST['top_up_amount']; ?>">
-                                <input type="hidden" name="payments_id" value="<?php echo $payments_id; ?>">
-                            </p>
-                            
-                            <p class="center paytrans"><input type="submit" class="btn btn-success" name="topupsubmit" value="Submit"></p>
-                        </form>
+                                <?php
+                                    while($row = mysqli_fetch_array($result))
+                                    {
+                                ?>
+                                    <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item_id[]">
+                                <?php
+                                    }
+
+                                ?>                            
+
+                                <p class="center paytrans">
+                                    <label>Upload Transaction Receipt</label><br/>
+                                    <input type="file" name="file" id="file" accept="image/*" required/>
+                                    <input name="top_up_amount" type="hidden" value="<?php echo number_format((float)$top_up_amount, 2, '.', ''); ?>">
+                                    <input type="hidden" name="top_up_id" value="<?php echo $top_up_id; ?>">
+                                    <input type="hidden" name="top_up_amount" value="<?php echo $_POST['top_up_amount']; ?>">
+                                    <input type="hidden" name="payments_id" value="<?php echo $payments_id; ?>">
+                                </p>
+
+                                <p class="center paytrans"><input type="submit" class="btn btn-success" name="topupsubmit" value="Submit"></p>
+                            </form>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -159,7 +287,7 @@ if(isset($_POST['topupsubmit']))
                     ?>
                     
                     <tr>
-                        <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item[]">
+                        <input type="hidden" value="<?php echo $row['item_id']; ?>" name="item_id[]">
                         <td><?php echo $row['item_description']; ?></td>
                         <td><?php echo $row['order_code']; ?></td>
                         <td><?php echo $row['weight']; ?></td>
@@ -190,3 +318,4 @@ if(isset($_POST['topupsubmit']))
         </div>
     </body>
 </html>
+

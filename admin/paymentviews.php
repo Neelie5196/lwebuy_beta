@@ -266,13 +266,17 @@ if(isset($_POST['declinereason']))
                                     $query12 = "SELECT * FROM payment WHERE top_up_id='$top_up_id'";
                                     $result12 = mysqli_query($con, $query12);
                                     $results12 = mysqli_fetch_assoc($result12);
-                                    ?>
                                     
-                                    <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment1" href="#verifyPayment1">View New Payment Receipt</a>
+                                    if($results12['title'] == 'Top-Up payment by Points'){
+                                        echo "New payment: ".$results12['title']." - ".$results12['amount']." Points";
+                                    }else if($results12['title'] == 'Top-Up payment by MOLPay'){
+                                        echo "New payment: ".$results12['title']." - RM".$results12['amount'];
+                                    }else{
+                                        ?>
+                                        <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment1" href="#verifyPayment1">View New Payment Receipt</a>
                                     <?php
+                                    }
                                 }
-                            }else{
-
                             }
                         ?>
                     </caption>
@@ -444,7 +448,7 @@ if(isset($_POST['declinereason']))
                     <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
                         <div class="modal-body left">
                             <img src="../receipts/<?php echo $results12['file']; ?>" style="width: 500px; height: 450px;">
-                            <input type="hidden" name="payments_id" value="<?php echo $results12['payment_id']; ?>">
+                            <input type="text" name="payments_id" value="<?php echo $results12['payment_id']; ?>">
                         </div>
 
                         <div class="modal-footer">

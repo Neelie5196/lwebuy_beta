@@ -91,7 +91,7 @@ if(isset($_POST['paybycredit']))
     $statuss = 'Completed';
     $top_up_id = $_POST['top_up_id'];
     
-    $result7 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id', user_id='$user_id', title='$title $payments_id', amount='$point $points', status='$statuss', top_up_id='$top_up_id'") or die(mysqli_error($con));
+    $result7 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id', user_id='$user_id', title='$title $points', amount='$point $points', status='$statuss', top_up_id='$top_up_id'") or die(mysqli_error($con));
         
     $result8 = mysqli_query($con, "UPDATE shipping SET top_up_id='$top_up_id', status='$status' WHERE payment_id='$payments_id' ") or die(mysqli_error($con));
     

@@ -163,6 +163,7 @@ if(isset($_POST['refundpayment1']))
                         }else{
                             ?>
                                 <a data-toggle="modal" class="btn btn-default btnReceipt declinePayment" href="#declinePayment">View Receipt</a>
+                                <br/>
                             <?php
                         }
                         

@@ -150,16 +150,21 @@ $user_id = $_SESSION['user_id'];
                 $statuss = 'Completed';
                 
                 $query3 = "SELECT *
-                           FROM order_item
+                           FROM top_up
                            WHERE payment_id='$orderid'";
                 $result3 = mysqli_query($con, $query3);
                 $results3 = mysqli_fetch_assoc($result3);
                 
                 $top_up_id = $results3['top_up_id'];
+                
+                $unique_id = substr(time(),5). $user_id;
+                $payment_id = $unique_id;
 
                 $result = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE payment_id='$orderid'") or die(mysqli_error($con));
 
-                $result1 = mysqli_query($con, "INSERT INTO payment SET payment_id='$orderid', user_id='$user_id', title='$title $molpay', amount='$amount', status='$statuss', top_up_id='$top_up_id'") or die(mysqli_error($con));
+                $result1 = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id', user_id='$user_id', title='$title $molpay', amount='$amount', status='$statuss', top_up_id='$top_up_id'") or die(mysqli_error($con));
+                
+                $result2 = mysqli_query($con, "UPDATE payment SET top_up_id=NULL WHERE payment_id='$orderid'") or die(mysqli_error($con));
                 
                 ?>
                 <script>
@@ -170,6 +175,50 @@ $user_id = $_SESSION['user_id'];
             else
             {
                 $result = mysqli_query($con, "UPDATE order_item SET payment_id=NULL WHERE payment_id='$orderid'") or die(mysqli_error($con));
+                $result1 = mysqli_query($con, "UPDATE payment SET top_up_id=NULL WHERE payment_id='$orderid'") or die(mysqli_error($con));
+                ?>
+                <script>
+                alert('Error While Payment, Please try again');
+                window.location.href='main.php#purchase';
+                </script>
+                <?php
+            }
+        }else if(mysqli_num_rows($result1) > 0){
+            if ( $status == "00" ) 
+            {
+                $status = 'Paid';
+                $title = 'Top-Up payment by';
+                $molpay = 'MOLPay';
+                $statuss = 'Completed';
+                
+                $query4 = "SELECT *
+                           FROM top_up
+                           WHERE payment_id='$orderid'";
+                $result4 = mysqli_query($con, $query4);
+                $results4 = mysqli_fetch_assoc($result4);
+                
+                $top_up_id = $results4['top_up_id'];
+                
+                $unique_id = substr(time(),5). $user_id;
+                $payment_id = $unique_id;
+
+                $result = mysqli_query($con, "INSERT INTO payment SET payment_id='$payment_id', user_id='$user_id', title='$title $molpay', amount='$amount', status='$statuss', top_up_id='$top_up_id'") or die(mysqli_error($con));
+                
+                $result1 = mysqli_query($con, "UPDATE shipping SET top_up_id='$top_up_id' WHERE payment_id='$orderid' ") or die(mysqli_error($con));
+                
+                $result2 = mysqli_query($con, "UPDATE payment SET top_up_id=NULL WHERE payment_id='$orderid'") or die(mysqli_error($con));
+                ?>
+                <script>
+                window.location.href='main.php#ship';
+                </script>
+                <?php
+            }
+            else
+            {
+                $statusss = 'Top-up';
+                
+                $result = mysqli_query($con, "UPDATE shipping SET status='$statusss' WHERE payment_id='$orderid' ") or die(mysqli_error($con));
+                $result1 = mysqli_query($con, "UPDATE payment SET top_up_id=NULL WHERE payment_id='$orderid'") or die(mysqli_error($con));
                 ?>
                 <script>
                 alert('Error While Payment, Please try again');

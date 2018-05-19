@@ -275,9 +275,10 @@ if(isset($_POST['declinereason']))
                         }else{
                             ?>
                                 <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
+                                <br/>
                             <?php
                         }
-                    
+                        
                         if(mysqli_num_rows($result11) > 0)
                         {                            
                             while($row = mysqli_fetch_array($result11))
@@ -450,7 +451,7 @@ if(isset($_POST['declinereason']))
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title center" id="verifyPaymentTitle1">Verify Payment1</h5>
+                        <h5 class="modal-title center" id="verifyPaymentTitle1">New Verify Payment</h5>
                     </div>
 
                     <form method="post" action="paymentview.php?payment_id=<?php echo $payment_id; ?>">

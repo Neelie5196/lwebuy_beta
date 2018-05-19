@@ -80,6 +80,11 @@ $query7 = "SELECT *
            WHERE item_id IN (".implode(',',$item).")";
 $result7 = mysqli_query($con, $query7);
 
+$query12 = "SELECT *
+           FROM item
+           WHERE item_id IN (".implode(',',$item).")";
+$result12 = mysqli_query($con, $query12);
+
 if(isset($_POST['paybycredit']))
 {    
     $unique_id = substr(time(),5). $user_id;
@@ -99,6 +104,35 @@ if(isset($_POST['paybycredit']))
     ?>
     <script>
     window.location.href='main.php#ship';
+    </script>
+    <?php
+}
+
+$query14 = "SELECT * FROM users WHERE user_id='$user_id'";
+$result14 = mysqli_query($con, $query14);
+$results14 = mysqli_fetch_assoc($result14);
+
+if(isset($_POST['molPay']))
+{    
+    $payment_id = $_POST['payment_id'];
+    $amount = $_POST['amount'];
+    $orderid = $_POST['orderid'];
+    $bill_name = $_POST['bill_name'];
+    $bill_email = $_POST['bill_email'];
+    $bill_mobile = $_POST['bill_mobile'];
+    $bill_desc = $_POST['bill_desc'];
+    $country = $_POST['country'];
+    $vcode = $_POST['vcode'];
+    $top_up_id = $_POST['top_up_id'];
+    $status = 'Request';
+    
+    $result10 = mysqli_query($con, "UPDATE shipping SET status='$status' WHERE payment_id='$payments_id' ") or die(mysqli_error($con));
+    
+    $result11 = mysqli_query($con, "UPDATE payment SET top_up_id='$top_up_id' WHERE payment_id='$payments_id' ") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    window.location.href='https://sandbox.molpay.com/MOLPay/pay/SB_parcelgateway/index.php?amount=<?php echo $amount; ?>&orderid=<?php echo $orderid; ?>&bill_name=<?php echo $bill_name; ?>&bill_email=<?php echo $bill_email; ?>&bill_mobile=<?php echo $bill_mobile; ?>&bill_desc=<?php echo $bill_desc; ?>&country=<?php echo $country; ?>&vcode=<?php echo $vcode; ?>';
     </script>
     <?php
 }
@@ -199,10 +233,8 @@ if(isset($_POST['paybycredit']))
                             <h3>MOLPay</h3>
                             <form action="paymentsss.php" method= "POST">
                                 <?php
-                                    $unique_id = substr(time(),5). $user_id;
-                                    $payment_id = $unique_id;
-                                    $total_pay = $_POST['pricetotal'];
-                                    $amount = number_format((float)$total_pay, 2, '.', '');
+                                    $payment_id = $payments_id;
+                                    $amount = number_format((float)$_POST['top_up_amount'], 2, '.', '');
                                     $merchantID = 'SB_parcelgateway';
                                     $orderid = $payment_id;
                                     $verifykey = '93c210aa2652f010892f41c659c677a4';
@@ -227,12 +259,9 @@ if(isset($_POST['paybycredit']))
                                         }
                                     }
                                 ?>
+                                <input type="hidden" name="top_up_id" value="<?php echo $top_up_id; ?>">
                                 <input type="hidden" name= "payment_id" value="<?php echo $payment_id; ?>">
-                                <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
-                                <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
-                                <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
-                                <input type="hidden" value="<?php echo $_POST['address']; ?>" name="address">
-                                <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
+                                <input type="hidden" name="payments_id" value="<?php echo $payments_id; ?>">
                                 <p class="center"><input type="submit" class="btn btn-success" name="molPay" value="PAY NOW"></p>
                             </form>
                         </div>

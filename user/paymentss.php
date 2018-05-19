@@ -130,6 +130,8 @@ if(isset($_POST['molPay']))
     
     $result16 = mysqli_query($con, "UPDATE order_item SET top_up_id='$top_up_id' WHERE order_item_id IN (".implode(',',$order_item).")") or die(mysqli_error($con));
     
+    $result17 = mysqli_query($con, "UPDATE payment SET top_up_id='$top_up_id' WHERE payment_id = '$payments_id'") or die(mysqli_error($con));
+    
     ?>
     <script>
     window.location.href='https://sandbox.molpay.com/MOLPay/pay/SB_parcelgateway/index.php?amount=<?php echo $amount; ?>&orderid=<?php echo $orderid; ?>&bill_name=<?php echo $bill_name; ?>&bill_email=<?php echo $bill_email; ?>&bill_mobile=<?php echo $bill_mobile; ?>&bill_desc=<?php echo $bill_desc; ?>&country=<?php echo $country; ?>&vcode=<?php echo $vcode; ?>';
@@ -234,8 +236,7 @@ if(isset($_POST['molPay']))
                             <h3>MOLPay</h3>
                             <form action="paymentss.php" method= "POST">
                                 <?php
-                                    $unique_id = substr(time(),5). $user_id;
-                                    $payment_id = $unique_id;
+                                    $payment_id = $payments_id;
                                     $amount = number_format((float)$top_up_amount, 2, '.', '');
                                     $merchantID = 'SB_parcelgateway';
                                     $orderid = $payment_id;

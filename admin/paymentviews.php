@@ -255,6 +255,7 @@ if(isset($_POST['declinereason']))
                             }else{
                                 ?>
                                     <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
+                                    <br/>
                                 <?php
                             }
                         
@@ -442,13 +443,13 @@ if(isset($_POST['declinereason']))
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title center" id="verifyPaymentTitle1">Verify Payment1</h5>
+                        <h5 class="modal-title center" id="verifyPaymentTitle1">New Verify Payment</h5>
                     </div>
 
                     <form method="post" action="paymentviews.php?payment_id=<?php echo $payment_id; ?>">
                         <div class="modal-body left">
                             <img src="../receipts/<?php echo $results12['file']; ?>" style="width: 500px; height: 450px;">
-                            <input type="text" name="payments_id" value="<?php echo $results12['payment_id']; ?>">
+                            <input type="hidden" name="payments_id" value="<?php echo $results12['payment_id']; ?>">
                         </div>
 
                         <div class="modal-footer">

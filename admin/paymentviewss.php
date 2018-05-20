@@ -163,10 +163,11 @@ if(isset($_POST['refundpayment1']))
                         }else{
                             ?>
                                 <a data-toggle="modal" class="btn btn-default btnReceipt declinePayment" href="#declinePayment">View Receipt</a>
-                                <br/>
                             <?php
                         }
-                        
+                        ?>
+                        <br />
+                        <?php
                         if(mysqli_num_rows($result11) > 0)
                         {
                             while($row = mysqli_fetch_array($result11))

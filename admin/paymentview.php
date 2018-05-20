@@ -275,10 +275,11 @@ if(isset($_POST['declinereason']))
                         }else{
                             ?>
                                 <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment" href="#verifyPayment">View Receipt</a>
-                                <br/>
                             <?php
                         }
-                        
+                        ?>
+                        <br />
+                        <?php
                         if(mysqli_num_rows($result11) > 0)
                         {                            
                             while($row = mysqli_fetch_array($result11))

@@ -181,10 +181,12 @@ if(isset($_POST['refundpayment1']))
                                     echo "New payment: ".$results12['title']." - ".$results12['amount']." Points";
                                 }else if($results12['title'] == 'Top-Up payment by MOLPay'){
                                     echo "New payment: ".$results12['title']." - RM".$results12['amount'];
-                                }else{
+                                }else if($results12['title'] != NULL){
                                     ?>
                                         <a data-toggle="modal" class="btn btn-default btnReceipt verifyPayment1" href="#verifyPayment1">View New Payment Receipt</a>
                                     <?php
+                                }else{
+                                    
                                 }
                             }
 

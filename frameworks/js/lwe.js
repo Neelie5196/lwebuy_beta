@@ -773,17 +773,31 @@ function funcPRHistory() {
 function funcORate() {
     document.getElementById("orate").style.display = "block";
     document.getElementById("omessage").style.display = "none";
+    document.getElementById("olog").style.display = "none";
     
     document.getElementById("btnorate").style.fontWeight = "bold";
     document.getElementById("btnomessage").style.fontWeight = "normal";
+    document.getElementById("btnolog").style.fontWeight = "normal";
 }
 
 function funcOMessage() {
     document.getElementById("orate").style.display = "none";
     document.getElementById("omessage").style.display = "block";
+    document.getElementById("olog").style.display = "none";
     
     document.getElementById("btnorate").style.fontWeight = "normal";
     document.getElementById("btnomessage").style.fontWeight = "bold";
+    document.getElementById("btnolog").style.fontWeight = "normal";
+}
+
+function funcOLog() {
+    document.getElementById("orate").style.display = "none";
+    document.getElementById("omessage").style.display = "none";
+    document.getElementById("olog").style.display = "block";
+    
+    document.getElementById("btnorate").style.fontWeight = "normal";
+    document.getElementById("btnomessage").style.fontWeight = "normal";
+    document.getElementById("btnolog").style.fontWeight = "bold";
 }
 
 function checkPass() {

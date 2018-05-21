@@ -55,7 +55,7 @@ if(isset($_POST['update']))
             
             $update2 = mysqli_query($con, "UPDATE shipping_update_summary SET DeliveryDate=NOW(), SignedName = '$signed[$i]', EventCode = 'DL', EventDescription = 'Delivered', ReasonCode = 'DL', ReasonDescription = 'Delivered' WHERE HawbNo = $t_code[$i]") or die(mysqli_error($con));
        
-	        $update3 = mysqli_query($con, "INSERT INTO log SET action='delivered $t_code[$i]', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
+	        $update3 = mysqli_query($con, "INSERT INTO log SET action='delivered $t_code[$i]', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
 	   }
 ?>
      

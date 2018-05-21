@@ -24,13 +24,27 @@ $query3 = "SELECT *
           FROM contact";
 $result3 = mysqli_query($con, $query3);
 
+if(isset($_POST['read']))
+{
+    $messageid = $_POST['messageid'];
+    $read = "read";
+    
+    $update01 = mysqli_query($con, "UPDATE contact SET status='$read' WHERE m_id = '$messageid'") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    window.location.href='main.php#adother';
+    </script>
+    <?php
+}
+
 if(isset($_POST['update-point']))
 {    
 	$user_id = $_SESSION['user_id'];
     $pointratio = $_POST['pointratio'];
     $rate_id = $_POST['rate_id'];
 	
-	$update = mysqli_query($con, "UPDATE rate SET rate='$pointratio' WHERE rate_id = $rate_id ") or die(mysqli_error($con));
+	$update = mysqli_query($con, "UPDATE rate SET rate='$pointratio' WHERE rate_id = '$rate_id' ") or die(mysqli_error($con));
 	$resultpoint = mysqli_query($con, "INSERT INTO log SET action='updated point rate to $pointratio', created_at=now(), user_id='$user_id', sort_by='others'") or die(mysqli_error($con));
     ?>
     <script>
@@ -46,7 +60,7 @@ if(isset($_POST['update-weight']))
     $weightratio = $_POST['weightratio'];
     $rate_ids = $_POST['rate_ids'];
 	
-	$update = mysqli_query($con, "UPDATE rate SET rate='$weightratio' WHERE rate_id = $rate_ids ") or die(mysqli_error($con));
+	$update = mysqli_query($con, "UPDATE rate SET rate='$weightratio' WHERE rate_id = '$rate_ids' ") or die(mysqli_error($con));
 	$resultweight = mysqli_query($con, "INSERT INTO log SET action='updated weight price to $weightratio', created_at=now(), user_id='$user_id', sort_by='others'") or die(mysqli_error($con));
     ?>
     <script>
@@ -176,38 +190,46 @@ if(isset($_POST['update-bankdetails']))
             </div>
         </div>
     </form>
-</div>
 
-<div id="omessage">
-    <table class="purchasetable">
-        <tr>
-            <th>Subject</th>
-            <th>Name</th>
-            <th>Contact</th>
-            <th>Email</th>
-            <th>Tracking Code</th>
-            <th>Message</th>
-        </tr>
-        
-        <?php
-            if (mysqli_num_rows($result3) > 0)
-            {
-                while ($row3 = mysqli_fetch_array($result3))
+    <div id="omessage">
+        <table class="purchasetable">
+            <tr>
+                <th>Subject</th>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Email</th>
+                <th>Tracking Code</th>
+                <th>Message</th>
+                <th></th>
+            </tr>
+
+            <?php
+                if (mysqli_num_rows($result3) > 0)
                 {
-                ?>
-        
-        <tr class="bodyrow">
-            <td><?php echo $row3['subject']; ?></td>
-            <td><?php echo $row3['name']; ?></td>
-            <td><?php echo $row3['contact']; ?></td>
-            <td><?php echo $row3['email']; ?></td>
-            <td><?php echo $row3['trackcode']; ?></td>
-            <td><?php echo $row3['message']; ?></td>
-        </tr>
-        
-        <?php
+                    while ($row3 = mysqli_fetch_array($result3))
+                    {
+                    ?>
+
+            <tr class="bodyrow">
+                <td><?php echo $row3['subject']; ?></td>
+                <td><?php echo $row3['name']; ?></td>
+                <td><?php echo $row3['contact']; ?></td>
+                <td><?php echo $row3['email']; ?></td>
+                <td><?php echo $row3['trackcode']; ?></td>
+                <td class="left"><?php echo $row3['message']; ?></td>
+                <td>
+                    <form action="other.php" method="post">
+                        <input type="hidden" name="messageid" value="<?php echo $row3['m_id']; ?>" />
+                        <input class="btn btn-sm btnGo" type="submit" name="read" value="Mark as read">
+                        <a class="btn btn-sm btnGo" type="button" target="_blank" href="message.php?m_id=<?php echo $row3['m_id']; ?>">Reply</a>
+                    </form>
+                </td>
+            </tr>
+
+            <?php
+                    }
                 }
-            }
-        ?>
-    </table>
+            ?>
+        </table>
+    </div>
 </div>

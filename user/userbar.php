@@ -35,6 +35,7 @@ $count2 = mysqli_num_rows($result2);
         <li><a href="#inventory" id="btninventory" onclick="resettimeoutimer()">Inventory<?php if ($count1 > 0) { ?><span class="notify"><?php echo $count1 ?></span><?php } ?></a></li>
         <li><a href="#ship" id="btnship" onclick="resettimeoutimer()">Ship<?php if ($count2 > 0) { ?><span class="notify"><?php echo $count2 ?></span><?php } ?></a></li>
         <li><a href="#track" id="btntrack" onclick="resettimeoutimer()">Track</a></li>
+        <li><a href="#other" id="btnother" onclick="resettimeoutimer()">Others</a></li>
     </ul>
 
     <ul class="nav navbar-nav navbar-right useritem right">
@@ -63,6 +64,7 @@ $count2 = mysqli_num_rows($result2);
             <li><a href="#inventory" id="btninventorys" onclick="resettimeoutimer();hidemenu()">Inventory</a></li>
             <li><a href="#ship" id="btnships" onclick="resettimeoutimer();hidemenu()">Ship<?php if ($count1 > 0) { ?><span class="notifys"><?php echo $count1 ?></span><?php } ?></a></li>
             <li><a href="#track" id="btntracks" onclick="resettimeoutimer();hidemenu()">Track</a></li>
+            <li><a href="#other" id="btnothers" onclick="resettimeoutimer()">Others</a></li>
         
             <li><a id="btncredits" href="#credit" onclick="resettimeoutimer();hidemenu()">Credits</a></li>
             <li><a id="btnusers" href="#user" onclick="resettimeoutimer();hidemenu()">My Account</a></li>

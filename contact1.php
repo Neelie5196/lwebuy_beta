@@ -18,7 +18,7 @@ if(isset($_POST['submit']))
         $trackcode = $_POST['trackcode'];
     }
     
-    $update = mysqli_query($con, "INSERT INTO contact SET name='$name', contact='$contact', email='$email', subject='$subject', trackcode='$trackcode', message='$message'");
+    $update = mysqli_query($con, "INSERT INTO contact SET name='$name', contact='$contact', email='$email', subject='$subject', trackcode='$trackcode', message='$message', status='read'");
     
     ?>
 

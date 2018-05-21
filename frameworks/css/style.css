@@ -134,7 +134,17 @@ body {
 }
 
 .btnDecline:hover {
-    background: #ff8000!important;
+    background: #2f9142!important;
+}
+
+.btnDel, .btnDel:visited, .btnDel:active, btnDel:focus {
+    background: #f26522!important;
+    color: #fff!important;
+    outline: none!important;
+}
+
+.btnDel:hover {
+    background: #f26522!important;
 }
 
 .btnAdd:hover {
@@ -934,7 +944,7 @@ body {
     margin: 5% auto 0 auto;
     background: #f4f9eb;
     border: solid 2px #2f9142;
-    padding: 1%;
+    padding: 0 1%;
     color: #2f9142;
 }
 
@@ -1195,4 +1205,13 @@ body {
     outline: none!important;
     background: rgba(139, 184, 54, 0.3);
     padding: 2%;
+}
+
+.recipientdettbl {
+    width: 100%;
+    margin: 0 1%;
+}
+
+.recipientdettbl td {
+    height: 40px;
 }

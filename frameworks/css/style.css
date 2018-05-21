@@ -428,6 +428,10 @@ body {
     color: #2f9142;
 }
 
+.shipformcontainer .formfield::placeholder {
+    color: #2f9142;
+}
+
 .shipformcontainer .formoptions {
     background: rgba(139, 184, 54, 0.3)!important;
     outline: none!important;

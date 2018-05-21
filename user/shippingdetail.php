@@ -27,6 +27,14 @@ $query4 = "SELECT *
 $result4 = mysqli_query($con, $query4);
 $results4 = mysqli_fetch_assoc($result4);
 
+$query01 = "SELECT * FROM recipient_names WHERE user_id = '$user_id'";
+$result01 = mysqli_query($con, $query01);
+
+$query02 = "SELECT * FROM recipient_contact WHERE user_id = '$user_id'";
+$result02 = mysqli_query($con, $query02);
+
+$query03 = "SELECT * FROM state";
+$result03 = mysqli_query($con, $query03);
 ?>
 
 <!DOCTYPE html>
@@ -75,18 +83,60 @@ $results4 = mysqli_fetch_assoc($result4);
                 <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-2 col-lg-push-2 shipformcontainer">
                     <p>
                         <label>Recipient Name: </label><br/>
-                        <input class="formfield" name="name" type="text" required />
+                        <select class="formselect" class="formselects" name="recipientname" id="recipientname" onchange="checkrecipname()" required>
+                            <option  class="formoptions" id="recipientname" selected>New</option>
+                            
+                            <?php
+                            
+                            if(mysqli_num_rows($result01) > 0)
+                                {
+                                    while($row01 = mysqli_fetch_array($result01))
+                                    {
+                                        ?>
+                            
+                            <option class="formoptions" value="<?php echo $row01['recipient_name'];?>"><?php echo $row01['recipient_name'];?></option>
+                            
+                            <?php
+                                    }
+                            }
+                            
+                            ?>
+                        </select>
                     </p>
+                    
+                    <p><input class="formfield" type="text" name="newrecipientname" id="newrecipientname" required /></p>
+                    <p><input type="checkbox" name="savenewrecipname" id="saverecipname" value="save" /> <label for="saverecipname" id="namechecklbl">Remember this name</label></p>
 
                     <p>
                         <label>Recipient Contact: </label><br/>
-                        <input class="formfield" name="contact" type="text" required />
+                        <select class="formselects" name="recipientcontact" id="recipientcontact" onchange="checkrecipcontact()" required>
+                            <option class="formoptions" id="recipientcontact" selected>New</option>
+                            
+                            <?php
+                            
+                            if(mysqli_num_rows($result02) > 0)
+                                {
+                                    while($row02 = mysqli_fetch_array($result02))
+                                    {
+                                        ?>
+                            
+                            <option class="formoptions" value="<?php echo $row02['recipient_contact'];?>"><?php echo $row02['recipient_contact'];?></option>
+                            
+                            <?php
+                                    }
+                            }
+                            
+                            ?>
+                        </select>
                     </p>
+                    
+                    <p><input class="formfield" name="newcontact" id="newcontact" type="text" required /></p>
+                    <p><input type="checkbox" name="savecontact" id="savecontact" value="save" /> <label for="savecontact" id="contactchecklbl">Remember this contact</label></p>
 
                     <p>
                         <label>Address:</label><br/>
-                        <select class="formselects" name="address" >
-                            <option class="formoptions" selected required>Address</option>
+                        <select class="formselects" name="address" onchange="checkaddress()" id="selectedaddress" required>
+                            <option class="formoptions" selected>New</option>
                             <?php 
                                 if(mysqli_num_rows($result) > 0)
                                 {
@@ -101,8 +151,34 @@ $results4 = mysqli_fetch_assoc($result4);
                                 }
                             ?>
                         </select>
-                        <a class="btn btnGo" href="javascript: void(0)" onclick="window.open('addAddress.php','windowname1','fullscreen=yes'); return false;">Add address</a>
                     </p>
+                    
+                    <p><input class="formfield" name="newaddress" id="newaddress" type="text" placeholder="Address" required /></p>
+
+                    <p><input class="formfield" name="postcode" id="postcode" type="text" placeholder="Postcode" required /></p>
+
+                    <p><input class="formfield" name="city" id="city" type="text" placeholder="City" required /></p>
+                
+                    <p>
+                        <select required name="state" id="state" class="formfield">
+                            <option class="formoption">Select a state</option>
+                            <?php 
+                                if(mysqli_num_rows($result03) > 0)
+                                {
+                                    while($row03 = mysqli_fetch_array($result03))
+                                    {
+                                        ?>
+                                            <option class="formselect" value="<?php echo $row03['state_name']; ?>">
+                                                <?php echo $row03['state_name']; ?>
+                                            </option>
+                                        <?php
+                                    }
+                                }
+                            ?>
+                        </select>
+                    </p>
+
+                    <p><input class="formfield" name="country" id="country" type="text" value="Malaysia" readonly /></p>
 
                     <p>
                         <label>Remarks: </label><br/>
@@ -182,4 +258,129 @@ $results4 = mysqli_fetch_assoc($result4);
             </form>
         </div>
     </body>
+    
+    <script>
+        function checkrecipname()
+        {
+            var selectedrecipname = document.getElementById("recipientname").value;
+            var newnameinput = document.getElementById("newrecipientname");
+            var savenamecheck = document.getElementById("saverecipname");
+            var namechklbl = document.getElementById("namechecklbl");
+            
+            if(selectedrecipname == "New")
+                {
+                    newnameinput.style.display = "block";
+                    newnameinput.disabled = false;
+                    newnameinput.required = true;
+                    newnameinput.style.borderBottom = "solid 0.5px #2f9142";
+                    
+                    savenamecheck.disabled = false;
+                    savenamecheck.style.display = "block";
+                    namechklbl.style.display = "block";
+                }
+            else
+                {
+                    newnameinput.style.display = "none";
+                    newnameinput.disabled = true;
+                    newnameinput.required = false;
+                    newnameinput.style.border = "none";
+                    
+                    savenamecheck.disabled = true;
+                    savenamecheck.style.display = "none";
+                    namechklbl.style.display = "none";
+                }
+        }
+
+        function checkrecipcontact()
+        {
+            var selectedcontact = document.getElementById("recipientcontact").value;
+            var newcontactinput = document.getElementById("newcontact");
+            var savecontactcheck = document.getElementById("savecontact");
+            var contactchklbl = document.getElementById("contactchecklbl");
+            
+            if(selectedcontact == "New")
+                {
+                    newcontactinput.style.display = "block";
+                    newcontactinput.disabled = false;
+                    newcontactinput.required = true;
+                    newcontactinput.style.borderBottom = "solid 0.5px #2f9142";
+                    
+                    savecontactcheck.disabled = false;
+                    savecontactcheck.style.display = "block";
+                    contactchklbl.style.display = "block";
+                }
+            else
+                {
+                    newcontactinput.style.display = "none";
+                    newcontactinput.disabled = true;
+                    newcontactinput.required = false;
+                    newcontactinput.style.border = "none";
+                    
+                    savecontactcheck.disabled = true;
+                    savecontactcheck.style.display = "none";
+                    contactchklbl.style.display = "none";
+                }
+        }
+        
+        function checkaddress()
+        {
+            var selectedadd = document.getElementById("selectedaddress").value;
+            var newadd = document.getElementById("newaddress");
+            var postcode = document.getElementById("postcode");
+            var city = document.getElementById("city");
+            var state = document.getElementById("state");
+            var country = document.getElementById("country");
+            
+            if(selectedadd == "New")
+                {
+                    newadd.style.display = "block";
+                    newadd.disabled = false;
+                    newadd.required = true;
+                    newadd.style.borderBottom = "solid 0.5px #2f9142";
+                    
+                    postcode.style.display = "block";
+                    postcode.disabled = false;
+                    postcode.required = true;
+                    postcode.style.borderBottom = "solid 0.5px #2f9142";
+                    
+                    city.style.display = "block";
+                    city.disabled = false;
+                    city.required = true;
+                    city.style.borderBottom = "solid 0.5px #2f9142";
+                    
+                    state.style.display = "block";
+                    state.disabled = false;
+                    state.required = true;
+                    
+                    country.style.display = "block";
+                    country.disabled = false;
+                    country.style.borderBottom = "solid 0.5px #2f9142";
+                }
+            else
+                {
+                    newadd.style.display = "none";
+                    newadd.disabled = true;
+                    newadd.required = false;
+                    newadd.style.border = "none";
+                    
+                    postcode.style.display = "none";
+                    postcode.disabled = true;
+                    postcode.required = false;
+                    postcode.style.border = "none";
+                    
+                    city.style.display = "none";
+                    city.disabled = true;
+                    city.required = false;
+                    city.style.border = "none";
+                    
+                    state.style.display = "none";
+                    state.disabled = true;
+                    state.required = false;
+                    
+                    country.style.display = "none";
+                    country.disabled = true;
+                    country.style.border = "none";
+                }
+        }
+    </script>
 </html>

@@ -10,7 +10,64 @@ if ($_SESSION['user_id'] == "")
 
 $user_id = $_SESSION['user_id'];
 $item = $_POST['item'];
-$address = $_POST['address'];
+
+if(isset($_POST['pay']))
+{
+    if($_POST['recipientname'] == "New")
+    {
+        $rname = addslashes($_POST['newrecipientname']);
+
+        if($_POST['savenewrecipname'] == "save")
+        {
+            $update01 = mysqli_query($con, "INSERT INTO recipient_names SET user_id = '$user_id', recipient_name = '$rname'") or die(mysqli_error($con));
+        }
+    }
+    else
+    {
+        $rname = addslashes($_POST['recipientname']);
+    }
+
+    if($_POST['recipientcontact'] == "New")
+    {
+        $rcontact = addslashes($_POST['newcontact']);
+
+        if($_POST['savecontact'] == "save")
+        {
+            $update02 = mysqli_query($con, "INSERT INTO recipient_contact SET user_id = '$user_id', recipient_contact = '$rcontact'") or die(mysqli_error($con));
+        }
+    }
+    else
+    {
+        $rcontact = addslashes($_POST['recipientcontact']);
+    }
+
+    if($_POST['address'] == "New")
+    {
+        $newaddress = $_POST['newaddress'];
+        $state = $_POST['state'];
+        $city = $_POST['city'];
+        $country = $_POST['country'];
+        $postcode = $_POST['postcode'];
+
+        $update03 = mysqli_query($con, "INSERT INTO address SET user_id = '$user_id', address='$newaddress', state='$state', city='$city', country='$country', postcode='$postcode'") or die(mysqli_error($con));
+
+        $query11 = "SELECT *
+                    FROM address
+                    WHERE address = '$newaddress' AND state='$state' AND city='$city' AND country='$country' AND postcode='$postcode'";
+        $result11 = mysqli_query($con, $query11);
+        $results11 = mysqli_fetch_assoc($result11);
+    }
+    else
+    {
+        $address = $_POST['address'];
+        
+        $query11 = "SELECT *
+                    FROM address
+                    WHERE address_id = '$address'";
+        $result11 = mysqli_query($con, $query11);
+        $results11 = mysqli_fetch_assoc($result11);
+    }
+}
 
 $query = "SELECT *
            FROM item
@@ -42,12 +99,6 @@ $query8 = "SELECT *
           WHERE country_name = 'Malaysia'";
 $result8 = mysqli_query($con, $query8);
 $results8 = mysqli_fetch_assoc($result8);
-
-$query11 = "SELECT *
-          FROM address
-          WHERE address_id = '$address'";
-$result11 = mysqli_query($con, $query11);
-$results11 = mysqli_fetch_assoc($result11);
 
 if(isset($_POST['paybycredit']))
 {    
@@ -239,10 +290,10 @@ $results14 = mysqli_fetch_assoc($result14);
                                         <h4>Your credit: <?php echo $results3['point']; ?></h4>
                                         <h4>Amount to pay (credits): <?php echo $point; ?></h4>
                                         <input type="hidden" value="<?php echo $point; ?>" name="point">
-                                        <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
-                                        <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
+                                        <input type="hidden" value="<?php echo $rname; ?>" name="name">
+                                        <input type="hidden" value="<?php echo $rcontact; ?>" name="contact">
                                         <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
-                                        <input type="hidden" value="<?php echo $_POST['address']; ?>" name="address">
+                                        <input type="hidden" value="<?php echo $results11['address_id']; ?>" name="address">
                                         <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
                                         <p class="center"><input type="submit" class="btn btn-success" name="paybycredit" value="Pay"></p>
                                         <?php
@@ -284,10 +335,10 @@ $results14 = mysqli_fetch_assoc($result14);
                                     }
                                 ?>
                                 <input type="hidden" name= "payment_id" value="<?php echo $payment_id; ?>">
-                                <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
-                                <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
+                                <input type="hidden" value="<?php echo $rname; ?>" name="name">
+                                <input type="hidden" value="<?php echo $rcontact; ?>" name="contact">
                                 <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
-                                <input type="hidden" value="<?php echo $_POST['address']; ?>" name="address">
+                                <input type="hidden" value="<?php echo $results11['address_id'] ?>" name="address">
                                 <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
                                 <p class="center"><input type="submit" class="btn btn-success" name="molPay" value="PAY NOW"></p>
                             </form>
@@ -315,10 +366,10 @@ $results14 = mysqli_fetch_assoc($result14);
                                 ?>
                                     <label>Upload Transaction Receipt</label><br/>
                                     <input type="file" name="file" id="file" accept="image/*" required />
-                                    <input type="hidden" value="<?php echo $_POST['name']; ?>" name="name">
-                                    <input type="hidden" value="<?php echo $_POST['contact']; ?>" name="contact">
+                                    <input type="hidden" value="<?php echo $rname; ?>" name="name">
+                                    <input type="hidden" value="<?php echo $rcontact; ?>" name="contact">
                                     <input type="hidden" value="<?php echo $_POST['remark']; ?>" name="remark">
-                                    <input type="hidden" value="<?php echo $_POST['address']; ?>" name="address">
+                                    <input type="hidden" value="<?php echo $results11['address_id'] ?>" name="address">
                                     <input type="hidden" value="<?php echo $_POST['totalweight']; ?>" name="totalweight">
                                     <input type="hidden" value="<?php echo $_POST['pricetotal']; ?>" name="pricetotal">
                                 </p>
@@ -333,9 +384,9 @@ $results14 = mysqli_fetch_assoc($result14);
             <div class="col-xs-5 col-md-4 col-lg-4 col-xs-push-1 col-md-push-4 col-lg-push-2 pdetailscontainer">
                 <h3>Payment Details</h3>
                 
-                <p>Recipient name: <?php echo $_POST['name']; ?></p>
+                <p>Recipient name: <?php echo $rname; ?></p>
                 
-                <p>Recipient contact: <?php echo $_POST['contact']; ?></p>
+                <p>Recipient contact: <?php echo $rcontact; ?></p>
                 
                 <p>Recipient remark: <?php echo $_POST['remark']; ?></p>
                 

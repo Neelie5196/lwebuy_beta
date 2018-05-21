@@ -491,17 +491,31 @@ function funcSReceive() {
 function funcCRequest() {
     document.getElementById("crequest").style.display = "block";
     document.getElementById("chistory").style.display = "none";
+    document.getElementById("crefund").style.display = "none";
     
     document.getElementById("btncrequest").style.fontWeight = "bold";
     document.getElementById("btnchistory").style.fontWeight = "normal";
+    document.getElementById("btncrefund").style.fontWeight = "normal";
 }
 
 function funcCHistory() {
     document.getElementById("crequest").style.display = "none";
     document.getElementById("chistory").style.display = "block";
+    document.getElementById("crefund").style.display = "none";
 
     document.getElementById("btncrequest").style.fontWeight = "normal";
     document.getElementById("btnchistory").style.fontWeight = "bold";
+    document.getElementById("btncrefund").style.fontWeight = "normal";
+}
+
+function funcCRefund() {
+    document.getElementById("crequest").style.display = "none";
+    document.getElementById("chistory").style.display = "none";
+    document.getElementById("crefund").style.display = "block";
+
+    document.getElementById("btncrequest").style.fontWeight = "normal";
+    document.getElementById("btnchistory").style.fontWeight = "normal";
+    document.getElementById("btncrefund").style.fontWeight = "bold";
 }
 
 function funcShowChgPassword() {

@@ -836,7 +836,7 @@ body {
     display: block;
 }
 
-#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #sinsuff, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory, #wslot, #wwarehouse, #acustomer, #astaff, #pship, #phistory, #pcredit, #poutstand, #pinsuff, #omessage, #iwarehouse, #prhistory, #prefund, #rapprove, #olog, #wstore {
+#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #sinsuff, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory, #wslot, #wwarehouse, #acustomer, #astaff, #pship, #phistory, #pcredit, #poutstand, #pinsuff, #omessage, #iwarehouse, #prhistory, #prefund, #rapprove, #olog, #wstore, #crefund {
     display: none;
 }
 

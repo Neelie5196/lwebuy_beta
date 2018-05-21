@@ -148,7 +148,8 @@ if(isset($_POST['molPay']))
             <table class="tblCTab">
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" id="btncrequest" onclick="funcCRequest()">Requests</button></td>
-                    <td><button class="btn-link btntab" id="btnchistory" onclick="funcCHistory()">Transaction History</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnchistory" onclick="funcCHistory()">Successful Reload History</button></td>
+                    <td><button class="btn-link btntab" id="btncrefund" onclick="funcCRefund()">Refund History</button></td>
                 </tr>
             </table>
         </div>
@@ -394,6 +395,9 @@ if(isset($_POST['molPay']))
                     ?>
                 </table>
             </div>
+        </div>
+        
+        <div id="crefund">
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <table class="purchasetable">
                     <tr class="center">

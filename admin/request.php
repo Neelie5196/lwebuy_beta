@@ -29,7 +29,7 @@ if(isset($_POST['approve']))
 			
 			$email = $_POST['email'];
 			$to=$email;
-			$subject="Your item approved" ;
+			$subject="Your request had benn approved" ;
 			$from = 'lwebuy.com';
 			$body='Proceed to payment';
 			$headers = "From:".$from;
@@ -51,7 +51,16 @@ if(isset($_POST['decline']))
     
     $result3 = mysqli_query($con, "UPDATE order_item SET comment='$comment', status = '$status' WHERE order_item_id = $order_item_id") or die(mysqli_error($con));
 	$resultdecline = mysqli_query($con, "INSERT INTO log SET action='declined request #$order_item_id ', created_at=now(), user_id='$user_id', sort_by='approve_price'") or die(mysqli_error($con));
-    ?>
+
+	$email = $_POST['email'];
+			$to=$email;
+			$subject="Your request had been decline" ;
+			$from = 'lwebuy.com';
+			$body='Please resubmit the request';
+			$headers = "From:".$from;
+			mail($to,$subject,$body,$headers);
+		
+   ?>
     <script>
     alert('Success to Decline');
     window.location.href='main.php#adrequest';

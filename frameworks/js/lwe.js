@@ -55,6 +55,10 @@ $(document).ready(function () {
             {
                 $("#mainview").load('other.php');
             }
+        else if (window.location.hash == "#other")
+            {
+                $("#mainview").load('other.php');
+            }
         else
             {
                 $("#mainview").load('dashboard.php');
@@ -269,8 +273,21 @@ $(document).ready(function(){
         $("#mainview").load('tracking.php');
     });
 });
+
 $(document).ready(function(){
     $("#btnadothers").click(function(){
+        $("#mainview").load('other.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnothers").click(function(){
+        $("#mainview").load('other.php');
+    });
+});
+
+$(document).ready(function(){
+    $("#btnother").click(function(){
         $("#mainview").load('other.php');
     });
 });

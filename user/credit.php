@@ -145,7 +145,7 @@ if(isset($_POST['molPay']))
     
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-12">
-            <table class="tblCTab">
+            <table class="tblATab">
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" id="btncrequest" onclick="funcCRequest()">Requests</button></td>
                     <td class="wborder"><button class="btn-link btntab" id="btnchistory" onclick="funcCHistory()">Successful Reload History</button></td>
@@ -161,11 +161,11 @@ if(isset($_POST['molPay']))
                 <?php
                     if($results19['user_id']>0){
                         ?>
-                        <p class="requestp">Current point : <?php echo $results19['point']." points"; ?></p>
+                        <p class="requestp">Current credit : <?php echo $results19['point']." points"; ?></p>
                         <?php
                     }else{
                         ?>
-                        <p class="requestp">Current point : 0 points</p>
+                        <p class="requestp">Current credit : 0 points</p>
                         <?php
                     }
                 ?>

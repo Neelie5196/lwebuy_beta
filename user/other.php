@@ -10,8 +10,55 @@ $result = mysqli_query($con, $query);
 $query1 = "SELECT * FROM recipient_contact WHERE user_id = '$user_id'";
 $result1 = mysqli_query($con, $query1);
 
-$query2 = "SELECT * FROM address WHERE user_id = '$user_id'";
+$query2 = "SELECT * FROM address WHERE user_id = '$user_id' AND astatus = 'show'";
 $result2 = mysqli_query($con, $query2);
+
+$confirm = "";
+
+if(isset($_POST['deletename']))
+{
+    $itemtodelete = $_POST['recipname'];
+    
+    $update = mysqli_query($con, "DELETE FROM recipient_names WHERE name_id = '$itemtodelete'") or die(mysqli_error($con));
+    
+    ?>
+
+<script>
+    window.location.href='main.php#other';
+</script>
+
+<?php
+}
+
+if(isset($_POST['deletecontact']))
+{
+    $itemtodelete = $_POST['recipcontact'];
+    
+    $update = mysqli_query($con, "DELETE FROM recipient_contact WHERE contact_id = '$itemtodelete'") or die(mysqli_error($con));
+    
+    ?>
+
+<script>
+    window.location.href='main.php#other';
+</script>
+
+<?php
+}
+
+if(isset($_POST['deleteadd']))
+{
+    $itemtodelete = $_POST['addid'];
+    
+    $update = mysqli_query($con, "UPDATE address SET astatus = 'hide' WHERE address_id = '$itemtodelete'") or die(mysqli_error($con));
+    
+    ?>
+
+<script>
+    window.location.href='main.php#other';
+</script>
+
+<?php
+}
 ?>
 
 <div class="col-xs-12 col-md-12 col-lg-12">
@@ -26,7 +73,7 @@ $result2 = mysqli_query($con, $query2);
                 <h3 class="smh3 hidden-md hidden-lg">Recipient Names</h3>
                 
                 <table class="recipientdettbl">
-                    <form action="other.php" method="post">
+                    
                     <?php
                         if(mysqli_num_rows($result) > 0)
                         {
@@ -37,8 +84,10 @@ $result2 = mysqli_query($con, $query2);
                         <tr>
                             <td class="left"><?php echo $row['recipient_name']; ?></td>
                             <td class="right">
-                                <input type="hidden" value="<?php echo $row['recipient_name']; ?>" name="recipname" />
-                                <input type="submit" class="btn btn-xs btnDel" value="Delete" name="deletename" />
+                                <form action="other.php" method="post">
+                                    <input type="hidden" value="<?php echo $row['name_id']; ?>" name="recipname" />
+                                    <input type="submit" class="btn btn-xs btnDel" value="Delete" name="deletename" onclick="return confirmDelete()" />
+                                </form>
                             </td>
                         </tr>
                     
@@ -56,7 +105,7 @@ $result2 = mysqli_query($con, $query2);
                     <?php
                         }
                     ?>
-                    </form>
+                    
                 </table>
             </div>
         </div>
@@ -67,7 +116,7 @@ $result2 = mysqli_query($con, $query2);
                 <h3 class="smh3 hidden-md hidden-lg">Recipient Contacts</h3>
 
                 <table class="recipientdettbl">
-                    <form action="other.php" method="post">
+                    
                     <?php
                         if(mysqli_num_rows($result1) > 0)
                         {
@@ -78,8 +127,10 @@ $result2 = mysqli_query($con, $query2);
                         <tr>
                             <td class="left"><?php echo $row1['recipient_contact']; ?></td>
                             <td class="right">
-                                <input type="hidden" value="<?php echo $row1['recipient_contact']; ?>" name="recipcontact" />
-                                <input type="submit" class="btn btn-xs btnDel" value="Delete" name="deletecontact" />
+                                <form action="other.php" method="post">
+                                    <input type="hidden" value="<?php echo $row1['contact_id']; ?>" name="recipcontact" />
+                                    <input type="submit" class="btn btn-xs btnDel" value="Delete" name="deletecontact" onclick="return confirmDelete()" />
+                                </form>
                             </td>
                         </tr>
                     
@@ -97,7 +148,6 @@ $result2 = mysqli_query($con, $query2);
                     <?php
                         }
                     ?>
-                    </form>
                 </table>
             </div>
         </div>
@@ -108,7 +158,6 @@ $result2 = mysqli_query($con, $query2);
                 <h3 class="smh3 hidden-md hidden-lg">Address</h3>
 
                 <table class="recipientdettbl">
-                    <form action="other.php" method="post">
                     <?php
                         if(mysqli_num_rows($result2) > 0)
                         {
@@ -119,8 +168,10 @@ $result2 = mysqli_query($con, $query2);
                         <tr>
                             <td class="left"><?php echo $row2['address'] . " " . $row2['postcode'] . " " . $row2['city'] . ", " . $row2['state'] . ", " . $row2['country']; ?></td>
                             <td class="right">
-                                <input type="hidden" value="<?php echo $row2['address_id']; ?>" name="addid" />
-                                <input type="submit" class="btn btn-xs btnDel" value="Delete" name="delete" />
+                                <form action="other.php" method="post">
+                                    <input type="hidden" value="<?php echo $row2['address_id']; ?>" name="addid" />
+                                    <input type="submit" class="btn btn-xs btnDel" value="Delete" name="deleteadd" onclick="return confirmDelete()" />
+                                </form>
                             </td>
                         </tr>
                     
@@ -138,9 +189,15 @@ $result2 = mysqli_query($con, $query2);
                     <?php
                         }
                     ?>
-                    </form>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function confirmDelete()
+    {
+        return confirm("Are you sure you want to delete this?");
+    }
+</script>

@@ -1208,8 +1208,8 @@ body {
 }
 
 .recipientdettbl {
-    width: 100%;
-    margin: 0 1%;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .recipientdettbl td {

@@ -219,9 +219,8 @@ if(isset($_POST['update-bankdetails']))
                 <td class="left"><?php echo $row3['message']; ?></td>
                 <td>
                     <form action="other.php" method="post">
-                        <input type="hidden" name="messageid" value="<?php echo $row3['m_id']; ?>" />
                         <input class="btn btn-sm btnGo" type="submit" name="read" value="Mark as read">
-                        <a class="btn btn-sm btnGo" type="button" target="_blank" href="message.php?m_id=<?php echo $row3['m_id']; ?>">Reply</a>
+                        <a class="btn btn-sm btnGo" type="button" target="_blank" href="message.php?email=<?php echo $row3['email']; ?>">Reply</a>
                     </form>
                 </td>
             </tr>

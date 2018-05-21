@@ -86,6 +86,7 @@ session_start();
         <p>
             <a href="../contact1.php" target="_blank"><span class="glyphicon glyphicon-envelope btnfoot" title="Leave us a message"></span></a>
             <a href="../contact2.php" target="_blank"><span class="glyphicon glyphicon-earphone btnfoot" title="Call us"></span></a>
+            <a href="guide.php" target="_blank"><span class="glyphicon glyphicon-question-sign btnfoot" title="Help"></span></a>
             Copyright &copy; 2018 Logistics Worldwide Express. All Rights Reserved | Web Design by Clement, Samuel & Eileen
         </p>
     </div>

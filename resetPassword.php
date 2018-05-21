@@ -1,12 +1,49 @@
 <?php
+require_once 'connection/config.php';
 session_start();
-$sessData = !empty($_SESSION['sessData'])?$_SESSION['sessData']:'';
-if(!empty($sessData['status']['msg'])){
-    $statusMsg = $sessData['status']['msg'];
-    $statusMsgType = $sessData['status']['type'];
-    unset($_SESSION['sessData']['status']);
+if(empty($_GET['fp_code']))
+{
+	$fp_code = '';
+}else{
+	$fp_code = $_GET['fp_code'];
+}
+if(isset($_POST['resetSubmit'])){
+		
+			  if($_POST['fp_code'] == ""){
+				?>
+				<script>
+				alert('You does not authorized to reset new password of this account.');
+				//window.location.href='resetpassword?fail';
+				</script>
+				<?php
+			}else{
+				 if($_POST['password'] !== $_POST['confirm_password']){
+					 ?>
+						<script>
+						alert('Confirm password must match with the password.');
+						window.location.href='resetpassword.php?fail';
+						</script>
+					 <?php
+					 }
+					 else{
+						 $password = $_POST['password'];
+						 $password = password_hash($password, PASSWORD_DEFAULT); 
+						 $fp_code = $_POST['fp_code'];
+						
+		
+						 $update_user=mysqli_query($con,"UPDATE users SET password='$password' WHERE forgot_pass_identity='$fp_code'")or die(mysqli_error($con));
+							?>
+							<script>
+							alert('Your account password has been reset successfully. Please login with your new password.');
+							window.location.href='login.php?success';
+							</script>
+							<?php
+					 }
+			}
+
 }
 ?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -52,22 +89,18 @@ if(!empty($sessData['status']['msg'])){
                 <img src="resources/img/logo-box.PNG" width="50%" />
             </div>
         </div>
-        <!--<div class="row regrow2">
-            <div class="col-xs-2 col-md-2 col-lg-2 col-xs-push-5 col-md-push-5 col-lg-push-5 center">
-                <img src="resources/img/logo-box.PNG" width="50%" />
-            </div>
-        </div>-->
+
         <div class="row loginrow3">
             <div class="col-md-12 col-lg-12 col-xs-12">
            
                 <div class="logincontainer">    
-				 <?php echo !empty($statusMsg)?'<p class="'.$statusMsgType.'">'.$statusMsg.'</p>':''; ?>
 				    <p>Reset Your Password</p>
-					<form class="form-inline" action="userAccount.php" method="post">
+					<form class="form-inline" action="resetPassword.php" method="post">
+					<input type="hidden" name="fp_code" class="formfield" value="<?php echo $fp_code ?>"/>
 					<p><input type="password" name="password" class="formfield" placeholder="PASSWORD" required=""></p>
 					<p><input type="password" name="confirm_password" class="formfield" placeholder="CONFIRM PASSWORD" required=""></p>
 					<div class="send-button">
-					<input type="hidden" name="fp_code" value="<?php echo $_REQUEST['fp_code']; ?>"/>
+					
 					<p><button type="submit" class="btn btn-default btnlogin" name="resetSubmit">Reset Password</button></p>
 					</div>
 			</form>

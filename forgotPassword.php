@@ -1,12 +1,61 @@
 <?php
+require_once 'connection/config.php';
 session_start();
-$sessData = !empty($_SESSION['sessData'])?$_SESSION['sessData']:'';
-if(!empty($sessData['status']['msg'])){
-    $statusMsg = $sessData['status']['msg'];
-    $statusMsgType = $sessData['status']['type'];
-    unset($_SESSION['sessData']['status']);
+?>
+<?php
+if(isset($_POST['forgotSubmit'])){
+		$mysqli = new mysqli($dbhost,$dbuser,$dbpass,$dbname) or die($mysqli->error);
+        /* User input email, checks if email exists  */
+        
+        // Escape email to protect against SQL injections
+        $email = $mysqli->escape_string($_POST['email']);
+        $result = $mysqli->query("SELECT * FROM users WHERE email='$email'");
+        
+		if ( $result->num_rows == 0 )
+        {
+            $_SESSION['message'] = "User does not exist!";
+            ?>
+
+            <script>
+            alert('No user');
+            window.location.href='forgotpassword.php?fail';
+            </script>
+
+        <?php
+                
+        }
+		else{
+				$email = $_POST['email'];
+				$uniqidStr = md5(uniqid(mt_rand()));;
+				$updateforgotpass = mysqli_query($con, "UPDATE users SET forgot_pass_identity='$uniqidStr' WHERE email='$email'") or die(mysqli_error($con));
+				$resetPassLink = 'localhost/lwebuy_beta/resetPassword.php?fp_code='.$uniqidStr;
+	
+				$to = $email;
+				$subject = "Password Update Request";
+				$mailContent = 'Dear User, 
+				<br/>Recently a request was submitted to reset a password for your account. If this was a mistake, just ignore this email and nothing will happen.
+				<br/>To reset your password, visit the following link: <a href="'.$resetPassLink.'">'.$resetPassLink.'</a>
+				<br/><br/>Regards,
+				<br/>LWECARE';
+				$headers = "MIME-Version: 1.0" . "\r\n";
+				$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+				//additional headers
+				$headers .= 'From: LWE<lwe@example.com>' . "\r\n";
+				//send email
+				mail($to,$subject,$mailContent,$headers);
+			?>
+
+            <script>
+            alert('Please check your e-mail, we have sent a password reset link to your registered email');
+            window.location.href='forgotpassword.php?;
+            </script>
+
+        <?php
+		}
 }
 ?>
+		
+				
 <!DOCTYPE html>
 <html data-ng-app="">
     <head>
@@ -53,18 +102,13 @@ if(!empty($sessData['status']['msg'])){
                 <img src="resources/img/logo-box.PNG" width="50%" />
             </div>
         </div>
-        <!--<div class="row regrow2">
-            <div class="col-xs-2 col-md-2 col-lg-2 col-xs-push-5 col-md-push-5 col-lg-push-5 center">
-                <img src="resources/img/logo-box.PNG" width="50%" />
-            </div>
-        </div>-->
+
         <div class="row loginrow3">
             <div class="col-md-12 col-lg-12 col-xs-12">
                 <div class="logincontainer">
-				 <?php echo !empty($statusMsg)?'<p class="'.$statusMsgType.'">'.$statusMsg.'</p>':''; ?>  
 				    <p>Enter the Email of Your Account to Reset Password</p>
                     
-					<form class="form-inline" action="userAccount.php" method="post">
+					<form class="form-inline" action="forgotPassword.php" method="post">
                         <p><input type="email" class="formfield" id="email" name="email"  placeholder="Email" required autofocus/></p>
 						<p><button type="submit" class="btn btn-default btnlogin" name="forgotSubmit">Submit</button></p>
 					</form>

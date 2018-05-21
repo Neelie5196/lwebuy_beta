@@ -86,7 +86,17 @@ if(isset($_POST['refundpayment1']))
 
     $result18 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
     
-    $result19 = mysqli_query($con, "UPDATE point SET point = point + '$refund_amount' WHERE user_id = $user_id ") or die(mysqli_error($con));
+    $query = "SELECT * 
+              FROM point
+              WHERE user_id = '$user_id'";
+    $results = mysqli_query($con, $query);
+    $resultss = mysqli_num_rows($results);
+    
+    if($resultss > 0){
+        $result19 = mysqli_query($con, "UPDATE point SET point = point + '$refund_amount' WHERE user_id = $user_id ") or die(mysqli_error($con));
+    }else{
+        $result19 = mysqli_query($con, "INSERT INTO point SET user_id='$user_id', point='$refund_amount'") or die(mysqli_error($con));
+    }
 
     for($i=0; $i<$_POST['numbers']; $i++){
         $result20 = mysqli_query($con, "UPDATE order_item SET payment_id = NULL, top_up_id = NULL WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));

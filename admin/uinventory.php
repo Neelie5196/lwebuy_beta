@@ -8,6 +8,8 @@ if ($_SESSION['user_id'] == "")
     exit();
 }
 
+$display = "";
+
 $user_id = $_SESSION['user_id'];
 
 $query = "SELECT *

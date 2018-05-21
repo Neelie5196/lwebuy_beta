@@ -14,6 +14,9 @@ $query1 = "SELECT *
            WHERE status='Not In Use'";
 $result1 = mysqli_query($con, $query1);
 
+$query01 = "SELECT * FROM item it JOIN slot st ON it.slot_id = st.slot_id WHERE action = 'In' ORDER BY datetime DESC";
+$result01 = mysqli_query($con, $query01);
+
 if(isset($_POST['createslot']))
 {    
 	$user_id = $_SESSION['user_id'];
@@ -119,9 +122,10 @@ if (isset($_GET['ware_id']))
     
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-12">
-            <table class="tblATab">
+            <table class="tblWTab">
                 <tr>
                     <td class="wborder"><button class="btn-link btntab" id="btnwpending" onclick="funcWPending()">Pending Items</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnwstore" onclick="funcWStore()">Items In-store</button></td>
                     <td class="wborder"><button class="btn-link btntab" id="btnwslot" onclick="funcWSlot()">Slots Management</button></td>
                     <td><button class="btn-link btntab" id="btnwwarehouse" onclick="funcWWarehouse()">Warehouses</button></td>
                 </tr>
@@ -162,6 +166,69 @@ if (isset($_GET['ware_id']))
                         }
                     ?>
                 </table>
+            </div>
+        </div>
+        
+        <div id="wstore">
+            <div class="row">
+                <div class="col-xs-5 col-md-5 col-lg-5 col-xs-push-2 col-md-push-2 col-lg-push-2 updatecontainer">
+                    <p>
+                        <input type="text" name="search" class="formfield" placeholder="Enter keyword to search" id="keyword" onkeyup="filtertable()" autofocus />
+                    </p>
+                </div>
+
+                <div class="col-xs-3 col-md-3 col-lg-3 col-xs-push-2 col-md-push-2 col-lg-push-2 updatecontainer">
+                    <p>
+                        Search by: 
+                        <select class="formselect" id="filterby">
+                            <option>Order code</option>
+                            <option>Item name</option>
+                            <option>Received at</option>
+                        </select>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <table class="purchasetable">
+                        <tr>
+                            <th>Order Code</th>
+                            <th>Item Name</th>
+                            <th>Received at</th>
+                            <th>Aisle No.</th>
+                            <th>Slot No.</th>
+                        </tr>
+                        
+                        <?php
+                            if(mysqli_num_rows($result01) > 0)
+                            {
+                                while($row01 = mysqli_fetch_array($result01))
+                                {
+                        ?>
+                        <tr class="logrow">
+                            <td class="ordercode"><?php echo $row01['order_code']; ?></td>
+                            <td class="itemname"><?php echo $row01['item_description']; ?></td>
+                            <td class="datetime"><?php echo $row01['datetime']; ?></td>
+                            <td class="aisle"><?php echo $row01['slot_aisle']; ?></td>
+                            <td class="slotno"><?php echo $row01['slot_num']; ?></td>
+                        </tr>
+                        
+                        <?php
+                                    }
+                                }
+                                else
+                                {
+                                ?>
+
+                                <tr>
+                                    <td colspan="7">No items in inventory.</td>
+                                </tr>
+                            <?php
+                                }
+                            ?>
+                    </table>
+                </div>
             </div>
         </div>
         
@@ -402,4 +469,58 @@ $(document).on("click", ".editWarehouse", function () {
     $(".modal-body #address").val( warehouseAddress );
     $('#editWarehouse').modal('show');
 });
+
+    
+function filtertable()
+{
+    var keyword = document.getElementById("keyword").value.toLowerCase();
+    var filterby = document.getElementById("filterby").value;
+
+    var rows = document.getElementsByClassName("logrow");
+    var ordercodes = document.getElementsByClassName("ordercode");
+    var itemnames = document.getElementsByClassName("itemname");
+    var datetime = document.getElementsByClassName("datetime");
+
+    for (var a = 0; a < rows.length; a++)
+        {
+            rows[a].style.display = "none";
+        }
+
+    if(filterby == "Order code")
+        {
+            for(var b = 0; b < rows.length; b++)
+                {
+                    var searchtarget = ordercodes[b].innerHTML.toLowerCase();
+
+                    if(searchtarget.includes(keyword))
+                        {
+                            rows[b].style.display = "table-row";
+                        }
+                }
+        }
+    else if(filterby == "Item name")
+        {
+            for(var b = 0; b < rows.length; b++)
+                {
+                    var searchtarget = itemnames[b].innerHTML.toLowerCase();
+
+                    if(searchtarget.includes(keyword))
+                        {
+                            rows[b].style.display = "table-row";
+                        }
+                }
+        }
+    else if(filterby == "Received at")
+        {
+            for(var b = 0; b < rows.length; b++)
+                {
+                    var searchtarget = datetime[b].innerHTML.toLowerCase();
+
+                    if(searchtarget.includes(keyword))
+                        {
+                            rows[b].style.display = "table-row";
+                        }
+                }
+        }
+}
 </script>

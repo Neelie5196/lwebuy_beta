@@ -588,30 +588,48 @@ function funcWPending() {
     document.getElementById("wpending").style.display = "block";
     document.getElementById("wslot").style.display = "none";
     document.getElementById("wwarehouse").style.display = "none";
+    document.getElementById("wstore").style.display = "none";
     
     document.getElementById("btnwpending").style.fontWeight = "bold";
     document.getElementById("btnwslot").style.fontWeight = "normal";
     document.getElementById("btnwwarehouse").style.fontWeight = "normal";
+    document.getElementById("btnwstore").style.fontWeight = "normal";
 }
 
 function funcWSlot() {
     document.getElementById("wpending").style.display = "none";
     document.getElementById("wslot").style.display = "block";
     document.getElementById("wwarehouse").style.display = "none";
+    document.getElementById("wstore").style.display = "none";
     
     document.getElementById("btnwpending").style.fontWeight = "normal";
     document.getElementById("btnwslot").style.fontWeight = "bold";
     document.getElementById("btnwwarehouse").style.fontWeight = "normal";
+    document.getElementById("btnwstore").style.fontWeight = "normal";
 }
 
 function funcWWarehouse() {
     document.getElementById("wpending").style.display = "none";
     document.getElementById("wslot").style.display = "none";
     document.getElementById("wwarehouse").style.display = "block";
+    document.getElementById("wstore").style.display = "none";
     
     document.getElementById("btnwpending").style.fontWeight = "normal";
     document.getElementById("btnwslot").style.fontWeight = "normal";
     document.getElementById("btnwwarehouse").style.fontWeight = "bold";
+    document.getElementById("btnwstore").style.fontWeight = "normal";
+}
+
+function funcWStore() {
+    document.getElementById("wpending").style.display = "none";
+    document.getElementById("wslot").style.display = "none";
+    document.getElementById("wwarehouse").style.display = "none";
+    document.getElementById("wstore").style.display = "block";
+    
+    document.getElementById("btnwpending").style.fontWeight = "normal";
+    document.getElementById("btnwslot").style.fontWeight = "normal";
+    document.getElementById("btnwwarehouse").style.fontWeight = "normal";
+    document.getElementById("btnwstore").style.fontWeight = "bold";
 }
 
 function funcAAdmin() {

@@ -45,7 +45,7 @@ if(isset($_POST['update-point']))
     $rate_id = $_POST['rate_id'];
 	
 	$update = mysqli_query($con, "UPDATE rate SET rate='$pointratio' WHERE rate_id = '$rate_id' ") or die(mysqli_error($con));
-	$resultpoint = mysqli_query($con, "INSERT INTO log SET action='updated point rate to $pointratio', created_at=now(), user_id='$user_id', sort_by='others'") or die(mysqli_error($con));
+	$resultpoint = mysqli_query($con, "INSERT INTO log SET action='updated point rate to $pointratio', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Credit rates updated');
@@ -61,7 +61,7 @@ if(isset($_POST['update-weight']))
     $rate_ids = $_POST['rate_ids'];
 	
 	$update = mysqli_query($con, "UPDATE rate SET rate='$weightratio' WHERE rate_id = '$rate_ids' ") or die(mysqli_error($con));
-	$resultweight = mysqli_query($con, "INSERT INTO log SET action='updated weight price to $weightratio', created_at=now(), user_id='$user_id', sort_by='others'") or die(mysqli_error($con));
+	$resultweight = mysqli_query($con, "INSERT INTO log SET action='updated weight price to $weightratio', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Weight rates updated');
@@ -76,7 +76,7 @@ if(isset($_POST['update-currency']))
     $currency = $_POST['currency'];
 	
 	$update = mysqli_query($con, "UPDATE country SET country_currency='$currency'") or die(mysqli_error($con));
-	$resultcurrency = mysqli_query($con, "INSERT INTO log SET action='updated currency to $currency', created_at=now(), user_id='$user_id', sort_by='others'") or die(mysqli_error($con));
+	$resultcurrency = mysqli_query($con, "INSERT INTO log SET action='updated currency to $currency', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
    ?>
     <script>
     alert('Currency rates updated');
@@ -94,7 +94,7 @@ if(isset($_POST['update-bankdetails']))
     $country_id = $_POST['country_id'];
 	
 	$update = mysqli_query($con, "UPDATE country SET country_name='$cname', bank='$bname', account_no='$accno' WHERE country_id = $country_id ") or die(mysqli_error($con));
-    $resultcurrency = mysqli_query($con, "INSERT INTO log SET action='updated bank details', created_at=now(), user_id='$user_id', sort_by='others'") or die(mysqli_error($con));
+    $resultcurrency = mysqli_query($con, "INSERT INTO log SET action='updated bank details', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
 	?>
     <script>
     alert('Bank details updated');
@@ -111,10 +111,11 @@ if(isset($_POST['update-bankdetails']))
     <form action="other.php" method="post">
         <div class="row">
             <div class="col-xs-12 col-md-12 col-lg-12">
-                <table class="tblITab">
+                <table class="tblATab">
                     <tr>
                         <td class="wborder"><button class="btn-link btntab" type="button" id="btnorate" onclick="funcORate()">Payment Details</button></td>
-                        <td><button class="btn-link btntab" type="button" id="btnomessage" onclick="funcOMessage()">Messages <?php if(mysqli_num_rows($result3) > 0) {echo "(" . mysqli_num_rows($result3) . ")";} ?></button></td>
+                        <td class="wborder"><button class="btn-link btntab" type="button" id="btnomessage" onclick="funcOMessage()">Messages <?php if(mysqli_num_rows($result3) > 0) {echo "(" . mysqli_num_rows($result3) . ")";} ?></button></td>
+                        <td><button class="btn-link btntab" type="button" id="btnolog" onclick="funcOLog()">Acitivty Log</button></td>
                     </tr>
                 </table>
             </div>
@@ -229,6 +230,14 @@ if(isset($_POST['update-bankdetails']))
                     }
                 }
             ?>
+        </table>
+    </div>
+    
+    <div id="olog">
+        <table class="purchasetable">
+            <tr>
+                <th></th>
+            </tr>
         </table>
     </div>
 </div>

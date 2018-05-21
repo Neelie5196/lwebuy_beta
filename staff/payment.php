@@ -99,7 +99,7 @@ if(isset($_POST['approvec']))
 
 	
     $update = mysqli_query($con, "UPDATE payment SET amount = '$amount', status='Completed' WHERE payment_id = '$payment_id' ") or die(mysqli_error($con));
-	$resultapayment = mysqli_query($con, "INSERT INTO log SET action='received payment, total RM$amount', created_at=now(), user_id='$user_id', sort_by='approve_payment'") or die(mysqli_error($con));
+	$resultapayment = mysqli_query($con, "INSERT INTO log SET action='received payment, total RM$amount', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
 	
 	$query = "SELECT * 
               FROM point

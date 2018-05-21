@@ -25,7 +25,7 @@ if(isset($_POST['approve']))
     $itemprice = $price * $currency;
     
     $result2 = mysqli_query($con, "UPDATE order_item SET price='$itemprice', status = '$status' WHERE order_item_id = $order_item_id") or die(mysqli_error($con));
-    $resultapprove = mysqli_query($con, "INSERT INTO log SET action='approved request #$order_item_id and update item price to $itemprice', created_at=now(), user_id='$user_id', sort_by='approve_price'") or die(mysqli_error($con));
+    $resultapprove = mysqli_query($con, "INSERT INTO log SET action='approved request #$order_item_id and update item price to $itemprice', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
 			
 			$email = $_POST['email'];
 			$to=$email;
@@ -50,7 +50,7 @@ if(isset($_POST['decline']))
     $status = 'Declined';
     
     $result3 = mysqli_query($con, "UPDATE order_item SET comment='$comment', status = '$status' WHERE order_item_id = $order_item_id") or die(mysqli_error($con));
-	$resultdecline = mysqli_query($con, "INSERT INTO log SET action='declined request #$order_item_id ', created_at=now(), user_id='$user_id', sort_by='approve_price'") or die(mysqli_error($con));
+	$resultdecline = mysqli_query($con, "INSERT INTO log SET action='declined request #$order_item_id ', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
 
 	$email = $_POST['email'];
 			$to=$email;
@@ -89,7 +89,7 @@ if(isset($_POST['editPrice']))
     $price = $_POST['price'];
     
     $result7 = mysqli_query($con, "UPDATE order_item SET price='$price' WHERE order_item_id='$order_item_id'") or die(mysqli_error($con));
-    $resultedit = mysqli_query($con, "INSERT INTO log SET action='edit item #$order_item_id price to $price ', created_at=now(), user_id='$user_id', sort_by='approve_price'") or die(mysqli_error($con));
+    $resultedit = mysqli_query($con, "INSERT INTO log SET action='edit item #$order_item_id price to $price ', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
     ?>
     <script>
     window.location.href='main.php#adrequest';

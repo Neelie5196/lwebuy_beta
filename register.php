@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         }
         else
         {
+			if($_POST['password'] == $_POST['repassword']){
             $lname = $_POST['lname'];
             $fname = $_POST['fname'];
             $email = $_POST['email'];
@@ -32,10 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			$password = password_hash($password, PASSWORD_DEFAULT); 
 			$code=substr(md5(mt_rand()),0,15);
 			
-            $sql = "INSERT INTO users (user_id, email, password, lname, fname, type, statuss, contact,created, code, verify) VALUES ('','$email', '$password', '$lname', '$fname', 'customer', 'active' '$contact',now(), '$code','no')";
+            $sql = "INSERT INTO users (user_id, email, password, lname, fname, type, statuss, contact,created, code, verify,forgot_pass_identity) VALUES ('','$email', '$password', '$lname', '$fname', 'customer', 'active', '$contact',now(), '$code','no','')";
             
-			
-			
 			mysqli_query($con, $sql);
 			$verifyLink = 'http://test-buy.lwe.com.my/verification.php?email='.$email.'&code='.$code.'';
 			$message = "Your Activation Code is ".$code."";
@@ -51,6 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             window.location.href='login.php?success';
             </script>
             <?php
+			}else{
+				?>
+				<script>
+				alert('Password does not match');
+				window.location.href='register.php?fail';
+				</script>
+				<?php
+			}
         }
     }
 }
@@ -97,11 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             </div>
         </div>
         
-        <!--<div class="row regrow2">
-            <div class="col-xs-2 col-md-2 col-lg-2 col-xs-push-5 col-md-push-5 col-lg-push-5 center">
-                <img src="resources/img/logo-box.PNG" width="50%" />
-            </div>
-        </div>-->
+
         
         <div class="row loginrow3">
             <div class="col-md-12 col-lg-12 hidden-xs hidden-sm">

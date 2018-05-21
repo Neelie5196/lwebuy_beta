@@ -822,6 +822,12 @@ body {
     width: 20%;    
 }
 
+.tblWTab {
+    margin-left: 5%;
+    margin-bottom: 1%;
+    width: 40%;    
+}
+
 .wborder {
     border-right: solid 1px #2f9142;
 }
@@ -830,7 +836,7 @@ body {
     display: block;
 }
 
-#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #sinsuff, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory, #wslot, #wwarehouse, #acustomer, #astaff, #pship, #phistory, #pcredit, #poutstand, #pinsuff, #omessage, #iwarehouse, #prhistory, #prefund, #rapprove {
+#ppayment, #pproceed, #preceive, #pdecline, #ireceive, #srequest, #sinsuff, #sproceed, #sreceive, #sdecline, #chgPass, #passno, #chgPasss, #passnos, #chistory, #pcard, #ptrans, #rhistory, #wslot, #wwarehouse, #acustomer, #astaff, #pship, #phistory, #pcredit, #poutstand, #pinsuff, #omessage, #iwarehouse, #prhistory, #prefund, #rapprove, #olog {
     display: none;
 }
 

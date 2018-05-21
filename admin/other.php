@@ -24,6 +24,9 @@ $query3 = "SELECT *
           FROM contact";
 $result3 = mysqli_query($con, $query3);
 
+$query01 = "SELECT * FROM log lg JOIN users us ON lg.user_id = us.user_id ORDER BY created_at DESC";
+$result01 = mysqli_query($con, $query01);
+
 if(isset($_POST['read']))
 {
     $messageid = $_POST['messageid'];
@@ -234,10 +237,62 @@ if(isset($_POST['update-bankdetails']))
     </div>
     
     <div id="olog">
+        <div class="col-xs-5 col-md-5 col-lg-5 col-xs-push-2 col-md-push-2 col-lg-push-2 updatecontainer">
+            <p>
+                <input type="text" name="search" class="formfield" placeholder="Enter keyword to search" id="keyword" onkeyup="filtertable()" autofocus />
+            </p>
+        </div>
+        
         <table class="purchasetable">
-            <tr>
-                <th></th>
+            <?php
+            if(mysqli_num_rows($result01) > 0)
+            {
+                while($row01 = mysqli_fetch_array($result01))
+                {
+            ?>
+
+            <tr class="logrow">
+                <td class="left"><?php echo $row01['fname'] . " " . $row01['lname'] . " " . $row01['action'] . " at " . $row01['created_at'] . "."; ?></td>
             </tr>
+            
+            <?php
+                }
+            }
+            else
+            {
+                ?>
+
+            <tr>
+                <td>No activity records.</td>
+            </tr>
+
+            <?php
+            }
+            ?>
         </table>
     </div>
 </div>
+
+<script>
+function filtertable()
+{
+    var keyword = document.getElementById("keyword").value.toLowerCase();
+
+    var rows = document.getElementsByClassName("logrow");
+    
+    for (var a = 0; a < rows.length; a++)
+        {
+            rows[a].style.display = "none";
+        }
+
+    for(var b = 0; b < rows.length; b++)
+    {
+        var searchtarget = rows[b].innerHTML.toLowerCase();
+
+        if(searchtarget.includes(keyword))
+            {
+                rows[b].style.display = "table-row";
+            }
+    }
+}
+</script>

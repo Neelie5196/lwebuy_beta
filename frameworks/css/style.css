@@ -692,6 +692,16 @@ body {
     margin-top: 3.5%;
 }
 
+.shipdetselect {
+    outline: none!important;
+    width: 90%!important;
+    background: none;
+    border: solid 1px #2f9142!important;
+    padding: 0.5%;
+    color: #8bb836;
+    margin: 3.5% auto 1% auto;
+}
+
 .tblformfield {
     width: 80%;
     border: none;

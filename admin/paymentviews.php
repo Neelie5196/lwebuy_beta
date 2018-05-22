@@ -299,9 +299,9 @@ if(isset($_POST['declinereason']))
         <div class="row">
             <form action="paymentviews.php?payment_id=<?php echo $payment_id; ?>" method="post">
                 <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
-                        <select required class="formselect" name="station" >
-                            <option class="formoption">Station</option>
+                    <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer center">
+                        <select required class="shipdetselect" name="station" >
+                            <option>Station</option>
                             <?php 
                                 if(mysqli_num_rows($result8) > 0)
                                 {
@@ -318,6 +318,7 @@ if(isset($_POST['declinereason']))
                         </select>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 updatecontainer">
                         <table class="purchasetable">

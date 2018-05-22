@@ -30,7 +30,7 @@ $result1 = mysqli_query($con, $query1);
 if(isset($_POST['update']))
     {
         $t_code = $_POST['tcode'];
-        $arrive = addslashes($_POST['arriveat']);
+        $arrive = $_POST['arriveat'];
         $ostationid = $_POST['originstation'];
         
         $count = sizeof($t_code);
@@ -47,9 +47,9 @@ if(isset($_POST['update']))
         
         for ($i = 0; $i < $count ; $i++)
         {
-            $eventDesc = 'Shipment arrived at ' . $arrive[$i] . '.';
+            $eventDesc = 'Shipment arrived at ' . addslashes($arrive[$i]) . '.';
             
-            $update0 = mysqli_query($con, "UPDATE shipping SET status = 'In Transit' WHERE tracking_code = $t_code[$i]") or die(mysqli_error($con));
+            $update0 = mysqli_query($con, "UPDATE shipping SET status = 'In Transit' WHERE tracking_code = '$t_code[$i]'") or die(mysqli_error($con));
             
             $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$t_code[$i]', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='DPT', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
 

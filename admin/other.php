@@ -239,7 +239,7 @@ if(isset($_POST['update-bankdetails']))
                 <td><?php echo $row3['email']; ?></td>
                 <td><?php echo $row3['trackcode']; ?></td>
                 <td class="left"><?php echo $row3['message']; ?></td>
-                <td>
+                <td class="left">
                     <form action="other.php" method="post">
                         <input type="hidden" value="<?php echo $row3['m_id']; ?>" name="messageid" />
                         <input class="btn btn-sm btnGo" type="submit" name="read" value="Mark as read">
@@ -265,7 +265,7 @@ if(isset($_POST['update-bankdetails']))
                 <td><?php echo $row4['email']; ?></td>
                 <td><?php echo $row4['trackcode']; ?></td>
                 <td class="left"><?php echo $row4['message']; ?></td>
-                <td>
+                <td class="left">
                     <form action="other.php" method="post">
                         <input type="hidden" value="<?php echo $row4['m_id']; ?>" name="messageid" />
                         <input class="btn btn-sm btnGo" type="submit" name="unread" value="Mark as unread">

@@ -33,12 +33,13 @@ if(isset($_POST['refundpayment']))
     $order_item_id = $_POST['order_item_id'];
     $refund_reason = $_POST['refund_reason'];
     $status = 'Declined';
+    $rstatus = 'Pending';
     $comment = 'Refund';
     
     for($i=0; $i<$_POST['numbers']; $i++){
         $result8 = mysqli_query($con, "UPDATE order_item SET status='$status', comment = '$comment' WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));
     }
-    $result9 = mysqli_query($con, "INSERT INTO refund SET user_id='$user_id', refund_reason='$refund_reason', payment_id = $payment_id") or die(mysqli_error($con));
+    $result9 = mysqli_query($con, "INSERT INTO refund SET user_id='$user_id', refund_reason='$refund_reason', payment_id = $payment_id, rstatus = $rstatus") or die(mysqli_error($con));
     ?>
     <script>
     window.location.href='main.php#purchase';

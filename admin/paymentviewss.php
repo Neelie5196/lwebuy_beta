@@ -42,9 +42,10 @@ if(isset($_POST['refundpayment']))
     $admin_charge = number_format((float)$_POST['admin_charge'], 2, '.', '');
     $transaction_code = $_POST['transaction_code'];
     $status = 'Declined';
+    $rstatus = 'Approved';
     $rm = 'RM';
 
-    $result7 = mysqli_query($con, "UPDATE refund SET total_amount='$rm $total_amount', refund_amount='$rm $refund_amount', admin_charge='$rm $admin_charge', transaction_code='$transaction_code' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
+    $result7 = mysqli_query($con, "UPDATE refund SET total_amount='$rm $total_amount', refund_amount='$rm $refund_amount', admin_charge='$rm $admin_charge', transaction_code='$transaction_code', rstatus = '$rstatus'  WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
 
     $result13 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
 
@@ -80,9 +81,10 @@ if(isset($_POST['refundpayment1']))
     $transaction_code = 'Refund Credit';
     $user_id = $_POST['user_id'];
     $status = 'Declined';
+    $rstatus = 'Approved';
     $points = 'Points';
 
-    $result17 = mysqli_query($con, "UPDATE refund SET total_amount='$total_amount $points', refund_amount='$refund_amount $points', admin_charge='$admin_charge $points', transaction_code='$transaction_code' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
+    $result17 = mysqli_query($con, "UPDATE refund SET total_amount='$total_amount $points', refund_amount='$refund_amount $points', admin_charge='$admin_charge $points', transaction_code='$transaction_code', rstatus = '$rstatus' WHERE payment_id = '$payment_id'") or die(mysqli_error($con));
 
     $result18 = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE payment_id = $payment_id ") or die(mysqli_error($con));
     

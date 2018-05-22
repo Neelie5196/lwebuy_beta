@@ -169,8 +169,9 @@ if(isset($_POST['declinepayment']))
     $user_id = $_POST['user_id'];
     $refund_reason = $_POST['refund_reason'];
     $status = 'Ready to Pay';
+    $rstatus = 'Pending';
 
-    $result7 = mysqli_query($con, "INSERT INTO refund SET user_id='$user_id', refund_reason='$refund_reason', payment_id = $payment_id") or die(mysqli_error($con));
+    $result7 = mysqli_query($con, "INSERT INTO refund SET user_id='$user_id', refund_reason='$refund_reason', payment_id = $payment_id, rstatus = '$rstatus'") or die(mysqli_error($con));
 
     for($i=0; $i<$_POST['numbers']; $i++){
         $result16 = mysqli_query($con, "UPDATE order_item SET status='$status' WHERE order_item_id = $order_item_id[$i]") or die(mysqli_error($con));

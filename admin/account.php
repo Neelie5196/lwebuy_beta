@@ -8,11 +8,11 @@ $query = "SELECT *
            ON ws.user_id = us.user_id
            JOIN warehouse wh
            ON wh.ware_id = ws.ware_id
-           WHERE type='admin'";
+           WHERE us.type = 'admin'";
 $result = mysqli_query($con, $query);
 
 if(isset($_POST['addadmin']))
-{    
+{        
 	$user_id = $_SESSION['user_id'];
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
@@ -23,11 +23,18 @@ if(isset($_POST['addadmin']))
     $password = $_POST['password'];
     $password = password_hash($password, PASSWORD_DEFAULT);
 	
-	$result3 = mysqli_query($con, "INSERT INTO users SET fname='$fname', lname='$lname', email='$email', contact='$contact', password='$password', type='$type'") or die(mysqli_error($con));
+	$result3 = mysqli_query($con, "INSERT INTO users SET fname='$fname', lname='$lname', email='$email', contact='$contact', password='$password', type='$type', verify = 'yes', statuss = 'active'") or die(mysqli_error($con));
     $resultadmin = mysqli_query($con, "INSERT INTO log SET action='created $email', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
-    $user_id = mysqli_insert_id($con);
     
-    $result4 = mysqli_query($con, "INSERT INTO work_station SET user_id='$user_id', ware_id='$station'") or die(mysqli_error($con));
+    $query20 = "SELECT * 
+              FROM users
+              WHERE email = '$email'";
+    $result20 = mysqli_query($con, $query20);
+    $results20 = mysqli_fetch_assoc($result20);
+    
+    $user_ids = $results20['user_id'];
+    
+    $result4 = mysqli_query($con, "INSERT INTO work_station SET user_id='$user_ids', ware_id='$station'") or die(mysqli_error($con));
     
     ?>
     <script>
@@ -43,8 +50,17 @@ $result5 = mysqli_query($con, $query5);
 if (isset($_GET['user_id']))
 {
     $user_id = $_GET['user_id'];
+    
+    $query22 = "SELECT * 
+              FROM users
+              WHERE user_id = '$user_id'";
+    $result22 = mysqli_query($con, $query22);
+    $results22 = mysqli_fetch_assoc($result22);
+    
+    $email = $results22['email'];
 
     $result6 = mysqli_query($con, "DELETE FROM users WHERE user_id=$user_id") or die(mysqli_error($con));
+    $result7 = mysqli_query($con, "DELETE FROM work_station WHERE user_id=$user_id") or die(mysqli_error($con));
     $resultdel = mysqli_query($con, "INSERT INTO log SET action='delete $email', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
     ?>
     <script>
@@ -130,11 +146,18 @@ if(isset($_POST['addstaff']))
     $password = $_POST['password'];
     $password = password_hash($password, PASSWORD_DEFAULT);
 	
-	$result13 = mysqli_query($con, "INSERT INTO users SET fname='$fname', lname='$lname', email='$email', contact='$contact', password='$password', type='$type'") or die(mysqli_error($con));
+	$result13 = mysqli_query($con, "INSERT INTO users SET fname='$fname', lname='$lname', email='$email', contact='$contact', password='$password', type='$type', verify = 'yes', statuss = 'active'") or die(mysqli_error($con));
     $resultstaff = mysqli_query($con, "INSERT INTO log SET action='created $email', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
-    $user_id = mysqli_insert_id($con);
     
-    $result14 = mysqli_query($con, "INSERT INTO work_station SET user_id='$user_id', ware_id='$station'") or die(mysqli_error($con));
+    $query21 = "SELECT * 
+              FROM users
+              WHERE email = '$email'";
+    $result21 = mysqli_query($con, $query21);
+    $results21 = mysqli_fetch_assoc($result21);
+    
+    $user_ids = $results21['user_id'];
+    
+    $result14 = mysqli_query($con, "INSERT INTO work_station SET user_id='$user_ids', ware_id='$station'") or die(mysqli_error($con));
     
     ?>
     <script>

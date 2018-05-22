@@ -20,11 +20,6 @@ SET time_zone = "+00:00";
 -- Database: `lwe_beta`
 --
 
-SET NAMES utf8;
-SET time_zone = '+00:00';
-SET foreign_key_checks = 0;
-SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
-
 DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address` (
   `address_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -138,8 +133,8 @@ CREATE TABLE `contact` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 INSERT INTO `contact` (`m_id`, `name`, `contact`, `email`, `subject`, `trackcode`, `message`, `datetime`, `status`) VALUES
-(1,	'aqmar',	'0133095483',	'aqmar.nordin@unixus.com',	'test',	'',	'Testing purpose',	'0000-00-00 00:00:00',	'read'),
-(2,	'aqmar',	'0133095483',	'aqmar.nordin@unixus.com',	'test',	'',	'TEST',	'0000-00-00 00:00:00',	'unread');
+(1,	'aqmar',	'0133095483',	'aqmar.nordin@unixus.com',	'test',	'',	'Testing purpose',	'0000-00-00 00:00:00',	'unread'),
+(2,	'aqmar',	'0133095483',	'aqmar.nordin@unixus.com',	'test',	'',	'TEST',	'0000-00-00 00:00:00',	'read');
 
 DROP TABLE IF EXISTS `country`;
 CREATE TABLE `country` (
@@ -167,7 +162,7 @@ CREATE TABLE `item` (
   `payment_id` int(11) DEFAULT NULL,
   `action` varchar(15) NOT NULL,
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=latin1;
 
 INSERT INTO `item` (`item_id`, `slot_id`, `from_order`, `item_description`, `order_code`, `weight`, `datetime`, `payment_id`, `action`) VALUES
 (1,	1,	'Purchase Request',	'jacket',	'122',	2.00,	'2018-04-17 06:28:24',	6326435,	'Out'),
@@ -274,7 +269,11 @@ INSERT INTO `item` (`item_id`, `slot_id`, `from_order`, `item_description`, `ord
 (102,	4,	'Purchase Request',	'Test update inventory purchase',	'12526',	1.00,	'2018-05-16 09:35:14',	779751,	'Out'),
 (103,	4,	'Inventory Request',	'Test update inventory',	'12356',	1.00,	'2018-05-16 09:35:14',	779751,	'Out'),
 (105,	31,	'Inventory Request',	'Test shipping detail',	'123456789',	1.00,	'2018-05-21 13:11:52',	698311,	'Out'),
-(106,	35,	'Inventory Request',	'Testing 123',	'8851028001812',	1.00,	'2018-05-21 14:11:00',	NULL,	'In');
+(106,	35,	'Inventory Request',	'Testing 123',	'8851028001812',	1.00,	'2018-05-21 14:11:00',	NULL,	'In'),
+(107,	35,	'Inventory Request',	'Testing barcode',	'9556156009110',	1.00,	'2018-05-22 01:45:32',	NULL,	'In'),
+(108,	35,	'Inventory Request',	'Testing barcode',	'9556156009110',	1.00,	'2018-05-22 01:47:14',	NULL,	'In'),
+(109,	35,	'Inventory Request',	'Testing barcode',	'9556156009110',	1.00,	'2018-05-22 01:48:25',	NULL,	'In'),
+(110,	35,	'Inventory Request',	'Ice lemon tea',	'9556570501337',	2.00,	'2018-05-22 01:48:25',	NULL,	'In');
 
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE `log` (
@@ -283,7 +282,7 @@ CREATE TABLE `log` (
   `action` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 INSERT INTO `log` (`log_id`, `user_id`, `action`, `created_at`) VALUES
 (1,	0,	'designated Array',	'2018-05-16 18:06:01'),
@@ -292,7 +291,9 @@ INSERT INTO `log` (`log_id`, `user_id`, `action`, `created_at`) VALUES
 (4,	0,	'registered LWE1526908305MY',	'2018-05-21 13:11:52'),
 (5,	0,	'send OUT 105',	'2018-05-21 13:11:52'),
 (6,	0,	'cleared 31',	'2018-05-21 13:11:52'),
-(7,	1,	'received Array',	'2018-05-21 14:11:00');
+(7,	1,	'received Array',	'2018-05-21 14:11:00'),
+(8,	1,	'received 9556156009110',	'2018-05-22 01:48:25'),
+(9,	1,	'received 9556570501337',	'2018-05-22 01:48:25');
 
 DROP TABLE IF EXISTS `order_item`;
 CREATE TABLE `order_item` (
@@ -691,12 +692,10 @@ CREATE TABLE `refund` (
   `refund_reason` varchar(255) NOT NULL,
   `transaction_code` varchar(50) DEFAULT NULL,
   `payment_id` int(11) DEFAULT NULL,
+  `rstatus` varchar(50) NOT NULL,
   PRIMARY KEY (`refund_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
-INSERT INTO `refund` (`refund_id`, `user_id`, `total_amount`, `refund_amount`, `admin_charge`, `refund_reason`, `transaction_code`, `payment_id`) VALUES
-(1,	35,	'0.01',	'0.01',	'0.01',	'invalid',	'123',	NULL),
-(2,	35,	'0.00',	'0.01',	'0.01',	'invalid',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `request`;
 CREATE TABLE `request` (
@@ -743,8 +742,8 @@ INSERT INTO `request` (`request_id`, `user_id`, `order_item`, `order_code`, `sta
 (36,	1,	'Test update inventory',	'12356',	'Received',	'2018-05-14 13:16:53',	'Test'),
 (37,	1,	'Test shipping detail',	'123456789',	'Received',	'2018-05-20 23:37:54',	'-'),
 (38,	1,	'Testing 123',	'8851028001812',	'Received',	'2018-05-21 14:11:00',	'tsting'),
-(39,	1,	'Testing barcode',	'9556156009110',	'Request',	'2018-05-21 18:14:14',	'-'),
-(40,	1,	'Ice lemon tea',	'9556570501337',	'Request',	'2018-05-21 18:14:58',	'-');
+(39,	1,	'Testing barcode',	'9556156009110',	'Received',	'2018-05-22 01:45:32',	'-'),
+(40,	1,	'Ice lemon tea',	'9556570501337',	'Received',	'2018-05-22 01:48:25',	'-');
 
 DROP TABLE IF EXISTS `shipping`;
 CREATE TABLE `shipping` (
@@ -1399,4 +1398,4 @@ INSERT INTO `work_station` (`work_id`, `user_id`, `ware_id`) VALUES
 (1,	0,	1),
 (2,	22,	1);
 
--- 2018-05-21 18:38:43
+-- 2018-05-22 02:12:09

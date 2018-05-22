@@ -22,7 +22,7 @@ $result3 = mysqli_query($con, $query3);
 
 $query4 = "SELECT *
         FROM refund
-        WHERE status = 'pending'";
+        WHERE rstatus = 'pending'";
 $result4 = mysqli_query($con, $query4);
 
 $count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_rows($result3) + mysqli_num_rows($result4);

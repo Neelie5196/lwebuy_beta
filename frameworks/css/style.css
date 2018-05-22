@@ -1184,7 +1184,7 @@ body {
     box-shadow: none!important;
 }
 
-.guidebtnservice:hover {
+.guidebtnservice:hover, .guidebtnservice:hover .darkgreentriangle {
     color: #8bb836;
     outline: none!important;
 }
@@ -1246,8 +1246,4 @@ body {
 
 .darkgreentriangle {
     color: #2f9142;
-}
-
-.darkgreentriangle:hover {
-    color: #8bb836!important;
 }

@@ -13,7 +13,7 @@ if(isset($_POST['resetSubmit'])){
 				?>
 				<script>
 				alert('You does not authorized to reset new password of this account.');
-				//window.location.href='resetpassword?fail';
+				window.location.href='resetpassword?fail';
 				</script>
 				<?php
 			}else{

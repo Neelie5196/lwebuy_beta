@@ -13,11 +13,9 @@ if(isset($_POST['forgotSubmit'])){
         
 		if ( $result->num_rows == 0 )
         {
-            $_SESSION['message'] = "User does not exist!";
             ?>
-
             <script>
-            alert('No user');
+            alert('User does not exist!');
             window.location.href='forgotpassword.php?fail';
             </script>
 
@@ -28,8 +26,14 @@ if(isset($_POST['forgotSubmit'])){
 				$email = $_POST['email'];
 				$uniqidStr = md5(uniqid(mt_rand()));;
 				$updateforgotpass = mysqli_query($con, "UPDATE users SET forgot_pass_identity='$uniqidStr' WHERE email='$email'") or die(mysqli_error($con));
-				$resetPassLink = 'localhost/lwebuy_beta/resetPassword.php?fp_code='.$uniqidStr;
-	
+				$resetPassLink = 'http://localhost/lwebuy_beta/resetPassword.php?fp_code='.$uniqidStr;
+				?>
+					<script>
+					alert('Please check your e-mail, we have sent a password reset link to your registered email');
+					window.location.href='login.php?success';
+					</script>
+
+				<?php
 				$to = $email;
 				$subject = "Password Update Request";
 				$mailContent = 'Dear User, 
@@ -42,15 +46,7 @@ if(isset($_POST['forgotSubmit'])){
 				//additional headers
 				$headers .= 'From: LWE<lwe@example.com>' . "\r\n";
 				//send email
-				mail($to,$subject,$mailContent,$headers);
-			?>
-
-            <script>
-            alert('Please check your e-mail, we have sent a password reset link to your registered email');
-            window.location.href='forgotpassword.php?;
-            </script>
-
-        <?php
+				mail($to,$subject,$mailContent,$headers);	
 		}
 }
 ?>

@@ -473,6 +473,17 @@ body {
     outline: none;
 }
 
+.msgformfield {
+    width: 100%;
+    border: none;
+    background: none;
+    color: #2f9142;
+}
+
+.msgformfield:focus {
+    outline: none;
+}
+
 .homerow {
     margin: 3% auto 0 auto;
 }
@@ -1047,6 +1058,16 @@ body {
 
 .admainrow1 {
     margin-top: 5%;
+}
+
+.msgfield, .trackfield:focus {
+    margin-top: 1%;
+    width: 80%;
+    background: none!important;
+    border: solid 2px #2f9142;
+    color: #8bb836;
+    outline: none!important;
+    padding: 1%;
 }
 
 .trackfield, .trackfield:focus {

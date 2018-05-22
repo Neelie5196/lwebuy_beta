@@ -61,15 +61,18 @@ if(isset($_POST['submit']))
 <div class="col-xs-12 col-md-12 col-lg-12">
     <h2 class="bigh2 pagetitle hidden-xs hidden-sm center" >Reply Message</h2>
     <h2 class="smh2 pagetitle hidden-md hidden-lg center">Reply Message</h2>
+    
     <form name="sendmail" action="message.php" method="post">
-        <div id="orate">
+        <div>
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="center">
-							<label>Email:</label>
-							 <p><input class= "formfield" name="email" type="text"  value="<?php echo $results['email']; ?>" disabled/></p>
-							 <label>Message:</label>
-							<p><textarea rows=10 cols=100 name="message"></textarea></p>
-							<input class="btn btn-sm btnGo" type="submit" name="submit" value="Send"/>
+						<p>
+                            <label>Email:</label>
+                            <input class="center msgformfield" name="email" type="text"  value="<?php echo $results['email']; ?>" disabled/>
+                        </p>
+                        <p><label>Message:</label></p>
+                        <p><textarea class="msgfield" rows=10 cols=100 name="message"></textarea></p>
+                        <p><input class="btn btn-sm btnGo" type="submit" name="submit" value="Send"/></p>
                     </div>
                 </div>
         </div>

@@ -70,7 +70,7 @@ $query11 = "SELECT *
         WHERE transaction_code IS NOT NULL";
 $result11 = mysqli_query($con, $query11);
 
-$query01 "SELECT * FROM refund WHERE rstatus = 'pending'";
+$query01 = "SELECT * FROM refund WHERE rstatus = 'pending'";
 $result01 = mysqli_query($con, $query01);
 
 if(isset($_POST['refundsave']))

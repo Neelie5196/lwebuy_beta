@@ -70,6 +70,9 @@ $query11 = "SELECT *
         WHERE transaction_code IS NOT NULL";
 $result11 = mysqli_query($con, $query11);
 
+$query01 "SELECT * FROM refund WHERE rstatus = 'pending'";
+$result01 = mysqli_query($con, $query01);
+
 if(isset($_POST['refundsave']))
 {
     $refund_id = $_POST['refund_id'];
@@ -152,8 +155,8 @@ if(isset($_POST['decline']))
                     <td class="wborder"><button class="btn-link btntab" id="btnppurchase" onclick="funcPPurchase()">Purchases <?php if(mysqli_num_rows($result) > 0) {echo "(" . mysqli_num_rows($result) . ")";} ?></button></td>
                     <td class="wborder"><button class="btn-link btntab" id="btnpship" onclick="funcPShip()">Shipping <?php if(mysqli_num_rows($result1) > 0) {echo "(" . mysqli_num_rows($result1) . ")";} ?></button></td>
                     <td class="wborder"><button class="btn-link btntab" id="btnpcredit" onclick="funcPCredit()">Credit Reload <?php if(mysqli_num_rows($result3) > 0) {echo "(" . mysqli_num_rows($result3) . ")";} ?></button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnpoutstand" onclick="funcPOutstand()">Outstanding Payments <?php if($outcount > 0) {echo "(" . $outcount . ")";} ?></button></td>
-                    <td class="wborder"><button class="btn-link btntab" id="btnprefund" onclick="funcPRefund()">Refund</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnpoutstand" onclick="funcPOutstand()">Outstanding Payments</button></td>
+                    <td class="wborder"><button class="btn-link btntab" id="btnprefund" onclick="funcPRefund()">Refund Requests <?php if(mysqli_num_rows($result01) > 0) {echo "(" . mysqli_num_rows($result01) . ")";} ?></button></td>
                     <td class="wborder"><button class="btn-link btntab" id="btnphistory" onclick="funcPHistory()">Payment History</button></td>
                     <td><button class="btn-link btntab" id="btnprhistory" onclick="funcPRHistory()">Refund History</button></td>
                 </tr>

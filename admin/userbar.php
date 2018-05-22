@@ -21,16 +21,11 @@ $query3 = "SELECT *
 $result3 = mysqli_query($con, $query3);
 
 $query4 = "SELECT *
-        FROM order_item
-        WHERE status = 'top-up'";
+        FROM refund
+        WHERE status = 'pending'";
 $result4 = mysqli_query($con, $query4);
 
-$query5 = "SELECT *
-        FROM shipping
-        WHERE status = 'top-up'";
-$result5 = mysqli_query($con, $query5);
-
-$count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_rows($result3) + mysqli_num_rows($result4) + mysqli_num_rows($result5);
+$count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_rows($result3) + mysqli_num_rows($result4);
 
 $query6 = "SELECT *
         FROM contact WHERE status='unread'";

@@ -322,11 +322,11 @@ body {
     color: #f26522!important;
 }
 
-.glyphicon-pencil, .glyphicon-edit, .glyphicon-eye-open, .glyphicon-print, .glyphicon-ok-circle, glyphicon-remove-circle {
+.glyphicon-pencil, .glyphicon-edit, .glyphicon-eye-open, .glyphicon-print, .glyphicon-ok-circle, .glyphicon-remove-circle {
     color: #2f9142!important;
 }
 
-.glyphicon-pencil:hover, .glyphicon-edit:hover, .glyphicon-eye-open:hover, .glyphicon-print:hover, glyphicon-ok-circle:hover, glyphicon-remove-circle {
+.glyphicon-pencil:hover, .glyphicon-edit:hover, .glyphicon-eye-open:hover, .glyphicon-print:hover, glyphicon-ok-circle:hover, .glyphicon-remove-circle:hover {
     color: #8bb836!important;
 }
 

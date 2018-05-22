@@ -516,11 +516,11 @@ $result15 = mysqli_query($con, $query15);
 										<?php
 											if($row['statuss'] != 'active'){
 												?>
-											<a href="account.php?active_id=<?php echo $row['user_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="active"><span class="glyphicon glyphicon-ok-circle"></span></a>
+											<a href="account.php?active_id=<?php echo $row['user_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="activate"><span class="glyphicon glyphicon-ok-circle"></span></a>
 											<?php
 											}else{
 												?>
-												<a href="account.php?ban_id=<?php echo $row['user_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="deactive"><span class="glyphicon glyphicon-remove-circle"></span></a>
+												<a href="account.php?ban_id=<?php echo $row['user_id']; ?>" class="btn btn-default btn-xs btnDelete" name="delete" title="deactivate"><span class="glyphicon glyphicon-remove-circle"></span></a>
 											<?php
 											}
 										?>

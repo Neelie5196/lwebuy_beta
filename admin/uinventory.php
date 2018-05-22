@@ -8,8 +8,6 @@ if ($_SESSION['user_id'] == "")
     exit();
 }
 
-$display = "";
-
 $user_id = $_SESSION['user_id'];
 
 $query = "SELECT *
@@ -53,7 +51,7 @@ if(isset($_POST['update']))
         
         $query6 = "SELECT *
                   FROM request 
-                  WHERE order_code = '$o_codes[$i]' AND request_id = '$orderid[$i]'";
+                  WHERE order_code = '$o_codes[$i]' AND order_item_id = '$orderid[$i]'";
         $result6 = mysqli_query($con, $query6);
         $results6 = mysqli_fetch_assoc($result6);
         
@@ -76,8 +74,16 @@ if(isset($_POST['update']))
                 
                 $update1 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Purchase Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
                 
-				$update2 = mysqli_query($con, "INSERT INTO log SET action='received $o_code[$i]', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
+				$update2 = mysqli_query($con, "INSERT INTO log SET action='received $o_codes', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
                 $display = "updated";
+				
+				$email = $_POST['email'];
+				$to=$email;
+				$subject="Your item approved" ;
+				$from = 'lwebuy.com';
+				$body='Proceed to payment';
+				$headers = "From:".$from;
+				mail($to,$subject,$body,$headers);
             }
             else
             {
@@ -99,7 +105,7 @@ if(isset($_POST['update']))
                     
                     $update2 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Purchase Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
                     
-					$update3 = mysqli_query($con, "INSERT INTO log SET action='received $o_code[$i]', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
+					$update3 = mysqli_query($con, "INSERT INTO log SET action='received $o_codes', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
                     $display = "updated";
                 }
                 else
@@ -128,7 +134,7 @@ if(isset($_POST['update']))
                 
                 $update1 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Inventory Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
                 
-                $update2 = mysqli_query($con, "INSERT INTO log SET action='received $o_codes', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
+								$update2 = mysqli_query($con, "INSERT INTO log SET action='received $o_codes', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
                 $display = "updated";
             }
             else
@@ -151,7 +157,7 @@ if(isset($_POST['update']))
 
                     $update2 = mysqli_query($con, "INSERT INTO item SET slot_id='$slot_id', from_order='Inventory Request', item_description='$order_item', order_code='$o_codes[$i]', weight='$weights[$i]', action='In'") or die(mysqli_error($con));
                     
-									$update2 = mysqli_query($con, "INSERT INTO log SET action='received $o_codes', created_at=now(), user_id='$user_id'") or die(mysqli_error($con));
+									$update2 = mysqli_query($con, "INSERT INTO log SET action='received $o_codes', created_at=now(), user_id='$user_id', sort_by='update'") or die(mysqli_error($con));
                     $display = "updated";
                 }
                 else
@@ -299,6 +305,7 @@ if($display == "noupdate")
                                     <td>
                                         <input type="checkbox" class="trackcheck" name="ocode[]" value="<?php echo $row1['order_code']?>" disabled />
                                     </td>
+									<input type="hidden" name="email" id="email"  value="<?php echo $row1['email']?>"/>
                                     <td><?php echo $row1['fname'] . " " . $row1['lname']; ?></td>
                                     <td><?php echo $row1['order_item']; ?></td>
                                     <td><?php echo $row1['order_code']; ?></td>

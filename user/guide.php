@@ -28,20 +28,19 @@ if ($_SESSION['user_id'] == "")
         
     </head>
 
-	<body class="linearbg" onload="timeouttimer()">
+	<body class="userbg" onload="timeouttimer()">
 
         <div class="row loginrow1"> 
         </div>
         
         <div class="row">
-            <div class="col-xs-12 col-md-8 col-lg-8 col-md-push-2 col-lg-push-2 contact">
-                <h1 class="bigh1 center hidden-xs hidden-sm">User Guide</h1>
-                <h1 class="smh1 center hidden-lg hidden-md">User Guide</h1>
+            <div class="col-xs-12 col-md-8 col-lg-8 col-md-push-2 col-lg-push-2">
+                <h2 class="bigh2 center pagetitle hidden-xs hidden-sm">User Guide</h2>
+                <h2 class="smh2 center pagetitle hidden-lg hidden-md">User Guide</h2>
           
-				<p class="">Follow the step below</p>
-             
+				<p class="darkgreennormal">Select function to view steps</p>
   
-                <p><button class="btn btnservice left" type="button" data-toggle="collapse" data-target="#purchase"><span class="glyphicon glyphicon-triangle-bottom"></span> &emsp; How to Purchase</button></p> 
+                <p><button class="btn guidebtnservice left" type="button" data-toggle="collapse" data-target="#purchase"><span class="glyphicon glyphicon-triangle-bottom darkgreentriangle"></span> &emsp; Purchase an item</button></p> 
                 <div id="purchase" class="collapse serviceinfo">
                     <table class="servicetbl">
                         <tr>
@@ -65,7 +64,7 @@ if ($_SESSION['user_id'] == "")
                     </table>
                 </div>
           
-		        <p><button class="btn btnservice left" type="button" data-toggle="collapse" data-target="#inventory"><span class="glyphicon glyphicon-triangle-bottom"></span> &emsp; How to add inventory</button></p> 
+		        <p><button class="btn guidebtnservice left" type="button" data-toggle="collapse" data-target="#inventory"><span class="glyphicon glyphicon-triangle-bottom darkgreentriangle"></span> &emsp; Send item to LWE warehouse</button></p> 
                 <div id="inventory" class="collapse serviceinfo">
                     <table class="servicetbl">
                         <tr>
@@ -92,7 +91,7 @@ if ($_SESSION['user_id'] == "")
                     </table>
                 </div>
 				
-				<p><button class="btn btnservice left" type="button" data-toggle="collapse" data-target="#shipping"><span class="glyphicon glyphicon-triangle-bottom"></span> &emsp; Shipping</button></p> 
+				<p><button class="btn guidebtnservice left" type="button" data-toggle="collapse" data-target="#shipping"><span class="glyphicon glyphicon-triangle-bottom darkgreentriangle"></span> &emsp; Ship your item</button></p> 
                 <div id="shipping" class="collapse serviceinfo">
                     <table class="servicetbl">
                         <tr>
@@ -110,7 +109,7 @@ if ($_SESSION['user_id'] == "")
                     </table>
                 </div>
                
-			   	<p><button class="btn btnservice left" type="button" data-toggle="collapse" data-target="#paymentcredit"><span class="glyphicon glyphicon-triangle-bottom"></span> &emsp; Payment(credit)</button></p> 
+			   	<p><button class="btn guidebtnservice left" type="button" data-toggle="collapse" data-target="#paymentcredit"><span class="glyphicon glyphicon-triangle-bottom darkgreentriangle"></span> &emsp; Payment (Credit)</button></p> 
                 <div id="paymentcredit" class="collapse serviceinfo">
                     <table class="servicetbl">
                         <tr>
@@ -128,7 +127,7 @@ if ($_SESSION['user_id'] == "")
                     </table>
 					</div>
 				
-				<p><button class="btn btnservice left" type="button" data-toggle="collapse" data-target="#paymentmolpay"><span class="glyphicon glyphicon-triangle-bottom"></span> &emsp; Payment(molpay)</button></p> 
+				<p><button class="btn guidebtnservice left" type="button" data-toggle="collapse" data-target="#paymentmolpay"><span class="glyphicon glyphicon-triangle-bottom darkgreentriangle"></span> &emsp; Payment (Molpay)</button></p> 
                 <div id="paymentmolpay" class="collapse serviceinfo">
                     <table class="servicetbl">
                         <tr>
@@ -153,7 +152,7 @@ if ($_SESSION['user_id'] == "")
                     </table>
 					</div>
                
-			   	<p><button class="btn btnservice left" type="button" data-toggle="collapse" data-target="#paymentreceipt"><span class="glyphicon glyphicon-triangle-bottom"></span> &emsp; Payment(transaction)</button></p> 
+			   	<p><button class="btn guidebtnservice left" type="button" data-toggle="collapse" data-target="#paymentreceipt"><span class="glyphicon glyphicon-triangle-bottom darkgreentriangle"></span> &emsp; Payment (Transaction receipt)</button></p> 
                 <div id="paymentreceipt" class="collapse serviceinfo">
                     <table class="servicetbl">
                         <tr>

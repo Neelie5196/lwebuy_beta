@@ -1175,6 +1175,24 @@ body {
     font-size: 90%;
 }
 
+.guidebtnservice, .guidebtnservice:focus, .guidebtnservice:active, .guidebtnservice:visited {
+    width: 100%;
+    font-weight: bold;
+    background: none;
+    color: #2f9142;
+    outline: none!important;
+    box-shadow: none!important;
+}
+
+.guidebtnservice:hover {
+    color: #8bb836;
+    outline: none!important;
+}
+
+.guidebtnservice .glyphicon {
+    font-size: 90%;
+}
+
 .servicetbl td {
     vertical-align: top;
     padding: 1%;
@@ -1220,4 +1238,16 @@ body {
 
 .recipientdettbl td {
     height: 40px;
+}
+
+.darkgreennormal {
+    color: #2f9142;
+}
+
+.darkgreentriangle {
+    color: #2f9142;
+}
+
+.darkgreentriangle:hover {
+    color: #8bb836!important;
 }

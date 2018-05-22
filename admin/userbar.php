@@ -33,7 +33,7 @@ $result5 = mysqli_query($con, $query5);
 $count1 = mysqli_num_rows($result1) + mysqli_num_rows($result2) + mysqli_num_rows($result3) + mysqli_num_rows($result4) + mysqli_num_rows($result5);
 
 $query6 = "SELECT *
-        FROM contact";
+        FROM contact WHERE status='unread'";
 $result6 = mysqli_query($con, $query6);
 
 $count2 = mysqli_num_rows($result6);

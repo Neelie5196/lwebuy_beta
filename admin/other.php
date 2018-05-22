@@ -21,8 +21,12 @@ $result2 = mysqli_query($con, $query2);
 $results2 = mysqli_fetch_assoc($result2);
 
 $query3 = "SELECT *
-          FROM contact";
+          FROM contact WHERE status = 'unread'";
 $result3 = mysqli_query($con, $query3);
+
+$query4 = "SELECT *
+          FROM contact WHERE status = 'read'";
+$result4 = mysqli_query($con, $query4);
 
 $query01 = "SELECT * FROM log lg JOIN users us ON lg.user_id = us.user_id ORDER BY created_at DESC";
 $result01 = mysqli_query($con, $query01);
@@ -31,6 +35,20 @@ if(isset($_POST['read']))
 {
     $messageid = $_POST['messageid'];
     $read = "read";
+    
+    $update01 = mysqli_query($con, "UPDATE contact SET status='$read' WHERE m_id = '$messageid'") or die(mysqli_error($con));
+    
+    ?>
+    <script>
+    window.location.href='main.php#adother';
+    </script>
+    <?php
+}
+
+if(isset($_POST['unread']))
+{
+    $messageid = $_POST['messageid'];
+    $read = "unread";
     
     $update01 = mysqli_query($con, "UPDATE contact SET status='$read' WHERE m_id = '$messageid'") or die(mysqli_error($con));
     
@@ -223,6 +241,7 @@ if(isset($_POST['update-bankdetails']))
                 <td class="left"><?php echo $row3['message']; ?></td>
                 <td>
                     <form action="other.php" method="post">
+                        <input type="hidden" value="<?php echo $row3['m_id']; ?>" name="messageid" />
                         <input class="btn btn-sm btnGo" type="submit" name="read" value="Mark as read">
                         <a class="btn btn-sm btnGo" type="button" target="_blank" href="message.php?email=<?php echo $row3['email']; ?>">Reply</a>
                     </form>
@@ -232,12 +251,39 @@ if(isset($_POST['update-bankdetails']))
             <?php
                     }
                 }
+            
+                if (mysqli_num_rows($result4) > 0)
+                {
+                    while ($row4 = mysqli_fetch_array($result4))
+                    {
+            ?>
+            
+            <tr class="bodyrow">
+                <td><?php echo $row4['subject']; ?></td>
+                <td><?php echo $row4['name']; ?></td>
+                <td><?php echo $row4['contact']; ?></td>
+                <td><?php echo $row4['email']; ?></td>
+                <td><?php echo $row4['trackcode']; ?></td>
+                <td class="left"><?php echo $row4['message']; ?></td>
+                <td>
+                    <form action="other.php" method="post">
+                        <input type="hidden" value="<?php echo $row4['m_id']; ?>" name="messageid" />
+                        <input class="btn btn-sm btnGo" type="submit" name="unread" value="Mark as unread">
+                        <a class="btn btn-sm btnGo" type="button" target="_blank" href="message.php?email=<?php echo $row4['email']; ?>">Reply</a>
+                    </form>
+                </td>
+            </tr>
+            
+            <?php
+                        
+                    }
+                }
             ?>
         </table>
     </div>
     
     <div id="olog">
-        <div class="col-xs-5 col-md-5 col-lg-5 col-xs-push-2 col-md-push-2 col-lg-push-2 updatecontainer">
+        <div class="col-xs-6 col-md-6 col-lg-6 col-xs-push-3 col-md-push-3 col-lg-push-3 updatecontainer">
             <p>
                 <input type="text" name="search" class="formfield" placeholder="Enter keyword to search" id="keyword" onkeyup="filtertable()" autofocus />
             </p>

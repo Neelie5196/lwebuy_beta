@@ -19,7 +19,7 @@ $count1 = mysqli_num_rows($result1);
 
 $query2 = "SELECT *
           FROM shipping
-          WHERE user_id='$user_id' AND status = 'DELIVERED' AND reviewed IS NULL";
+          WHERE user_id='$user_id' AND status = 'DELIVERED' AND review IS NULL";
 $result2 = mysqli_query($con, $query2);
 $count2 = mysqli_num_rows($result2);
 ?>

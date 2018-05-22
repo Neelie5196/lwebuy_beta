@@ -46,7 +46,7 @@ if(isset($_POST['checkin']))
         
         foreach ($t_code as $t)
         {
-            $update0 = mysqli_query($con, "UPDATE shipping SET status = 'SHIPMENT RECEIVED' WHERE tracking_code = $t") or die(mysqli_error($con));
+            $update0 = mysqli_query($con, "UPDATE shipping SET status = 'SHIPMENT RECEIVED' WHERE tracking_code = '$t'") or die(mysqli_error($con));
             
             $update1 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$t', StationCode='$ostationcode', StationDescription='$ostationname', CountryCode='$ocountrycode', CountryDescription='$ocountryname', EventCode='PKI', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark=''") or die(mysqli_error($con));
 

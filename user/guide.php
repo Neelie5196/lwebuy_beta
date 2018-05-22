@@ -34,7 +34,7 @@ if ($_SESSION['user_id'] == "")
         </div>
         
         <div class="row">
-            <div class="col-xs-12 col-md-8 col-lg-8 col-md-push-2 col-lg-push-2">
+            <div class="col-xs-12 col-md-8 col-lg-8 col-md-push-2 col-lg-push-2 darkgreennormal">
                 <h2 class="bigh2 center pagetitle hidden-xs hidden-sm">User Guide</h2>
                 <h2 class="smh2 center pagetitle hidden-lg hidden-md">User Guide</h2>
           

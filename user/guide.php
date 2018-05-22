@@ -29,9 +29,7 @@ if ($_SESSION['user_id'] == "")
     </head>
 
 	<body class="linearbg" onload="timeouttimer()">
-	<div class="row" id="usernav">
-            <?php include_once "userbar.php" ?>
-        </div>
+
         <div class="row loginrow1"> 
         </div>
         
@@ -39,36 +37,31 @@ if ($_SESSION['user_id'] == "")
             <div class="col-xs-12 col-md-8 col-lg-8 col-md-push-2 col-lg-push-2 contact">
                 <h1 class="bigh1 center hidden-xs hidden-sm">User Guide</h1>
                 <h1 class="smh1 center hidden-lg hidden-md">User Guide</h1>
-                
-             
-                
-				<p class="subtitle">Follow the step below</p>
+          
+				<p class="">Follow the step below</p>
              
   
                 <p><button class="btn btnservice left" type="button" data-toggle="collapse" data-target="#purchase"><span class="glyphicon glyphicon-triangle-bottom"></span> &emsp; How to Purchase</button></p> 
                 <div id="purchase" class="collapse serviceinfo">
                     <table class="servicetbl">
                         <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/1purchase.JPG" alt="international express" width="100%" /></td>
+						<td>
+                                <p class="coltitle">Step 1: Click 'Purchase'</p>						
+                        </td>	
+                        </tr>
+						<td class="imgcol"><img src="../resources/img/guide/1purchase.JPG" alt="international express" width="100%" /></td>
+						<tr>                     
                             <td>
-                                <p class="coltitle">Step 1:</p>
-                                <p>Click 'Purchase' </p>
+							<p class="coltitle">Step 2: Copy item url</p>
                             </td>
                         </tr>
-						<tr>
-                            <td class="imgcol"><img src="../resources/img/guide/3copyurl.JPG" alt="international parcel" width="100%" /></td>
-                            <td>
-							<p class="coltitle">Step 2:</p>
-                                <p>Copy item url</p>
-                            </td>
-                        </tr>
+						<td class="imgcol"><img src="../resources/img/guide/3copyurl.JPG" alt="international parcel" width="100%" /></td>
                         <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/2addpurchase.JPG" alt="international parcel" width="100%" /></td>
                             <td>
-							<p class="coltitle">Step 3:</p>
-                                <p>Add the url and click 'Request'</p>
+							<p class="coltitle">Step 3: Add the url and click 'Request'</p>
                             </td>
                         </tr>
+						<td class="imgcol"><img src="../resources/img/guide/2addpurchase.JPG" alt="international parcel" width="100%" /></td>
                     </table>
                 </div>
           
@@ -76,26 +69,26 @@ if ($_SESSION['user_id'] == "")
                 <div id="inventory" class="collapse serviceinfo">
                     <table class="servicetbl">
                         <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/inventory.JPG" alt="international express" width="100%" /></td>
                             <td>
-                                <p class="coltitle">Step 1:</p>
-                                <p>Click 'Inventory'</p>
+                                <p class="coltitle">Step 1: Click 'Inventory'</p>
                             </td>
                         </tr>
+						         <td class="imgcol"><img src="../resources/img/guide/inventory.JPG" alt="international express" width="100%" /></td>
                         <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/trackingcode.JPG" alt="international parcel" width="100%" /></td>
+                           
                             <td>
-                                <p class="coltitle">Step 2:</p>
-								<p>Copy order code</p>
+                                <p class="coltitle">Step 2:Copy order code</p>
+								<p></p>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/3payment.JPG" alt="postal packets" width="100%" /></td>
+								<td class="imgcol"><img src="../resources/img/guide/trackingcode.JPG" alt="international parcel" width="100%" /></td>
+                        <tr> 
                             <td>
-                                <p class="coltitle">Step 3:</p>
-                                <p>Add the code and click 'Request'</p>
+                                <p class="coltitle">Step 3: Add the code and click 'Request'</p>
+                                <p></p>
                             </td>
                         </tr>
+						     <td class="imgcol"><img src="../resources/img/guide/additem.JPG" alt="postal packets" width="100%" /></td>
                     </table>
                 </div>
 				
@@ -103,19 +96,17 @@ if ($_SESSION['user_id'] == "")
                 <div id="shipping" class="collapse serviceinfo">
                     <table class="servicetbl">
                         <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/ship.JPG" alt="international express" width="100%" /></td>
                             <td>
-                                <p class="coltitle">Step 1:</p>
-                                <p>Click 'Shipping'</p>
+                                <p class="coltitle">Step 1:Click 'Shipping'</p>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/2addpurchase.JPG" alt="international parcel" width="100%" /></td>
+						   <td class="imgcol"><img src="../resources/img/guide/ship.JPG" alt="international express" width="100%" /></td>
+                        <tr>  
                             <td>
-							<p class="coltitle">Step 2:</p>
-                                <p>Tick item, and click 'shipping'</p>
+							<p class="coltitle">Step 2:Tick item, and click 'shipping'</p>
                             </td>
                         </tr>
+						  <td class="imgcol"><img src="../resources/img/guide/shipping.JPG" alt="international parcel" width="100%" /></td>
                     </table>
                 </div>
                
@@ -123,19 +114,17 @@ if ($_SESSION['user_id'] == "")
                 <div id="paymentcredit" class="collapse serviceinfo">
                     <table class="servicetbl">
                         <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/pay.JPG" alt="international express" width="100%" /></td>
                             <td>
-                                <p class="coltitle">Step 1:</p>
-                                <p>Tick item to pay, and click 'Pay'</p>
+                                <p class="coltitle">Step 1: Tick item to pay, and click 'Pay'</p>
                             </td>
                         </tr>
+								   <td class="imgcol"><img src="../resources/img/guide/pay.JPG" alt="international express" width="100%" /></td>
                         <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/credit.JPG" alt="international parcel" width="100%" /></td>
                             <td>
-							 <p class="coltitle">Step 2:</p>
-                                <p>Choose Credit, and click 'pay' </p>
+							 <p class="coltitle">Step 2: Choose Credit, and click 'pay'</p>
                             </td>
                         </tr>
+						      <td class="imgcol"><img src="../resources/img/guide/credit.JPG" alt="international parcel" width="100%" /></td>
                     </table>
 					</div>
 				
@@ -143,26 +132,24 @@ if ($_SESSION['user_id'] == "")
                 <div id="paymentmolpay" class="collapse serviceinfo">
                     <table class="servicetbl">
                         <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/pay.JPG" alt="international express" width="100%" /></td>
+                      
                             <td>
-                                <p class="coltitle">Step 1:</p>
-                                <p>Tick item to pay, and click 'Pay'</p>
+                                <p class="coltitle">Step 1: Tick item to pay, and click 'Pay'</p>
                             </td>
                         </tr>
-                        <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/molpay.JPG" alt="international parcel" width="100%" /></td>
+						      <td class="imgcol"><img src="../resources/img/guide/pay.JPG" alt="international express" width="100%" /></td>
+                        <tr> 
                             <td>
-							 <p class="coltitle">Step 2:</p>
-                                <p>Choose Molpay, and click 'pay now' </p>
+							 <p class="coltitle">Step 2: Choose Molpay, and click 'pay now' </p>
                             </td>
                         </tr>
-						<tr>
-                            <td class="imgcol"><img src="../resources/img/guide/molpay2.JPG" alt="international parcel" width="100%" /></td>
+						<td class="imgcol"><img src="../resources/img/guide/molpay.JPG" alt="international parcel" width="100%" /></td>
+						<tr> 
                             <td>
-							 <p class="coltitle">Step 3:</p>
-                                <p>Fill bank details, and click 'pay now' </p>
+							 <p class="coltitle">Step 3: Fill bank details, and click 'pay now'</p>
                             </td>
                         </tr>
+						   <td class="imgcol"><img src="../resources/img/guide/molpay2.JPG" alt="international parcel" width="100%" /></td>
                     </table>
 					</div>
                
@@ -170,18 +157,17 @@ if ($_SESSION['user_id'] == "")
                 <div id="paymentreceipt" class="collapse serviceinfo">
                     <table class="servicetbl">
                         <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/pay.JPG" alt="international express" width="100%" /></td>
                             <td>
-                                <p class="coltitle">Step 1:</p>
-                               <p>Tick item to pay, and click 'Pay'</p>
+                                <p class="coltitle">Step 1: Tick item to pay, and click 'Pay'</p>
                             </td>
                         </tr>
+				 <td class="imgcol"><img src="../resources/img/guide/pay.JPG" alt="international express" width="100%" /></td>
                         <tr>
-                            <td class="imgcol"><img src="../resources/img/guide/receipt.JPG" alt="international parcel" width="100%" /></td>
                             <td>
-                                <p>Upload the receipt, and click 'Submit'</p>
+							 <p class="coltitle">Step 2: Upload the receipt, and click 'Submit'</p>
                             </td>
                         </tr>
+						<td class="imgcol"><img src="../resources/img/guide/receipt.JPG" alt="international parcel" width="100%" /></td>
                     </table>
 					</div>
 			   </div>
